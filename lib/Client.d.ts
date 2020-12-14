@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import WebSocket from 'ws';
 /**
  * Options for your command
  * @interface
@@ -27,26 +28,27 @@ export interface commandOptions {
 /**
  * Callback for commands
  * @typedef
+ * TODO: change request res and next function types to actual types
  */
 export declare type commandCallback = (req: any, res: any, next: any) => Promise<void> | void;
+export declare type eventNames = 'READY';
 /**
  * Client Class
  * @example
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client
- *
  */
 declare class Client {
-    private token;
+    ws: WebSocket | undefined;
+    private events;
     private prefix;
+    private loop;
     private commands;
     private middlware;
     /**
-     *
-     * @param {string|Buffer} token The token for your bot
      * @param {string} prefix The prefix for your bot
      */
-    constructor(token: string | Buffer, prefix: string);
+    constructor(prefix: string);
     /**
      * Command function
      * @param {string|string[]} name Name of the command,
@@ -54,13 +56,30 @@ declare class Client {
      * @param {commandOptions} options Options for your command
      * @returns {Client}
      * @example
-     *
-     * cli.command(['ping', 'latency'], (res, res, next) => {
+     * cli.command(['ping', 'latency'], (res, res) => {
      *      res.send('Pong!'); // send message
-     *      next(); // run next function
      * });
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions): this;
+    on(event: eventNames, cb: Function): this;
+    /**
+     * Add a middleware
+     * @param {commandCallback} cb Your middleware function
+     * @returns {Client}
+     * @description a function that is ran before every command
+     * @example
+     *
+     * cli.use((req, res, next) => {
+     *      req.send(`${req.command} has been used!`);
+     *      next(); // call the next middlware/command
+     * })
+     */
     use(cb: commandCallback): this;
+    /**
+     * Log your bot into discord
+     * @param {string|Buffer} token Your bot token
+     */
+    login(token: string | Buffer): void;
+    logout(end?: boolean): void;
 }
 export default Client;

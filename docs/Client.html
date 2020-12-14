@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
 </nav>
 
 <div id="main">
@@ -234,7 +234,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line9">line 9</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line8">line 8</a>
             </li></ul></dd>
         </div>
     
@@ -446,7 +446,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line34">line 34</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line29">line 29</a>
             </li></ul></dd>
         </div>
     
@@ -495,7 +495,313 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (res, res, next) => {     res.send('Pong!'); // send message     next(); // run next function});</code></pre>
+    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (res, res) => {     res.send('Pong!'); // send message});</code></pre>
+
+    </div>
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="login">
+        <a href="#login">#</a>
+        <span class="type-signature"></span>login<span class="signature">(token)</span><span class="type-signature"></span>
+    </h4>
+
+    
+
+
+
+    <div class="description">
+        <p>Log your bot into discord</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>token</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Buffer</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Your bot token</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line66">line 66</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="use">
+        <a href="#use">#</a>
+        <span class="type-signature"></span>use<span class="signature">(cb)</span><span class="type-signature"> &rarr; {<a href="Client.html">Client</a>}</span>
+    </h4>
+
+    
+
+
+
+    <div class="description">
+        <p>a function that is ran before every command</p>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#commandCallback">commandCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Your middleware function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line58">line 58</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container mt-20">
+    <strong>Returns:</strong>
+        
+            
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Client.html">Client</a></span>
+
+
+    </dd>
+</dl>
+
+    </div>
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Example</strong>
+        
+    <pre class="prettyprint"><code>cli.use((req, res, next) => {     req.send(`${req.command} has been used!`);     next(); // call the next middlware/command})</code></pre>
 
     </div>
 
@@ -529,7 +835,7 @@
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"}];
+  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"}];
   setupSearch(list)
 </script>
 

@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Maven+Pro&family=Montserrat:ital@1&display=swap');
 
-code {
-    font-size: 1.25rem
+h1::after, h2::after, h3::after, h4::after, h5::after, h6::after {
+    background-color: inherit !important;
+}
+
+.prettyprint code {
+    font-size: 1rem !important;
 } code .com {
     font-family: 'Montserrat', sans-serif;
 } code .kwd {
