@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Maven+Pro&family=Montserrat:ital@1&display=swap');
+
+code {
+    font-size: 1.25rem
+} code .com {
+    font-family: 'Montserrat', sans-serif;
+} code .kwd {
+    font-family: 'Montserrat', sans-serif;
+} code .typ, .pln {
+    font-family: 'Maven Pro', sans-serif;
+}
