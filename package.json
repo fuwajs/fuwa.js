@@ -6,7 +6,7 @@
   "types": "./index.d.ts",
   "scripts": {
     "docs": "jsdoc -c jsdoc.json .",
-    "test": "tsc -p . && node example/index"
+    "test": "tsc -p . && node examples/index"
   },
   "repository": {
     "type": "git",

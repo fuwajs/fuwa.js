@@ -12,3 +12,6 @@ export declare const OPCodes: {
     HELLO: number;
     HEARTBEAT_ACK: number;
 };
+export declare const discordAPI: {
+    gateway: string;
+};

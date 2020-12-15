@@ -12,3 +12,7 @@ export const OPCodes = {
     HELLO: 10,
     HEARTBEAT_ACK: 11,
 }
+
+export const discordAPI = {
+    gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
+}

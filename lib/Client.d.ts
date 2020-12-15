@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import WebSocket from 'ws';
+import User from './User';
 /**
  * Options for your command
  * @interface
@@ -32,6 +33,17 @@ export interface commandOptions {
  */
 export declare type commandCallback = (req: any, res: any, next: any) => Promise<void> | void;
 export declare type eventNames = 'READY';
+export interface clientOptions {
+    /**
+     * The owners' discord ID
+     */
+    owners: string[] | string;
+    /**
+     * To turn on the debug mode, not recommed to turn this on unless your debugging
+     * the library itself
+     */
+    debug?: boolean;
+}
 /**
  * Client Class
  * @example
@@ -39,7 +51,9 @@ export declare type eventNames = 'READY';
  * const cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client
  */
 declare class Client {
+    bot: User | null;
     ws: WebSocket | undefined;
+    private debugMode;
     private events;
     private prefix;
     private loop;
@@ -48,7 +62,8 @@ declare class Client {
     /**
      * @param {string} prefix The prefix for your bot
      */
-    constructor(prefix: string);
+    constructor(prefix: string, options?: clientOptions);
+    debug(bug: Error | string): void;
     /**
      * Command function
      * @param {string|string[]} name Name of the command,

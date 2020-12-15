@@ -1,11 +1,12 @@
 const { fs, path } = { fs: require('fs'), path: require('path') }; // Optional if you use login option 2
-const Fuwa = require('../index'); // Import fuwa.js here instead of ../index!
+const Fuwa = require('../index.js'); // Import fuwa.js here instead of ../index.js!
 
 const cli = new Fuwa.Client('_');
 
 
 // This function is going to be ran when the bot finishes loading and connects to discord
 cli.on('READY', () => {
+    console.log(cli.bot);
     console.log('Hey im online!');
 });
 

@@ -1,5 +1,6 @@
 import WebSocket from 'ws';
-import { OPCodes } from './_Const';
+import User from './User';
+import { discordAPI, OPCodes } from './_Const';
 
 /**
  * Options for your command
@@ -34,6 +35,19 @@ export interface commandOptions {
  */
 export type commandCallback = (req: any, res: any, next: any) => Promise<void>|void;
 export type eventNames = 'READY';
+export interface clientOptions {
+    /**
+     * The owners' discord ID 
+     */
+    owners: string[]|string
+    /**
+     * To turn on the debug mode, not recommed to turn this on unless your debugging
+     * the library itself
+     */
+    debug?: boolean
+
+    
+}
 /**
  * Client Class
  * @example
@@ -41,17 +55,26 @@ export type eventNames = 'READY';
  * const cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client
  */
 class Client {
-    ws: WebSocket|undefined;
+    public bot: User|null = null;
+    public ws: WebSocket|undefined;
+    private debugMode: boolean;
     private events: Map<eventNames, Function> = new Map;
     private prefix: string;
     private loop: NodeJS.Timeout|undefined;
-    private commands: Map<string, { cb:commandCallback, options: commandOptions }[] > = new Map;
+    private commands: Map<string, { cb:commandCallback, options: commandOptions }[]> = new Map;
     private middlware: commandCallback[] = [];
     /**
      * @param {string} prefix The prefix for your bot
      */
-    constructor(prefix: string) {
+    constructor(prefix: string, options?: clientOptions) {
+        this.debugMode = options?.debug||false;
         this.prefix = prefix
+    }
+    debug(bug: Error|string) {
+        if(this.debugMode) {
+            if(bug instanceof Error) { throw bug }
+            else { console.log(bug+'\n') }
+        }
     }
     /**
      * Command function
@@ -105,53 +128,72 @@ class Client {
      * @param {string|Buffer} token Your bot token
      */
     login(token: string|Buffer) {
-        this.ws = new WebSocket('wss://gateway.discord.gg/?v=6&encoding=json');
+        this.ws = new WebSocket(discordAPI.gateway);
         const self = this;
-        this.ws.onopen = function() {
-            this.onmessage = (e) => {
-                const res = JSON.parse(e.data.toString());
-                console.log(res);
-
+        this.ws.on('open', function() {
+            self.debug(`Connect to ${discordAPI.gateway}`);
+            this.on('message', (e) => {
+                const res = JSON.parse(e.toString());
+                self.debug(`Incoming message from ${discordAPI.gateway}:
+Event: ${res.t}
+OPCOde: ${res.op}
+Other: ${res.s}
+Data: ${JSON.stringify(res.d, null, (self.debugMode ? 4 : 0)).replace('\\', '')}`);
+                let lastHeartbeat = Date.now();
                 switch(res.op) {  
+                    
                     case(OPCodes.HELLO):
+                    
+                        // Start heartbeat loop
                         self.loop = setInterval(() => {
                             this.send(JSON.stringify({
                                 op: 1,
                                 d: 251
                             }));
+                            let now = Date.now();
+                            self.debug(
+                                `Requested a heartbeat ${new Date(now).toDateString()} with a ${(now-lastHeartbeat)/1000}ms delay
+                            `);
+                            lastHeartbeat = now;
                         }, res.d.heartbeat_interval);
+                        // Send Identify
+                        const cred = JSON.stringify({
+                            op: OPCodes.IDENTIFY,
+                            d: {
+                            token: token.toString(),
+                            intents: 513,
+                            properties: {
+                                $os: process.platform,
+                                $browser: "fuwa.js",
+                                $device: "fuwa.js"
+                            }
+                            }
+                        }, null, (self.debugMode ? 4 : 0));
+                        self.debug(`Attempting to identify with the following credentials: ${cred.replace('\\', '')}`)
+                        this.send(cred);
+                        self.debug('Credentials sent');
+
                         break;
                 }
                 switch(res.t) {
                     case 'READY':
+                        self.debug(`
+                            Logged in on ${new Date().toDateString()}
+                        `);
+                        
+                        self.bot = new User(res.d.user);
                         let fn = self.events.get('READY');
                         fn ? fn() : 0;
                         break;
                 }
             
-            };
-            this.send(JSON.stringify({
-                op: OPCodes.IDENTIFY,
-                d: {
-                  token: token.toString(),
-                  intents: 513,
-                  properties: {
-                    $os: process.platform,
-                    $browser: "fuwa.js",
-                    $device: "fuwa.js"
-                  }
-                }
-            }));
-        }
-        const secret = token.toString();
-        // TODO: Login to discord  
+            });
+        });
     }
     logout(end: boolean = true) {
         if(this.ws && this.loop) {
             clearInterval(this.loop);
-            if(end) {
-                process.exit();
-            }
+            end ? process.exit() : 0;
         }
     }
 }
