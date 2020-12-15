@@ -1,4 +1,5 @@
-test
+examples
+*/**/*.secret
 src
 docs
 .vscode

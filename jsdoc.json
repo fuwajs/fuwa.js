@@ -15,7 +15,7 @@
     "source": {
         "include": ["./src/lib", "./README.md"],
         "includePattern": ".ts$",
-        "excludePattern": "(node_modules/|docs|.d.ts)",
+        "excludePattern": "(node_modules/|docs|.d.ts|$_)",
         "exclude": ["./node_modules", "./src/index.ts", "./index.d.ts"]
     },
     "plugins": [
