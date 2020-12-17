@@ -32,7 +32,7 @@
     
 
 
-    <title>commandOptions</title>
+    <title>statusOptions</title>
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -69,7 +69,7 @@
 
 <div id="main">
     
-    <h1 id='page-title' class="page-title">commandOptions</h1>
+    <h1 id='page-title' class="page-title">statusOptions</h1>
     
 
     
@@ -85,7 +85,7 @@
         
         <h2>
         
-        commandOptions
+        statusOptions
         
         </h2>
         
@@ -98,7 +98,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>Options for your command</p></div>
+            <div class="description"><p>status options for bot</p></div>
         
 
         
@@ -121,16 +121,17 @@
 
         
             
-<h4 class="name" id="args">
-    <a href="#args">#</a>
-    <span class="type-signature"></span>args<span class="type-signature"> :Array</span>
+<h4 class="name" id="afk">
+    <a href="#afk">#</a>
+    <span class="type-signature"></span>afk<span class="type-signature"> :boolean</span>
 </h4>
 
 
 
 
 <div class="description">
-    <p>Command Arguments</p>
+    <p>whether or not the bot is afk
+default false</p>
 </div>
 
 
@@ -140,88 +141,13 @@
         <ul>
             <li>
                 
-<span class="param-type">Array</span>
+<span class="param-type">boolean</span>
 
 
             </li>
         </ul>
     </div>
 
-
-
-
-
-    <h5 class="subsection-title">Properties</h5>
-
-    
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>]</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>]</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -256,7 +182,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line249">line 249</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line232">line 232</a>
             </li></ul></dd>
         </div>
     
@@ -275,16 +201,16 @@
 
         
             
-<h4 class="name" id="desc">
-    <a href="#desc">#</a>
-    <span class="type-signature"></span>desc<span class="type-signature"> :string</span>
+<h4 class="name" id="name">
+    <a href="#name">#</a>
+    <span class="type-signature"></span>name<span class="type-signature"> :string</span>
 </h4>
 
 
 
 
 <div class="description">
-    <p>Description for your command.</p>
+    <p>status that will be displayed</p>
 </div>
 
 
@@ -335,7 +261,246 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line244">line 244</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line207">line 207</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="status">
+    <a href="#status">#</a>
+    <span class="type-signature"></span>status<span class="type-signature"> :status</span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>status of your bot
+default is online</p>
+</div>
+
+
+
+    <div class="member-item-container flex">
+        <strong>Type: </strong>
+        <ul>
+            <li>
+                
+<span class="param-type">status</span>
+
+
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line225">line 225</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="type">
+    <a href="#type">#</a>
+    <span class="type-signature"></span>type<span class="type-signature"> :statusType</span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>available types are playing , listening , streaming ,  competing</p>
+</div>
+
+
+
+    <div class="member-item-container flex">
+        <strong>Type: </strong>
+        <ul>
+            <li>
+                
+<span class="param-type">statusType</span>
+
+
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line212">line 212</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="url">
+    <a href="#url">#</a>
+    <span class="type-signature"></span>url<span class="type-signature"> :string</span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>only if type is streaming
+supports youtube and twitch</p>
+</div>
+
+
+
+    <div class="member-item-container flex">
+        <strong>Type: </strong>
+        <ul>
+            <li>
+                
+<span class="param-type">string</span>
+
+
+            </li>
+        </ul>
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line218">line 218</a>
             </li></ul></dd>
         </div>
     

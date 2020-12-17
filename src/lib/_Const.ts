@@ -15,4 +15,5 @@ export const OPCodes = {
 
 export const discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
+    api: 'https://discord.com/api/v8/'
 }

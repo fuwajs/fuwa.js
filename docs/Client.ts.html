@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li><li><a href="statusOptions.html">statusOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
 </nav>
 
 <div id="main">
@@ -79,31 +79,68 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
+            <pre class="prettyprint source linenums"><code>import WebSocket from "ws";
+import User from "./User";
+import { discordAPI, OPCodes } from "./_Const";
+
+export type statusType = "playing" | "listening" | "streaming" | "competing";
+export type status = "dnd" | "offline" | "idle" | "online";
+/**
+ * status options for bot
+ * @interface
+ */
+export interface statusOptions {
+  /**
+   * status that will be displayed
+   */
+  name: string;
+  /**
+   *available types are playing , listening , streaming ,  competing
+   */
+  type?: statusType;
+  /**
+   * only if type is streaming
+   * supports youtube and twitch
+   */
+
+  url?: string;
+
+  /**
+   * status of your bot
+   * default is online
+   */
+
+  status?: status;
+  /**
+   * whether or not the bot is afk
+   * default false
+   */
+  afk?: boolean;
+}
 /**
  * Options for your command
  * @interface
  */
 export interface commandOptions {
+  /**
+   * Description for your command.
+   */
+  desc: string;
+  /**
+   * Command Arguments
+   */
+  args?: {
     /**
-     * Description for your command.
+     * @name length
+     * Length of your argument (including spaces).
      */
-    desc: string,
+    length: number;
     /**
-     * Command Arguments
+     * @name default
+     * Defualt value for argument if one is not passed.
      */
-    args?: {
-        /**
-         * @name length
-         * Length of your argument (including spaces).
-         */
-        length: number,
-        /**
-         * @name default
-         * Defualt value for argument if one is not passed.
-         */
-        default: string,
-    }[];
+    default: string;
+  }[];
 }
 
 /**
@@ -111,81 +148,245 @@ export interface commandOptions {
  * @typedef
  * TODO: change request res and next function types to actual types
  */
-export type commandCallback = (req: any, res: any, next: any) => Promise&lt;void>|void;
-
+export type commandCallback = (
+  req: any,
+  res: any,
+  next: any
+) => Promise&lt;void> | void;
+export type eventNames = "READY";
+export interface clientOptions {
+  /**
+   * The owners' discord ID
+   */
+  owners: string[] | string;
+  /**
+   * To turn on the debug mode, not recommed to turn this on unless your debugging
+   * the library itself
+   */
+  debug?: boolean;
+}
 /**
  * Client Class
  * @example
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
- * const cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client
+ * 
+ * const cli = new Fuwa.Client('?'); // init the Client
  */
 class Client {
-    private prefix: string;
-    private commands: Map&lt;string, { cb:commandCallback, options: commandOptions }[] > = new Map;
-    private middlware: commandCallback[] = [];
-    /**
-     * @param {string|Buffer} token The token for your bot
-     * @param {string} prefix The prefix for your bot
-     */
-    constructor(prefix: string) {
-        this.prefix = prefix;
+  public bot: User | null = null;
+  public ws: WebSocket | undefined;
+  private debugMode: boolean;
+  private events: Map&lt;eventNames, Function> = new Map();
+  private prefix: string;
+  private loop: NodeJS.Timeout | undefined;
+  private commands: Map&lt;
+    string,
+    { cb: commandCallback; options: commandOptions }[]
+  > = new Map();
+  private middlware: commandCallback[] = [];
+  protected statusTypeOp: any = {
+    playing: 0,
+    streaming: 1,
+    listening: 2,
+    custom: 4,
+    competing: 5,
+  };
+  /**
+   * @param {string} prefix The prefix for your bot
+   */
+  constructor(prefix: string, options?: clientOptions) {
+    this.debugMode = options?.debug || false;
+    this.prefix = prefix;
+  }
+  debug(bug: Error | string) {
+    if (this.debugMode) {
+      if (bug instanceof Error) {
+        throw bug;
+      } else {
+        console.log(bug + "\n");
+      }
     }
-    /**
-     * Command function
-     * @param {string|string[]} name Name of the command,
-     * @param {commandCallback} cb The function that is called when the command is ran
-     * @param {commandOptions} options Options for your command
-     * @returns {Client}
-     * @example 
-     * cli.command(['ping', 'latency'], (res, res) => {
-     *      res.send('Pong!'); // send message
-     * });
-     */
-    command(name: string | string[], cb: commandCallback, options?: commandOptions ) {
-        if(Array.isArray(name)) {
-            name.forEach(key => {
-                const option: commandOptions = options||{ desc: 'No description was provided' };
-                let commands = this.commands.get(key);
-                commands ? commands.push({ cb, options: option }) : undefined
-                this.commands.set(key, commands||[{ cb, options: option }]);
-            })
-        } else {
-            const option: commandOptions = options||{ desc: 'No description was provided' };
-            let commands = this.commands.get(name);
-            commands ? commands.push({ cb, options: option }) : undefined
-            this.commands.set(name, commands||[{ cb, options: option }]);
+  }
+  /**
+   * Command function
+   * @param {string|string[]} name Name of the command,
+   * @param {commandCallback} cb The function that is called when the command is ran
+   * @param {commandOptions} options Options for your command
+   * @returns {Client}
+   * @example
+   * 
+   * cli.command(['ping', 'latency'], (res, res) => {
+   * 
+   *      res.send('Pong!'); // send message
+   * });
+   */
+  command(
+    name: string | string[],
+    cb: commandCallback,
+    options?: commandOptions
+  ) {
+    if (Array.isArray(name)) {
+      name.forEach((key) => {
+        const option: commandOptions = options || {
+          desc: "No description was provided",
+        };
+        let commands = this.commands.get(key);
+        commands ? commands.push({ cb, options: option }) : undefined;
+        this.commands.set(key, commands || [{ cb, options: option }]);
+      });
+    } else {
+      const option: commandOptions = options || {
+        desc: "No description was provided",
+      };
+      let commands = this.commands.get(name);
+      commands ? commands.push({ cb, options: option }) : undefined;
+      this.commands.set(name, commands || [{ cb, options: option }]);
+    }
+    return this;
+  }
+  on(event: eventNames, cb: Function) {
+    this.events.set(event, cb);
+    return this;
+  }
+  /**
+   * Add a middleware
+   * @param {commandCallback} cb Your middleware function
+   * @returns {Client}
+   * @description a function that is ran before every command
+   * @example
+   *
+   * cli.use((req, res, next) => {
+   * 
+   *      req.send(`${req.command} has been used!`);
+   * 
+   *      next(); // call the next middlware/command
+   * })
+   */
+  use(cb: commandCallback) {
+    this.middlware.push(cb);
+    return this;
+  }
+  /**
+   * options for bot status
+   *  @interface
+   */
+
+  /**
+   * Log your bot into discord
+   * @param {string|Buffer} token Your bot token
+   * @param {statusOptions} status Your Bot Status Options
+   * @example 
+   * 
+   * cli.login("TOKEN" ,{name :"My Status" , type : "Playing" , status : "online"} );
+   * 
+   */
+
+  login(token: string | Buffer, status?: statusOptions) {
+    const cred: any = {
+      op: OPCodes.IDENTIFY,
+      d: {
+        token: token.toString(),
+        intents: 513,
+        properties: {
+          $os: process.platform,
+          $browser: "fuwa.js",
+          $device: "fuwa.js",
+        },
+        presence: {},
+      },
+    };
+    if (status) {
+      let activities: any = [
+        {
+          name: status.name,
+        },
+      ];
+      status.type &amp;&amp; status.type.toLowerCase() !== "streaming"
+        ? (activities[0]["type"] = this.statusTypeOp[status.type.toLowerCase()])
+        : status.type &amp;&amp; status.type.toLowerCase() === "streaming" &amp;&amp; status.url
+        ? ((activities[0].type = 1), (activities[0].url = status.url))
+        : (activities[0]["type"] = 4);
+      cred.d.presence.activities = activities;
+      status.status
+        ? (cred.d.presence.status = status.status)
+        : (cred.d.presence.status = "online");
+      status.afk
+        ? (cred.d.presence.afk = status.afk)
+        : (cred.d.presence.afk = "false");
+    }
+
+    this.ws = new WebSocket(discordAPI.gateway);
+    const self = this;
+    this.ws.on("open", function () {
+      self.debug(`Connect to ${discordAPI.gateway}`);
+      this.on("message", (e) => {
+        const res = JSON.parse(e.toString());
+        self.debug(`Incoming message from ${discordAPI.gateway}:
+Event: ${res.t}
+OPCOde: ${res.op}
+Other: ${res.s}
+Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+          "\\",
+          ""
+        )}`);
+        let lastHeartbeat = Date.now();
+
+        switch (res.op) {
+          case OPCodes.HELLO:
+            // Start heartbeat loop
+            self.loop = setInterval(() => {
+              this.send(
+                JSON.stringify({
+                  op: 1,
+                  d: 251,
+                })
+              );
+              let now = Date.now();
+              self.debug(
+                `Requested a heartbeat ${new Date(now).toDateString()} with a ${
+                  (now - lastHeartbeat) / 1000
+                }ms delay
+                            `
+              );
+              lastHeartbeat = now;
+            }, res.d.heartbeat_interval);
+            // Send Identify
+            let identify = JSON.stringify(cred, null, self.debugMode ? 4 : 0);
+            self.debug(
+              `Attempting to identify with the following credentials: ${identify.replace(
+                "\\",
+                ""
+              )}`
+            );
+            this.send(identify);
+            self.debug("Credentials sent");
+
+            break;
         }
-        return this;
+        switch (res.t) {
+          case "READY":
+            self.debug(`
+                            Logged in on ${new Date().toDateString()}
+                        `);
+
+            self.bot = new User(res.d.user);
+            let fn = self.events.get("READY");
+            fn ? fn() : 0;
+            break;
+        }
+      });
+    });
+  }
+  logout(end: boolean = true) {
+    if (this.ws &amp;&amp; this.loop) {
+      clearInterval(this.loop);
+      end ? process.exit() : 0;
     }
-    /**
-     * Add a middleware
-     * @param {commandCallback} cb Your middleware function 
-     * @returns {Client}
-     * @description a function that is ran before every command
-     * @example
-     * 
-     * cli.use((req, res, next) => {
-     *      req.send(`${req.command} has been used!`);
-     *      next(); // call the next middlware/command
-     * })
-     */
-    use(cb: commandCallback) {
-        this.middlware.push(cb);
-        return this;
-    }
-    /**
-     * Log your bot into discord
-     * @param {string|Buffer} token Your bot token
-     */
-    login(token: string|Buffer) {
-        const secret = token.toString();
-        // TODO: Login to discord  
-    }
+  }
 }
 
-
-
-export default Client;</code></pre>
+export default Client;
+</code></pre>
         </article>
     </section>
 
@@ -208,7 +409,7 @@ export default Client;</code></pre>
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"}];
+  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"},{"title":"statusOptions","link":"<a href=\"statusOptions.html\">statusOptions</a>"}];
   setupSearch(list)
 </script>
 

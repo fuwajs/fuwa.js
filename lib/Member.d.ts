@@ -1,5 +1,4 @@
 import User from "./User";
-
-class Member extends User {}
-
+declare class Member extends User {
+}
 export default Member;

@@ -1,6 +1,5 @@
-import User from './User';
+import User from "./User";
 
-class Message {
-}
+class Message {}
 
 export default Message;

@@ -10,9 +10,18 @@ cli.on('READY', () => {
     console.log('Hey im online!');
 });
 
+// Set your status!
+cli.setStatus({
+    name: 'Some Status', 
+    type: 'streaming',
+    url: 'https://blank.org',
+    status: 'idle' 
+});
+
+
+
 // login Option 1 (suggested):
 const TOKEN = fs.readFileSync(path.join(__dirname, 'token.secret')) // Replace this with your token file name
-
 cli.login(TOKEN); // log the bot into discord
 
 // Login Option 2

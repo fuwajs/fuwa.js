@@ -1,6 +1,37 @@
 /// <reference types="node" />
-import WebSocket from 'ws';
-import User from './User';
+import WebSocket from "ws";
+import User from "./User";
+export declare type statusType = "playing" | "listening" | "streaming" | "competing";
+export declare type status = "dnd" | "offline" | "idle" | "online";
+/**
+ * status options for bot
+ * @interface
+ */
+export interface statusOptions {
+    /**
+     * status that will be displayed
+     */
+    name: string;
+    /**
+     *available types are playing , listening , streaming ,  competing
+     */
+    type?: statusType;
+    /**
+     * only if type is streaming
+     * supports youtube and twitch
+     */
+    url?: string;
+    /**
+     * status of your bot
+     * default is online
+     */
+    status?: status;
+    /**
+     * whether or not the bot is afk
+     * default false
+     */
+    afk?: boolean;
+}
 /**
  * Options for your command
  * @interface
@@ -32,7 +63,7 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export declare type commandCallback = (req: any, res: any, next: any) => Promise<void> | void;
-export declare type eventNames = 'READY';
+export declare type eventNames = "READY";
 export interface clientOptions {
     /**
      * The owners' discord ID
@@ -59,6 +90,8 @@ declare class Client {
     private loop;
     private commands;
     private middlware;
+    protected statusTypeOp: any;
+    private cred;
     /**
      * @param {string} prefix The prefix for your bot
      */
@@ -71,7 +104,7 @@ declare class Client {
      * @param {commandOptions} options Options for your command
      * @returns {Client}
      * @example
-     * cli.command(['ping', 'latency'], (res, res) => {
+     * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!'); // send message
      * });
      */
@@ -91,10 +124,16 @@ declare class Client {
      */
     use(cb: commandCallback): this;
     /**
+     * options for bot status
+     *  @interface
+     */
+    /**
      * Log your bot into discord
      * @param {string|Buffer} token Your bot token
+     * @param {statusOptions} status Your Bot Status Options
      */
     login(token: string | Buffer): void;
     logout(end?: boolean): void;
+    setStatus(status: statusOptions): void;
 }
 export default Client;
