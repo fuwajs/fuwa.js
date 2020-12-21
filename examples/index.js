@@ -29,7 +29,7 @@ cli.command("ping"  ,async (req, res ) => {
 // cli.login(TOKEN); // log the bot into discord
 
 // Login Option 2
-cli.login('NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.lmmxBfE9NqgJ-cJFIp7oBGKNo-o');
+cli.login('token here');
 //
 // It is advised not to put your token in your main file, 
 // using the method above is recommended and safer.
