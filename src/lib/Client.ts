@@ -1,7 +1,8 @@
 import WebSocket from "ws";
 import User from "./User";
+import Req from "./Req";
 import { discordAPI, OPCodes } from "./_Const";
-import Response from "./Response";
+import Response from "./Res";
 export type statusType = "playing" | "listening" | "streaming" | "competing";
 export type status = "dnd" | "offline" | "idle" | "online";
 function next() {
@@ -274,10 +275,10 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
             break;
           case "MESSAGE_CREATE":
             self.debug("Recived A Message :" + res.d.content);
-
+            let request = new Req(token.toString() , res.d);
             let response = new Response(res.d, token.toString());
             let command = self.commands.get(res.d.content);
-            command ? command[0].cb(res.d, response, next) : 0;
+            command ? command[0].cb(request, response, next) : 0;
         }
       });
     });

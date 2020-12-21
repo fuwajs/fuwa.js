@@ -208,7 +208,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line12">line 12</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line15">line 15</a>
             </li></ul></dd>
         </div>
     
@@ -237,7 +237,7 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa libraryconst cli = new Fuwa.Client('?'); // init the Client</code></pre>
+    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa libraryconst cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client</code></pre>
 
     </div>
 
@@ -420,7 +420,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line54">line 54</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line68">line 68</a>
             </li></ul></dd>
         </div>
     
@@ -469,7 +469,7 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (res, res) => {     res.send('Pong!'); // send message});</code></pre>
+    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (req, res) => {     res.send('Pong!'); // send message});</code></pre>
 
     </div>
 
@@ -611,7 +611,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line110">line 110</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line118">line 118</a>
             </li></ul></dd>
         </div>
     
@@ -636,13 +636,6 @@
 
 
 
-
-    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
-        <strong>Example</strong>
-        
-    <pre class="prettyprint"><code>cli.login("TOKEN" ,{name :"My Status" , type : "Playing" , status : "online"} );</code></pre>
-
-    </div>
 
 
         
@@ -756,7 +749,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line93">line 93</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line105">line 105</a>
             </li></ul></dd>
         </div>
     
@@ -805,7 +798,7 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.use((req, res, next) => {     req.send(`${req.command} has been used!`);     next(); // call the next middlware/command})</code></pre>
+    <pre class="prettyprint"><code>cli.use((req, res, next) => {     req.send(`${req.command} has been used!`);     next(); // call the next middlware/command})</code></pre>
 
     </div>
 

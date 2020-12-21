@@ -1,14 +1,18 @@
-
-interface embed { 
+/**
+ * Embed Options
+ * @interface
+ */
+export interface embed { 
+    
     type? : string ; 
     title? : string; 
     description? : string ; 
     url? : string ; 
     timestamp? : Date; 
-    color? : string ; 
+    color? : string  | number; 
     footer? : {
         text: string; 
-        icon_url :string ; 
+        url :string ; 
         proxy_icon_url  : string;
     }; 
     image? : {
@@ -34,9 +38,9 @@ interface embed {
         name: string  ; 
     };
     author?: { 
-        url  : string ; 
+
         proxy_icon_url: string ; 
-        icon_url : string ; 
+        url : string ; 
         name:  string ;
     }
     fields? : {name  : string ; value : string , inline :boolean  }[]
@@ -47,7 +51,7 @@ class Embed  {
     protected description : string | null = null; 
     protected url : string | null= null; 
     protected timestamp : Date | null = null; 
-    protected color : string | null = null; 
+    protected color : string | Number | null = null; 
     protected footer : {
         text : string; 
         icon_url :string  | null; 
@@ -59,7 +63,7 @@ class Embed  {
         height : Number | null; 
         width : Number | null; 
     } | null = null; 
-    protected thumbanil : {
+    protected thumbnail : {
         url  : string ; 
         proxy_url : string|null ; 
         height  : Number |null; 
@@ -76,9 +80,8 @@ class Embed  {
         name: string |null; 
     }| null = null;
     protected author: { 
-        url  : string |null; 
         proxy_icon_url : string |null; 
-        icon_url: string |null; 
+        url: string |null; 
         name:  string|null;
     }|null = null;
     protected fields : Object[] |null = null;
@@ -90,39 +93,45 @@ class Embed  {
        this.url = data.url ? data.url : null;
        this.timestamp = data.timestamp ? data.timestamp :  null; 
        this.color = data.color?  data.color : null; 
-       this.footer = data.footer ? {text: data.footer.text , icon_url: data.footer.icon_url ? data.footer.icon_url : null , proxy_icon_url : data.footer.proxy_icon_url ? data.footer.proxy_icon_url : null} : null; 
+       this.footer = data.footer ? {text: data.footer.text , icon_url: data.footer.url ? data.footer.url: null , proxy_icon_url : data.footer.proxy_icon_url ? data.footer.proxy_icon_url : null} : null; 
        this.image = data.image ? {url :  data.image.url , height : data.image.height ? data.image.height : null  , width:  data.image.width ? data.image.width :null , proxy_url : data.image.proxy_url ? data.image.proxy_url : null } :null;
-       this.thumbanil = data.thumbnail ? {url :  data.thumbnail.url, height : data.thumbnail.height ? data.thumbnail.height : null , width :  data.thumbnail.width ? data.thumbnail.width : null, proxy_url : data.thumbnail.proxy_url? data.thumbnail.proxy_url : null } : null; 
+       this.thumbnail = data.thumbnail ? {url :  data.thumbnail.url, height : data.thumbnail.height ? data.thumbnail.height : null , width :  data.thumbnail.width ? data.thumbnail.width : null, proxy_url : data.thumbnail.proxy_url? data.thumbnail.proxy_url : null } : null; 
        this.video = data.video ? {url : data.video.url , height : data.video.height ? data.video.height : null , width :  data.video.width ? data.video.width :null , proxy_url : data.video.proxy_url ? data.video.proxy_url : null}  : null;
-       this.author = data.author ? {url : data.author.url ? data.author.url : null ,  name :  data.author.name ? data.author.name : null , icon_url : data.author.icon_url  ? data.author.icon_url : null, proxy_icon_url : data.author.proxy_icon_url ? data.author.proxy_icon_url : null}: null;
+       this.author = data.author ? {  name :  data.author.name ? data.author.name : null , url : data.author.url  ? data.author.url : null, proxy_icon_url : data.author.proxy_icon_url ? data.author.proxy_icon_url : null}: null;
        this.provider = data.provider ? {url : data.provider.url?data.provider.url : null , name : data.provider.name ? data.provider.name : null}: null;
        this.fields = data.fields ? data.fields.map(c =>this.fields!.push({name : c.name , value : c.value , inline : c.inline ? true : false})) : null;
        }
     }
 
-    
+    /**
+     * @param {string} description  Description For Embed 
+     */
     setDescription(description : string ) { 
         this.description = description; 
         return this; 
     }
-    
-    setImage(imageUrl : string , obj : {proxy_url? :string  , height ?:  number  , width ? :number}) { 
-        this.image =  {url : imageUrl , proxy_url: obj.proxy_url? obj.proxy_url : null  ,height : obj.height ? obj.height : null, width :  obj.width?obj.width:null }; 
+    /**
+     * @param {string} imageUrl Url Of Image In Embed
+     * @param  {proxy_url : string  , height : number , width : number } obj Extra Options For Embed  
+     */
+    setImage(imageUrl : string , obj? : {proxy_url? :string  , height ?:  number  , width ? :number}) { 
+        this.image =  {url : imageUrl , proxy_url: obj && obj.proxy_url? obj.proxy_url : null  ,height : obj && obj.height ? obj.height : null, width :  obj && obj.width?obj.width:null }; 
         return this ;
     }
     setTitle (title : string ) { 
         this.title  = title;
-    }
-    setFooter (footertext : string ,obj : { icon_url? : string , proxy_icon_url?: string}){ 
-        this.footer = { text: footertext ,  icon_url :obj. icon_url? obj.icon_url : null ,  proxy_icon_url :obj.proxy_icon_url ? obj.proxy_icon_url:null};
         return this;
     }
-    setAuthor(name : string ,obj : {icon_url?:string , proxy_icon_url ?: string , url?:string} ) { 
-        this.author = {name : name , icon_url : obj.icon_url?obj.icon_url:null, proxy_icon_url : obj.proxy_icon_url ? obj.proxy_icon_url : null , url : obj.url?obj.url :null };
+    setFooter (footertext : string ,obj? : { url? : string , proxy_icon_url?: string}){ 
+        this.footer = { text: footertext ,  icon_url: obj && obj.url? obj.url : null ,  proxy_icon_url :obj && obj.proxy_icon_url ? obj.proxy_icon_url:null};
         return this;
     }
-    setThumbnail (url : string , obj : {proxy_url :  string , height : number , width :  number }){ 
-        this.thumbanil = {url: url , proxy_url :  obj.proxy_url ? obj.proxy_url : null , height : obj.height ? obj.height : null , width :  obj.width ?  obj.width : null }; 
+    setAuthor(name : string ,obj? : {url?:string , proxy_icon_url ?: string } ) { 
+        this.author = {name : name , url : obj && obj.url?obj.url:null, proxy_icon_url : obj &&  obj.proxy_icon_url ? obj.proxy_icon_url : null };
+        return this;
+    }
+    setThumbnail (url : string , obj? : {proxy_url :  string , height : number , width :  number }){ 
+        this.thumbnail = {url: url , proxy_url : obj &&  obj.proxy_url ? obj.proxy_url : null , height : obj &&  obj.height ? obj.height : null , width :   obj &&obj.width ?  obj.width : null }; 
         return this;
     }
     setColor(code : string) { 
@@ -145,12 +154,12 @@ class Embed  {
         this.fields = [...fields];
         return this;
     }
-    setProvider(name : string , obj : {url: string}) { 
-        this.provider = {name : name , url:  obj.url ? obj.url :  null}; 
+    setProvider(name : string , obj? : {url: string}) { 
+        this.provider = {name : name , url: obj &&  obj.url ? obj.url :  null}; 
         return this;
     }
-    setVideo(url : string  , obj : {height :  number , width : number ,proxy_url: string }) { 
-        this.video = {url :  url , height :  obj.height ? obj.height : null ,  width : obj.width ?  obj.width : null , proxy_url : obj.proxy_url ? obj.proxy_url : null} 
+    setVideo(url : string  , obj? : {height :  number , width : number ,proxy_url: string }) { 
+        this.video = {url :  url , height :  obj &&  obj.height ? obj.height : null ,  width : obj && obj.width ?  obj.width : null , proxy_url : obj &&obj.proxy_url ? obj.proxy_url : null} 
         return this;
     }
     
