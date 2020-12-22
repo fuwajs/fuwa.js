@@ -87,7 +87,7 @@ declare class Embed {
         name: string | null;
     } | null;
     protected fields: Object[] | null;
-    constructor(data: embed | null);
+    constructor(data?: embed);
     /**
      * @param {string} description  Description For Embed
      */

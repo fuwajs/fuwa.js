@@ -171,9 +171,9 @@ class Client {
       const option: commandOptions = options || {
         desc: "No description was provided",
       };
-      let commands = this.commands.get(name);
+      let commands = this.commands.get(this.prefix +name);
       commands ? commands.push({ cb, options: option }) : undefined;
-      this.commands.set(name, commands || [{ cb, options: option }]);
+      this.commands.set(this.prefix + name, commands || [{ cb, options: option }]);
     }
     return this;
   }
@@ -209,6 +209,7 @@ class Client {
    */
 
   login(token: string | Buffer) {
+    if(!this.prefix) throw new Error('No prefix provided');
     this.ws = new WebSocket(discordAPI.gateway);
     const self = this;
     this.ws.on("open", function () {

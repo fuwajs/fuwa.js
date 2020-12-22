@@ -5,9 +5,9 @@ const cli = new Fuwa.Client('_');
 
 
 // This function is going to be ran when the bot finishes loading and connects to discord
-// cli.on('READY', () => {
-//     console.log('Hey im online!');
-// });
+cli.on('READY', () => {
+    console.log('Hey im online!');
+});
 
 // Set your status!
 cli.setStatus({
@@ -17,20 +17,19 @@ cli.setStatus({
     status: 'idle' 
 });
 const embed = new Fuwa.Embed()
-.setTitle("thor")
+.setTitle("some title")
 .setColor("#6f00ff")
-cli.command("ping"  ,async (req, res ) => {
-    // let channel = await req.channel.find({}); //guild id //supports name | type | position | nsfw
-    // console.log(channel);
-    res.send(embed);
+
+cli.command("ping", async(req, res) => {
+    //finds a channel by id
+    let sc =  await req.channel.get("738185770669441044");
+    //finds all the channels that fulfil given  condition
+    let c =  await req.channel.find(c => c.name === "general");
+    // finds first channel that fulfils given condition
+    let cn =  await req.channel.findFirst(c => c.nsfw === true );
+    //sends embed and returns that message
+    let rep = res.send(embed);
 })
 // login Option 1 (suggested):
-// const TOKEN = fs.readFileSync(path.join(__dirname, 'token.secret')) // Replace this with your token file name
-// cli.login(TOKEN); // log the bot into discord
 
-// Login Option 2
-cli.login('token here');
-//
-// It is advised not to put your token in your main file, 
-// using the method above is recommended and safer.
-
+cli.login("NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.ZUBbsM-6mkJC5RagvLYe6mUk_g0")

@@ -85,7 +85,7 @@ class Embed  {
         name:  string|null;
     }|null = null;
     protected fields : Object[] |null = null;
-   constructor(data:embed | null){
+   constructor(data?:embed){
        if (data){ 
        this.type = data.type || "rich"; 
        this.title = data.title ? data.title :  null;

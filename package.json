@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/Artrix9095/Fuwa.js#readme",
   "dependencies": {
-    "ws": "^7.4.1",
-    "axios": "^0.21.0"
+    "axios": "^0.21.0",
+    "undici": "^3.0.0",
+    "ws": "^7.4.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.13",
