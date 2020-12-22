@@ -79,7 +79,7 @@ export interface clientOptions {
  * Client Class
  * @example
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
- * const cli = new Fuwa.Client('MY_TOKEN_HERE', '?'); // init the Client
+ * const cli = new Fuwa.Client( '?'); // init the Client
  */
 declare class Client {
     bot: User | null;
