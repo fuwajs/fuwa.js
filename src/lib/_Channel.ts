@@ -55,7 +55,7 @@ export class Channel {
                 this.object.parentId = this.object.parent_id; 
                 delete  this.object.parent_id
             }
-            //this is not working dn't know why
+            //this is not working dn't know why ..
             if (this.object.rate_limit_per_user){ 
                 this.object.rateLimitPerUser = this.object.rate_limit_per_user; 
                 delete this.object.rate_limit_per_user;
