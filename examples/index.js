@@ -32,4 +32,4 @@ cli.command("ping", async(req, res) => {
 })
 // login Option 1 (suggested):
 
-cli.login("NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.wm8Yfi16213SYFR5jyVksfX0AOM")
+cli.login("token")
