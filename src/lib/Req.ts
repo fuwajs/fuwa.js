@@ -10,7 +10,8 @@ class Req {
         this.channel = { 
           get :channel.get.bind(channel), 
           find :  channel.find.bind(channel), 
-          findFirst:  channel.findFirst.bind(channel)
+          findFirst:  channel.findFirst.bind(channel), 
+          createChannel : channel.createChannel.bind(channel)
         }
     }
 

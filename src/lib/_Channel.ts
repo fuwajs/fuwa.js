@@ -1,5 +1,26 @@
+import axios from "axios";
+import {discordAPI}  from "./_Const";
+let channelType = {"text": 0 , "dm" : 1, "voice": 2 , "groupdm" : 3 , "category" : 4 , "news" : 5 , "store" : 6};
+
+
+export interface permissions { 
+    id : string, 
+    type :  string , 
+    allow :  string [] |  string ,
+    deny : string[] |  string 
+}
+/**
+ * @interface channel
+ */
 export interface channel  {
+    /**
+     * @description  id  of channel
+     */
     id  : string , 
+    /**
+     * @description type of channel from text |  voice | dm | unknown | 
+     * @default  type text
+     */
     type :  string , 
     position? :  number | null ,
     name? : string  | null ,
@@ -25,12 +46,14 @@ export interface channel  {
     last_message_id? : string | null,
     lastMessageId?:  string | null , 
     lastPinTimestamp?: string | null,
-
+    edit : Function , 
+    delete : Function
 }
 export class Channel { 
     private object  : channel;  
-        constructor(data : channel) { 
-            this.object = {...data};
+    private token  : string ;
+        constructor(data : channel , token : string ) { 
+            this.object = {...data };
             if (this.object.permission_overwrites){
                 this.object.permissionOverwrite = this.object.permission_overwrites;
                 delete this.object.permission_overwrites;  
@@ -55,12 +78,11 @@ export class Channel {
                 this.object.parentId = this.object.parent_id; 
                 delete  this.object.parent_id
             }
-            //this is not working dn't know why ..
-            if (this.object.rate_limit_per_user){ 
+            if (this.object.rate_limit_per_user !== undefined){ 
                 this.object.rateLimitPerUser = this.object.rate_limit_per_user; 
                 delete this.object.rate_limit_per_user;
             }
-            if (this.object.last_message_id) { 
+            if (this.object.last_message_id !== undefined) { 
                 this.object.lastMessageId = this.object.last_message_id ; 
                 delete this.object.last_message_id;
             }
@@ -68,9 +90,41 @@ export class Channel {
                 this.object.lastPinTimestamp = this.object.last_pin_timestamp ; 
                 delete this.object.last_pin_timestamp ;
             }
+            this.token = token;
+
+            Object.defineProperty(this.object , "edit" ,  { enumerable : false , writable : true });
+            this.object.edit = async(name  : string , type   : "text" | "news" = "text" , obj ? :{position ?: number ,  category? : string , nsfw? :  boolean , userLimit? : number ,  permissions ?:{id : string , type : string , allow : string[],deny : string[] }[]}) => {
+                let data : any= {name : name , type : channelType[type] !== undefined? channelType[type]: "text"}; 
+                obj?.position ? data.position = obj.position : 0 ;
+                obj?.nsfw ?  data.nsfw  = obj.nsfw : 0;
+                obj?.permissions ?  data.permission_overwrites = obj.permissions : 0; 
+                obj?.userLimit ?  data.user_limit = obj.userLimit : 0;
+                obj?.category  ? data.parent_id = obj.category : 0;
+                console.log(data);
+                try { 
+                let c = await axios(discordAPI.api +  "/channels/" + this.object.id , { method :"PATCH" , headers : {"Authorization" : "Bot " + this.token } , data : data}); 
+                let channel =new Channel(c.data , this.token);
+                return channel;
+                }catch(e) { 
+                    return e.response.data.errors.parent_id._errors;
+                }
+            }
+            Object.defineProperty(this.object , "delete" ,{enumerable : false , writable : true } ) ; 
+            this.object.delete = async () => {
+               try {
+                let result = await axios(discordAPI.api +"/channels/" +this.object.id , {method :"DELETE" , headers : {"Authorization" : "Bot " + this.token}}); 
+                let channel = new Channel( result.data , this.token);
+                return channel;
+                }catch(e) { 
+                return e.response.data
+               }
+           } 
         }
+
+
 
         getObj () { 
             return this.object;
         }
+
 }

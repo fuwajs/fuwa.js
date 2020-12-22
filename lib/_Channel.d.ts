@@ -1,5 +1,21 @@
-export interface channel {
+export interface permissions {
     id: string;
+    type: string;
+    allow: string[] | string;
+    deny: string[] | string;
+}
+/**
+ * @interface channel
+ */
+export interface channel {
+    /**
+     * @description  id  of channel
+     */
+    id: string;
+    /**
+     * @description type of channel from text |  voice | dm | unknown |
+     * @default  type text
+     */
     type: string;
     position?: number | null;
     name?: string | null;
@@ -25,9 +41,12 @@ export interface channel {
     last_message_id?: string | null;
     lastMessageId?: string | null;
     lastPinTimestamp?: string | null;
+    edit: Function;
+    delete: Function;
 }
 export declare class Channel {
     private object;
-    constructor(data: channel);
+    private token;
+    constructor(data: channel, token: string);
     getObj(): channel;
 }

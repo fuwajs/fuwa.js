@@ -21,15 +21,15 @@ const embed = new Fuwa.Embed()
 .setColor("#6f00ff")
 
 cli.command("ping", async(req, res) => {
-    //finds a channel by id
-    let sc =  await req.channel.get("738185770669441044");
-    //finds all the channels that fulfil given  condition
-    let c =  await req.channel.find(c => c.name === "general");
+    // console.log(channela);
+    // console.log(channel);
     // finds first channel that fulfils given condition
     let cn =  await req.channel.findFirst(c => c.nsfw === true );
+    //creates a  channel
+    // let nn = await req.channel.createChannel("thorisop" , "voice" , {nsfw :  true  , categoryId :"738185770182901804" , position : 4 });
     //sends embed and returns that message
     let rep = res.send(embed);
 })
 // login Option 1 (suggested):
 
-cli.login("your token")
+cli.login("NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.wm8Yfi16213SYFR5jyVksfX0AOM")
