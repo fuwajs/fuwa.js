@@ -21,12 +21,19 @@ const embed = new Fuwa.Embed()
 .setColor("#6f00ff")
 
 cli.command("ping", async(req, res) => {
-    // console.log(channela);
-    // console.log(channel);
+    // gets channel by id 
+    let channelFromid =  await req.channel.get("id");
+    
+    let channel =  await req.channel.find(c => c.nsfw === true );
+//edits a channel
+    channel.edit("name" ); 
+
     // finds first channel that fulfils given condition
-    let cn =  await req.channel.findFirst(c => c.nsfw === true );
+    let firstChannel =  await req.channel.findFirst(c => c.nsfw === true );
+    //delete a channel
+    firstChannel.delete();
     //creates a  channel
-    // let nn = await req.channel.createChannel("thorisop" , "voice" , {nsfw :  true  , categoryId :"738185770182901804" , position : 4 });
+    let channelCreate= await req.channel.createChannel("thorisop" , "voice" , {nsfw :  true  , categoryId :"738185770182901804" , position : 4 });
     //sends embed and returns that message
     let rep = res.send(embed);
 })
