@@ -1,6 +1,8 @@
 /// <reference types="node" />
 import WebSocket from "ws";
 import User from "./User";
+import Req from "./Req";
+import Response from "./Res";
 export declare type statusType = "playing" | "listening" | "streaming" | "competing";
 export declare type status = "dnd" | "offline" | "idle" | "online";
 /**
@@ -62,8 +64,11 @@ export interface commandOptions {
  * @typedef
  * TODO: change request res and next function types to actual types
  */
-export declare type commandCallback = (req: any, res: any, next: any) => Promise<void> | void;
-export declare type eventNames = "READY";
+export declare type commandCallback = (req: Req, res: Response, next: any) => Promise<void> | void;
+export interface Events {
+    READY: () => void | Promise<void>;
+    MSG: (req: Req) => void | Promise<void>;
+}
 export interface clientOptions {
     /**
      * The owners' discord ID
@@ -89,7 +94,7 @@ declare class Client {
     private prefix;
     private loop;
     private commands;
-    private middlware;
+    private middleware;
     protected statusTypeOp: any;
     private cred;
     /**
@@ -109,7 +114,7 @@ declare class Client {
      * });
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions): this;
-    on(event: eventNames, cb: Function): this;
+    on<T extends keyof Events>(event: T, cb: Events[T]): this;
     /**
      * Add a middleware
      * @param {commandCallback} cb Your middleware function

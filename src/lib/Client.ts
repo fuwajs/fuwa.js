@@ -72,11 +72,14 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-  req: any,
-  res: any,
+  req: Req,
+  res: Response,
   next: any
 ) => Promise<void> | void;
-export type eventNames = "READY";
+export interface Events {
+  READY: () => void|Promise<void>,
+  MSG: (req: Req) => void|Promise<void>
+}
 export interface clientOptions {
   /**
    * The owners' discord ID
@@ -98,14 +101,14 @@ class Client {
   public bot: User | null = null;
   public ws: WebSocket | undefined;
   private debugMode: boolean;
-  private events: Map<eventNames, Function> = new Map();
+  private events: Map<keyof Events, Function> = new Map();
   private prefix: string;
   private loop: NodeJS.Timeout | undefined;
   private commands: Map<
     string,
     { cb: commandCallback; options: commandOptions }[]
   > = new Map();
-  private middlware: commandCallback[] = [];
+  private middleware: commandCallback[] = [];
   protected statusTypeOp: any = {
     playing: 0,
     streaming: 1,
@@ -177,7 +180,7 @@ class Client {
     }
     return this;
   }
-  on(event: eventNames, cb: Function) {
+  on<T extends keyof Events>(event: T, cb: Events[T]) {
     this.events.set(event, cb);
     return this;
   }
@@ -194,7 +197,7 @@ class Client {
    * })
    */
   use(cb: commandCallback) {
-    this.middlware.push(cb);
+    this.middleware.push(cb);
     return this;
   }
   /**
@@ -225,7 +228,7 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
           ""
         )}`);
         let lastHeartbeat = Date.now();
-        self.cred.d.token = token;
+        self.cred.d.token = token.toString();
         switch (res.op) {
           case OPCodes.HELLO:
             // Start heartbeat loop
@@ -279,7 +282,23 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
             let request = new Req(token.toString() , res.d);
             let response = new Response(res.d, token.toString());
             let command = self.commands.get(res.d.content);
-            command ? command[0].cb(request, response, next) : 0;
+            const next = (req: Req, res: Response, arr: { cb: commandCallback }[], i = 0, secoundArr?: { cb: commandCallback }[] ) => {
+              return () => {
+                arr[i+1] ? arr[i+1].cb(req, res, next(req, res, arr, i++)) : (
+                  secoundArr ? (secoundArr[0] ? secoundArr[0].cb(
+                    req, res, next(
+                      req, res, secoundArr, i++
+                    )
+                  ): 0) : 0
+                );
+              }
+            }
+            let _: any[] = [];
+            self.middleware.forEach(v => _.push({ cb: v }));
+            self.middleware[0] ? self.middleware[0](request, response, next(
+              request, response, _, 0, command
+            )) : 0;
+            command ? command[0].cb(request, response, next(request, response, command)) : 0;
         }
       });
     });
