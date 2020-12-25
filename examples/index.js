@@ -38,4 +38,4 @@ let message = res.reply("some text" ,  embed);
 })
 // login Option 1 (suggested):
 
-cli.login("your token")
+cli.login("your")

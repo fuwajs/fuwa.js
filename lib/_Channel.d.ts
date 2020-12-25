@@ -43,6 +43,8 @@ export interface channel {
     lastPinTimestamp?: string | null;
     edit: Function;
     delete: Function;
+    isText: Function;
+    toString: Function;
 }
 export declare class Channel {
     private object;

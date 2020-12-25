@@ -6,7 +6,7 @@ let channelType = {"text": 0 , "dm" : 1, "voice": 2 , "groupdm" : 3 , "category"
 class Channel { 
 protected channelsArray   : Promise<any> | null = null;
 constructor(private token : string  , private res : any){
-    this.channelsArray = this.channels();
+  this.channelsArray = this.channels();
 };
    
 

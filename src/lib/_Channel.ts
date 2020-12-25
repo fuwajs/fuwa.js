@@ -48,7 +48,9 @@ export interface channel  {
   lastMessageId?:  string | null , 
 	lastPinTimestamp?: string | null,
   edit : Function , 
-  delete : Function
+	delete : Function, 
+	isText :  Function,
+	toString :  Function
 }
 export class Channel { 
 	private object  : channel;  
@@ -94,7 +96,6 @@ export class Channel {
 	this.token = token;
 
 	Object.defineProperty(this.object , "edit" ,  { enumerable : false , writable : true });
-
 	this.object.edit = async(name  : string , type   : "text" | "news" = "text" , obj ? :{position ?: number ,  category? : string , nsfw? :  boolean , userLimit? : number ,  permissions ?: permissions}) => {
 	let data : any= {name : name , type : channelType[type] !== undefined? channelType[type]: "text"}; 
 	obj?.position ? data.position = obj.position : 0 ;
@@ -105,16 +106,32 @@ export class Channel {
 	let path =   "/api/v8/channels/" + this.object.id;
 	let d = JSON.stringify(data);
 	let c  : any=await uncidiOther("PATCH", path , this.token , d);
-	console.log(c);
 	const channel  = new Channel(c , this.token); 
 	return channel;
 	}
+
 	Object.defineProperty(this.object , "delete" ,{enumerable : false , writable : true } ) ; 
 	this.object.delete = async () => {
 	let result :  any= await uncidiDel("/api/v8/channels/" +this.object.id , this.token); 
 	let channel = new Channel( result, this.token);
 	return channel;
-	} 
+	}
+
+	Object.defineProperty(this.object , "isText" , {enumerable : false , writable  : true});
+	this.object.isText = async () => {
+	if (this.object.type === "text") { 
+		return true; 
+	}else { 
+		return false ;
+	}
+	}
+
+	Object.defineProperty(this.object,  "toString" , {enumerable : false , writable :  true }); 
+	this.object.toString = async () =>{
+	if (this.object.id) {
+		return "<#" + this.object.id + ">";
+	}
+	}
 	}
         
 	getObj () { 
