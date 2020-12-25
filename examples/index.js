@@ -38,4 +38,4 @@ let message = res.reply("some text" ,  embed);
 })
 // login Option 1 (suggested):
 
-cli.login("NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.w_z9lswyRZMjb8cqTVgXfwn56mU")
+cli.login("your token")
