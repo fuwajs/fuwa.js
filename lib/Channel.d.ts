@@ -1,24 +1,20 @@
+import { permissions as _Permissions } from "./_Channel";
 declare class Channel {
     private token;
     private res;
-    channelsArray: Promise<any> | null;
+    protected channelsArray: Promise<any> | null;
     constructor(token: string, res: any);
-    protected channels(): Promise<any>;
-    get(channelid: string): Promise<any>;
-    find(condition: any): Promise<any>;
+    protected channels(): Promise<void | null>;
+    get(channelid: string): Promise<void | null>;
+    find(condition: any): Promise<void | null>;
     findFirst(condition: any): Promise<any>;
     createChannel(name: string, type?: string, obj?: {
         position?: number;
         nsfw?: boolean;
         topic?: string;
-        permissionOverwrites?: {
-            id: string;
-            type: string;
-            allow: string;
-            deny: string;
-        }[];
+        permissionOverwrites?: _Permissions;
         categoryId?: string;
         userLimit?: number;
-    }): Promise<any>;
+    }): Promise<import("./_Channel").channel | null>;
 }
 export default Channel;

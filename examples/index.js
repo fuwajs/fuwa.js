@@ -21,22 +21,21 @@ const embed = new Fuwa.Embed()
 .setColor("#6f00ff")
 
 cli.command("ping", async(req, res) => {
-    // gets channel by id 
-    let channelFromid =  await req.channel.get("id");
-    
-    let channel =  await req.channel.find(c => c.nsfw === true );
-//edits a channel
-    channel.edit("name" ); 
-
-    // finds first channel that fulfils given condition
-    let firstChannel =  await req.channel.findFirst(c => c.nsfw === true );
-    //delete a channel
-    firstChannel.delete();
-    //creates a  channel
-    let channelCreate= await req.channel.createChannel("thorisop" , "voice" , {nsfw :  true  , categoryId :"738185770182901804" , position : 4 });
-    //sends embed and returns that message
-    let rep = res.send(embed);
+//find a channel by id and returns channel 
+let channel1 = req.channel.get("id"); 
+//finds a channel by name or any other condition and returns channel
+let channel2 = req.channel.find(c => c.name === "name"); 
+//finds first channel by name or any other condition and returns channel
+let channel3 = req.channel.findFirst(c => c.name === "name"); 
+//edits a channel default type is text and returns the new channel
+let newChannel = channel1.edit("name" , "type" , {nsfw : false , position : 5  , categoryId : "parentId"});
+//deletes a channel and returns the deleted channel 
+let deletedChannel = channel1.delete(); 
+//sends a message  or embed or both and returns that message 
+let message = res.send("some text" ,  embed); 
+//sends a message or embed or both with mention  and returns that message 
+let message = res.reply("some text" ,  embed);
 })
 // login Option 1 (suggested):
 
-cli.login("token")
+cli.login("NzU3ODkxMjgyNDQ5MjAzMjEw.X2m_Qg.w_z9lswyRZMjb8cqTVgXfwn56mU")

@@ -13,9 +13,9 @@ export interface channel {
      */
     id: string;
     /**
-     * @description type of channel from text |  voice | dm | unknown |
-     * @default  type text
-     */
+    * @description type of channel from text | voice | dm | unknown |
+    * @default  type text
+    */
     type: string;
     position?: number | null;
     name?: string | null;
