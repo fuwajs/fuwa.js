@@ -57,7 +57,7 @@ class Res {
 		let colorcode: string = content.color ? 0 + "x" + content.color.split("#")[1]: '0';
 		colorcode !== '0' ? content.color= parseInt(colorcode): content.color = content.color;
 	};
-	};
+	}; 
 	(this.data.embed = content), (this.data.tts = false);
 	});
 	};

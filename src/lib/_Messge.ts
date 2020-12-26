@@ -14,7 +14,7 @@ content :  string ;
 private nonce : number | string ;
 tts  :  boolean; 
 file : file; 
-embed :Embed; 
+embed :Embed;  
 allowedMentions: 
 
 }
