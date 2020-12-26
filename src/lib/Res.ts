@@ -27,7 +27,7 @@ class Res {
 	if (embed) {
 		Object.keys(embed).map((el: any) => {
 		embed[el] === null && el !== "color" ? delete embed[el] : 0;
-	if (el == "color" && typeof embed.color === "string") {
+	if (el === "color" && typeof embed.color === "string") {
 		let colorcode: string = embed.color? 0 + "x" + embed.color.split("#")[1]:"0";
 	if (colorcode !== "0") {
 		embed.color = parseInt(colorcode);
