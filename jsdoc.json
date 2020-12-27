@@ -2,7 +2,7 @@
     "opts": {
         "encoding": "utf8",
         "readme": "./README.md",
-        "destination": "docs/",
+        "destination": "../fuwa.github.io/",
         "template": "node_modules/clean-jsdoc-theme",
         "theme_opts": {
             "theme": "dark",
