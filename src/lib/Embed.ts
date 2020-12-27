@@ -1,3 +1,6 @@
+import path from 'path';
+import fs from 'fs';
+
 /**
  * Embed Options
  * @interface
@@ -167,13 +170,30 @@ class Embed {
         return this;
     }
     /**
-     * @param {string} imageUrl Url Of Image In Embed
+     * @param {string} imageUrl Url of the image , this can also be a file name
      * @param  {proxy_url : string  , height : number , width : number } obj Extra Options For Embed
+     * @example
+     *
+     * const Fuwa = require('fuwa.js');
+     *
+     * // Image with filename
+     * const embed = new Fuwa.Embed()
+     * embed.setImage('foo.bar.png');
+     *
+     * // Image with URL
+     * embed.setImage('https://www.google.com/favicon.ico')
+     *
      */
     setImage(
         imageUrl: string,
         obj?: { proxy_url?: string; height?: number; width?: number }
     ) {
+        if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
+            let ext = path.extname(imageUrl).replace('.', '');
+            ext === 'svg' ? (ext = 'svg+xml') : 0;
+            const base64 = fs.readFileSync(imageUrl).toString('base64');
+            imageUrl = `data:image/${ext};base64,${base64}`;
+        }
         this.image = {
             url: imageUrl,
             proxy_url: obj && obj.proxy_url ? obj.proxy_url : null,
