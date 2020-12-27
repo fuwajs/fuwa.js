@@ -7,3 +7,4 @@ docs
 tsconfig.json
 jsdoc.json
 custom.css
+.prettierrc.json
