@@ -171,7 +171,7 @@ class Embed {
     }
     /**
      * @param {string} imageUrl Url of the image , this can also be a file name
-     * @param  {proxy_url : string  , height : number , width : number } obj Extra Options For Embed
+     * @param  {{ proxy_url?: string, height?: number, width?: number }} obj Extra Options For Embed
      * @example
      *
      * const Fuwa = require('fuwa.js');
@@ -181,7 +181,7 @@ class Embed {
      * embed.setImage('foo.bar.png');
      *
      * // Image with URL
-     * embed.setImage('https://www.google.com/favicon.ico')
+     * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg's)
      *
      */
     setImage(
@@ -202,10 +202,29 @@ class Embed {
         };
         return this;
     }
+
+    /**
+     * @param {string} title title for image embed
+     * @example
+     *
+     * embed.setTitle("some title")
+     */
     setTitle(title: string) {
         this.title = title;
         return this;
     }
+
+    /**
+     * @param {string} footertext text to be displayed in footer of embed
+     * @param {{url?: string; proxy_icon_url?: string}} obj extra options for footer
+     * @example
+     *
+     * //without options
+     * embed.setFooter("some value")
+     *
+     * //with options
+     * embed.setFooter("some value", {url: "https://cdn.discordapp.com/attachments/792884815631351869/.jpg"})
+     */
     setFooter(
         footertext: string,
         obj?: { url?: string; proxy_icon_url?: string }
@@ -218,6 +237,18 @@ class Embed {
         };
         return this;
     }
+
+    /**
+     * @param {string} name author name that should be displayed in embed
+     * @param {{ url?: string, proxy_icon_url?: string }} obj extra options for author
+     * @example
+     *
+     * //without options
+     * embed.setAuthor("Some Name")
+     *
+     * //with options
+     * embed.setAuthor("Some Name", {url: "https://cdn.discordapp.com/attachments/792884815631351869/.jpg"})
+     */
     setAuthor(name: string, obj?: { url?: string; proxy_icon_url?: string }) {
         this.author = {
             name: name,
@@ -227,9 +258,21 @@ class Embed {
         };
         return this;
     }
+
+    /**
+     * @param {string} url url for thumbnail in embed
+     * @param {{ proxy_url: string; height: number; width: number }} obj extra options for thumbnail
+     * @example
+     *
+     * //without options
+     * embed.setThumbnail("https://cdn.discordapp.com/attachments/792884815631351869/.jpg")
+     *
+     * //with options
+     * embed.setThumbnail("https://cdn.discordapp.com/attachments/792884815631351869/.jpg", {height: 100, width:100 ,})
+     */
     setThumbnail(
         url: string,
-        obj?: { proxy_url: string; height: number; width: number }
+        obj?: { proxy_url?: string; height?: number; width?: number }
     ) {
         this.thumbnail = {
             url: url,
@@ -239,30 +282,96 @@ class Embed {
         };
         return this;
     }
+
+    /**
+     * @param {string}  code  color hex code for embed
+     * @example
+     *
+     * embed.setColor("#6f00ff")
+     */
     setColor(code: string) {
         this.color = code;
         return this;
     }
+
+    /**
+     * @param {Date} time timestamp for embed
+     * @example
+     *
+     * embed.setTimestamp()
+     */
     setTimestamp(time?: Date | number) {
         this.timestamp = new Date(time || Date.now());
         return this;
     }
+
+    /**
+     * @param {string} url url of embed
+     * @example
+     *
+     * embed.setUrl("https://www.fuwaorg.com")
+     */
     setUrl(url: string) {
         this.url = url;
         return this;
     }
-    setType(type: 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link') {
+
+    /**
+     * @param {string} type type of embed
+     * available types are
+     * rich: the default type
+     * image: type image
+     * video: type video
+     * gif: type gif
+     * article: type article
+     * link: type link
+     * @example
+     *
+     * embed.setType("rich")
+     */
+    setType(type: 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link') {
         this.type = type;
         return this;
     }
+
+    /**
+     * @param {Object[]} fields fields For  embed
+     * @example
+     *
+     * embed.addFields([{name: "some name", value: "some value"}])
+     */
     addFields(...fields: Object[]) {
         this.fields = [...fields];
         return this;
     }
+    /**
+     *
+     * @param {Object} field A field for embed
+     */
+    addField(field: Object) {
+        this.fields ? this.fields.push(field) : (this.fields = [field]);
+        return this;
+    }
+
+    /**
+     * @param {string} name name of provider if exists
+     * @param {{url: string}} obj extra options for provider
+     * @example
+     *
+     * embed.setProvider("some name")
+     */
     setProvider(name: string, obj?: { url: string }) {
         this.provider = { name: name, url: obj && obj.url ? obj.url : null };
         return this;
     }
+
+    /**
+     * @param {string} url url for video in embed
+     * @param {{height: number; width: number; proxy_url: string}} obj extra options
+     * @example
+     *
+     * embed.setVideo("https://www.dropbox.com/s/df2d2gf1dvnr5uj.mp4")
+     */
     setVideo(
         url: string,
         obj?: { height: number; width: number; proxy_url: string }

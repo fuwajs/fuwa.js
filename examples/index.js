@@ -1,7 +1,9 @@
 const { fs, path } = { fs: require('fs'), path: require('path') }; // Optional if you use login option 2
 const Fuwa = require('../index.js'); // Import fuwa.js here instead of ../index.js!
 
-const client = new Fuwa.Client('_',  { debug: true });
+const client = new Fuwa.Client(req => {
+    return '?'
+},  { debug: true });
 
 
 client

@@ -19,15 +19,7 @@ export interface permissions {
  * @interface channel
  */
 export interface channel {
-    /**
-     * @description  id  of channel
-     */
     id: string;
-    /**
-     * @description type of channel from text | voice | dm | unknown |
-     * @default  type text
-     */
-
     type: string;
     position?: number | null;
     name?: string | null;
@@ -105,6 +97,14 @@ export class Channel {
             enumerable: false,
             writable: true,
         });
+
+        /**
+         * @param {string} name name for new channel
+         * @param {type} text available types for editing channel are
+         * text: for type text channel
+         * news: for type news channel
+         * @param {{position?: number, category?: string, nsfw?: boolean, userLimit?: number, permissions?: permissions}} obj extra options for editing a channel
+         */
         this.object.edit = async (
             name: string,
             type: 'text' | 'news' = 'text',
@@ -132,12 +132,7 @@ export class Channel {
             obj?.category ? (data.parent_id = obj.category) : 0;
             let path = '/api/v8/channels/' + this.object.id;
             let d = JSON.stringify(data);
-            let c: any = await uncidiOther(
-                'PATCH',
-                path,
-                this.token,
-                d
-            ); /* why any? ur defaeating the purpose of ts*/
+            let c: any = await uncidiOther('PATCH', path, this.token, d);
             const channel = new Channel(c, this.token);
             return channel;
         };
@@ -171,10 +166,18 @@ export class Channel {
             enumerable: false,
             writable: true,
         });
-        this.object.toString = async () => {
-            if (this.object.id) {
-                return '<#' + this.object.id + '>';
-            }
+
+        Object.defineProperty(this.object, 'delete', {
+            enumerable: false,
+            writable: true,
+        });
+        this.object.delete = async () => {
+            let result: any = await uncidiDel(
+                '/api/v8/channels/' + this.object.id,
+                this.token
+            );
+            let channel = new Channel(result, this.token);
+            return channel;
         };
     }
 

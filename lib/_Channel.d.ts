@@ -8,14 +8,7 @@ export interface permissions {
  * @interface channel
  */
 export interface channel {
-    /**
-     * @description  id  of channel
-     */
     id: string;
-    /**
-    * @description type of channel from text | voice | dm | unknown |
-    * @default  type text
-    */
     type: string;
     position?: number | null;
     name?: string | null;

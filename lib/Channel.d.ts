@@ -1,4 +1,4 @@
-import { permissions as _Permissions } from "./_Channel";
+import { permissions as _Permissions } from './_Channel';
 declare class Channel {
     private token;
     private res;

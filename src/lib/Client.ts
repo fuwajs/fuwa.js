@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import User from './User';
-import Req from './Req';
+import Request from './Req';
 import { discordAPI, OPCodes } from './_Const';
 import Response from './Res';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -72,13 +72,15 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Req,
+    req: Request,
     res: Response,
     next: any
 ) => Promise<void> | void;
 export interface Events {
-    READY: () => void | Promise<void>;
-    MSG: (req: Req) => void | Promise<void>;
+    READY(): void | Promise<void>;
+    MSG(req: Request): void | Promise<void>;
+    CMD_NOT_FOUND(req: Request, cmd: commandCallback): void | Promise<void>;
+    ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -102,7 +104,10 @@ class Client {
     public ws: WebSocket | undefined;
     private debugMode: boolean;
     private events: Map<keyof Events, Function> = new Map();
-    private prefix: string;
+    private prefix:
+        | string
+        | string[]
+        | ((req: Request) => Promise<string> | string);
     private loop: NodeJS.Timeout | undefined;
     private commands: Map<
         string,
@@ -132,7 +137,13 @@ class Client {
     /**
      * @param {string} prefix The prefix for your bot
      */
-    constructor(prefix: string, options?: clientOptions) {
+    constructor(
+        prefix:
+            | string
+            | string[]
+            | ((req: Request) => Promise<string> | string),
+        options?: clientOptions
+    ) {
         this.debugMode = options?.debug || false;
         this.prefix = prefix;
     }
@@ -167,7 +178,7 @@ class Client {
                     desc: 'No description was provided',
                 };
                 let commands = this.commands.get(key);
-                commands ? commands.push({ cb, options: option }) : undefined;
+                commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         } else {
@@ -215,13 +226,13 @@ class Client {
      * @param {statusOptions} status Your Bot Status Options
      */
 
-    login(token: string | Buffer) {
+    async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
         this.ws = new WebSocket(discordAPI.gateway);
         const self = this;
-        this.ws.on('open', function () {
+        this.ws.on('open', async function () {
             self.debug(`Connect to ${discordAPI.gateway}`);
-            this.on('message', (e) => {
+            this.on('message', async (e) => {
                 const res = JSON.parse(e.toString());
                 self.debug(`Incoming message from ${discordAPI.gateway}:
 Event: ${res.t}
@@ -238,6 +249,8 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                         // Start heartbeat loop
 
                         self.loop = setInterval(() => {
+                            if (!self.bot)
+                                throw new Error('Unable to login to discord');
                             this.send(
                                 JSON.stringify({
                                     op: 1,
@@ -284,12 +297,13 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                         fn ? fn() : 0;
                         break;
                     case 'MESSAGE_CREATE':
+                        let __ = self.events.get('MSG');
+                        __ ? __() : 0;
                         self.debug('Recived A Message :' + res.d.content);
-                        let request = new Req(token.toString(), res.d);
+                        let request = new Request(token.toString(), res.d);
                         let response = new Response(res.d, token.toString());
-                        let command = self.commands.get(res.d.content);
                         const next = (
-                            req: Req,
+                            req: Request,
                             res: Response,
                             arr: { cb: commandCallback }[],
                             i = 0,
@@ -313,6 +327,29 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                                     : 0;
                             };
                         };
+                        const prefix =
+                            typeof self.prefix === 'function'
+                                ? await self.prefix(request)
+                                : Array.isArray(self.prefix)
+                                ? self.prefix.find((p) =>
+                                      res.d.content.startsWith(p)
+                                  )
+                                : self.prefix;
+                        if (!res.d.content.startsWith(prefix)) break;
+                        self.debug(
+                            res.d.content.replace(prefix, '').toLowerCase()
+                        );
+                        if (!prefix) {
+                            throw new Error('No valid prefix found');
+                        }
+                        let command = self.commands.get(
+                            res.d.content.replace(prefix, '').toLowerCase()
+                        );
+                        if (!command) {
+                            let ___ = self.events.get('CMD_NOT_FOUND');
+                            ___ ? ___() : 0;
+                            break;
+                        }
                         let _: any[] = [];
                         self.middleware.forEach((v) => _.push({ cb: v }));
                         self.middleware[0]
@@ -322,13 +359,18 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                                   next(request, response, _, 0, command)
                               )
                             : 0;
-                        command
-                            ? command[0].cb(
-                                  request,
-                                  response,
-                                  next(request, response, command)
-                              )
-                            : 0;
+
+                        try {
+                            command[0].cb(
+                                request,
+                                response,
+                                next(request, response, command, 0)
+                            );
+                        } catch (e) {
+                            let ____ = self.events.get('ERR');
+                            if (!____) throw e;
+                            ____();
+                        }
                 }
             });
         });

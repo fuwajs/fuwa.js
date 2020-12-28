@@ -1,10 +1,10 @@
 /// <reference types="node" />
-import WebSocket from "ws";
-import User from "./User";
-import Req from "./Req";
-import Response from "./Res";
-export declare type statusType = "playing" | "listening" | "streaming" | "competing";
-export declare type status = "dnd" | "offline" | "idle" | "online";
+import WebSocket from 'ws';
+import User from './User';
+import Request from './Req';
+import Response from './Res';
+export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
+export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
  * status options for bot
  * @interface
@@ -64,10 +64,12 @@ export interface commandOptions {
  * @typedef
  * TODO: change request res and next function types to actual types
  */
-export declare type commandCallback = (req: Req, res: Response, next: any) => Promise<void> | void;
+export declare type commandCallback = (req: Request, res: Response, next: any) => Promise<void> | void;
 export interface Events {
-    READY: () => void | Promise<void>;
-    MSG: (req: Req) => void | Promise<void>;
+    READY(): void | Promise<void>;
+    MSG(req: Request): void | Promise<void>;
+    CMD_NOT_FOUND(req: Request, cmd: commandCallback): void | Promise<void>;
+    ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -100,7 +102,7 @@ declare class Client {
     /**
      * @param {string} prefix The prefix for your bot
      */
-    constructor(prefix: string, options?: clientOptions);
+    constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
     debug(bug: Error | string): void;
     /**
      * Command function
@@ -137,7 +139,7 @@ declare class Client {
      * @param {string|Buffer} token Your bot token
      * @param {statusOptions} status Your Bot Status Options
      */
-    login(token: string | Buffer): void;
+    login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
     setStatus(status: statusOptions): void;
 }
