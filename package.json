@@ -1,34 +1,41 @@
 {
-  "name": "fuwa.js",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "types": "./index.d.ts",
-  "scripts": {
-    "docs": "jsdoc -c jsdoc.json .",
-    "test": "tsc -p . && node examples/index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Artrix9095/Fuwa.js.git"
-  },
-  "author": "Artrix",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Artrix9095/Fuwa.js/issues"
-  },
-  "homepage": "https://github.com/Artrix9095/Fuwa.js#readme",
-  "dependencies": {
-    "axios": "^0.21.0",
-    "undici": "^3.0.0",
-    "ws": "^7.4.1"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.13",
-    "@types/ws": "^7.4.0",
-    "better-docs": "^2.3.2",
-    "clean-jsdoc-theme": "^3.0.1",
-    "jsdoc": "^3.6.6",
-    "typescript": "^4.1.3"
-  }
+    "name": "fuwa.js",
+    "version": "1.0.0",
+    "description": "A new powerful, discord bot library inspired by express",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "keywords": [
+        "fuwa",
+        "fuwajs",
+        "discord",
+        "bots",
+        "discordapi"
+    ],
+    "scripts": {
+        "docs": "jsdoc -c jsdoc.json .",
+        "test": "npm run build && node examples/index",
+        "build": "tsc -p ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Artrix9095/Fuwa.js.git"
+    },
+    "author": "Artrix",
+    "license": "Apache-2.0",
+    "bugs": {
+        "url": "https://github.com/Artrix9095/Fuwa.js/issues"
+    },
+    "homepage": "https://github.com/Artrix9095/Fuwa.js#readme",
+    "dependencies": {
+        "undici": "^3.0.0",
+        "ws": "^7.4.1"
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.13",
+        "@types/ws": "^7.4.0",
+        "better-docs": "^2.3.2",
+        "clean-jsdoc-theme": "^3.0.1",
+        "jsdoc": "^3.6.6",
+        "typescript": "^4.1.3"
+    }
 }

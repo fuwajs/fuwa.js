@@ -1,0 +1,24 @@
+import _Client from './lib/Client';
+import _User from './lib/User';
+import _Embed from './lib/Embed';
+export declare const Client: typeof _Client;
+export declare const User: typeof _User;
+export declare const Embed: typeof _Embed;
+export declare const Colors: {
+    rgb(r: number, g: number, b: number): string;
+    mind: string;
+    white: string;
+    snow: string;
+    aliceBlue: string;
+    antiqueWhite: string;
+    aqua: string;
+    aquaMarine: string;
+    azure: string;
+    beige: string;
+    bisque: string;
+    black: string;
+    blanchedAlmond: string;
+    blue: string;
+    blueViolet: string;
+    brown: string;
+};

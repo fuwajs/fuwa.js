@@ -1,8 +1,8 @@
 /// <reference types="node" />
 import WebSocket from 'ws';
 import User from './User';
-import Request from './Req';
-import Response from './Res';
+import Request from './Request';
+import Response from './Reponse';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -91,19 +91,22 @@ export interface clientOptions {
 declare class Client {
     bot: User | null;
     ws: WebSocket | undefined;
-    private debugMode;
-    private events;
-    private prefix;
-    private loop;
-    private commands;
-    private middleware;
+    protected debugMode: boolean;
+    protected events: Map<keyof Events, Function>;
+    protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
+    protected loop: NodeJS.Timeout | undefined;
+    protected commands: Map<string, {
+        cb: commandCallback;
+        options: commandOptions;
+    }[]>;
+    protected middleware: commandCallback[];
     protected statusTypeOp: any;
-    private cred;
+    protected cred: any;
     /**
      * @param {string} prefix The prefix for your bot
      */
     constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
-    debug(bug: Error | string): void;
+    protected debug(bug: Error | any): void;
     /**
      * Command function
      * @param {string|string[]} name Name of the command,
@@ -112,10 +115,18 @@ declare class Client {
      * @returns {Client}
      * @example
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'); // send message
+     *      res.send('Pong!'-+
+     * ); // send message
      * });
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions): this;
+    /**
+     * @param {keyof Events} event The event
+     * @param {Function} cb The callback function
+     * @example
+     *
+     * cli.on('READY', () => console.log('Up and ready to go!'));
+     */
     on<T extends keyof Events>(event: T, cb: Events[T]): this;
     /**
      * Add a middleware

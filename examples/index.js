@@ -1,10 +1,7 @@
 const { fs, path } = { fs: require('fs'), path: require('path') }; // Optional if you use login option 2
-const Fuwa = require('../index.js'); // Import fuwa.js here instead of ../index.js!
+const Fuwa = require('../dist/index'); // Import fuwa.js here!
 
-const client = new Fuwa.Client(req => {
-    return '?'
-},  { debug: true });
-
+const client = new Fuwa.Client(req => '?',  { debug: true });
 
 client
 // This function is going to be ran when the bot finishes loading and connects to discord
@@ -14,10 +11,9 @@ client
         next();
     })
     .command('ping', (req, res, next) => {
-        res.send(
-            new Fuwa.Embed()
-                .setTimestamp()
-                .setTitle('Ping')
+        res.send(new Fuwa.Embed()
+            .setTitle('Pong')
+            .setColor(Fuwa.Colors.rgb(13, 186, 120))
         );
     })
     // Set your status!

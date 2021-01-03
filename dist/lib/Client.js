@@ -41,9 +41,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ws_1 = __importDefault(require("ws"));
 var User_1 = __importDefault(require("./User"));
-var Req_1 = __importDefault(require("./Req"));
 var _Const_1 = require("./_Const");
-var Res_1 = __importDefault(require("./Res"));
+var Reponse_1 = __importDefault(require("./Reponse"));
 function next() {
     console.log('Will Do Something');
 }
@@ -103,7 +102,8 @@ var Client = /** @class */ (function () {
      * @returns {Client}
      * @example
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'); // send message
+     *      res.send('Pong!'-+
+     * ); // send message
      * });
      */
     Client.prototype.command = function (name, cb, options) {
@@ -124,10 +124,17 @@ var Client = /** @class */ (function () {
             };
             var commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb: cb, options: option }) : undefined;
-            this.commands.set(this.prefix + name, commands || [{ cb: cb, options: option }]);
+            this.commands.set(name, commands || [{ cb: cb, options: option }]);
         }
         return this;
     };
+    /**
+     * @param {keyof Events} event The event
+     * @param {Function} cb The callback function
+     * @example
+     *
+     * cli.on('READY', () => console.log('Up and ready to go!'));
+     */
     Client.prototype.on = function (event, cb) {
         this.events.set(event, cb);
         return this;
@@ -216,8 +223,8 @@ var Client = /** @class */ (function () {
                                             __ = self.events.get('MSG');
                                             __ ? __() : 0;
                                             self.debug('Recived A Message :' + res.d.content);
-                                            request = new Req_1.default(token.toString(), res.d);
-                                            response = new Res_1.default(res.d, token.toString());
+                                            request = null;
+                                            response = new Reponse_1.default(res.d, token.toString());
                                             next_1 = function (req, res, arr, i, secoundArr) {
                                                 if (i === void 0) { i = 0; }
                                                 return function () {
@@ -244,11 +251,15 @@ var Client = /** @class */ (function () {
                                             _c.label = 5;
                                         case 5:
                                             prefix = _b;
-                                            self.debug(res.d.content.replace(prefix, '').toLowerCase());
                                             if (!prefix) {
                                                 throw new Error('No valid prefix found');
                                             }
+                                            if (!res.d.content.startsWith(prefix))
+                                                return [3 /*break*/, 6];
+                                            self.debug(res.d.content.replace(prefix, '').toLowerCase());
                                             command = self.commands.get(res.d.content.replace(prefix, '').toLowerCase());
+                                            console.log(command);
+                                            console.log(self.commands);
                                             if (!command) {
                                                 ___ = self.events.get('CMD_NOT_FOUND');
                                                 ___ ? ___() : 0;

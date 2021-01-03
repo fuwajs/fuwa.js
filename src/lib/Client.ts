@@ -1,8 +1,8 @@
 import WebSocket from 'ws';
 import User from './User';
-import Request from './Req';
+import Request from './Request';
 import { discordAPI, OPCodes } from './_Const';
-import Response from './Res';
+import Response from './Reponse';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 function next() {
@@ -102,18 +102,18 @@ export interface clientOptions {
 class Client {
     public bot: User | null = null;
     public ws: WebSocket | undefined;
-    private debugMode: boolean;
-    private events: Map<keyof Events, Function> = new Map();
-    private prefix:
+    protected debugMode: boolean;
+    protected events: Map<keyof Events, Function> = new Map();
+    protected prefix:
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
-    private loop: NodeJS.Timeout | undefined;
-    private commands: Map<
+    protected loop: NodeJS.Timeout | undefined;
+    protected commands: Map<
         string,
         { cb: commandCallback; options: commandOptions }[]
     > = new Map();
-    private middleware: commandCallback[] = [];
+    protected middleware: commandCallback[] = [];
     protected statusTypeOp: any = {
         playing: 0,
         streaming: 1,
@@ -121,7 +121,7 @@ class Client {
         custom: 4,
         competing: 5,
     };
-    private cred: any = {
+    protected cred: any = {
         op: OPCodes.IDENTIFY,
         d: {
             token: null,
@@ -147,7 +147,7 @@ class Client {
         this.debugMode = options?.debug || false;
         this.prefix = prefix;
     }
-    debug(bug: Error | string) {
+    protected debug(bug: Error | any) {
         if (this.debugMode) {
             if (bug instanceof Error) {
                 throw bug;
@@ -164,7 +164,8 @@ class Client {
      * @returns {Client}
      * @example
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'); // send message
+     *      res.send('Pong!'-+
+     * ); // send message
      * });
      */
     command(
@@ -187,14 +188,17 @@ class Client {
             };
             let commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
-            this.commands.set(
-                this.prefix + name,
-                commands || [{ cb, options: option }]
-            );
+            this.commands.set(name, commands || [{ cb, options: option }]);
         }
         return this;
     }
-
+    /**
+     * @param {keyof Events} event The event
+     * @param {Function} cb The callback function
+     * @example
+     *
+     * cli.on('READY', () => console.log('Up and ready to go!'));
+     */
     on<T extends keyof Events>(event: T, cb: Events[T]) {
         this.events.set(event, cb);
         return this;
@@ -300,7 +304,7 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                         let __ = self.events.get('MSG');
                         __ ? __() : 0;
                         self.debug('Recived A Message :' + res.d.content);
-                        let request = new Request(token.toString(), res.d);
+                        let request: any = null; // new Request(token.toString(), res.d);
                         let response = new Response(res.d, token.toString());
                         const next = (
                             req: Request,
@@ -335,16 +339,19 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                                       res.d.content.startsWith(p)
                                   )
                                 : self.prefix;
+
+                        if (!prefix) {
+                            throw new Error('No valid prefix found');
+                        }
                         if (!res.d.content.startsWith(prefix)) break;
                         self.debug(
                             res.d.content.replace(prefix, '').toLowerCase()
                         );
-                        if (!prefix) {
-                            throw new Error('No valid prefix found');
-                        }
                         let command = self.commands.get(
                             res.d.content.replace(prefix, '').toLowerCase()
                         );
+                        console.log(command);
+                        console.log(self.commands);
                         if (!command) {
                             let ___ = self.events.get('CMD_NOT_FOUND');
                             ___ ? ___() : 0;

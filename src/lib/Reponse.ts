@@ -1,5 +1,5 @@
 import { EmbedOptions } from './Embed';
-import { uncidiOther } from './unicdi';
+import undici from './_unicdi';
 class Res {
     protected data: any = {};
     constructor(private req: any, private token: string) {}
@@ -47,7 +47,7 @@ class Res {
             (this.data.embed = embed), (this.data.tts = false);
         }
 
-        let result = await uncidiOther(
+        let result = await undici.OTHER(
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
@@ -98,7 +98,7 @@ class Res {
             (this.data.embed = embed), (this.data.tts = false);
         }
 
-        let result = await uncidiOther(
+        let result = await undici.OTHER(
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,

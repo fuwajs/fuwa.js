@@ -35,8 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var unicdi_1 = require("./unicdi");
+var _unicdi_1 = __importDefault(require("./_unicdi"));
 var Res = /** @class */ (function () {
     function Res(req, token) {
         this.req = req;
@@ -92,7 +95,7 @@ var Res = /** @class */ (function () {
                             });
                             (this.data.embed = embed), (this.data.tts = false);
                         }
-                        return [4 /*yield*/, unicdi_1.uncidiOther('POST', "/api/v8/channels/" + this.req.channel_id + "/messages", this.token, JSON.stringify(this.data))];
+                        return [4 /*yield*/, _unicdi_1.default.OTHER('POST', "/api/v8/channels/" + this.req.channel_id + "/messages", this.token, JSON.stringify(this.data))];
                     case 1:
                         result = _a.sent();
                         return [2 /*return*/, result];
@@ -146,7 +149,7 @@ var Res = /** @class */ (function () {
                             });
                             (this.data.embed = embed), (this.data.tts = false);
                         }
-                        return [4 /*yield*/, unicdi_1.uncidiOther('POST', "/api/v8/channels/" + this.req.channel_id + "/messages", this.token, JSON.stringify(this.data))];
+                        return [4 /*yield*/, _unicdi_1.default.OTHER('POST', "/api/v8/channels/" + this.req.channel_id + "/messages", this.token, JSON.stringify(this.data))];
                     case 1:
                         result = _a.sent();
                         return [2 /*return*/, result];

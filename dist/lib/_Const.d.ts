@@ -15,4 +15,5 @@ export declare const OPCodes: {
 export declare const discordAPI: {
     gateway: string;
     api: string;
+    discord: string;
 };

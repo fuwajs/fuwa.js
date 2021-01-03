@@ -1,6 +1,6 @@
+"use strict";
 // import { uncidiGet, uncidiOther } from './_unicdi';
 // import { Channel as _Channel, permissions as _Permissions } from './_Channel';
-
 // let channelType = {
 //     text: 0,
 //     dm: 1,
@@ -10,13 +10,11 @@
 //     news: 5,
 //     store: 6,
 // };
-
 // class Channel {
 //     protected channelsArray: Promise<any> | null = null;
 //     constructor(private token: string, private res: any) {
 //         this.channelsArray = this.channels();
 //     }
-
 //     protected async channels(): Promise<void | null> {
 //         let path = `/api/v8/guilds/${this.res.guild_id}/channels`;
 //         let channels: any = await uncidiGet(path, this.token);
@@ -25,7 +23,6 @@
 //         );
 //         return sortedChannels;
 //     }
-
 //     async get(channelid: string): Promise<void | null> {
 //         if (!channelid) {
 //             return null; //-> THROW ERROR
@@ -36,7 +33,6 @@
 //             return c.length == 1 ? c[0] : c;
 //         }
 //     }
-
 //     async find(condition: any): Promise<void | null> {
 //         if (!condition) {
 //             return null; //-> THROW ERROR
@@ -47,7 +43,6 @@
 //             return c.length == 1 ? c[0] : c;
 //         }
 //     }
-
 //     async findFirst(condition: any) {
 //         if (!condition) {
 //             return null; //-> THROW ERROR
@@ -58,7 +53,6 @@
 //             return c && c.length == 1 ? c[0] : c;
 //         }
 //     }
-
 //     async createChannel(
 //         name: string,
 //         type: string = 'text',
@@ -98,5 +92,4 @@
 //         return sortedChannel;
 //     }
 // }
-
 // export default Channel;
