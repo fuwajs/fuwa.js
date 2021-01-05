@@ -10,5 +10,6 @@
 		}
 	],
 	"tabWidth": 4,
-	"useTabs": false
+	"useTabs": false,
+	"printWidth": 80
 }

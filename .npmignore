@@ -1,8 +1,8 @@
 examples
 */**/*.secret
-src
-docs
-.vscode
+src/
+docs/
+.vscode/
 .gitignore
 tsconfig.json
 jsdoc.json
