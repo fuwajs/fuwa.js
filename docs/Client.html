@@ -208,7 +208,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line15">line 15</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line13">line 13</a>
             </li></ul></dd>
         </div>
     
@@ -237,8 +237,7 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa library
-const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
+    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa libraryconst cli = new Fuwa.Client('?'); // Init The Client</code></pre>
 
     </div>
 
@@ -421,7 +420,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line75">line 75</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line56">line 56</a>
             </li></ul></dd>
         </div>
     
@@ -470,10 +469,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (req, res) => {
-     res.send('Pong!'-+
-); // send message
-});</code></pre>
+    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (req, res) => {     res.send('Pong!'-+); // send message});</code></pre>
 
     </div>
 
@@ -615,7 +611,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line132">line 132</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line113">line 113</a>
             </li></ul></dd>
         </div>
     
@@ -767,7 +763,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line103">line 103</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line84">line 84</a>
             </li></ul></dd>
         </div>
     
@@ -912,7 +908,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line119">line 119</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line100">line 100</a>
             </li></ul></dd>
         </div>
     
@@ -961,10 +957,7 @@ const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.use((req, res, next) => {
-     req.send(`${req.command} has been used!`);
-     next(); // call the next middlware/command
-})</code></pre>
+    <pre class="prettyprint"><code>cli.use((req, res, next) => {     req.send(`${req.command} has been used!`);     next(); // call the next middlware/command})</code></pre>
 
     </div>
 

@@ -1,9 +1,8 @@
 /// <reference types="node" />
-import WebSocket from 'ws';
 import User from './User';
 import Request from './Request';
-import { DiscordAPIEvents, DiscordAPIRespone } from './_Const';
 import Response from './Reponse';
+import Emitter from './Emitter';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -89,26 +88,24 @@ export interface clientOptions {
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  */
-declare class Client {
+declare class Client extends Emitter {
     bot: User | null;
-    ws: WebSocket | undefined;
+    private sessionId;
     protected debugMode: boolean;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
-    protected loop: NodeJS.Timeout | undefined;
+    protected loop?: number;
     protected commands: Map<string, {
         cb: commandCallback;
         options: commandOptions;
     }[]>;
     protected middleware: commandCallback[];
     protected statusTypeOp: any;
-    protected cred: any;
     /**
      * @param {string} prefix The prefix for your bot
      */
     constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
     protected debug(bug: Error | any): void;
-    protected APIEvent<T extends keyof DiscordAPIEvents>(event: T, data: DiscordAPIRespone<T>): void;
     /**
      * Command function
      * @param {string|string[]} name Name of the command,

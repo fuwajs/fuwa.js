@@ -12,10 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const ws_1 = __importDefault(require("ws"));
-const User_1 = __importDefault(require("./User"));
 const _Const_1 = require("./_Const");
-const Reponse_1 = __importDefault(require("./Reponse"));
+const Emitter_1 = __importDefault(require("./Emitter"));
 function next() {
     console.log('Will Do Something');
 }
@@ -25,12 +23,14 @@ function next() {
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  */
-class Client {
+class Client extends Emitter_1.default {
     /**
      * @param {string} prefix The prefix for your bot
      */
     constructor(prefix, options) {
+        super();
         this.bot = null;
+        this.sessionId = '';
         this.events = new Map();
         this.commands = new Map();
         this.middleware = [];
@@ -40,19 +40,6 @@ class Client {
             listening: 2,
             custom: 4,
             competing: 5,
-        };
-        this.cred = {
-            op: _Const_1.OPCodes.IDENTIFY,
-            d: {
-                token: null,
-                intents: 513,
-                properties: {
-                    $os: process.platform,
-                    $browser: 'fuwa.js',
-                    $device: 'fuwa.js',
-                },
-                presence: {},
-            },
         };
         this.debugMode = (options === null || options === void 0 ? void 0 : options.debug) || false;
         this.prefix = prefix;
@@ -65,12 +52,6 @@ class Client {
             else {
                 console.log(bug + '\n');
             }
-        }
-    }
-    APIEvent(event, data) {
-        switch (event) {
-            case 'READY':
-                event;
         }
     }
     /**
@@ -146,105 +127,141 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.prefix)
                 throw new Error('No prefix provided');
-            this.ws = new ws_1.default(_Const_1.discordAPI.gateway);
-            const self = this;
-            this.ws.on('open', function () {
-                return __awaiter(this, void 0, void 0, function* () {
-                    self.debug(`Connect to ${_Const_1.discordAPI.gateway}`);
-                    this.on('message', (e) => __awaiter(this, void 0, void 0, function* () {
-                        const res = JSON.parse(e.toString());
-                        self.debug(`Incoming message from ${_Const_1.discordAPI.gateway}:
-Event: ${res.t}
-OPCOde: ${res.op}
-Other: ${res.s}
-Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace('\\', '')}`);
-                        let lastHeartbeat = Date.now();
-                        self.cred.d.token = token.toString();
-                        switch (res.op) {
-                            case _Const_1.OPCodes.HELLO:
-                                // Start heartbeat loop
-                                self.loop = setInterval(() => {
-                                    if (!self.bot)
-                                        throw new Error('Unable to login to discord');
-                                    this.send(JSON.stringify({
-                                        op: 1,
-                                        d: 251,
-                                    }));
-                                    let now = Date.now();
-                                    self.debug(`Requested a heartbeat ${new Date(now).toDateString()} with a ${(now - lastHeartbeat) / 1000}ms delay
-                            `);
-                                    lastHeartbeat = now;
-                                }, res.d.heartbeat_interval);
-                                // Send Identify
-                                let identify = JSON.stringify(self.cred, null, self.debugMode ? 4 : 0);
-                                self.debug(`Attempting to identify with the following credentials: ${identify.replace('\\', '')}`);
-                                this.send(identify);
-                                self.debug('Credentials sent');
-                                break;
+            this.connect(_Const_1.discordAPI.gateway);
+            this.op(10 /* Hello */, (data) => {
+                this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
+                this.response.op.emit(2 /* Identify */, {
+                    d: {
+                        token: token.toString(),
+                        intents: 513,
+                        properties: {
+                            $os: process.platform,
+                            $browser: 'Fuwa.js',
+                            $device: 'Fuwa.js'
                         }
-                        switch (res.t) {
-                            case 'READY':
-                                self.debug(`
-                            Logged in on ${new Date().toDateString()}
-                        `);
-                                self.bot = new User_1.default(res.d.user);
-                                let fn = self.events.get('READY');
-                                fn ? fn() : 0;
-                                break;
-                            case 'MESSAGE_CREATE':
-                                let __ = self.events.get('MSG');
-                                __ ? __() : 0;
-                                self.debug('Recived A Message :' + res.d.content);
-                                let request = null; // new Request(token.toString(), res.d);
-                                let response = new Reponse_1.default(res.d, token.toString());
-                                const next = (req, res, arr, i = 0, secoundArr) => {
-                                    return () => {
-                                        arr[i + 1]
-                                            ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
-                                            : secoundArr
-                                                ? secoundArr[0]
-                                                    ? secoundArr[0].cb(req, res, next(req, res, secoundArr, i++))
-                                                    : 0
-                                                : 0;
-                                    };
-                                };
-                                const prefix = typeof self.prefix === 'function'
-                                    ? yield self.prefix(request)
-                                    : Array.isArray(self.prefix)
-                                        ? self.prefix.find((p) => res.d.content.startsWith(p))
-                                        : self.prefix;
-                                if (!prefix) {
-                                    throw new Error('No valid prefix found');
-                                }
-                                if (!res.d.content.startsWith(prefix))
-                                    break;
-                                self.debug(res.d.content.replace(prefix, '').toLowerCase());
-                                let command = self.commands.get(res.d.content.replace(prefix, '').toLowerCase());
-                                console.log(command);
-                                console.log(self.commands);
-                                if (!command) {
-                                    let ___ = self.events.get('CMD_NOT_FOUND');
-                                    ___ ? ___() : 0;
-                                    break;
-                                }
-                                let _ = [];
-                                self.middleware.forEach((v) => _.push({ cb: v }));
-                                self.middleware[0]
-                                    ? self.middleware[0](request, response, next(request, response, _, 0, command))
-                                    : 0;
-                                try {
-                                    command[0].cb(request, response, next(request, response, command, 0));
-                                }
-                                catch (e) {
-                                    let ____ = self.events.get('ERR');
-                                    if (!____)
-                                        throw e;
-                                    ____();
-                                }
-                        }
-                    }));
+                    }
                 });
             });
+            this.op(9 /* Invalid Session */, () => { throw new Error('Invalid token'); });
+            this.event('READY', ({ d: data }) => {
+                this.sessionId = data.session_id;
+                this.bot = data.user;
+                let READY = this.events.get('READY');
+                READY ? READY() : 0;
+            });
+            const self = this;
+            //         this.ws.on('open', async function () {
+            //             self.debug(`Connect to ${discordAPI.gateway}`);
+            //             this.on('message', async (e) => {
+            //                 const res = JSON.parse(e.toString());
+            //                 self.debug(`Incoming message from ${discordAPI.gateway}:
+            // Event: ${res.t}
+            // OPCOde: ${res.op}
+            // Other: ${res.s}
+            // Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+            //                     '\\',
+            //                     ''
+            //                 )}`);
+            //                 switch (res.op) {
+            //                     case OPCodes.HELLO:
+            //                         // Start heartbeat loop
+            //                         self.debug(
+            //                             `Attempting to identify with the following credentials: ${identify.replace(
+            //                                 '\\',
+            //                                 ''
+            //                             )}`
+            //                         );
+            //                         self.debug('Credentials sent');
+            //                         break;
+            //                 }
+            //                 switch (res.t) {
+            //                     case 'READY':
+            //                         self.debug(`
+            //                             Logged in on ${new Date().toDateString()}
+            //                         `);
+            //                         self.bot = new User(res.d.user);
+            //                         let fn = self.events.get('READY');
+            //                         fn ? fn() : 0;
+            //                         break;
+            //                     case 'MESSAGE_CREATE':
+            //                         let __ = self.events.get('MSG');
+            //                         __ ? __() : 0;
+            //                         self.debug('Recived A Message :' + res.d.content);
+            //                         let request: any = null; // new Request(token.toString(), res.d);
+            //                         let response = new Response(res.d, token.toString());
+            //                         const next = (
+            //                             req: Request,
+            //                             res: Response,
+            //                             arr: { cb: commandCallback }[],
+            //                             i = 0,
+            //                             secoundArr?: { cb: commandCallback }[]
+            //                         ) => {
+            //                             return () => {
+            //                                 arr[i + 1]
+            //                                     ? arr[i + 1].cb(
+            //                                           req,
+            //                                           res,
+            //                                           next(req, res, arr, i++)
+            //                                       )
+            //                                     : secoundArr
+            //                                     ? secoundArr[0]
+            //                                         ? secoundArr[0].cb(
+            //                                               req,
+            //                                               res,
+            //                                               next(req, res, secoundArr, i++)
+            //                                           )
+            //                                         : 0
+            //                                     : 0;
+            //                             };
+            //                         };
+            //                         const prefix =
+            //                             typeof self.prefix === 'function'
+            //                                 ? await self.prefix(request)
+            //                                 : Array.isArray(self.prefix)
+            //                                 ? self.prefix.find((p) =>
+            //                                       res.d.content.startsWith(p)
+            //                                   )
+            //                                 : self.prefix;
+            //                         if (!prefix) {
+            //                             throw new Error('No valid prefix found');
+            //                         }
+            //                         if (!res.d.content.startsWith(prefix)) break;
+            //                         self.debug(
+            //                             res.d.content.replace(prefix, '').toLowerCase()
+            //                         );
+            //                         let command = self.commands.get(
+            //                             res.d.content.replace(prefix, '').toLowerCase()
+            //                         );
+            //                         console.log(command);
+            //                         console.log(self.commands);
+            //                         if (!command) {
+            //                             let ___ = self.events.get('CMD_NOT_FOUND');
+            //                             ___ ? ___() : 0;
+            //                             break;
+            //                         }
+            //                         let _: any[] = [];
+            //                         self.middleware.forEach((v) => _.push({ cb: v }));
+            //                         self.middleware[0]
+            //                             ? self.middleware[0](
+            //                                   request,
+            //                                   response,
+            //                                   next(request, response, _, 0, command)
+            //                               )
+            //                             : 0;
+            //                         try {
+            //                             command[0].cb(
+            //                                 request,
+            //                                 response,
+            //                                 next(request, response, command, 0)
+            //                             );
+            //                         } catch (e) {
+            //                             let ____ = self.events.get('ERR');
+            //                             if (!____) throw e;
+            //                             ____();
+            //                         }
+            //                 }
+            //             });
+            //         });
         });
     }
     logout(end = true) {
@@ -254,25 +271,27 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace('\\', '')}`)
         }
     }
     setStatus(status) {
-        let activities = [
-            {
-                name: status.name,
-            },
-        ];
-        status.type && status.type.toLowerCase() !== 'streaming'
-            ? (activities[0]['type'] = this.statusTypeOp[status.type.toLowerCase()])
-            : status.type &&
-                status.type.toLowerCase() === 'streaming' &&
-                status.url
-                ? ((activities[0].type = 1), (activities[0].url = status.url))
-                : (activities[0]['type'] = 4);
-        this.cred.d.presence.activities = activities;
-        status.status
-            ? (this.cred.d.presence.status = status.status)
-            : (this.cred.d.presence.status = 'online');
-        status.afk
-            ? (this.cred.d.presence.afk = status.afk)
-            : (this.cred.d.presence.afk = 'false');
+        // let activities: any = [
+        //     {
+        //         name: status.name,
+        //     },
+        // ];
+        // status.type && status.type.toLowerCase() !== 'streaming'
+        //     ? (activities[0]['type'] = this.statusTypeOp[
+        //           status.type.toLowerCase()
+        //       ])
+        //     : status.type &&
+        //       status.type.toLowerCase() === 'streaming' &&
+        //       status.url
+        //     ? ((activities[0].type = 1), (activities[0].url = status.url))
+        //     : (activities[0]['type'] = 4);
+        // this.cred.d.presence.activities = activities;
+        // status.status
+        //     ? (this.cred.d.presence.status = status.status)
+        //     : (this.cred.d.presence.status = 'online');
+        // status.afk
+        //     ? (this.cred.d.presence.afk = status.afk)
+        //     : (this.cred.d.presence.afk = 'false');
     }
 }
 exports.default = Client;

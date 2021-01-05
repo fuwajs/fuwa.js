@@ -1,26 +1,108 @@
 export declare const OPCodes: {
-    DISPATCH: number;
     HEARTBEAT: number;
     IDENTIFY: number;
     STATUS_UPDATE: number;
     VOICE_STATE_UPDATE: number;
-    VOICE_GUILD_PING: number;
     RESUME: number;
-    RECONNECT: number;
     REQUEST_GUILD_MEMBERS: number;
     INVALID_SESSION: number;
     HELLO: number;
-    HEARTBEAT_ACK: number;
 };
+export declare const OPCodeMap: Map<"HEARTBEAT" | "IDENTIFY" | "STATUS_UPDATE" | "VOICE_STATE_UPDATE" | "RESUME" | "REQUEST_GUILD_MEMBERS" | "INVALID_SESSION" | "HELLO", 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>;
 export declare const discordAPI: {
     gateway: string;
     api: string;
     discord: string;
 };
 export interface DiscordAPIEvents {
-    GUILD_CREATE: Guild;
-    READY: Ready;
-    CHANNEL_CREATE: Channel;
+    GUILD_CREATE: {
+        op?: 0;
+        t?: 'GUILD_CREATE';
+        d: Guild;
+    };
+    READY: {
+        op?: 0;
+        t?: 'READY';
+        d: Ready;
+    };
+    CHANNEL_CREATE: {
+        op?: 0;
+        t?: 'CHANNEL_CREATE';
+        d: Ready;
+    };
+}
+export interface DiscordAPIOP {
+    1: {
+        op?: 1;
+        t?: null;
+        d: number | null;
+    };
+    2: {
+        op?: 2;
+        t?: null;
+        d: {
+            token: string;
+            intents: 513;
+            properties: {
+                $os: string;
+                $browser: string;
+                $device: string;
+            };
+        };
+    };
+    3: {
+        op?: 3;
+        t?: null;
+        d: {
+            since: number;
+            activities: {
+                name: string;
+                type: 0 | 1 | 2 | 3 | 4 | 5;
+            }[];
+            status: 'offline' | 'online' | 'dnd' | 'idle';
+            afk: boolean;
+        };
+    };
+    4: {
+        op?: 4;
+        t?: null;
+        d: {
+            guild_id: string;
+            channel_id: string;
+            self_mute: boolean;
+            self_deaf: boolean;
+        };
+    };
+    6: {
+        op?: 6;
+        t?: null;
+        d: {
+            token: string;
+            session_id: string;
+            seq: 1337;
+        };
+    };
+    8: {
+        op?: 8;
+        t?: null;
+        d: {
+            guild_id: number;
+            query: string;
+            limit: number;
+        };
+    };
+    9: {
+        op?: 9;
+        t?: null;
+        d: false;
+    };
+    10: {
+        op?: 10;
+        t?: null;
+        d: {
+            heartbeat_interval: number;
+        };
+    };
 }
 export interface Ready {
     v: number;
@@ -147,8 +229,10 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIRespone<T extends keyof DiscordAPIEvents> {
+export interface DiscordAPIEventRespone<T extends keyof DiscordAPIEvents> {
     op: 0;
     t: T;
     d: DiscordAPIEvents[T];
+}
+export interface DiscordAPIOPResponse<T extends keyof {}> {
 }
