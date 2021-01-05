@@ -4,10 +4,12 @@ import Request from './Request';
 import {
     discordAPI,
     DiscordAPIEvents,
-    DiscordAPIRespone,
+    DiscordAPIEventRespone,
     OPCodes,
+    OPCodeMap,
 } from './_Const';
 import Response from './Reponse';
+import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 function next() {
@@ -104,16 +106,16 @@ export interface clientOptions {
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  */
-class Client {
+class Client extends Emitter {
     public bot: User | null = null;
-    public ws: WebSocket | undefined;
+    private sessionId = ''
     protected debugMode: boolean;
     protected events: Map<keyof Events, Function> = new Map();
     protected prefix:
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
-    protected loop: NodeJS.Timeout | undefined;
+    protected loop?: number;
     protected commands: Map<
         string,
         { cb: commandCallback; options: commandOptions }[]
@@ -126,19 +128,6 @@ class Client {
         custom: 4,
         competing: 5,
     };
-    protected cred: any = {
-        op: OPCodes.IDENTIFY,
-        d: {
-            token: null,
-            intents: 513,
-            properties: {
-                $os: process.platform,
-                $browser: 'fuwa.js',
-                $device: 'fuwa.js',
-            },
-            presence: {},
-        },
-    };
     /**
      * @param {string} prefix The prefix for your bot
      */
@@ -149,6 +138,7 @@ class Client {
             | ((req: Request) => Promise<string> | string),
         options?: clientOptions
     ) {
+        super();
         this.debugMode = options?.debug || false;
         this.prefix = prefix;
     }
@@ -161,15 +151,7 @@ class Client {
             }
         }
     }
-    protected APIEvent<T extends keyof DiscordAPIEvents>(
-        event: T,
-        data: DiscordAPIRespone<T>
-    ) {
-        switch (event) {
-            case 'READY':
-                event;
-        }
-    }
+    
     /**
      * Command function
      * @param {string|string[]} name Name of the command,
@@ -246,155 +228,148 @@ class Client {
 
     async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
-        this.ws = new WebSocket(discordAPI.gateway);
-        const self = this;
-        this.ws.on('open', async function () {
-            self.debug(`Connect to ${discordAPI.gateway}`);
-            this.on('message', async (e) => {
-                const res = JSON.parse(e.toString());
-                self.debug(`Incoming message from ${discordAPI.gateway}:
-Event: ${res.t}
-OPCOde: ${res.op}
-Other: ${res.s}
-Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
-                    '\\',
-                    ''
-                )}`);
-                let lastHeartbeat = Date.now();
-                self.cred.d.token = token.toString();
-                switch (res.op) {
-                    case OPCodes.HELLO:
-                        // Start heartbeat loop
-
-                        self.loop = setInterval(() => {
-                            if (!self.bot)
-                                throw new Error('Unable to login to discord');
-                            this.send(
-                                JSON.stringify({
-                                    op: 1,
-                                    d: 251,
-                                })
-                            );
-                            let now = Date.now();
-                            self.debug(
-                                `Requested a heartbeat ${new Date(
-                                    now
-                                ).toDateString()} with a ${
-                                    (now - lastHeartbeat) / 1000
-                                }ms delay
-                            `
-                            );
-                            lastHeartbeat = now;
-                        }, res.d.heartbeat_interval);
-                        // Send Identify
-                        let identify = JSON.stringify(
-                            self.cred,
-                            null,
-                            self.debugMode ? 4 : 0
-                        );
-                        self.debug(
-                            `Attempting to identify with the following credentials: ${identify.replace(
-                                '\\',
-                                ''
-                            )}`
-                        );
-                        this.send(identify);
-                        self.debug('Credentials sent');
-
-                        break;
-                }
-
-                switch (res.t) {
-                    case 'READY':
-                        self.debug(`
-                            Logged in on ${new Date().toDateString()}
-                        `);
-
-                        self.bot = new User(res.d.user);
-                        let fn = self.events.get('READY');
-                        fn ? fn() : 0;
-                        break;
-                    case 'MESSAGE_CREATE':
-                        let __ = self.events.get('MSG');
-                        __ ? __() : 0;
-                        self.debug('Recived A Message :' + res.d.content);
-                        let request: any = null; // new Request(token.toString(), res.d);
-                        let response = new Response(res.d, token.toString());
-                        const next = (
-                            req: Request,
-                            res: Response,
-                            arr: { cb: commandCallback }[],
-                            i = 0,
-                            secoundArr?: { cb: commandCallback }[]
-                        ) => {
-                            return () => {
-                                arr[i + 1]
-                                    ? arr[i + 1].cb(
-                                          req,
-                                          res,
-                                          next(req, res, arr, i++)
-                                      )
-                                    : secoundArr
-                                    ? secoundArr[0]
-                                        ? secoundArr[0].cb(
-                                              req,
-                                              res,
-                                              next(req, res, secoundArr, i++)
-                                          )
-                                        : 0
-                                    : 0;
-                            };
-                        };
-                        const prefix =
-                            typeof self.prefix === 'function'
-                                ? await self.prefix(request)
-                                : Array.isArray(self.prefix)
-                                ? self.prefix.find((p) =>
-                                      res.d.content.startsWith(p)
-                                  )
-                                : self.prefix;
-
-                        if (!prefix) {
-                            throw new Error('No valid prefix found');
-                        }
-                        if (!res.d.content.startsWith(prefix)) break;
-                        self.debug(
-                            res.d.content.replace(prefix, '').toLowerCase()
-                        );
-                        let command = self.commands.get(
-                            res.d.content.replace(prefix, '').toLowerCase()
-                        );
-                        console.log(command);
-                        console.log(self.commands);
-                        if (!command) {
-                            let ___ = self.events.get('CMD_NOT_FOUND');
-                            ___ ? ___() : 0;
-                            break;
-                        }
-                        let _: any[] = [];
-                        self.middleware.forEach((v) => _.push({ cb: v }));
-                        self.middleware[0]
-                            ? self.middleware[0](
-                                  request,
-                                  response,
-                                  next(request, response, _, 0, command)
-                              )
-                            : 0;
-
-                        try {
-                            command[0].cb(
-                                request,
-                                response,
-                                next(request, response, command, 0)
-                            );
-                        } catch (e) {
-                            let ____ = self.events.get('ERR');
-                            if (!____) throw e;
-                            ____();
-                        }
+        this.connect(discordAPI.gateway);
+        
+        this.op(10 /* Hello */, (data) => {
+            this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
+            this.response.op.emit(2 /* Identify */, {
+                d: {
+                    token: token.toString(),
+                    intents: 513,
+                    properties: {
+                        $os: process.platform,
+                        $browser: 'Fuwa.js',
+                        $device: 'Fuwa.js'
+                    }
                 }
             });
         });
+        this.op(9 /* Invalid Session */, () => { throw new Error('Invalid token') });
+        this.event('READY', ({ d: data }) => {
+            this.sessionId = data.session_id
+            this.bot = data.user;
+            let READY = this.events.get('READY');
+            READY ? READY() : 0;
+        });
+        const self = this;
+//         this.ws.on('open', async function () {
+//             self.debug(`Connect to ${discordAPI.gateway}`);
+//             this.on('message', async (e) => {
+//                 const res = JSON.parse(e.toString());
+//                 self.debug(`Incoming message from ${discordAPI.gateway}:
+// Event: ${res.t}
+// OPCOde: ${res.op}
+// Other: ${res.s}
+// Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+//                     '\\',
+//                     ''
+//                 )}`);
+//                 switch (res.op) {
+//                     case OPCodes.HELLO:
+//                         // Start heartbeat loop
+
+//                         self.debug(
+//                             `Attempting to identify with the following credentials: ${identify.replace(
+//                                 '\\',
+//                                 ''
+//                             )}`
+//                         );
+//                         self.debug('Credentials sent');
+
+//                         break;
+//                 }
+
+//                 switch (res.t) {
+//                     case 'READY':
+//                         self.debug(`
+//                             Logged in on ${new Date().toDateString()}
+//                         `);
+
+//                         self.bot = new User(res.d.user);
+//                         let fn = self.events.get('READY');
+//                         fn ? fn() : 0;
+//                         break;
+//                     case 'MESSAGE_CREATE':
+//                         let __ = self.events.get('MSG');
+//                         __ ? __() : 0;
+//                         self.debug('Recived A Message :' + res.d.content);
+//                         let request: any = null; // new Request(token.toString(), res.d);
+//                         let response = new Response(res.d, token.toString());
+//                         const next = (
+//                             req: Request,
+//                             res: Response,
+//                             arr: { cb: commandCallback }[],
+//                             i = 0,
+//                             secoundArr?: { cb: commandCallback }[]
+//                         ) => {
+//                             return () => {
+//                                 arr[i + 1]
+//                                     ? arr[i + 1].cb(
+//                                           req,
+//                                           res,
+//                                           next(req, res, arr, i++)
+//                                       )
+//                                     : secoundArr
+//                                     ? secoundArr[0]
+//                                         ? secoundArr[0].cb(
+//                                               req,
+//                                               res,
+//                                               next(req, res, secoundArr, i++)
+//                                           )
+//                                         : 0
+//                                     : 0;
+//                             };
+//                         };
+//                         const prefix =
+//                             typeof self.prefix === 'function'
+//                                 ? await self.prefix(request)
+//                                 : Array.isArray(self.prefix)
+//                                 ? self.prefix.find((p) =>
+//                                       res.d.content.startsWith(p)
+//                                   )
+//                                 : self.prefix;
+
+//                         if (!prefix) {
+//                             throw new Error('No valid prefix found');
+//                         }
+//                         if (!res.d.content.startsWith(prefix)) break;
+//                         self.debug(
+//                             res.d.content.replace(prefix, '').toLowerCase()
+//                         );
+//                         let command = self.commands.get(
+//                             res.d.content.replace(prefix, '').toLowerCase()
+//                         );
+//                         console.log(command);
+//                         console.log(self.commands);
+//                         if (!command) {
+//                             let ___ = self.events.get('CMD_NOT_FOUND');
+//                             ___ ? ___() : 0;
+//                             break;
+//                         }
+//                         let _: any[] = [];
+//                         self.middleware.forEach((v) => _.push({ cb: v }));
+//                         self.middleware[0]
+//                             ? self.middleware[0](
+//                                   request,
+//                                   response,
+//                                   next(request, response, _, 0, command)
+//                               )
+//                             : 0;
+
+//                         try {
+//                             command[0].cb(
+//                                 request,
+//                                 response,
+//                                 next(request, response, command, 0)
+//                             );
+//                         } catch (e) {
+//                             let ____ = self.events.get('ERR');
+//                             if (!____) throw e;
+//                             ____();
+//                         }
+//                 }
+//             });
+//         });
     }
     logout(end: boolean = true) {
         if (this.ws && this.loop) {
@@ -404,27 +379,27 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
     }
 
     setStatus(status: statusOptions) {
-        let activities: any = [
-            {
-                name: status.name,
-            },
-        ];
-        status.type && status.type.toLowerCase() !== 'streaming'
-            ? (activities[0]['type'] = this.statusTypeOp[
-                  status.type.toLowerCase()
-              ])
-            : status.type &&
-              status.type.toLowerCase() === 'streaming' &&
-              status.url
-            ? ((activities[0].type = 1), (activities[0].url = status.url))
-            : (activities[0]['type'] = 4);
-        this.cred.d.presence.activities = activities;
-        status.status
-            ? (this.cred.d.presence.status = status.status)
-            : (this.cred.d.presence.status = 'online');
-        status.afk
-            ? (this.cred.d.presence.afk = status.afk)
-            : (this.cred.d.presence.afk = 'false');
+        // let activities: any = [
+        //     {
+        //         name: status.name,
+        //     },
+        // ];
+        // status.type && status.type.toLowerCase() !== 'streaming'
+        //     ? (activities[0]['type'] = this.statusTypeOp[
+        //           status.type.toLowerCase()
+        //       ])
+        //     : status.type &&
+        //       status.type.toLowerCase() === 'streaming' &&
+        //       status.url
+        //     ? ((activities[0].type = 1), (activities[0].url = status.url))
+        //     : (activities[0]['type'] = 4);
+        // this.cred.d.presence.activities = activities;
+        // status.status
+        //     ? (this.cred.d.presence.status = status.status)
+        //     : (this.cred.d.presence.status = 'online');
+        // status.afk
+        //     ? (this.cred.d.presence.afk = status.afk)
+        //     : (this.cred.d.presence.afk = 'false');
     }
 }
 
