@@ -2,6 +2,7 @@
 import WebSocket from 'ws';
 import User from './User';
 import Request from './Request';
+import { DiscordAPIEvents, DiscordAPIRespone } from './_Const';
 import Response from './Reponse';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
@@ -107,6 +108,7 @@ declare class Client {
      */
     constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
     protected debug(bug: Error | any): void;
+    protected APIEvent<T extends keyof DiscordAPIEvents>(event: T, data: DiscordAPIRespone<T>): void;
     /**
      * Command function
      * @param {string|string[]} name Name of the command,

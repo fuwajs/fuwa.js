@@ -7,7 +7,7 @@ exports.default = {
      * @param {number} g
      * @param {number} b
      */
-    rgb: function (r, g, b) {
+    rgb(r, g, b) {
         return ('#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1));
     },
     mind: '#3EB489',

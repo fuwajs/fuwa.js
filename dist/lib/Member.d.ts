@@ -1,4 +1,4 @@
-import User from "./User";
+import User from './User';
 declare class Member extends User {
 }
 export default Member;

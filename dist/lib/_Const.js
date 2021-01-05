@@ -17,6 +17,6 @@ exports.OPCodes = {
 };
 exports.discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
-    api: "https://discord.com/api/v8/",
+    api: `https://discord.com/api/v8/`,
     discord: 'https://discord.com',
 };

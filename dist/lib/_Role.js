@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-;
 class Role {
     constructor(data) {
         this.hoist = false;
@@ -29,5 +28,4 @@ class Role {
         return this;
     }
 }
-;
 exports.default = Role;
