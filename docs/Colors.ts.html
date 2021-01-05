@@ -32,7 +32,7 @@
     
 
 
-    <title>Home</title>
+    <title>Colors.ts</title>
 
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -69,29 +69,47 @@
 
 <div id="main">
     
+    <h1 id='page-title' class="page-title">Colors.ts</h1>
+    
 
     
 
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
-    <section class="readme">
-        <article><h1>Fuwa.js</h1></article>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>export default {
+    /**
+     * Generate a hex color string from rgb properties
+     * @param {number} r
+     * @param {number} g
+     * @param {number} b
+     */
+    rgb(r: number, g: number, b: number) {
+        return (
+            '#' + ((1 &lt;&lt; 24) + (r &lt;&lt; 16) + (g &lt;&lt; 8) + b).toString(16).slice(1)
+        );
+    },
+    mind: '#3EB489',
+    white: '#FFFFFF',
+    snow: '#FFFAFA',
+    aliceBlue: '#f0f8ff',
+    antiqueWhite: '#faebd7',
+    aqua: '#00ffff',
+    aquaMarine: '#7fffd4',
+    azure: '#f0ffff',
+    beige: '#f5f5dc',
+    bisque: '#ffe4c4',
+    black: '#000000',
+    blanchedAlmond: '#ffebcd',
+    blue: '#0000ff',
+    blueViolet: '#8a2be2',
+    brown: '#a52a2a',
+};
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

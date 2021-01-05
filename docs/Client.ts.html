@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="channel.html">channel</a></li><li><a href="commandOptions.html">commandOptions</a></li><li><a href="statusOptions.html">statusOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#on">on</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li><li><a href="statusOptions.html">statusOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
 </nav>
 
 <div id="main">
@@ -81,9 +81,14 @@
         <article>
             <pre class="prettyprint source linenums"><code>import WebSocket from 'ws';
 import User from './User';
-import Req from './Req';
-import { discordAPI, OPCodes } from './_Const';
-import Response from './Res';
+import Request from './Request';
+import {
+    discordAPI,
+    DiscordAPIEvents,
+    DiscordAPIRespone,
+    OPCodes,
+} from './_Const';
+import Response from './Reponse';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 function next() {
@@ -153,13 +158,15 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Req,
+    req: Request,
     res: Response,
     next: any
 ) => Promise&lt;void> | void;
 export interface Events {
-    READY: () => void | Promise&lt;void>;
-    MSG: (req: Req) => void | Promise&lt;void>;
+    READY(): void | Promise&lt;void>;
+    MSG(req: Request): void | Promise&lt;void>;
+    CMD_NOT_FOUND(req: Request, cmd: commandCallback): void | Promise&lt;void>;
+    ERR(err: Error): void | Promise&lt;void>;
 }
 export interface clientOptions {
     /**
@@ -181,15 +188,18 @@ export interface clientOptions {
 class Client {
     public bot: User | null = null;
     public ws: WebSocket | undefined;
-    private debugMode: boolean;
-    private events: Map&lt;keyof Events, Function> = new Map();
-    private prefix: string;
-    private loop: NodeJS.Timeout | undefined;
-    private commands: Map&lt;
+    protected debugMode: boolean;
+    protected events: Map&lt;keyof Events, Function> = new Map();
+    protected prefix:
+        | string
+        | string[]
+        | ((req: Request) => Promise&lt;string> | string);
+    protected loop: NodeJS.Timeout | undefined;
+    protected commands: Map&lt;
         string,
         { cb: commandCallback; options: commandOptions }[]
     > = new Map();
-    private middleware: commandCallback[] = [];
+    protected middleware: commandCallback[] = [];
     protected statusTypeOp: any = {
         playing: 0,
         streaming: 1,
@@ -197,7 +207,7 @@ class Client {
         custom: 4,
         competing: 5,
     };
-    private cred: any = {
+    protected cred: any = {
         op: OPCodes.IDENTIFY,
         d: {
             token: null,
@@ -213,17 +223,32 @@ class Client {
     /**
      * @param {string} prefix The prefix for your bot
      */
-    constructor(prefix: string, options?: clientOptions) {
+    constructor(
+        prefix:
+            | string
+            | string[]
+            | ((req: Request) => Promise&lt;string> | string),
+        options?: clientOptions
+    ) {
         this.debugMode = options?.debug || false;
         this.prefix = prefix;
     }
-    debug(bug: Error | string) {
+    protected debug(bug: Error | any) {
         if (this.debugMode) {
             if (bug instanceof Error) {
                 throw bug;
             } else {
                 console.log(bug + '\n');
             }
+        }
+    }
+    protected APIEvent&lt;T extends keyof DiscordAPIEvents>(
+        event: T,
+        data: DiscordAPIRespone&lt;T>
+    ) {
+        switch (event) {
+            case 'READY':
+                event;
         }
     }
     /**
@@ -234,7 +259,8 @@ class Client {
      * @returns {Client}
      * @example
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'); // send message
+     *      res.send('Pong!'-+
+     * ); // send message
      * });
      */
     command(
@@ -248,7 +274,7 @@ class Client {
                     desc: 'No description was provided',
                 };
                 let commands = this.commands.get(key);
-                commands ? commands.push({ cb, options: option }) : undefined;
+                commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         } else {
@@ -257,14 +283,17 @@ class Client {
             };
             let commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
-            this.commands.set(
-                this.prefix + name,
-                commands || [{ cb, options: option }]
-            );
+            this.commands.set(name, commands || [{ cb, options: option }]);
         }
         return this;
     }
-
+    /**
+     * @param {keyof Events} event The event
+     * @param {Function} cb The callback function
+     * @example
+     *
+     * cli.on('READY', () => console.log('Up and ready to go!'));
+     */
     on&lt;T extends keyof Events>(event: T, cb: Events[T]) {
         this.events.set(event, cb);
         return this;
@@ -296,13 +325,13 @@ class Client {
      * @param {statusOptions} status Your Bot Status Options
      */
 
-    login(token: string | Buffer) {
+    async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
         this.ws = new WebSocket(discordAPI.gateway);
         const self = this;
-        this.ws.on('open', function () {
+        this.ws.on('open', async function () {
             self.debug(`Connect to ${discordAPI.gateway}`);
-            this.on('message', (e) => {
+            this.on('message', async (e) => {
                 const res = JSON.parse(e.toString());
                 self.debug(`Incoming message from ${discordAPI.gateway}:
 Event: ${res.t}
@@ -319,6 +348,8 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                         // Start heartbeat loop
 
                         self.loop = setInterval(() => {
+                            if (!self.bot)
+                                throw new Error('Unable to login to discord');
                             this.send(
                                 JSON.stringify({
                                     op: 1,
@@ -365,12 +396,13 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                         fn ? fn() : 0;
                         break;
                     case 'MESSAGE_CREATE':
+                        let __ = self.events.get('MSG');
+                        __ ? __() : 0;
                         self.debug('Recived A Message :' + res.d.content);
-                        let request = new Req(token.toString(), res.d);
+                        let request: any = null; // new Request(token.toString(), res.d);
                         let response = new Response(res.d, token.toString());
-                        let command = self.commands.get(res.d.content);
                         const next = (
-                            req: Req,
+                            req: Request,
                             res: Response,
                             arr: { cb: commandCallback }[],
                             i = 0,
@@ -394,6 +426,32 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                                     : 0;
                             };
                         };
+                        const prefix =
+                            typeof self.prefix === 'function'
+                                ? await self.prefix(request)
+                                : Array.isArray(self.prefix)
+                                ? self.prefix.find((p) =>
+                                      res.d.content.startsWith(p)
+                                  )
+                                : self.prefix;
+
+                        if (!prefix) {
+                            throw new Error('No valid prefix found');
+                        }
+                        if (!res.d.content.startsWith(prefix)) break;
+                        self.debug(
+                            res.d.content.replace(prefix, '').toLowerCase()
+                        );
+                        let command = self.commands.get(
+                            res.d.content.replace(prefix, '').toLowerCase()
+                        );
+                        console.log(command);
+                        console.log(self.commands);
+                        if (!command) {
+                            let ___ = self.events.get('CMD_NOT_FOUND');
+                            ___ ? ___() : 0;
+                            break;
+                        }
                         let _: any[] = [];
                         self.middleware.forEach((v) => _.push({ cb: v }));
                         self.middleware[0]
@@ -403,13 +461,18 @@ Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
                                   next(request, response, _, 0, command)
                               )
                             : 0;
-                        command
-                            ? command[0].cb(
-                                  request,
-                                  response,
-                                  next(request, response, command)
-                              )
-                            : 0;
+
+                        try {
+                            command[0].cb(
+                                request,
+                                response,
+                                next(request, response, command, 0)
+                            );
+                        } catch (e) {
+                            let ____ = self.events.get('ERR');
+                            if (!____) throw e;
+                            ____();
+                        }
                 }
             });
         });
@@ -470,7 +533,7 @@ export default Client;
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"channel","link":"<a href=\"channel.html\">channel</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"},{"title":"statusOptions","link":"<a href=\"statusOptions.html\">statusOptions</a>"}];
+  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#on","link":"<a href=\"Client.html#on\">Client &rtrif; on</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"},{"title":"statusOptions","link":"<a href=\"statusOptions.html\">statusOptions</a>"}];
   setupSearch(list)
 </script>
 

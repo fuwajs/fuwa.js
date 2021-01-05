@@ -64,7 +64,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="channel.html">channel</a></li><li><a href="commandOptions.html">commandOptions</a></li><li><a href="statusOptions.html">statusOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+    <h2><a href="index.html"><div class="text">Home</div></a></h2><div class="search-box"><input type="text" placeholder="Search..." id="search-box" /><div class="search-item-container" id="search-item-container"><ul class="search-item-ul" id="search-item-ul"></ul></div></div><div class="sidebar-list-div"><h3>Classes</h3><ul><li><a href="Client.html">Client</a><ul class='methods'><li data-type='method'><a href="Client.html#command">command</a></li><li data-type='method'><a href="Client.html#login">login</a></li><li data-type='method'><a href="Client.html#on">on</a></li><li data-type='method'><a href="Client.html#use">use</a></li></ul></li></ul><h3>Interfaces</h3><ul><li><a href="commandOptions.html">commandOptions</a></li><li><a href="statusOptions.html">statusOptions</a></li></ul><h3><a href="global.html">Global</a></h3></div>
 </nav>
 
 <div id="main">
@@ -208,7 +208,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line16">line 16</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line15">line 15</a>
             </li></ul></dd>
         </div>
     
@@ -237,7 +237,8 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa libraryconst cli = new Fuwa.Client('?'); // Init The Client</code></pre>
+    <pre class="prettyprint"><code>const Fuwa = require('fuwa.js'); // Import Fuwa library
+const cli = new Fuwa.Client('?'); // Init The Client</code></pre>
 
     </div>
 
@@ -420,7 +421,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line69">line 69</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line75">line 75</a>
             </li></ul></dd>
         </div>
     
@@ -469,7 +470,10 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (req, res) => {     res.send('Pong!'); // send message});</code></pre>
+    <pre class="prettyprint"><code>cli.command(['ping', 'latency'], (req, res) => {
+     res.send('Pong!'-+
+); // send message
+});</code></pre>
 
     </div>
 
@@ -481,7 +485,7 @@
 
     <h4 class="name" id="login">
         <a href="#login">#</a>
-        <span class="type-signature"></span>login<span class="signature">(token, status)</span><span class="type-signature"></span>
+        <span class="type-signature">(async) </span>login<span class="signature">(token, status)</span><span class="type-signature"></span>
     </h4>
 
     
@@ -611,7 +615,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line119">line 119</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line132">line 132</a>
             </li></ul></dd>
         </div>
     
@@ -636,6 +640,165 @@
 
 
 
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="on">
+        <a href="#on">#</a>
+        <span class="type-signature"></span>on<span class="signature">(event, cb)</span><span class="type-signature"></span>
+    </h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Parameters:</strong>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cb</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The callback function</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    </div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class="details-item-container">
+            <dt class="tag-source">Source:</dt>
+            <dd class="tag-source"><ul class="dummy"><li>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line103">line 103</a>
+            </li></ul></dd>
+        </div>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
+        <strong>Example</strong>
+        
+    <pre class="prettyprint"><code>cli.on('READY', () => console.log('Up and ready to go!'));</code></pre>
+
+    </div>
 
 
         
@@ -749,7 +912,7 @@
         <div class="details-item-container">
             <dt class="tag-source">Source:</dt>
             <dd class="tag-source"><ul class="dummy"><li>
-                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line106">line 106</a>
+                <a href="Client.ts.html">Client.ts</a>, <a href="Client.ts.html#line119">line 119</a>
             </li></ul></dd>
         </div>
     
@@ -798,7 +961,10 @@
     <div class="method-member-container flex flex-col w-100 overflow-auto mt-20">
         <strong>Example</strong>
         
-    <pre class="prettyprint"><code>cli.use((req, res, next) => {     req.send(`${req.command} has been used!`);     next(); // call the next middlware/command})</code></pre>
+    <pre class="prettyprint"><code>cli.use((req, res, next) => {
+     req.send(`${req.command} has been used!`);
+     next(); // call the next middlware/command
+})</code></pre>
 
     </div>
 
@@ -832,7 +998,7 @@
 <script src="scripts/linenumber.js"></script>
 <script src="scripts/fix-code-block.js"></script>
 <script>
-  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"channel","link":"<a href=\"channel.html\">channel</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"},{"title":"statusOptions","link":"<a href=\"statusOptions.html\">statusOptions</a>"}];
+  var list = [{"title":"Client","link":"<a href=\"Client.html\">Client</a>"},{"title":"Client#command","link":"<a href=\"Client.html#command\">Client &rtrif; command</a>"},{"title":"Client#login","link":"<a href=\"Client.html#login\">Client &rtrif; login</a>"},{"title":"Client#on","link":"<a href=\"Client.html#on\">Client &rtrif; on</a>"},{"title":"Client#use","link":"<a href=\"Client.html#use\">Client &rtrif; use</a>"},{"title":"commandOptions","link":"<a href=\"commandOptions.html\">commandOptions</a>"},{"title":"statusOptions","link":"<a href=\"statusOptions.html\">statusOptions</a>"}];
   setupSearch(list)
 </script>
 
