@@ -1,7 +1,12 @@
 import WebSocket from 'ws';
 import User from './User';
 import Request from './Request';
-import { discordAPI, OPCodes } from './_Const';
+import {
+    discordAPI,
+    DiscordAPIEvents,
+    DiscordAPIRespone,
+    OPCodes,
+} from './_Const';
 import Response from './Reponse';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
@@ -154,6 +159,15 @@ class Client {
             } else {
                 console.log(bug + '\n');
             }
+        }
+    }
+    protected APIEvent<T extends keyof DiscordAPIEvents>(
+        event: T,
+        data: DiscordAPIRespone<T>
+    ) {
+        switch (event) {
+            case 'READY':
+                event;
         }
     }
     /**
