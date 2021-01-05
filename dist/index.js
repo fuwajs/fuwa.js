@@ -3,15 +3,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Colors = exports.Embed = exports.User = exports.Client = void 0;
-var Client_1 = __importDefault(require("./lib/Client"));
-var User_1 = __importDefault(require("./lib/User"));
-var Embed_1 = __importDefault(require("./lib/Embed"));
+exports.Colors = exports.Role = exports.Embed = exports.User = exports.Client = void 0;
+const Client_1 = __importDefault(require("./lib/Client"));
+const User_1 = __importDefault(require("./lib/User"));
+const Embed_1 = __importDefault(require("./lib/Embed"));
+const _Role_1 = __importDefault(require("./lib/_Role"));
 exports.Client = Client_1.default;
 exports.User = User_1.default;
 exports.Embed = Embed_1.default;
+exports.Role = _Role_1.default;
 exports.Colors = {
-    rgb: function (r, g, b) {
+    rgb(r, g, b) {
         return ('#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1));
     },
     mind: '#3EB489',

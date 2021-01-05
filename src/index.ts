@@ -1,9 +1,11 @@
 import _Client from './lib/Client';
 import _User from './lib/User';
 import _Embed from './lib/Embed';
+import _Role from './lib/_Role';
 export const Client = _Client;
 export const User = _User;
 export const Embed = _Embed;
+export const Role = _Role;
 export const Colors = {
     rgb(r: number, g: number, b: number) {
         return (
