@@ -43,7 +43,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-push": "npm run format && npm run build && npm run docs"
+            "pre-commit": "echo 'commiting' && npm run format && npm run build && npm run docs"
         }
 
     }
