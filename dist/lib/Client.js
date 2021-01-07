@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const _Const_1 = require("./_Const");
+const _DiscordAPI_1 = require("./_DiscordAPI");
 const Emitter_1 = __importDefault(require("./Emitter"));
 /**
  * Client Class
@@ -126,7 +126,7 @@ class Client extends Emitter_1.default {
             if (!this.prefix)
                 throw new Error('No prefix provided');
             console.log(token.toString());
-            this.connect(_Const_1.discordAPI.gateway);
+            this.connect(_DiscordAPI_1.discordAPI.gateway);
             this.op(10 /* Hello */, (data) => {
                 console.log(data);
                 this.loop = setInterval(() => this.response.op.emit(1, 251), data.heartbeat_interval);
@@ -149,7 +149,6 @@ class Client extends Emitter_1.default {
                 let READY = this.events.get('READY');
                 READY ? READY() : 0;
             });
-            const self = this;
             //         this.ws.on('open', async function () {
             //             self.debug(`Connect to ${discordAPI.gateway}`);
             //             this.on('message', async (e) => {

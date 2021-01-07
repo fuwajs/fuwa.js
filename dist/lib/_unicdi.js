@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const undici_1 = require("undici");
-const _Const_1 = require("./_Const");
-const http = new undici_1.Client(_Const_1.discordAPI.discord);
+const _DiscordAPI_1 = require("./_DiscordAPI");
+const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
     GET(path, token) {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {

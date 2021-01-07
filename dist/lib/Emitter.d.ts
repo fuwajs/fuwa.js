@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import { DiscordAPIOP as DiscordAPIOPResponse, DiscordAPIEvents } from './_Const';
+import { DiscordAPIOP as DiscordAPIOPResponse, DiscordAPIEvents } from './_DiscordAPI';
 declare class Emitter {
     protected ws?: WebSocket;
     private OPevents;
