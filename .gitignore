@@ -1,4 +1,4 @@
-
+docs
 .vscode
 node_modules
 */**/*.secret
