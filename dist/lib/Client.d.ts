@@ -15,7 +15,7 @@ export interface statusOptions {
      */
     name: string;
     /**
-     *available types are playing , listening , streaming ,  competing
+     * available types are playing , listening , streaming ,  competing
      */
     type?: statusType;
     /**
@@ -30,7 +30,7 @@ export interface statusOptions {
     status?: status;
     /**
      * whether or not the bot is afk
-     * default false
+     * @default false
      */
     afk?: boolean;
 }
@@ -92,6 +92,7 @@ declare class Client extends Emitter {
     bot: User | null;
     private sessionId;
     protected debugMode: boolean;
+    protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
     protected loop?: number;
@@ -120,7 +121,7 @@ declare class Client extends Emitter {
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions): this;
     /**
-     * @param {keyof Events} event The event
+     * @param {T} event The event
      * @param {Function} cb The callback function
      * @example
      *

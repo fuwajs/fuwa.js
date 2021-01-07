@@ -12,9 +12,9 @@
         "discordapi"
     ],
     "scripts": {
-        "docs": "jsdoc -c jsdoc.json .",
+        "docs": "npx jsdoc -c jsdoc.json .",
         "test": "npm run build && node examples/index",
-        "build": "tsc -p .",
+        "build": "npx tsc -p .",
         "format": "npx prettier --config .prettierrc.json 'src/**/*.ts' --write"
     },
     "repository": {

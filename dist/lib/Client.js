@@ -14,9 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const _Const_1 = require("./_Const");
 const Emitter_1 = __importDefault(require("./Emitter"));
-function next() {
-    console.log('Will Do Something');
-}
 /**
  * Client Class
  * @example
@@ -31,6 +28,7 @@ class Client extends Emitter_1.default {
         super();
         this.bot = null;
         this.sessionId = '';
+        this.status = [];
         this.events = new Map();
         this.commands = new Map();
         this.middleware = [];
@@ -88,7 +86,7 @@ class Client extends Emitter_1.default {
         return this;
     }
     /**
-     * @param {keyof Events} event The event
+     * @param {T} event The event
      * @param {Function} cb The callback function
      * @example
      *
@@ -271,27 +269,27 @@ class Client extends Emitter_1.default {
         }
     }
     setStatus(status) {
-        // let activities: any = [
-        //     {
-        //         name: status.name,
-        //     },
-        // ];
-        // status.type && status.type.toLowerCase() !== 'streaming'
-        //     ? (activities[0]['type'] = this.statusTypeOp[
-        //           status.type.toLowerCase()
-        //       ])
-        //     : status.type &&
-        //       status.type.toLowerCase() === 'streaming' &&
-        //       status.url
-        //     ? ((activities[0].type = 1), (activities[0].url = status.url))
-        //     : (activities[0]['type'] = 4);
-        // this.cred.d.presence.activities = activities;
-        // status.status
-        //     ? (this.cred.d.presence.status = status.status)
-        //     : (this.cred.d.presence.status = 'online');
-        // status.afk
-        //     ? (this.cred.d.presence.afk = status.afk)
-        //     : (this.cred.d.presence.afk = 'false');
+        let cred = {};
+        let activities = [
+            {
+                name: status.name,
+            },
+        ];
+        status.type && status.type.toLowerCase() !== 'streaming'
+            ? (activities[0]['type'] = this.statusTypeOp[status.type.toLowerCase()])
+            : status.type &&
+                status.type.toLowerCase() === 'streaming' &&
+                status.url
+                ? ((activities[0].type = 1), (activities[0].url = status.url))
+                : (activities[0]['type'] = 4);
+        cred.d.presence.activities = activities;
+        status.status
+            ? (cred.d.presence.status = status.status)
+            : (cred.d.presence.status = 'online');
+        status.afk
+            ? (cred.d.presence.afk = status.afk)
+            : (cred.d.presence.afk = 'false');
+        this.stat;
     }
 }
 exports.default = Client;

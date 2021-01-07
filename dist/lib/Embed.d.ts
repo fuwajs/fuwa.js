@@ -104,7 +104,7 @@ declare class Embed {
      * embed.setImage('foo.bar.png');
      *
      * // Image with URL
-     * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg's)
+     * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg')
      *
      */
     setImage(imageUrl: string, obj?: {
