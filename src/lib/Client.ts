@@ -147,7 +147,7 @@ class Client extends Emitter {
             }
         }
     }
-    
+
     /**
      * Command function
      * @param name Name of the command,
@@ -199,7 +199,7 @@ class Client extends Emitter {
      * a function that is ran before every command
      * @param  cb Your middleware function
      * @returns A client
-     * @description 
+     * @description
      * ```typescript
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
@@ -223,11 +223,11 @@ class Client extends Emitter {
 
     async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
-        if(token.toString().length !== 59 /* discord token length */) {
-            token = readFile(join(__dirname, token.toString()))
+        if (token.toString().length !== 59 /* discord token length */) {
+            token = readFile(join(__dirname, token.toString()));
         }
         this.connect(discordAPI.gateway);
-        
+
         this.op(10 /* Hello */, (data) => {
             this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
             this.response.op.emit(2 /* Identify */, {
@@ -237,137 +237,139 @@ class Client extends Emitter {
                     properties: {
                         $os: process.platform,
                         $browser: 'Fuwa.js',
-                        $device: 'Fuwa.js'
-                    }
-                }
+                        $device: 'Fuwa.js',
+                    },
+                },
             });
         });
-        this.op(9 /* Invalid Session */, () => { throw new Error('Invalid token') });
+        this.op(9 /* Invalid Session */, () => {
+            throw new Error('Invalid token');
+        });
         this.event('READY', ({ d: data }) => {
-            this.sessionId = data.session_id
+            this.sessionId = data.session_id;
             this.bot = data.user;
             let READY = this.events.get('READY');
             READY ? READY() : 0;
         });
         const self = this;
-//         this.ws.on('open', async function () {
-//             self.debug(`Connect to ${discordAPI.gateway}`);
-//             this.on('message', async (e) => {
-//                 const res = JSON.parse(e.toString());
-//                 self.debug(`Incoming message from ${discordAPI.gateway}:
-// Event: ${res.t}
-// OPCOde: ${res.op}
-// Other: ${res.s}
-// Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
-//                     '\\',
-//                     ''
-//                 )}`);
-//                 switch (res.op) {
-//                     case OPCodes.HELLO:
-//                         // Start heartbeat loop
+        //         this.ws.on('open', async function () {
+        //             self.debug(`Connect to ${discordAPI.gateway}`);
+        //             this.on('message', async (e) => {
+        //                 const res = JSON.parse(e.toString());
+        //                 self.debug(`Incoming message from ${discordAPI.gateway}:
+        // Event: ${res.t}
+        // OPCOde: ${res.op}
+        // Other: ${res.s}
+        // Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+        //                     '\\',
+        //                     ''
+        //                 )}`);
+        //                 switch (res.op) {
+        //                     case OPCodes.HELLO:
+        //                         // Start heartbeat loop
 
-//                         self.debug(
-//                             `Attempting to identify with the following credentials: ${identify.replace(
-//                                 '\\',
-//                                 ''
-//                             )}`
-//                         );
-//                         self.debug('Credentials sent');
+        //                         self.debug(
+        //                             `Attempting to identify with the following credentials: ${identify.replace(
+        //                                 '\\',
+        //                                 ''
+        //                             )}`
+        //                         );
+        //                         self.debug('Credentials sent');
 
-//                         break;
-//                 }
+        //                         break;
+        //                 }
 
-//                 switch (res.t) {
-//                     case 'READY':
-//                         self.debug(`
-//                             Logged in on ${new Date().toDateString()}
-//                         `);
+        //                 switch (res.t) {
+        //                     case 'READY':
+        //                         self.debug(`
+        //                             Logged in on ${new Date().toDateString()}
+        //                         `);
 
-//                         self.bot = new User(res.d.user);
-//                         let fn = self.events.get('READY');
-//                         fn ? fn() : 0;
-//                         break;
-//                     case 'MESSAGE_CREATE':
-//                         let __ = self.events.get('MSG');
-//                         __ ? __() : 0;
-//                         self.debug('Recived A Message :' + res.d.content);
-//                         let request: any = null; // new Request(token.toString(), res.d);
-//                         let response = new Response(res.d, token.toString());
-//                         const next = (
-//                             req: Request,
-//                             res: Response,
-//                             arr: { cb: commandCallback }[],
-//                             i = 0,
-//                             secoundArr?: { cb: commandCallback }[]
-//                         ) => {
-//                             return () => {
-//                                 arr[i + 1]
-//                                     ? arr[i + 1].cb(
-//                                           req,
-//                                           res,
-//                                           next(req, res, arr, i++)
-//                                       )
-//                                     : secoundArr
-//                                     ? secoundArr[0]
-//                                         ? secoundArr[0].cb(
-//                                               req,
-//                                               res,
-//                                               next(req, res, secoundArr, i++)
-//                                           )
-//                                         : 0
-//                                     : 0;
-//                             };
-//                         };
-//                         const prefix =
-//                             typeof self.prefix === 'function'
-//                                 ? await self.prefix(request)
-//                                 : Array.isArray(self.prefix)
-//                                 ? self.prefix.find((p) =>
-//                                       res.d.content.startsWith(p)
-//                                   )
-//                                 : self.prefix;
+        //                         self.bot = new User(res.d.user);
+        //                         let fn = self.events.get('READY');
+        //                         fn ? fn() : 0;
+        //                         break;
+        //                     case 'MESSAGE_CREATE':
+        //                         let __ = self.events.get('MSG');
+        //                         __ ? __() : 0;
+        //                         self.debug('Recived A Message :' + res.d.content);
+        //                         let request: any = null; // new Request(token.toString(), res.d);
+        //                         let response = new Response(res.d, token.toString());
+        //                         const next = (
+        //                             req: Request,
+        //                             res: Response,
+        //                             arr: { cb: commandCallback }[],
+        //                             i = 0,
+        //                             secoundArr?: { cb: commandCallback }[]
+        //                         ) => {
+        //                             return () => {
+        //                                 arr[i + 1]
+        //                                     ? arr[i + 1].cb(
+        //                                           req,
+        //                                           res,
+        //                                           next(req, res, arr, i++)
+        //                                       )
+        //                                     : secoundArr
+        //                                     ? secoundArr[0]
+        //                                         ? secoundArr[0].cb(
+        //                                               req,
+        //                                               res,
+        //                                               next(req, res, secoundArr, i++)
+        //                                           )
+        //                                         : 0
+        //                                     : 0;
+        //                             };
+        //                         };
+        //                         const prefix =
+        //                             typeof self.prefix === 'function'
+        //                                 ? await self.prefix(request)
+        //                                 : Array.isArray(self.prefix)
+        //                                 ? self.prefix.find((p) =>
+        //                                       res.d.content.startsWith(p)
+        //                                   )
+        //                                 : self.prefix;
 
-//                         if (!prefix) {
-//                             throw new Error('No valid prefix found');
-//                         }
-//                         if (!res.d.content.startsWith(prefix)) break;
-//                         self.debug(
-//                             res.d.content.replace(prefix, '').toLowerCase()
-//                         );
-//                         let command = self.commands.get(
-//                             res.d.content.replace(prefix, '').toLowerCase()
-//                         );
-//                         console.log(command);
-//                         console.log(self.commands);
-//                         if (!command) {
-//                             let ___ = self.events.get('CMD_NOT_FOUND');
-//                             ___ ? ___() : 0;
-//                             break;
-//                         }
-//                         let _: any[] = [];
-//                         self.middleware.forEach((v) => _.push({ cb: v }));
-//                         self.middleware[0]
-//                             ? self.middleware[0](
-//                                   request,
-//                                   response,
-//                                   next(request, response, _, 0, command)
-//                               )
-//                             : 0;
+        //                         if (!prefix) {
+        //                             throw new Error('No valid prefix found');
+        //                         }
+        //                         if (!res.d.content.startsWith(prefix)) break;
+        //                         self.debug(
+        //                             res.d.content.replace(prefix, '').toLowerCase()
+        //                         );
+        //                         let command = self.commands.get(
+        //                             res.d.content.replace(prefix, '').toLowerCase()
+        //                         );
+        //                         console.log(command);
+        //                         console.log(self.commands);
+        //                         if (!command) {
+        //                             let ___ = self.events.get('CMD_NOT_FOUND');
+        //                             ___ ? ___() : 0;
+        //                             break;
+        //                         }
+        //                         let _: any[] = [];
+        //                         self.middleware.forEach((v) => _.push({ cb: v }));
+        //                         self.middleware[0]
+        //                             ? self.middleware[0](
+        //                                   request,
+        //                                   response,
+        //                                   next(request, response, _, 0, command)
+        //                               )
+        //                             : 0;
 
-//                         try {
-//                             command[0].cb(
-//                                 request,
-//                                 response,
-//                                 next(request, response, command, 0)
-//                             );
-//                         } catch (e) {
-//                             let ____ = self.events.get('ERR');
-//                             if (!____) throw e;
-//                             ____();
-//                         }
-//                 }
-//             });
-//         });
+        //                         try {
+        //                             command[0].cb(
+        //                                 request,
+        //                                 response,
+        //                                 next(request, response, command, 0)
+        //                             );
+        //                         } catch (e) {
+        //                             let ____ = self.events.get('ERR');
+        //                             if (!____) throw e;
+        //                             ____();
+        //                         }
+        //                 }
+        //             });
+        //         });
     }
     logout(end: boolean = true) {
         if (this.ws && this.loop) {
@@ -377,7 +379,7 @@ class Client extends Emitter {
     }
 
     setStatus(status: statusOptions) {
-        let cred: any = {}
+        let cred: any = {};
         let activities: any = [
             {
                 name: status.name,

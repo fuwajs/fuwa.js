@@ -12,17 +12,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = require("path");
+const fs_1 = require("fs");
 const _Const_1 = require("./_Const");
 const Emitter_1 = __importDefault(require("./Emitter"));
 /**
  * Client Class
- * @example
+ * ```typescript
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
+ * ```
  */
 class Client extends Emitter_1.default {
     /**
-     * @param {string} prefix The prefix for your bot
+     * @param prefix The prefix for your bot
      */
     constructor(prefix, options) {
         super();
@@ -54,14 +57,14 @@ class Client extends Emitter_1.default {
     }
     /**
      * Command function
-     * @param {string|string[]} name Name of the command,
-     * @param {commandCallback} cb The function that is called when the command is ran
-     * @param {commandOptions} options Options for your command
-     * @returns {Client}
-     * @example
+     * @param name Name of the command,
+     * @param cb The function that is called when the command is ran
+     * @param  options Options for your command
+     * @returns client
+     * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'-+
-     * ); // send message
+     *      res.send('Pong!)
+     * ```
      * });
      */
     command(name, cb, options) {
@@ -86,27 +89,27 @@ class Client extends Emitter_1.default {
         return this;
     }
     /**
-     * @param {T} event The event
-     * @param {Function} cb The callback function
-     * @example
-     *
+     * @typeParam T The event name
+     * @param cb The callback function
+     * ```typescript
      * cli.on('READY', () => console.log('Up and ready to go!'));
+     * ```
      */
     on(event, cb) {
         this.events.set(event, cb);
         return this;
     }
     /**
-     * Add a middleware
-     * @param {commandCallback} cb Your middleware function
-     * @returns {Client}
-     * @description a function that is ran before every command
-     * @example
-     *
+     * a function that is ran before every command
+     * @param  cb Your middleware function
+     * @returns A client
+     * @description
+     * ```typescript
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
      * })
+     * ```
      */
     use(cb) {
         this.middleware.push(cb);
@@ -114,17 +117,19 @@ class Client extends Emitter_1.default {
     }
     /**
      * options for bot status
-     *  @interface
      */
     /**
      * Log your bot into discord
-     * @param {string|Buffer} token Your bot token
-     * @param {statusOptions} status Your Bot Status Options
+     * @param token Your bot token
+     * @param status Your Bot Status Options
      */
     login(token) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.prefix)
                 throw new Error('No prefix provided');
+            if (token.toString().length !== 59 /* discord token length */) {
+                token = fs_1.readFileSync(path_1.join(__dirname, token.toString()));
+            }
             this.connect(_Const_1.discordAPI.gateway);
             this.op(10 /* Hello */, (data) => {
                 this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
@@ -135,12 +140,14 @@ class Client extends Emitter_1.default {
                         properties: {
                             $os: process.platform,
                             $browser: 'Fuwa.js',
-                            $device: 'Fuwa.js'
-                        }
-                    }
+                            $device: 'Fuwa.js',
+                        },
+                    },
                 });
             });
-            this.op(9 /* Invalid Session */, () => { throw new Error('Invalid token'); });
+            this.op(9 /* Invalid Session */, () => {
+                throw new Error('Invalid token');
+            });
             this.event('READY', ({ d: data }) => {
                 this.sessionId = data.session_id;
                 this.bot = data.user;

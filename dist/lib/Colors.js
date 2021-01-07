@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     /**
      * Generate a hex color string from rgb properties
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
+     * @param r
+     * @param g
+     * @param b
      */
     rgb(r, g, b) {
         return ('#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1));

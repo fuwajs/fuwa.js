@@ -14,18 +14,24 @@ class Emitter {
                 emit: (op, data) => {
                     var _a;
                     data.op = op;
-                    if (((_a = this.ws) === null || _a === void 0 ? void 0 : _a.OPEN) && !this.ws.CLOSED && !this.ws.CLOSING && !this.ws.CONNECTING)
+                    if (((_a = this.ws) === null || _a === void 0 ? void 0 : _a.OPEN) &&
+                        !this.ws.CLOSED &&
+                        !this.ws.CLOSING &&
+                        !this.ws.CONNECTING)
                         this.ws.send(JSON.stringify(data));
-                }
+                },
             },
             events: {
                 emit: (e, data) => {
                     var _a;
                     data.t = e;
-                    if (((_a = this.ws) === null || _a === void 0 ? void 0 : _a.OPEN) && !this.ws.CLOSED && !this.ws.CLOSING && !this.ws.CONNECTING)
+                    if (((_a = this.ws) === null || _a === void 0 ? void 0 : _a.OPEN) &&
+                        !this.ws.CLOSED &&
+                        !this.ws.CLOSING &&
+                        !this.ws.CONNECTING)
                         this.ws.send(JSON.stringify(data));
-                }
-            }
+                },
+            },
         };
     }
     connect(url) {
@@ -33,7 +39,7 @@ class Emitter {
         this.ws.on('open', () => {
             var _a;
             this.WSEvents.open ? this.WSEvents.open() : 0;
-            (_a = this.ws) === null || _a === void 0 ? void 0 : _a.on('message', data => {
+            (_a = this.ws) === null || _a === void 0 ? void 0 : _a.on('message', (data) => {
                 this.WSEvents.message ? this.WSEvents.message() : 0;
                 let res = JSON.parse(data.toString());
                 if (res.op === 0) {
