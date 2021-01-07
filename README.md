@@ -16,9 +16,10 @@ const client = new Fuwa.Client(
     '?'
 );
 
-client.on('READY', () => console.log('I am alive!'));
-
-client.command(['hi', 'hello'], (req, res) => res.send('Hello there :)'));
+client
+    .on('READY', () => console.log('I am alive!'));
+    .command(['hi', 'hello'], (req, res) => res.send(`Hello there my name is ${client.bot.username}!`));
 
 client.login('YOUR_TOKEN_HERE');
 ```
+Check the [docs](https://artrix9095.github.io/Fuwa.js) for more in depth examples.

@@ -1,4 +1,3 @@
-const { fs, path } = { fs: require('fs'), path: require('path') }; // Optional if you use login option 2
 const Fuwa = require('../dist/index'); // Import fuwa.js here!
 
 const client = new Fuwa.Client(req => '?', { debug: true });
@@ -11,9 +10,9 @@ client
         next();
     })
     .command('ping', (req, res, next) => {
-        res.send(new fuwa.Embed()
+        res.send(new Fuwa.Embed()
             .setTitle('Pong')
-            .setColor(fuwa.Colors.rgb(13, 186, 120))
+            .setColor(Fuwa.Colors.rgb(13, 186, 120))
         );
     })
     // Set your status!
@@ -25,8 +24,7 @@ client
 
 
 // login Option 1 (suggested):
-const TOKEN = fs.readFileSync(path.join(__dirname, 'token.secret')) // Replace this with your token file name
-client.login(TOKEN); // log the bot into discord
+client.login('token.secret'); // log the bot into discord
 
 // Login Option 2
 // client.login('PUT_YOUR_TOKEN_HERE');
