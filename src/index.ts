@@ -1,11 +1,4 @@
-import _Client from './lib/Client';
-import _User from './lib/User';
-import _Embed from './lib/Embed';
-import _Colors from './lib/Colors';
-export const Client = _Client;
-export const User = _User;
-export const Embed = _Embed;
-export const Colors = _Colors;
-
-// for all you canadians
-export const Colours = Colors;
+export { default as Client } from './lib/Client';
+export { default as Embed } from './lib/Embed';
+export { default as Colors } from './lib/Colors';
+export { default as Colours } from './lib/Colors';
