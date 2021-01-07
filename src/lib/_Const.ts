@@ -13,6 +13,17 @@ export const OPCodes = {
     // HEARTBEAT_ACK: 11,
 };
 
+export enum opCodes {
+    heartbeat,
+    indentify,
+    statusUpdate,
+    voiceStateUpdate,
+    resume,
+    requestGuildMembers,
+    invalidSession,
+    hello,
+}
+
 export const OPCodeMap = new Map<keyof typeof OPCodes, keyof DiscordAPIOP>()
     .set('HEARTBEAT', 1)
     .set('IDENTIFY', 2)
@@ -253,7 +264,7 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIEventRespone<T extends keyof DiscordAPIEvents> {
+export interface DiscordAPIEventResponse<T extends keyof DiscordAPIEvents> {
     op: 0;
     t: T;
     d: DiscordAPIEvents[T];

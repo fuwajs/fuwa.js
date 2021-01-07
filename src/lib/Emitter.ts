@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 import {
-    DiscordAPIEventRespone,
+    DiscordAPIEventResponse,
     DiscordAPIOP as DiscordAPIOPResponse,
     DiscordAPIEvents,
     DiscordAPIOP,

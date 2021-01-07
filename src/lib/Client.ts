@@ -6,9 +6,8 @@ import Request from './Request';
 import {
     discordAPI,
     DiscordAPIEvents,
-    DiscordAPIEventRespone,
-    OPCodes,
-    OPCodeMap,
+    DiscordAPIEventResponse,
+    opCodes,
 } from './_Const';
 import Response from './Reponse';
 import Emitter from './Emitter';
