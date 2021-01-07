@@ -4,7 +4,7 @@ import {
     DiscordAPIOP as DiscordAPIOPResponse,
     DiscordAPIEvents,
     DiscordAPIOP,
-} from './_Const';
+} from './_DiscordAPI';
 class Emitter {
     protected ws?: WebSocket;
     private OPevents: { [key: number]: (data: any) => any } = {};

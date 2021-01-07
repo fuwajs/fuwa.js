@@ -9,7 +9,7 @@ import {
     DiscordAPIEventRespone,
     OPCodes,
     OPCodeMap,
-} from './_Const';
+} from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -251,7 +251,6 @@ class Client extends Emitter {
             let READY = this.events.get('READY');
             READY ? READY() : 0;
         });
-        const self = this;
         //         this.ws.on('open', async function () {
         //             self.debug(`Connect to ${discordAPI.gateway}`);
         //             this.on('message', async (e) => {

@@ -1,5 +1,5 @@
 import { Client } from 'undici';
-import { discordAPI } from './_Const';
+import { discordAPI } from './_DiscordAPI';
 const http = new Client(discordAPI.discord);
 
 export default {
