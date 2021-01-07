@@ -6,7 +6,7 @@ import Request from './Request';
 import {
     discordAPI,
     DiscordAPIEvents,
-    DiscordAPIEventRespone,
+    DiscordAPIEventResponse,
     OPCodes,
     OPCodeMap,
 } from './_DiscordAPI';

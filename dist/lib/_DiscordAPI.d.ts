@@ -8,6 +8,16 @@ export declare const OPCodes: {
     INVALID_SESSION: number;
     HELLO: number;
 };
+export declare enum opCodes {
+    heartbeat = 0,
+    indentify = 1,
+    statusUpdate = 2,
+    voiceStateUpdate = 3,
+    resume = 4,
+    requestGuildMembers = 5,
+    invalidSession = 6,
+    hello = 7
+}
 export declare const OPCodeMap: Map<"HEARTBEAT" | "IDENTIFY" | "STATUS_UPDATE" | "VOICE_STATE_UPDATE" | "RESUME" | "REQUEST_GUILD_MEMBERS" | "INVALID_SESSION" | "HELLO", 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>;
 export declare const discordAPI: {
     gateway: string;
@@ -229,7 +239,7 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIEventRespone<T extends keyof DiscordAPIEvents> {
+export interface DiscordAPIEventResponse<T extends keyof DiscordAPIEvents> {
     op: 0;
     t: T;
     d: DiscordAPIEvents[T];
