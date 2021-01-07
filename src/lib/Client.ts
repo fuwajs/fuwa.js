@@ -1,5 +1,7 @@
 import WebSocket from 'ws';
 import User from './User';
+import { join } from 'path';
+import { readFileSync as readFile } from 'fs';
 import Request from './Request';
 import {
     discordAPI,
@@ -226,6 +228,9 @@ class Client extends Emitter {
 
     async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
+        if(token.toString().length !== 59 /* discord token length */) {
+            token = readFile(join(__dirname, token.toString()))
+        }
         this.connect(discordAPI.gateway);
         
         this.op(10 /* Hello */, (data) => {
