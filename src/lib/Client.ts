@@ -12,9 +12,6 @@ import Response from './Reponse';
 import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
-function next() {
-    console.log('Will Do Something');
-}
 /**
  * status options for bot
  * @interface
@@ -25,7 +22,7 @@ export interface statusOptions {
      */
     name: string;
     /**
-     *available types are playing , listening , streaming ,  competing
+     * available types are playing , listening , streaming ,  competing
      */
     type?: statusType;
     /**
@@ -43,7 +40,7 @@ export interface statusOptions {
     status?: status;
     /**
      * whether or not the bot is afk
-     * default false
+     * @default false
      */
     afk?: boolean;
 }
@@ -108,8 +105,9 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User | null = null;
-    private sessionId = ''
+    private sessionId = '';
     protected debugMode: boolean;
+    protected status: any = [];
     protected events: Map<keyof Events, Function> = new Map();
     protected prefix:
         | string
@@ -189,7 +187,7 @@ class Client extends Emitter {
         return this;
     }
     /**
-     * @param {keyof Events} event The event
+     * @param {T} event The event
      * @param {Function} cb The callback function
      * @example
      *
@@ -379,27 +377,29 @@ class Client extends Emitter {
     }
 
     setStatus(status: statusOptions) {
-        // let activities: any = [
-        //     {
-        //         name: status.name,
-        //     },
-        // ];
-        // status.type && status.type.toLowerCase() !== 'streaming'
-        //     ? (activities[0]['type'] = this.statusTypeOp[
-        //           status.type.toLowerCase()
-        //       ])
-        //     : status.type &&
-        //       status.type.toLowerCase() === 'streaming' &&
-        //       status.url
-        //     ? ((activities[0].type = 1), (activities[0].url = status.url))
-        //     : (activities[0]['type'] = 4);
-        // this.cred.d.presence.activities = activities;
-        // status.status
-        //     ? (this.cred.d.presence.status = status.status)
-        //     : (this.cred.d.presence.status = 'online');
-        // status.afk
-        //     ? (this.cred.d.presence.afk = status.afk)
-        //     : (this.cred.d.presence.afk = 'false');
+        let cred: any = {}
+        let activities: any = [
+            {
+                name: status.name,
+            },
+        ];
+        status.type && status.type.toLowerCase() !== 'streaming'
+            ? (activities[0]['type'] = this.statusTypeOp[
+                  status.type.toLowerCase()
+              ])
+            : status.type &&
+              status.type.toLowerCase() === 'streaming' &&
+              status.url
+            ? ((activities[0].type = 1), (activities[0].url = status.url))
+            : (activities[0]['type'] = 4);
+        cred.d.presence.activities = activities;
+        status.status
+            ? (cred.d.presence.status = status.status)
+            : (cred.d.presence.status = 'online');
+        status.afk
+            ? (cred.d.presence.afk = status.afk)
+            : (cred.d.presence.afk = 'false');
+        this.stat
     }
 }
 
