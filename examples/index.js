@@ -1,11 +1,11 @@
 const { fs, path } = { fs: require('fs'), path: require('path') }; // Optional if you use login option 2
-const fuwa = require('../dist/index'); // Import fuwa.js here!
+const Fuwa = require('../dist/index'); // Import fuwa.js here!
 
-const client = new fuwa.Client(req => '?', { debug: true });
+const client = new Fuwa.Client(req => '?', { debug: true });
 
 client
     // This function is going to be ran when the bot finishes loading and connects to discord
-    .on('READY', () => console.log('POG'))
+    .on('READY', () => console.log(`Hello, my name is ${client.bot.username}!`))
     .use((_, __, next) => {
         console.log('I WAS USED');
         next();

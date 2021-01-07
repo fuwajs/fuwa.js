@@ -289,7 +289,7 @@ class Client extends Emitter_1.default {
         status.afk
             ? (cred.d.presence.afk = status.afk)
             : (cred.d.presence.afk = 'false');
-        this.stat;
+        this.status = cred;
     }
 }
 exports.default = Client;

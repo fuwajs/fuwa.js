@@ -399,7 +399,7 @@ class Client extends Emitter {
         status.afk
             ? (cred.d.presence.afk = status.afk)
             : (cred.d.presence.afk = 'false');
-        this.stat
+        this.status = cred;
     }
 }
 
