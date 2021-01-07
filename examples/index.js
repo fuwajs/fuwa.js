@@ -1,4 +1,6 @@
 const Fuwa = require('../dist/index'); // Import fuwa.js here!
+const { join } = require('path');
+const { readFileSync: readFile } = require('fs')
 
 const client = new Fuwa.Client(req => '?', { debug: true });
 
@@ -16,15 +18,15 @@ client
         );
     })
     // Set your status!
-    .setStatus({
-        name: 'Some Status',
-        type: 'streaming',
-        url: 'https://blank.org'
-    });
+    // .setStatus({
+    //     name: 'Some Status',
+    //     type: 'streaming',
+    //     url: 'https://blank.org'
+    // });
 
 
 // login Option 1 (suggested):
-client.login('token.secret'); // log the bot into discord
+client.login(readFile(join(__dirname, 'token.secret'))); // log the bot into discord
 
 // Login Option 2
 // client.login('PUT_YOUR_TOKEN_HERE');

@@ -12,8 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = require("path");
-const fs_1 = require("fs");
 const _Const_1 = require("./_Const");
 const Emitter_1 = __importDefault(require("./Emitter"));
 /**
@@ -127,28 +125,25 @@ class Client extends Emitter_1.default {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.prefix)
                 throw new Error('No prefix provided');
-            if (token.toString().length !== 59 /* discord token length */) {
-                token = fs_1.readFileSync(path_1.join(__dirname, token.toString()));
-            }
+            console.log(token.toString());
             this.connect(_Const_1.discordAPI.gateway);
             this.op(10 /* Hello */, (data) => {
-                this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
+                console.log(data);
+                this.loop = setInterval(() => this.response.op.emit(1, 251), data.heartbeat_interval);
                 this.response.op.emit(2 /* Identify */, {
-                    d: {
-                        token: token.toString(),
-                        intents: 513,
-                        properties: {
-                            $os: process.platform,
-                            $browser: 'Fuwa.js',
-                            $device: 'Fuwa.js',
-                        },
+                    token: token.toString(),
+                    intents: 513,
+                    properties: {
+                        $os: process.platform,
+                        $browser: 'Fuwa.js',
+                        $device: 'Fuwa.js',
                     },
                 });
             });
             this.op(9 /* Invalid Session */, () => {
                 throw new Error('Invalid token');
             });
-            this.event('READY', ({ d: data }) => {
+            this.event('READY', (data) => {
                 this.sessionId = data.session_id;
                 this.bot = data.user;
                 let READY = this.events.get('READY');
@@ -274,29 +269,6 @@ class Client extends Emitter_1.default {
             clearInterval(this.loop);
             end ? process.exit() : 0;
         }
-    }
-    setStatus(status) {
-        let cred = {};
-        let activities = [
-            {
-                name: status.name,
-            },
-        ];
-        status.type && status.type.toLowerCase() !== 'streaming'
-            ? (activities[0]['type'] = this.statusTypeOp[status.type.toLowerCase()])
-            : status.type &&
-                status.type.toLowerCase() === 'streaming' &&
-                status.url
-                ? ((activities[0].type = 1), (activities[0].url = status.url))
-                : (activities[0]['type'] = 4);
-        cred.d.presence.activities = activities;
-        status.status
-            ? (cred.d.presence.status = status.status)
-            : (cred.d.presence.status = 'online');
-        status.afk
-            ? (cred.d.presence.afk = status.afk)
-            : (cred.d.presence.afk = 'false');
-        this.status = cred;
     }
 }
 exports.default = Client;

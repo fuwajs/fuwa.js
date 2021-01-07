@@ -111,7 +111,7 @@ class Client extends Emitter {
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
-    protected loop?: number;
+    protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
         { cb: commandCallback; options: commandOptions }[]
@@ -223,29 +223,29 @@ class Client extends Emitter {
 
     async login(token: string | Buffer) {
         if (!this.prefix) throw new Error('No prefix provided');
-        if (token.toString().length !== 59 /* discord token length */) {
-            token = readFile(join(__dirname, token.toString()));
-        }
+        console.log(token.toString());
         this.connect(discordAPI.gateway);
 
         this.op(10 /* Hello */, (data) => {
-            this.loop = setInterval(() => this.response.op.emit(1, { d: 251 }));
+            console.log(data);
+            this.loop = setInterval(
+                () => this.response.op.emit(1, 251),
+                data.heartbeat_interval
+            );
             this.response.op.emit(2 /* Identify */, {
-                d: {
-                    token: token.toString(),
-                    intents: 513,
-                    properties: {
-                        $os: process.platform,
-                        $browser: 'Fuwa.js',
-                        $device: 'Fuwa.js',
-                    },
+                token: token.toString(),
+                intents: 513,
+                properties: {
+                    $os: process.platform,
+                    $browser: 'Fuwa.js',
+                    $device: 'Fuwa.js',
                 },
             });
         });
         this.op(9 /* Invalid Session */, () => {
             throw new Error('Invalid token');
         });
-        this.event('READY', ({ d: data }) => {
+        this.event('READY', (data) => {
             this.sessionId = data.session_id;
             this.bot = data.user;
             let READY = this.events.get('READY');
@@ -378,31 +378,31 @@ class Client extends Emitter {
         }
     }
 
-    setStatus(status: statusOptions) {
-        let cred: any = {};
-        let activities: any = [
-            {
-                name: status.name,
-            },
-        ];
-        status.type && status.type.toLowerCase() !== 'streaming'
-            ? (activities[0]['type'] = this.statusTypeOp[
-                  status.type.toLowerCase()
-              ])
-            : status.type &&
-              status.type.toLowerCase() === 'streaming' &&
-              status.url
-            ? ((activities[0].type = 1), (activities[0].url = status.url))
-            : (activities[0]['type'] = 4);
-        cred.d.presence.activities = activities;
-        status.status
-            ? (cred.d.presence.status = status.status)
-            : (cred.d.presence.status = 'online');
-        status.afk
-            ? (cred.d.presence.afk = status.afk)
-            : (cred.d.presence.afk = 'false');
-        this.status = cred;
-    }
+    // setStatus(status: statusOptions) {
+    //     let cred: any = {};
+    //     let activities: any = [
+    //         {
+    //             name: status.name,
+    //         },
+    //     ];
+    //     status.type && status.type.toLowerCase() !== 'streaming'
+    //         ? (activities[0]['type'] = this.statusTypeOp[
+    //               status.type.toLowerCase()
+    //           ])
+    //         : status.type &&
+    //           status.type.toLowerCase() === 'streaming' &&
+    //           status.url
+    //         ? ((activities[0].type = 1), (activities[0].url = status.url))
+    //         : (activities[0]['type'] = 4);
+    //     cred.d.presence.activities = activities;
+    //     status.status
+    //         ? (cred.d.presence.status = status.status)
+    //         : (cred.d.presence.status = 'online');
+    //     status.afk
+    //         ? (cred.d.presence.afk = status.afk)
+    //     : (cred.d.presence.afk = 'false');
+    // this.status = cred;
+    // }
 }
 
 export default Client;

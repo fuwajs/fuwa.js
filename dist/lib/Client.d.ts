@@ -91,7 +91,7 @@ declare class Client extends Emitter {
     protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
-    protected loop?: number;
+    protected loop?: NodeJS.Timeout;
     protected commands: Map<string, {
         cb: commandCallback;
         options: commandOptions;
@@ -147,6 +147,5 @@ declare class Client extends Emitter {
      */
     login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
-    setStatus(status: statusOptions): void;
 }
 export default Client;

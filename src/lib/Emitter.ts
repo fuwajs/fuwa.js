@@ -14,43 +14,43 @@ class Emitter {
         op: {
             emit: <T extends keyof DiscordAPIOPResponse>(
                 op: T,
-                data: DiscordAPIOPResponse[T]
+                d: DiscordAPIOPResponse[T]['d']
             ) => {
-                data.op = op;
-                if (
-                    this.ws?.OPEN &&
-                    !this.ws.CLOSED &&
-                    !this.ws.CLOSING &&
-                    !this.ws.CONNECTING
-                )
-                    this.ws.send(JSON.stringify(data));
+                this.ws.send(
+                    JSON.stringify({
+                        op,
+                        d,
+                        t: null,
+                    })
+                );
             },
         },
         events: {
             emit: <T extends keyof DiscordAPIEvents>(
-                e: T,
-                data: DiscordAPIEvents[T]
+                t: T,
+                d: DiscordAPIEvents[T]
             ) => {
-                data.t = e;
-                if (
-                    this.ws?.OPEN &&
-                    !this.ws.CLOSED &&
-                    !this.ws.CLOSING &&
-                    !this.ws.CONNECTING
-                )
-                    this.ws.send(JSON.stringify(data));
+                this.ws.send(
+                    JSON.stringify({
+                        t,
+                        d,
+                        op: 0,
+                    })
+                );
             },
         },
     };
     connect(url: string) {
         this.ws = new WebSocket(url);
         this.ws.on('open', () => {
+            console.log('Connected');
             this.WSEvents.open ? this.WSEvents.open() : 0;
             this.ws?.on('message', (data) => {
                 this.WSEvents.message ? this.WSEvents.message() : 0;
                 let res: { op: number; t: string | null; d: any } = JSON.parse(
                     data.toString()
                 );
+                console.log(res);
                 if (res.op === 0) {
                     if (!res.t)
                         throw new Error(
@@ -63,13 +63,13 @@ class Emitter {
     }
     op<T extends keyof DiscordAPIOPResponse>(
         op: T,
-        cb: (data: DiscordAPIOPResponse[T]) => any
+        cb: (data: DiscordAPIOPResponse[T]['d']) => any
     ) {
         this.OPevents[op] = cb;
     }
     event<T extends keyof DiscordAPIEvents>(
         e: T,
-        cb: (data: DiscordAPIEvents[T]) => any
+        cb: (data: DiscordAPIEvents[T]['d']) => any
     ) {
         this.APIEvents[e] = cb;
     }
