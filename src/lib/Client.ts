@@ -16,7 +16,6 @@ export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
  * status options for bot
- * @interface
  */
 export interface statusOptions {
     /**
@@ -42,7 +41,6 @@ export interface statusOptions {
     status?: status;
     /**
      * whether or not the bot is afk
-     * @default false
      */
     afk?: boolean;
 }
@@ -60,12 +58,10 @@ export interface commandOptions {
      */
     args?: {
         /**
-         * @name length
          * Length of your argument (including spaces).
          */
         length: number;
         /**
-         * @name default
          * Defualt value for argument if one is not passed.
          */
         default: string;
@@ -74,7 +70,6 @@ export interface commandOptions {
 
 /**
  * Callback for commands
- * @typedef
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
@@ -101,9 +96,10 @@ export interface clientOptions {
 }
 /**
  * Client Class
- * @example
+ * ```typescript
  * const Fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
+ * ```
  */
 class Client extends Emitter {
     public bot: User | null = null;
@@ -129,7 +125,7 @@ class Client extends Emitter {
         competing: 5,
     };
     /**
-     * @param {string} prefix The prefix for your bot
+     * @param prefix The prefix for your bot
      */
     constructor(
         prefix:
@@ -154,14 +150,14 @@ class Client extends Emitter {
     
     /**
      * Command function
-     * @param {string|string[]} name Name of the command,
-     * @param {commandCallback} cb The function that is called when the command is ran
-     * @param {commandOptions} options Options for your command
-     * @returns {Client}
-     * @example
+     * @param name Name of the command,
+     * @param cb The function that is called when the command is ran
+     * @param  options Options for your command
+     * @returns client
+     * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!'-+
-     * ); // send message
+     *      res.send('Pong!)
+     * ```
      * });
      */
     command(
@@ -189,27 +185,27 @@ class Client extends Emitter {
         return this;
     }
     /**
-     * @param {T} event The event
-     * @param {Function} cb The callback function
-     * @example
-     *
+     * @typeParam T The event name
+     * @param cb The callback function
+     * ```typescript
      * cli.on('READY', () => console.log('Up and ready to go!'));
+     * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]) {
         this.events.set(event, cb);
         return this;
     }
     /**
-     * Add a middleware
-     * @param {commandCallback} cb Your middleware function
-     * @returns {Client}
-     * @description a function that is ran before every command
-     * @example
-     *
+     * a function that is ran before every command
+     * @param  cb Your middleware function
+     * @returns A client
+     * @description 
+     * ```typescript
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
      * })
+     * ```
      */
     use(cb: commandCallback) {
         this.middleware.push(cb);
@@ -217,13 +213,12 @@ class Client extends Emitter {
     }
     /**
      * options for bot status
-     *  @interface
      */
 
     /**
      * Log your bot into discord
-     * @param {string|Buffer} token Your bot token
-     * @param {statusOptions} status Your Bot Status Options
+     * @param token Your bot token
+     * @param status Your Bot Status Options
      */
 
     async login(token: string | Buffer) {

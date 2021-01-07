@@ -4,8 +4,8 @@ class Res {
     protected data: any = {};
     constructor(private req: any, private token: string) {}
     /**
-     * @param {string | Embed} content Can Send Both Embed And Message With Author Menntion
-     * @param {Embed} embed Can Only Send Embed With Author Mention
+     * @param content Can Send Both Embed And Message With Author Menntion
+     * @param embed Can Only Send Embed With Author Mention
      */
     async reply(content: string | EmbedOptions, embed?: EmbedOptions) {
         if (typeof content === 'string') {
@@ -57,8 +57,8 @@ class Res {
     }
 
     /**
-     * @param {string | Embed} content Can Send Both Embed And Message
-     * @param {Embed} embed Can Only Send Embed
+     * @param content Can Send Both Embed And Message
+     * @param embed Can Only Send Embed
      */
 
     async send(content: string | EmbedOptions, embed?: EmbedOptions) {

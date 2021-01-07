@@ -1,9 +1,9 @@
 export default {
     /**
      * Generate a hex color string from rgb properties
-     * @param {number} r
-     * @param {number} g
-     * @param {number} b
+     * @param r
+     * @param g
+     * @param b
      */
     rgb(r: number, g: number, b: number) {
         return (
