@@ -1,7 +1,4 @@
-import WebSocket from 'ws';
 import User from './User';
-import { join } from 'path';
-import { readFileSync as readFile } from 'fs';
 import Request from './Request';
 import { discordAPI, opCodes } from './_DiscordAPI';
 import Response from './Reponse';
@@ -69,7 +66,7 @@ export interface commandOptions {
 export type commandCallback = (
     req: Request | null,
     res: Response,
-    next: any
+    next: void
 ) => Promise<void> | void;
 export interface Events {
     ready(): void | Promise<void>;
@@ -99,8 +96,8 @@ class Client extends Emitter {
     public bot: User | null = null;
     private sessionId = '';
     protected debugMode: boolean;
-    protected status: any = [];
-    protected events: Map<keyof Events, Function> = new Map();
+    protected status: unknown[] = [];
+    protected events: Map<keyof Events, unknown> = new Map();
     protected prefix:
         | string
         | string[]
@@ -165,7 +162,7 @@ class Client extends Emitter {
                 const option: commandOptions = options || {
                     desc: 'No description was provided',
                 };
-                let commands = this.commands.get(key);
+                const commands = this.commands.get(key);
                 commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
@@ -173,7 +170,7 @@ class Client extends Emitter {
             const option: commandOptions = options || {
                 desc: 'No description was provided',
             };
-            let commands = this.commands.get(this.prefix + name);
+            const commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
@@ -263,10 +260,10 @@ class Client extends Emitter {
         this.event('ready', (data) => {
             this.sessionId = data.session_id;
             this.bot = data.user;
-            let ready = this.events.get('ready');
+            const ready = this.events.get('ready');
             ready ? ready() : 0;
         });
-        this.event('MESSAGE_CREATE', async (data) => {
+        this.event('messageCreate', async (data) => {
             const req = null;
             const res = new Response(data, token.toString());
             const prefix =
@@ -284,7 +281,7 @@ class Client extends Emitter {
                 .toLowerCase();
             const command = this.commands.get(commandName);
             if (!command) return;
-            let _: any[] = [];
+            const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
             this.middleware[0]
                 ? this.middleware[0](req, res, next(req, res, _, 0, command))
@@ -410,13 +407,13 @@ class Client extends Emitter {
         //             });
         //         });
     }
-    logout(end: boolean = true) {
+    logout(end = true): void {
         if (this.ws && this.loop) {
             clearInterval(this.loop);
-            end ? process.exit() : 0;
+            if (end) process.exit();
         }
     }
-    set(opt: string, val: any) {
+    set(opt: string, val: unknown): this {
         this.options.set('opt', val);
         return this;
     }

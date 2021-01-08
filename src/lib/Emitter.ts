@@ -1,9 +1,7 @@
 import WebSocket from 'ws';
 import {
-    DiscordAPIEventResponse,
     DiscordAPIOP as DiscordAPIOPResponse,
     DiscordAPIEvents,
-    DiscordAPIOP,
 } from './_DiscordAPI';
 class Emitter {
     protected ws?: WebSocket;
@@ -15,28 +13,16 @@ class Emitter {
             emit: <T extends keyof DiscordAPIOPResponse>(
                 op: T,
                 d: DiscordAPIOPResponse[T]['d']
-            ) => {
-                this.ws.send(
-                    JSON.stringify({
-                        op,
-                        d,
-                        t: null,
-                    })
-                );
+            ): void => {
+                this.ws.send(JSON.stringify({ op, d, t: null, }));
             },
         },
         events: {
             emit: <T extends keyof DiscordAPIEvents>(
                 t: T,
                 d: DiscordAPIEvents[T]
-            ) => {
-                this.ws.send(
-                    JSON.stringify({
-                        t,
-                        d,
-                        op: 0,
-                    })
-                );
+             ): void => {
+                this.ws.send(JSON.stringify({ t, d, op: 0 }));
             },
         },
     };
@@ -47,7 +33,7 @@ class Emitter {
             this.WSEvents.open ? this.WSEvents.open() : 0;
             this.ws?.on('message', (data) => {
                 this.WSEvents.message ? this.WSEvents.message() : 0;
-                let res: { op: number; t: string | null; d: any } = JSON.parse(
+                const res: { op: number; t: string | null; d: any } = JSON.parse(
                     data.toString()
                 );
                 console.log(res);

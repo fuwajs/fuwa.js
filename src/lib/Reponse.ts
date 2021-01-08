@@ -18,12 +18,10 @@ class Res {
                         ? delete content[el]
                         : 0;
                     if (typeof content.color === 'string') {
-                        let colorcode: string = content.color
+                        const colorcode: string = content.color
                             ? 0 + 'x' + content.color.split('#')[1]
                             : '0';
-                        colorcode !== '0'
-                            ? (content.color = parseInt(colorcode))
-                            : (content.color = content.color);
+                        if (colorcode !== '0') content.color = parseInt(colorcode);
                     }
                 }
 
@@ -37,7 +35,7 @@ class Res {
             Object.keys(embed).map((el: any) => {
                 embed[el] === null && el !== 'color' ? delete embed[el] : 0;
                 if (el === 'color' && typeof embed.color === 'string') {
-                    let colorcode: string = embed.color
+                    const colorcode: string = embed.color
                         ? 0 + 'x' + embed.color.split('#')[1]
                         : '0';
                     if (colorcode !== '0') {
@@ -48,7 +46,7 @@ class Res {
             (this.data.embed = embed), (this.data.tts = false);
         }
 
-        let result = await undici.OTHER(
+        const result = await undici.OTHER(
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
@@ -72,12 +70,10 @@ class Res {
                         ? delete content[el]
                         : 0;
                     if (typeof content.color === 'string') {
-                        let colorcode: string = content.color
+                        const colorcode: string = content.color
                             ? 0 + 'x' + content.color.split('#')[1]
                             : '0';
-                        colorcode !== '0'
-                            ? (content.color = parseInt(colorcode))
-                            : (content.color = content.color);
+                        if (colorcode !== '0') content.color = parseInt(colorcode);
                     }
                 }
                 (this.data.embed = content), (this.data.tts = false);
@@ -88,7 +84,7 @@ class Res {
             Object.keys(embed).map((el: any) => {
                 embed[el] === null && el !== 'color' ? delete embed[el] : 0;
                 if (el == 'color' && typeof embed.color === 'string') {
-                    let colorcode: string = embed.color
+                    const colorcode: string = embed.color
                         ? 0 + 'x' + embed.color.split('#')[1]
                         : '0';
                     if (colorcode !== '0') {
@@ -99,7 +95,7 @@ class Res {
             (this.data.embed = embed), (this.data.tts = false);
         }
 
-        let result = await undici.OTHER(
+        const result = await undici.OTHER(
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
