@@ -235,10 +235,10 @@ export interface Overwrites {
 }
 export interface Channel {
     type: number;
-    nsfw: boolean;
-    position: number;
-    permission_overwrites: Overwrites[];
-    name: string;
+    nsfw?: boolean;
+    position?: number;
+    permission_overwrites?: Overwrites[];
+    name?: string;
     id: string;
     topic?: null;
     rate_limit_per_user?: number;
@@ -246,6 +246,7 @@ export interface Channel {
     last_message_id?: string;
     user_limit?: number;
     bitrate?: number;
+    guild_id?: string;
 }
 export interface GuildHashes {
     version: number;
@@ -259,8 +260,8 @@ export interface Channels {
 }
 export interface Role {
     position: number;
-    permissions_new: string;
-    permissions: number;
+    permissions_new?: string;
+    permissions: string;
     name: string;
     mentionable: boolean;
     managed: boolean;
