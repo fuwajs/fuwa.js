@@ -4,6 +4,7 @@ const fs = require('fs')
 
 const bot = new fuwa.Client('?', { debug: true });
 // bot.set('prefix', '?');
+
 // Log the bot into discord
 bot.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 
@@ -16,6 +17,15 @@ bot.use((req, res, next) => {
     console.log('Someone used me.');
     next();
 });
+
+bot.command('rules', (req, res, next) => {
+    res.send(new Fuwa.Embed()
+        .setTitle('Pong')
+        .setColor(Fuwa.Colors.rgb(13, 186, 120))
+    );
+});
+
+
 
 bot.command('ping', (req, res, next) => {
     res.send(new fuwa.Embed()

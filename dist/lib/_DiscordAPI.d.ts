@@ -33,6 +33,50 @@ export interface DiscordAPIEvents {
         t?: 'channelCreate';
         d: Ready;
     };
+    MESSAGE_CREATE: {
+        op?: 0;
+        t?: 'MESSAGE_CREATE';
+        d: Message;
+    };
+}
+export interface Message {
+    type: number;
+    tts: boolean;
+    timestamp: Date;
+    referenced_message: null;
+    pinned: boolean;
+    nonce: string;
+    mentions: any[];
+    mention_roles: any[];
+    mention_everyone: boolean;
+    member: Member;
+    id: string;
+    flags: number;
+    embeds: any[];
+    edited_timestamp: null;
+    content: string;
+    channel_id: string;
+    author: Author;
+    attachments: any[];
+    guild_id: string;
+}
+export interface Author {
+    username: string;
+    public_flags: number;
+    id: string;
+    discriminator: string;
+    avatar: string;
+}
+export interface Member {
+    roles: null[];
+    premium_since: null;
+    pending: boolean;
+    nick: null;
+    mute: boolean;
+    joined_at: Date;
+    is_pending: boolean;
+    hoisted_role: string;
+    deaf: boolean;
 }
 export interface DiscordAPIOP {
     1: {
@@ -213,14 +257,6 @@ export interface Channels {
     omitted: boolean;
     hash: string;
 }
-export interface Member {
-    user: User;
-    roles: string[];
-    mute: boolean;
-    joined_at: string;
-    hoisted_role: null;
-    deaf: boolean;
-}
 export interface Role {
     position: number;
     permissions_new: string;
@@ -236,6 +272,4 @@ export interface DiscordAPIEventResponse<T extends keyof DiscordAPIEvents> {
     op: 0;
     t: T;
     d: DiscordAPIEvents[T];
-}
-export interface DiscordAPIOPResponse<T extends keyof {}> {
 }

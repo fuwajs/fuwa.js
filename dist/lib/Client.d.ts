@@ -59,7 +59,7 @@ export interface commandOptions {
  * Callback for commands
  * TODO: change request res and next function types to actual types
  */
-export declare type commandCallback = (req: Request, res: Response, next: any) => Promise<void> | void;
+export declare type commandCallback = (req: Request | null, res: Response, next: any) => Promise<void> | void;
 export interface Events {
     ready(): void | Promise<void>;
     msg(req: Request): void | Promise<void>;
@@ -73,7 +73,7 @@ export interface clientOptions {
     owners: string[] | string;
     /**
      * To turn on the debug mode, not recommed to turn this on unless your debugging
-     * the library itself
+     * the library itthis
      */
     debug?: boolean;
 }
