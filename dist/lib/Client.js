@@ -18,7 +18,7 @@ const Emitter_1 = __importDefault(require("./Emitter"));
 /**
  * Client Class
  * ```typescript
- * const Fuwa = require('fuwa.js'); // Import Fuwa library
+ * const fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  * ```
  */
@@ -91,7 +91,7 @@ class Client extends Emitter_1.default {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('READY', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
     on(event, cb) {
@@ -137,10 +137,10 @@ class Client extends Emitter_1.default {
             };
             console.log(token.toString());
             this.connect(_DiscordAPI_1.discordAPI.gateway);
-            this.op(10 /* Hello */, (data) => {
+            this.op(_DiscordAPI_1.opCodes.hello, (data) => {
                 console.log(data);
                 this.loop = setInterval(() => this.response.op.emit(1, 251), data.heartbeat_interval);
-                this.response.op.emit(2 /* Identify */, {
+                this.response.op.emit(_DiscordAPI_1.opCodes.indentify, {
                     token: token.toString(),
                     intents: 513,
                     properties: {
@@ -150,14 +150,14 @@ class Client extends Emitter_1.default {
                     },
                 });
             });
-            this.op(9 /* Invalid Session */, () => {
+            this.op(_DiscordAPI_1.opCodes.invalidSession, () => {
                 throw new Error('Invalid token');
             });
-            this.event('READY', (data) => {
+            this.event('ready', (data) => {
                 this.sessionId = data.session_id;
                 this.bot = data.user;
-                let READY = this.events.get('READY');
-                READY ? READY() : 0;
+                let ready = this.events.get('ready');
+                ready ? ready() : 0;
             });
             this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
                 const req = null;
@@ -209,16 +209,16 @@ class Client extends Emitter_1.default {
             //                         break;
             //                 }
             //                 switch (res.t) {
-            //                     case 'READY':
+            //                     case 'ready':
             //                         this.debug(`
             //                             Logged in on ${new Date().toDateString()}
             //                         `);
             //                         this.bot = new User(res.d.user);
-            //                         let fn = this.events.get('READY');
+            //                         let fn = this.events.get('ready');
             //                         fn ? fn() : 0;
             //                         break;
-            //                     case 'MESSAGE_CREATE':
-            //                         let __ = this.events.get('MSG');
+            //                     case 'messageCreate':
+            //                         let __ = this.events.get('msg');
             //                         __ ? __() : 0;
             //                         this.debug('Recived A Message :' + res.d.content);
             //                         let request: any = null; // new Request(token.toString(), res.d);
@@ -303,6 +303,10 @@ class Client extends Emitter_1.default {
             clearInterval(this.loop);
             end ? process.exit() : 0;
         }
+    }
+    set(opt, val) {
+        this.options.set('opt', val);
+        return this;
     }
 }
 exports.default = Client;

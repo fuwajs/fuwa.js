@@ -1,38 +1,42 @@
-export const OPCodes = {
-    // DISPATCH: 0,
-    HEARTBEAT: 1,
-    IDENTIFY: 2,
-    STATUS_UPDATE: 3,
-    VOICE_STATE_UPDATE: 4,
-    // VOICE_GUILD_PING: 5,
-    RESUME: 6,
-    // RECONNECT: 7,
-    REQUEST_GUILD_MEMBERS: 8,
-    INVALID_SESSION: 9,
-    HELLO: 10,
-    // HEARTBEAT_ACK: 11,
-};
+// export const OPCodes = {
+//     // DISPATCH: 0,
+//     HEARTBEAT: 1,
+//     IDENTIFY: 2,
+//     STATUS_UPDATE: 3,
+//     VOICE_STATE_UPDATE: 4,
+//     // VOICE_GUILD_PING: 5,
+//     RESUME: 6,
+//     // RECONNECT: 7,
+//     REQUEST_GUILD_MEMBERS: 8,
+//     INVALID_SESSION: 9,
+//     HELLO: 10,
+//     // HEARTBEAT_ACK: 11,
+// };
 
 export enum opCodes {
+    dispatch,
     heartbeat,
     indentify,
     statusUpdate,
     voiceStateUpdate,
+    voiceGuildPing,
     resume,
+    reconnect,
     requestGuildMembers,
     invalidSession,
     hello,
+    heartbeatAck,
 }
 
-export const OPCodeMap = new Map<keyof typeof OPCodes, keyof DiscordAPIOP>()
-    .set('HEARTBEAT', 1)
-    .set('IDENTIFY', 2)
-    .set('STATUS_UPDATE', 3)
-    .set('VOICE_STATE_UPDATE', 4)
-    .set('RESUME', 6)
-    .set('REQUEST_GUILD_MEMBERS', 8)
-    .set('INVALID_SESSION', 9)
-    .set('HELLO', 10);
+// export const OPCodeMap = new Map<keyof typeof OPCodes, keyof DiscordAPIOP>()
+//     .set('HEARTBEAT', 1)
+//     .set('IDENTIFY', 2)
+//     .set('STATUS_UPDATE', 3)
+//     .set('VOICE_STATE_UPDATE', 4)
+//     .set('RESUME', 6)
+//     .set('REQUEST_GUILD_MEMBERS', 8)
+//     .set('INVALID_SESSION', 9)
+//     .set('HELLO', 10);
 
 export const discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
@@ -41,19 +45,19 @@ export const discordAPI = {
 };
 
 export interface DiscordAPIEvents {
-    GUILD_CREATE: {
+    guildCreate: {
         op?: 0;
-        t?: 'GUILD_CREATE';
+        t?: 'guildCreate';
         d: Guild;
     };
-    READY: {
+    ready: {
         op?: 0;
-        t?: 'READY';
+        t?: 'ready';
         d: Ready;
     };
-    CHANNEL_CREATE: {
+    channelCreate: {
         op?: 0;
-        t?: 'CHANNEL_CREATE';
+        t?: 'channelCreate';
         d: Ready;
     };
     MESSAGE_CREATE: {

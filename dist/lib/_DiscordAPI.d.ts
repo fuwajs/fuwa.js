@@ -1,43 +1,36 @@
-export declare const OPCodes: {
-    HEARTBEAT: number;
-    IDENTIFY: number;
-    STATUS_UPDATE: number;
-    VOICE_STATE_UPDATE: number;
-    RESUME: number;
-    REQUEST_GUILD_MEMBERS: number;
-    INVALID_SESSION: number;
-    HELLO: number;
-};
 export declare enum opCodes {
-    heartbeat = 0,
-    indentify = 1,
-    statusUpdate = 2,
-    voiceStateUpdate = 3,
-    resume = 4,
-    requestGuildMembers = 5,
-    invalidSession = 6,
-    hello = 7
+    dispatch = 0,
+    heartbeat = 1,
+    indentify = 2,
+    statusUpdate = 3,
+    voiceStateUpdate = 4,
+    voiceGuildPing = 5,
+    resume = 6,
+    reconnect = 7,
+    requestGuildMembers = 8,
+    invalidSession = 9,
+    hello = 10,
+    heartbeatAck = 11
 }
-export declare const OPCodeMap: Map<"HEARTBEAT" | "IDENTIFY" | "STATUS_UPDATE" | "VOICE_STATE_UPDATE" | "RESUME" | "REQUEST_GUILD_MEMBERS" | "INVALID_SESSION" | "HELLO", 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>;
 export declare const discordAPI: {
     gateway: string;
     api: string;
     discord: string;
 };
 export interface DiscordAPIEvents {
-    GUILD_CREATE: {
+    guildCreate: {
         op?: 0;
-        t?: 'GUILD_CREATE';
+        t?: 'guildCreate';
         d: Guild;
     };
-    READY: {
+    ready: {
         op?: 0;
-        t?: 'READY';
+        t?: 'ready';
         d: Ready;
     };
-    CHANNEL_CREATE: {
+    channelCreate: {
         op?: 0;
-        t?: 'CHANNEL_CREATE';
+        t?: 'channelCreate';
         d: Ready;
     };
     MESSAGE_CREATE: {

@@ -5,14 +5,10 @@ import { readFileSync as readFile } from 'fs';
 import Request from './Request';
 import {
     discordAPI,
-    DiscordAPIEvents,
-    DiscordAPIEventResponse,
-    OPCodes,
-    OPCodeMap,
+    opCodes,
 } from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
-import { request } from 'http';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -79,10 +75,10 @@ export type commandCallback = (
     next: any
 ) => Promise<void> | void;
 export interface Events {
-    READY(): void | Promise<void>;
-    MSG(req: Request): void | Promise<void>;
-    CMD_NOT_FOUND(req: Request, cmd: commandCallback): void | Promise<void>;
-    ERR(err: Error): void | Promise<void>;
+    ready(): void | Promise<void>;
+    msg(req: Request): void | Promise<void>;
+    cmdNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    err(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -98,7 +94,7 @@ export interface clientOptions {
 /**
  * Client Class
  * ```typescript
- * const Fuwa = require('fuwa.js'); // Import Fuwa library
+ * const fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  * ```
  */
@@ -112,6 +108,7 @@ class Client extends Emitter {
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
+    protected options: Map<string, any>;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
@@ -189,7 +186,7 @@ class Client extends Emitter {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('READY', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]) {
@@ -221,7 +218,6 @@ class Client extends Emitter {
      * @param token Your bot token
      * @param status Your Bot Status Options
      */
-
     async login(token: string | Buffer) {
         const next = (
             req: Request,
@@ -251,13 +247,13 @@ class Client extends Emitter {
         console.log(token.toString());
         this.connect(discordAPI.gateway);
 
-        this.op(10 /* Hello */, (data) => {
+        this.op(opCodes.hello, (data) => {
             console.log(data);
             this.loop = setInterval(
                 () => this.response.op.emit(1, 251),
                 data.heartbeat_interval
             );
-            this.response.op.emit(2 /* Identify */, {
+            this.response.op.emit(opCodes.indentify, {
                 token: token.toString(),
                 intents: 513,
                 properties: {
@@ -267,14 +263,15 @@ class Client extends Emitter {
                 },
             });
         });
-        this.op(9 /* Invalid Session */, () => {
+        this.op(opCodes.invalidSession, () => {
             throw new Error('Invalid token');
         });
-        this.event('READY', (data) => {
+
+        this.event('ready', (data) => {
             this.sessionId = data.session_id;
             this.bot = data.user;
-            let READY = this.events.get('READY');
-            READY ? READY() : 0;
+            let ready = this.events.get('ready');
+            ready ? ready() : 0;
         });
         this.event('MESSAGE_CREATE', async data => {
             const req = null;
@@ -323,7 +320,7 @@ class Client extends Emitter {
         //                     ''
         //                 )}`);
         //                 switch (res.op) {
-        //                     case OPCodes.HELLO:
+        //                     case opCodes.hello:
         //                         // Start heartbeat loop
 
         //                         this.debug(
@@ -338,17 +335,17 @@ class Client extends Emitter {
         //                 }
 
         //                 switch (res.t) {
-        //                     case 'READY':
+        //                     case 'ready':
         //                         this.debug(`
         //                             Logged in on ${new Date().toDateString()}
         //                         `);
 
         //                         this.bot = new User(res.d.user);
-        //                         let fn = this.events.get('READY');
+        //                         let fn = this.events.get('ready');
         //                         fn ? fn() : 0;
         //                         break;
-        //                     case 'MESSAGE_CREATE':
-        //                         let __ = this.events.get('MSG');
+        //                     case 'messageCreate':
+        //                         let __ = this.events.get('msg');
         //                         __ ? __() : 0;
         //                         this.debug('Recived A Message :' + res.d.content);
         //                         let request: any = null; // new Request(token.toString(), res.d);
@@ -421,7 +418,7 @@ class Client extends Emitter {
         //                                 next(request, response, command, 0)
         //                             );
         //                         } catch (e) {
-        //                             let ____ = this.events.get('ERR');
+        //                             let ____ = this.events.get('err');
         //                             if (!____) throw e;
         //                             ____();
         //                         }
@@ -435,7 +432,10 @@ class Client extends Emitter {
             end ? process.exit() : 0;
         }
     }
-
+    set(opt: string, val: any) {
+        this.options.set('opt', val);
+        return this;
+    }
     // setStatus(status: statusOptions) {
     //     let cred: any = {};
     //     let activities: any = [

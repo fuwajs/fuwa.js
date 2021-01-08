@@ -9,8 +9,8 @@ class Res {
      */
     async reply(content: string | EmbedOptions, embed?: EmbedOptions) {
         if (typeof content === 'string') {
-            (this.data.content = '<@' + this.req.author.id + '> ' + content),
-                (this.data.tts = false);
+            this.data.content = '<@' + this.req.author.id + '> ' + content;
+            this.data.tts = false;
         } else if (typeof content === 'object') {
             Object.keys(content).map((el) => {
                 if (el === 'color') {
@@ -26,9 +26,10 @@ class Res {
                             : (content.color = content.color);
                     }
                 }
-                (this.data.embed = content),
-                    (this.data.tts = false),
-                    (this.data.content = '<@' + this.req.author.id + '> ');
+
+                this.data.embed = content;
+                this.data.tts = false;
+                this.data.content = '<@' + this.req.author.id + '> ';
             });
         }
 
