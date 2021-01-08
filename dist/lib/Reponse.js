@@ -26,8 +26,8 @@ class Res {
     reply(content, embed) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof content === 'string') {
-                (this.data.content = '<@' + this.req.author.id + '> ' + content),
-                    (this.data.tts = false);
+                this.data.content = '<@' + this.req.author.id + '> ' + content;
+                this.data.tts = false;
             }
             else if (typeof content === 'object') {
                 Object.keys(content).map((el) => {
@@ -44,9 +44,9 @@ class Res {
                                 : (content.color = content.color);
                         }
                     }
-                    (this.data.embed = content),
-                        (this.data.tts = false),
-                        (this.data.content = '<@' + this.req.author.id + '> ');
+                    this.data.embed = content;
+                    this.data.tts = false;
+                    this.data.content = '<@' + this.req.author.id + '> ';
                 });
             }
             if (embed) {

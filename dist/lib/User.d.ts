@@ -7,7 +7,7 @@ export declare class User {
     verified?: boolean;
     mfa_enabled?: boolean;
     flags?: number;
-    email?: null | string;
+    email?: string;
     constructor(data: {
         id: string;
         username: string;

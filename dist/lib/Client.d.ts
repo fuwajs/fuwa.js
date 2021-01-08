@@ -61,10 +61,10 @@ export interface commandOptions {
  */
 export declare type commandCallback = (req: Request, res: Response, next: any) => Promise<void> | void;
 export interface Events {
-    READY(): void | Promise<void>;
-    MSG(req: Request): void | Promise<void>;
-    CMD_NOT_FOUND(req: Request, cmd: commandCallback): void | Promise<void>;
-    ERR(err: Error): void | Promise<void>;
+    ready(): void | Promise<void>;
+    msg(req: Request): void | Promise<void>;
+    cmdNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    err(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -80,7 +80,7 @@ export interface clientOptions {
 /**
  * Client Class
  * ```typescript
- * const Fuwa = require('fuwa.js'); // Import Fuwa library
+ * const fuwa = require('fuwa.js'); // Import Fuwa library
  * const cli = new Fuwa.Client('?'); // Init The Client
  * ```
  */
@@ -91,6 +91,7 @@ declare class Client extends Emitter {
     protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
+    protected options: Map<string, any>;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<string, {
         cb: commandCallback;
@@ -120,7 +121,7 @@ declare class Client extends Emitter {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('READY', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]): this;
@@ -147,5 +148,6 @@ declare class Client extends Emitter {
      */
     login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
+    set(opt: string, val: any): this;
 }
 export default Client;
