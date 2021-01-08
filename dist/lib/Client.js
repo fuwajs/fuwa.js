@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _DiscordAPI_1 = require("./_DiscordAPI");
+const Reponse_1 = __importDefault(require("./Reponse"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 /**
  * Client Class
@@ -123,8 +124,17 @@ class Client extends Emitter_1.default {
      */
     login(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!this.prefix)
-                throw new Error('No prefix provided');
+            const next = (req, res, arr, i = 0, secoundArr) => {
+                return () => {
+                    arr[i + 1]
+                        ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
+                        : secoundArr
+                            ? secoundArr[0]
+                                ? secoundArr[0].cb(req, res, next(req, res, secoundArr, i++))
+                                : 0
+                            : 0;
+                };
+            };
             console.log(token.toString());
             this.connect(_DiscordAPI_1.discordAPI.gateway);
             this.op(10 /* Hello */, (data) => {
@@ -149,43 +159,68 @@ class Client extends Emitter_1.default {
                 let READY = this.events.get('READY');
                 READY ? READY() : 0;
             });
+            this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
+                const req = null;
+                const res = new Reponse_1.default(data, token.toString());
+                const prefix = typeof this.prefix === 'function'
+                    ? yield this.prefix(req)
+                    : Array.isArray(this.prefix)
+                        ? this.prefix.find((p) => data.content.startsWith(p)) || false
+                        : this.prefix;
+                if (prefix === false)
+                    return;
+                if (prefix === null || prefix === undefined)
+                    return;
+                const commandName = data.content
+                    .replace(prefix, '')
+                    .split(' ')[0]
+                    .toLowerCase();
+                const command = this.commands.get(commandName);
+                if (!command)
+                    return;
+                let _ = [];
+                this.middleware.forEach((v) => _.push({ cb: v }));
+                this.middleware[0]
+                    ? this.middleware[0](req, res, next(req, res, _, 0, command)) : 0;
+                command[0].cb(req, res, next(req, res, command, 0));
+            }));
             //         this.ws.on('open', async function () {
-            //             self.debug(`Connect to ${discordAPI.gateway}`);
+            //             this.debug(`Connect to ${discordAPI.gateway}`);
             //             this.on('message', async (e) => {
             //                 const res = JSON.parse(e.toString());
-            //                 self.debug(`Incoming message from ${discordAPI.gateway}:
+            //                 this.debug(`Incoming message from ${discordAPI.gateway}:
             // Event: ${res.t}
             // OPCOde: ${res.op}
             // Other: ${res.s}
-            // Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+            // Data: ${JSON.stringify(res.d, null, this.debugMode ? 4 : 0).replace(
             //                     '\\',
             //                     ''
             //                 )}`);
             //                 switch (res.op) {
             //                     case OPCodes.HELLO:
             //                         // Start heartbeat loop
-            //                         self.debug(
+            //                         this.debug(
             //                             `Attempting to identify with the following credentials: ${identify.replace(
             //                                 '\\',
             //                                 ''
             //                             )}`
             //                         );
-            //                         self.debug('Credentials sent');
+            //                         this.debug('Credentials sent');
             //                         break;
             //                 }
             //                 switch (res.t) {
             //                     case 'READY':
-            //                         self.debug(`
+            //                         this.debug(`
             //                             Logged in on ${new Date().toDateString()}
             //                         `);
-            //                         self.bot = new User(res.d.user);
-            //                         let fn = self.events.get('READY');
+            //                         this.bot = new User(res.d.user);
+            //                         let fn = this.events.get('READY');
             //                         fn ? fn() : 0;
             //                         break;
             //                     case 'MESSAGE_CREATE':
-            //                         let __ = self.events.get('MSG');
+            //                         let __ = this.events.get('MSG');
             //                         __ ? __() : 0;
-            //                         self.debug('Recived A Message :' + res.d.content);
+            //                         this.debug('Recived A Message :' + res.d.content);
             //                         let request: any = null; // new Request(token.toString(), res.d);
             //                         let response = new Response(res.d, token.toString());
             //                         const next = (
@@ -214,34 +249,34 @@ class Client extends Emitter_1.default {
             //                             };
             //                         };
             //                         const prefix =
-            //                             typeof self.prefix === 'function'
-            //                                 ? await self.prefix(request)
-            //                                 : Array.isArray(self.prefix)
-            //                                 ? self.prefix.find((p) =>
+            //                             typeof this.prefix === 'function'
+            //                                 ? await this.prefix(request)
+            //                                 : Array.isArray(this.prefix)
+            //                                 ? this.prefix.find((p) =>
             //                                       res.d.content.startsWith(p)
             //                                   )
-            //                                 : self.prefix;
+            //                                 : this.prefix;
             //                         if (!prefix) {
             //                             throw new Error('No valid prefix found');
             //                         }
             //                         if (!res.d.content.startsWith(prefix)) break;
-            //                         self.debug(
+            //                         this.debug(
             //                             res.d.content.replace(prefix, '').toLowerCase()
             //                         );
-            //                         let command = self.commands.get(
+            //                         let command = this.commands.get(
             //                             res.d.content.replace(prefix, '').toLowerCase()
             //                         );
             //                         console.log(command);
-            //                         console.log(self.commands);
+            //                         console.log(this.commands);
             //                         if (!command) {
-            //                             let ___ = self.events.get('CMD_NOT_FOUND');
+            //                             let ___ = this.events.get('CMD_NOT_FOUND');
             //                             ___ ? ___() : 0;
             //                             break;
             //                         }
             //                         let _: any[] = [];
-            //                         self.middleware.forEach((v) => _.push({ cb: v }));
-            //                         self.middleware[0]
-            //                             ? self.middleware[0](
+            //                         this.middleware.forEach((v) => _.push({ cb: v }));
+            //                         this.middleware[0]
+            //                             ? this.middleware[0](
             //                                   request,
             //                                   response,
             //                                   next(request, response, _, 0, command)
@@ -254,7 +289,7 @@ class Client extends Emitter_1.default {
             //                                 next(request, response, command, 0)
             //                             );
             //                         } catch (e) {
-            //                             let ____ = self.events.get('ERR');
+            //                             let ____ = this.events.get('ERR');
             //                             if (!____) throw e;
             //                             ____();
             //                         }

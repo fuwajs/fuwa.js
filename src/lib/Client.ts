@@ -12,6 +12,7 @@ import {
 } from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
+import { request } from 'http';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -73,7 +74,7 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Request,
+    req: Request|null,
     res: Response,
     next: any
 ) => Promise<void> | void;
@@ -90,7 +91,7 @@ export interface clientOptions {
     owners: string[] | string;
     /**
      * To turn on the debug mode, not recommed to turn this on unless your debugging
-     * the library itself
+     * the library itthis
      */
     debug?: boolean;
 }
@@ -222,7 +223,31 @@ class Client extends Emitter {
      */
 
     async login(token: string | Buffer) {
-        if (!this.prefix) throw new Error('No prefix provided');
+        const next = (
+            req: Request,
+            res: Response,
+            arr: { cb: commandCallback }[],
+            i = 0,
+            secoundArr?: { cb: commandCallback }[]
+        ) => {
+            return () => {
+                arr[i + 1]
+                    ? arr[i + 1].cb(
+                            req,
+                            res,
+                            next(req, res, arr, i++)
+                        )
+                    : secoundArr
+                    ? secoundArr[0]
+                        ? secoundArr[0].cb(
+                                req,
+                                res,
+                                next(req, res, secoundArr, i++)
+                            )
+                        : 0
+                    : 0;
+            };
+        };
         console.log(token.toString());
         this.connect(discordAPI.gateway);
 
@@ -251,15 +276,49 @@ class Client extends Emitter {
             let READY = this.events.get('READY');
             READY ? READY() : 0;
         });
+        this.event('MESSAGE_CREATE', async data => {
+            const req = null;
+            const res = new Response(data, token.toString());
+            const prefix =
+                typeof this.prefix === 'function'
+                    ? await this.prefix(req)
+                    : Array.isArray(this.prefix)
+                    ? this.prefix.find((p) =>
+                            data.content.startsWith(p)
+                        ) || false
+                    : this.prefix;
+            if(prefix === false) return;
+            if(prefix === null || prefix ===  undefined) return;
+            const commandName = data.content
+                .replace(prefix, '')
+                .split(' ')[0]
+                .toLowerCase();
+            const command = this.commands.get(commandName);
+            if(!command) return;
+            let _: any[] = [];
+            this.middleware.forEach((v) => _.push({ cb: v }));
+            this.middleware[0]
+                ? this.middleware[0](
+                        req,
+                        res,
+                        next(req, res, _, 0, command)
+                    ) : 0;
+                command[0].cb(
+                    req,
+                    res,
+                    next(req, res, command, 0)
+                );
+            
+        })
         //         this.ws.on('open', async function () {
-        //             self.debug(`Connect to ${discordAPI.gateway}`);
+        //             this.debug(`Connect to ${discordAPI.gateway}`);
         //             this.on('message', async (e) => {
         //                 const res = JSON.parse(e.toString());
-        //                 self.debug(`Incoming message from ${discordAPI.gateway}:
+        //                 this.debug(`Incoming message from ${discordAPI.gateway}:
         // Event: ${res.t}
         // OPCOde: ${res.op}
         // Other: ${res.s}
-        // Data: ${JSON.stringify(res.d, null, self.debugMode ? 4 : 0).replace(
+        // Data: ${JSON.stringify(res.d, null, this.debugMode ? 4 : 0).replace(
         //                     '\\',
         //                     ''
         //                 )}`);
@@ -267,31 +326,31 @@ class Client extends Emitter {
         //                     case OPCodes.HELLO:
         //                         // Start heartbeat loop
 
-        //                         self.debug(
+        //                         this.debug(
         //                             `Attempting to identify with the following credentials: ${identify.replace(
         //                                 '\\',
         //                                 ''
         //                             )}`
         //                         );
-        //                         self.debug('Credentials sent');
+        //                         this.debug('Credentials sent');
 
         //                         break;
         //                 }
 
         //                 switch (res.t) {
         //                     case 'READY':
-        //                         self.debug(`
+        //                         this.debug(`
         //                             Logged in on ${new Date().toDateString()}
         //                         `);
 
-        //                         self.bot = new User(res.d.user);
-        //                         let fn = self.events.get('READY');
+        //                         this.bot = new User(res.d.user);
+        //                         let fn = this.events.get('READY');
         //                         fn ? fn() : 0;
         //                         break;
         //                     case 'MESSAGE_CREATE':
-        //                         let __ = self.events.get('MSG');
+        //                         let __ = this.events.get('MSG');
         //                         __ ? __() : 0;
-        //                         self.debug('Recived A Message :' + res.d.content);
+        //                         this.debug('Recived A Message :' + res.d.content);
         //                         let request: any = null; // new Request(token.toString(), res.d);
         //                         let response = new Response(res.d, token.toString());
         //                         const next = (
@@ -320,35 +379,35 @@ class Client extends Emitter {
         //                             };
         //                         };
         //                         const prefix =
-        //                             typeof self.prefix === 'function'
-        //                                 ? await self.prefix(request)
-        //                                 : Array.isArray(self.prefix)
-        //                                 ? self.prefix.find((p) =>
+        //                             typeof this.prefix === 'function'
+        //                                 ? await this.prefix(request)
+        //                                 : Array.isArray(this.prefix)
+        //                                 ? this.prefix.find((p) =>
         //                                       res.d.content.startsWith(p)
         //                                   )
-        //                                 : self.prefix;
+        //                                 : this.prefix;
 
         //                         if (!prefix) {
         //                             throw new Error('No valid prefix found');
         //                         }
         //                         if (!res.d.content.startsWith(prefix)) break;
-        //                         self.debug(
+        //                         this.debug(
         //                             res.d.content.replace(prefix, '').toLowerCase()
         //                         );
-        //                         let command = self.commands.get(
+        //                         let command = this.commands.get(
         //                             res.d.content.replace(prefix, '').toLowerCase()
         //                         );
         //                         console.log(command);
-        //                         console.log(self.commands);
+        //                         console.log(this.commands);
         //                         if (!command) {
-        //                             let ___ = self.events.get('CMD_NOT_FOUND');
+        //                             let ___ = this.events.get('CMD_NOT_FOUND');
         //                             ___ ? ___() : 0;
         //                             break;
         //                         }
         //                         let _: any[] = [];
-        //                         self.middleware.forEach((v) => _.push({ cb: v }));
-        //                         self.middleware[0]
-        //                             ? self.middleware[0](
+        //                         this.middleware.forEach((v) => _.push({ cb: v }));
+        //                         this.middleware[0]
+        //                             ? this.middleware[0](
         //                                   request,
         //                                   response,
         //                                   next(request, response, _, 0, command)
@@ -362,7 +421,7 @@ class Client extends Emitter {
         //                                 next(request, response, command, 0)
         //                             );
         //                         } catch (e) {
-        //                             let ____ = self.events.get('ERR');
+        //                             let ____ = this.events.get('ERR');
         //                             if (!____) throw e;
         //                             ____();
         //                         }

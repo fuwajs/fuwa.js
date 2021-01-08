@@ -11,7 +11,7 @@ client
         console.log('I WAS USED');
         next();
     })
-    .command('ping', (req, res, next) => {
+    .command('rules', (req, res, next) => {
         res.send(new Fuwa.Embed()
             .setTitle('Pong')
             .setColor(Fuwa.Colors.rgb(13, 186, 120))
