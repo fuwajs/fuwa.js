@@ -1,6 +1,6 @@
-const fuwa = require('../dist/index'); // Import fuwa.js here!
-const path = require('path');
-const fs = require('fs');
+import fuwa from '../dist/index'; // Import fuwa.js here!
+import path from 'path';
+import fs from 'fs';
 
 const owner = fs.readFileSync(path.join(__dirname, 'owner.secret')).toString();
 const client = new fuwa.Client('?', { debug: true, owners: owner});
@@ -25,6 +25,8 @@ client.command('rules', (req, res, next) => {
         .setColor(fuwa.Colors.rgb(13, 186, 120))
     );
 });
+
+
 
 client.command('ping', (req, res, next) => {
     res.send(new fuwa.Embed()
