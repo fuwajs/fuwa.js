@@ -5,9 +5,9 @@ import {
 } from './_DiscordAPI';
 class Emitter {
     protected ws?: WebSocket;
-    private OPevents: { [key: number]: (data: any) => any } = {};
-    private APIEvents: { [key: string]: (data: any) => any } = {};
-    private WSEvents: { [key: string]: () => any } = {};
+    private OPevents: { [key: number]: (data: unknown) => unknown };
+    private APIEvents: { [key: string]: (data: unknown) => unknown };
+    private WSEvents: { [key: string]: () => unknown };
     response = {
         op: {
             emit: <T extends keyof DiscordAPIOPResponse>(
@@ -21,19 +21,19 @@ class Emitter {
             emit: <T extends keyof DiscordAPIEvents>(
                 t: T,
                 d: DiscordAPIEvents[T]
-             ): void => {
+            ): void => {
                 this.ws.send(JSON.stringify({ t, d, op: 0 }));
             },
         },
     };
-    connect(url: string) {
+    connect(url: string): void {
         this.ws = new WebSocket(url);
         this.ws.on('open', () => {
             console.log('Connected');
-            this.WSEvents.open ? this.WSEvents.open() : 0;
+            this.WSEvents.open();
             this.ws?.on('message', (data) => {
-                this.WSEvents.message ? this.WSEvents.message() : 0;
-                const res: { op: number; t: string | null; d: any } = JSON.parse(
+                this.WSEvents.message();
+                const res: { op: number; t: string | null; d: unknown } = JSON.parse(
                     data.toString()
                 );
                 console.log(res);
@@ -42,21 +42,21 @@ class Emitter {
                         throw new Error(
                             `The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`
                         );
-                    this.APIEvents[res.t] ? this.APIEvents[res.t](res.d) : 0;
-                } else this.OPevents[res.op] ? this.OPevents[res.op](res.d) : 0;
+                    if (this.APIEvents[res.t]) this.APIEvents[res.t](res.d);
+                } else if (this.OPevents[res.op]) this.OPevents[res.op](res.d);
             });
         });
     }
-    op<T extends keyof DiscordAPIOPResponse>(
+    protected op<T extends keyof DiscordAPIOPResponse>(
         op: T,
-        cb: (data: DiscordAPIOPResponse[T]['d']) => any
-    ) {
+        cb: (data: DiscordAPIOPResponse[T]['d']) => void
+    ): void {
         this.OPevents[op] = cb;
     }
     event<T extends keyof DiscordAPIEvents>(
         e: T,
-        cb: (data: DiscordAPIEvents[T]['d']) => any
-    ) {
+        cb: (data: DiscordAPIEvents[T]['d']) => void
+    ): void {
         this.APIEvents[e] = cb;
     }
 }

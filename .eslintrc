@@ -17,6 +17,7 @@
     ],
     "rules": {
         "no-ternary": "warn",
-        "no-eq-null": "warn"
+        "no-eq-null": "warn",
+        "semi": "error"
     }
   }
