@@ -8,3 +8,6 @@ tsconfig.json
 jsdoc.json
 custom.css
 .prettierrc.json
+.eslintcache
+.eslintignore
+.eslintrc
