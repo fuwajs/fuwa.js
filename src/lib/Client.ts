@@ -3,7 +3,10 @@ import User from './User';
 import { join } from 'path';
 import { readFileSync as readFile } from 'fs';
 import Request from './Request';
-import { discordAPI, opCodes } from './_DiscordAPI';
+import {
+    discordAPI,
+    opCodes,
+} from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -67,7 +70,7 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Request | null,
+    req: Request|null,
     res: Response,
     next: any
 ) => Promise<void> | void;
@@ -225,14 +228,18 @@ class Client extends Emitter {
         ) => {
             return () => {
                 arr[i + 1]
-                    ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
+                    ? arr[i + 1].cb(
+                            req,
+                            res,
+                            next(req, res, arr, i++)
+                        )
                     : secoundArr
                     ? secoundArr[0]
                         ? secoundArr[0].cb(
-                              req,
-                              res,
-                              next(req, res, secoundArr, i++)
-                          )
+                                req,
+                                res,
+                                next(req, res, secoundArr, i++)
+                            )
                         : 0
                     : 0;
             };
@@ -266,31 +273,40 @@ class Client extends Emitter {
             let ready = this.events.get('ready');
             ready ? ready() : 0;
         });
-        this.event('MESSAGE_CREATE', async (data) => {
+        this.event('MESSAGE_CREATE', async data => {
             const req = null;
             const res = new Response(data, token.toString());
             const prefix =
                 typeof this.prefix === 'function'
                     ? await this.prefix(req)
                     : Array.isArray(this.prefix)
-                    ? this.prefix.find((p) => data.content.startsWith(p)) ||
-                      false
+                    ? this.prefix.find((p) =>
+                            data.content.startsWith(p)
+                        ) || false
                     : this.prefix;
-            if (prefix === false) return;
-            if (prefix === null || prefix === undefined) return;
+            if(prefix === false) return;
+            if(prefix === null || prefix ===  undefined) return;
             const commandName = data.content
                 .replace(prefix, '')
                 .split(' ')[0]
                 .toLowerCase();
             const command = this.commands.get(commandName);
-            if (!command) return;
+            if(!command) return;
             let _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
             this.middleware[0]
-                ? this.middleware[0](req, res, next(req, res, _, 0, command))
-                : 0;
-            command[0].cb(req, res, next(req, res, command, 0));
-        });
+                ? this.middleware[0](
+                        req,
+                        res,
+                        next(req, res, _, 0, command)
+                    ) : 0;
+                command[0].cb(
+                    req,
+                    res,
+                    next(req, res, command, 0)
+                );
+            
+        })
         //         this.ws.on('open', async function () {
         //             this.debug(`Connect to ${discordAPI.gateway}`);
         //             this.on('message', async (e) => {

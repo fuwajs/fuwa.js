@@ -63,49 +63,49 @@ export interface DiscordAPIEvents {
     MESSAGE_CREATE: {
         op?: 0;
         t?: 'MESSAGE_CREATE';
-        d: Message;
-    };
+        d: Message
+    }
 }
 export interface Message {
-    type: number;
-    tts: boolean;
-    timestamp: Date;
+    type:               number;
+    tts:                boolean;
+    timestamp:          Date;
     referenced_message: null;
-    pinned: boolean;
-    nonce: string;
-    mentions: any[];
-    mention_roles: any[];
-    mention_everyone: boolean;
-    member: Member;
-    id: string;
-    flags: number;
-    embeds: any[];
-    edited_timestamp: null;
-    content: string;
-    channel_id: string;
-    author: Author;
-    attachments: any[];
-    guild_id: string;
+    pinned:             boolean;
+    nonce:              string;
+    mentions:           any[];
+    mention_roles:      any[];
+    mention_everyone:   boolean;
+    member:             Member;
+    id:                 string;
+    flags:              number;
+    embeds:             any[];
+    edited_timestamp:   null;
+    content:            string;
+    channel_id:         string;
+    author:             Author;
+    attachments:        any[];
+    guild_id:           string;
 }
 
 export interface Author {
-    username: string;
-    public_flags: number;
-    id: string;
+    username:      string;
+    public_flags:  number;
+    id:            string;
     discriminator: string;
-    avatar: string;
+    avatar:        string;
 }
 
 export interface Member {
-    roles: null[];
+    roles:         null[];
     premium_since: null;
-    pending: boolean;
-    nick: null;
-    mute: boolean;
-    joined_at: Date;
-    is_pending: boolean;
-    hoisted_role: string;
-    deaf: boolean;
+    pending:       boolean;
+    nick:          null;
+    mute:          boolean;
+    joined_at:     Date;
+    is_pending:    boolean;
+    hoisted_role:  string;
+    deaf:          boolean;
 }
 
 export interface DiscordAPIOP {
