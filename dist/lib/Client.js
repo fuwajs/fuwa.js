@@ -165,7 +165,8 @@ class Client extends Emitter_1.default {
                 const prefix = typeof this.prefix === 'function'
                     ? yield this.prefix(req)
                     : Array.isArray(this.prefix)
-                        ? this.prefix.find((p) => data.content.startsWith(p)) || false
+                        ? this.prefix.find((p) => data.content.startsWith(p)) ||
+                            false
                         : this.prefix;
                 if (prefix === false)
                     return;
@@ -181,7 +182,8 @@ class Client extends Emitter_1.default {
                 let _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
                 this.middleware[0]
-                    ? this.middleware[0](req, res, next(req, res, _, 0, command)) : 0;
+                    ? this.middleware[0](req, res, next(req, res, _, 0, command))
+                    : 0;
                 command[0].cb(req, res, next(req, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
@@ -197,7 +199,7 @@ class Client extends Emitter_1.default {
             //                     ''
             //                 )}`);
             //                 switch (res.op) {
-            //                     case OPCodes.HELLO:
+            //                     case opCodes.hello:
             //                         // Start heartbeat loop
             //                         this.debug(
             //                             `Attempting to identify with the following credentials: ${identify.replace(
@@ -289,7 +291,7 @@ class Client extends Emitter_1.default {
             //                                 next(request, response, command, 0)
             //                             );
             //                         } catch (e) {
-            //                             let ____ = this.events.get('ERR');
+            //                             let ____ = this.events.get('err');
             //                             if (!____) throw e;
             //                             ____();
             //                         }
