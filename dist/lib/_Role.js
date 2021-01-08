@@ -4,12 +4,15 @@ class Role {
     constructor(data) {
         this.hoist = false;
         this.mentionable = false;
+        this.managed = false;
         this.name = data.name;
+        this.id = data.id;
+        this.position = data.position;
+        if (data.permissions_new) {
+            this.permissionsNew = data.permissions_new;
+        }
         if (data.permissions) {
             this.permissions = data.permissions;
-        }
-        else {
-            this.permissions = ' ';
         }
         if (data.color) {
             this.color = data.color;

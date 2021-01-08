@@ -1,10 +1,4 @@
-export interface _Role {
-    name: string;
-    permissions?: string;
-    color?: number;
-    hoist?: boolean;
-    mentionable?: boolean;
-}
+import { Role as _Role } from './_DiscordAPI';
 
 class Role {
     name: string;
@@ -12,13 +6,20 @@ class Role {
     color: number;
     hoist: boolean = false;
     mentionable: boolean = false;
+    managed: boolean = false;
+    position: number
+    id: string; 
+    permissionsNew: string;
     constructor(data: _Role) {
         this.name = data.name;
+        this.id = data.id;
+        this.position = data.position;
+        if (data.permissions_new) { 
+            this.permissionsNew = data.permissions_new;
+        }
         if (data.permissions) {
             this.permissions = data.permissions;
-        } else {
-            this.permissions = ' ';
-        }
+        } 
         if (data.color) {
             this.color = data.color;
         } else {
