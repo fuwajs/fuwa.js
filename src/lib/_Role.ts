@@ -1,5 +1,8 @@
 import { Role as _Role } from './_DiscordAPI';
 
+/**
+ * Role Class
+ */
 class Role {
     name: string;
     permissions: string;

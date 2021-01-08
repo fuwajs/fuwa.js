@@ -197,7 +197,7 @@ class Client extends Emitter_1.default {
             //                     ''
             //                 )}`);
             //                 switch (res.op) {
-            //                     case OPCodes.HELLO:
+            //                     case opCodes.hello:
             //                         // Start heartbeat loop
             //                         this.debug(
             //                             `Attempting to identify with the following credentials: ${identify.replace(
@@ -289,7 +289,7 @@ class Client extends Emitter_1.default {
             //                                 next(request, response, command, 0)
             //                             );
             //                         } catch (e) {
-            //                             let ____ = this.events.get('ERR');
+            //                             let ____ = this.events.get('err');
             //                             if (!____) throw e;
             //                             ____();
             //                         }

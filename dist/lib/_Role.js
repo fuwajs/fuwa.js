@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Role Class
+ */
 class Role {
     constructor(data) {
         this.hoist = false;

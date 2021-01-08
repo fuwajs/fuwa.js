@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Channel Class
+ */
 class Channel {
     constructor(data) {
         this.nsfw = false;

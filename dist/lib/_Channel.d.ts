@@ -1,5 +1,8 @@
 import { Channel as _Channel } from './_DiscordAPI';
 import { Overwrites as _Overwrites } from './_DiscordAPI';
+/**
+ * Channel Class
+ */
 declare class Channel {
     id: string;
     type: number;
