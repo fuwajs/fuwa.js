@@ -56,11 +56,10 @@ class Client extends Emitter_1.default {
     }
     /**
      * Command function
-     * @param name Name and aliases of the command,
+     * @param name Name of the command,
      * @param cb The function that is called when the command is ran
      * @param  options Options for your command
-     * @returns Client
-     * @example
+     * @returns client
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
@@ -73,7 +72,7 @@ class Client extends Emitter_1.default {
                 const option = options || {
                     desc: 'No description was provided',
                 };
-                const commands = this.commands.get(key);
+                let commands = this.commands.get(key);
                 commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
@@ -82,7 +81,7 @@ class Client extends Emitter_1.default {
             const option = options || {
                 desc: 'No description was provided',
             };
-            const commands = this.commands.get(this.prefix + name);
+            let commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
@@ -95,8 +94,8 @@ class Client extends Emitter_1.default {
      * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
-    set(key, val) {
-        this.options[key] = val;
+    on(event, cb) {
+        this.events.set(event, cb);
         return this;
     }
     /**
@@ -157,11 +156,11 @@ class Client extends Emitter_1.default {
             this.event('ready', (data) => {
                 this.sessionId = data.session_id;
                 this.bot = data.user;
-                const ready = this.events.get('ready');
+                let ready = this.events.get('ready');
                 ready ? ready() : 0;
             });
-            this.event('messageCreate', (data) => __awaiter(this, void 0, void 0, function* () {
-                const req = new Request();
+            this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
+                const req = null;
                 const res = new Reponse_1.default(data, token.toString());
                 const prefix = typeof this.prefix === 'function'
                     ? yield this.prefix(req)
@@ -180,10 +179,11 @@ class Client extends Emitter_1.default {
                 const command = this.commands.get(commandName);
                 if (!command)
                     return;
-                const _ = [];
+                let _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
-                if (this.middleware[0])
-                    this.middleware[0](req, res, next(req, res, _, 0, command));
+                this.middleware[0]
+                    ? this.middleware[0](req, res, next(req, res, _, 0, command))
+                    : 0;
                 command[0].cb(req, res, next(req, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
@@ -303,9 +303,12 @@ class Client extends Emitter_1.default {
     logout(end = true) {
         if (this.ws && this.loop) {
             clearInterval(this.loop);
-            if (end)
-                process.exit();
+            end ? process.exit() : 0;
         }
+    }
+    set(opt, val) {
+        this.options.set('opt', val);
+        return this;
     }
 }
 exports.default = Client;

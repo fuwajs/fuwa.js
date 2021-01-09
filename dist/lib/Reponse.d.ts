@@ -1,29 +1,18 @@
-import Embed from './Embed';
-import Message from './Message';
-interface ResponseMessage {
-    /**
-     * The contents of the message
-     */
-    content: string;
-    /**
-     * Should the message use TextToSpeech
-     */
-    tts: boolean;
-    embed: Embed;
-}
-declare class Response {
+import { EmbedOptions } from './Embed';
+declare class Res {
     private req;
     private token;
-    protected data: ResponseMessage;
-    constructor(req: Message, token: string);
+    protected data: any;
+    constructor(req: any, token: string);
     /**
-     * @param content The message to send. Can be a message or an Embed
+     * @param content Can Send Both Embed And Message With Author Menntion
+     * @param embed Can Only Send Embed With Author Mention
      */
-    reply(content: string | Embed): Promise<unknown>;
+    reply(content: string | EmbedOptions, embed?: EmbedOptions): Promise<unknown>;
     /**
-     * @param content The content to send. The content can be a string or an
-     * Embed.
+     * @param content Can Send Both Embed And Message
+     * @param embed Can Only Send Embed
      */
-    send(content: string | Embed): Promise<unknown>;
+    send(content: string | EmbedOptions, embed?: EmbedOptions): Promise<unknown>;
 }
-export default Response;
+export default Res;

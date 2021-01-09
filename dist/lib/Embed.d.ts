@@ -1,40 +1,92 @@
-declare type Media = {
-    url: string;
-    proxy_url: string;
-    height: number;
-    width: number;
-};
-declare type EmbedType = 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link';
-declare class Embed {
-    protected type: EmbedType;
-    protected title?: string;
-    protected description?: string;
-    protected url?: string;
-    protected timestamp?: Date;
+/**
+ * Embed Options
+ */
+export interface EmbedOptions {
+    type?: string;
+    title?: string;
+    description?: string;
+    url?: string;
+    timestamp?: Date;
     color?: string | number;
-    protected footer?: {
+    footer?: {
         text: string;
-        icon_url: string | null;
-        proxy_icon_url: string | null;
+        url: string;
+        proxy_icon_url: string;
     };
-    protected image?: Media;
-    protected thumbnail: Media;
-    protected video: Media;
-    protected provider: {
-        url: string | null;
-        name: string | null;
-    } | null;
-    protected author?: {
-        proxy_icon_url: string | null;
-        url: string | null;
-        name: string | null;
+    image?: {
+        url: string;
+        proxy_url: string;
+        height: number;
+        width: number;
     };
-    protected fields?: {
+    thumbnail?: {
+        url: string;
+        proxy_url: string;
+        height: number;
+        width: number;
+    };
+    video?: {
+        url: string;
+        proxy_url: string;
+        height: number;
+        width: number;
+    };
+    provider?: {
+        url: string;
+        name: string;
+    };
+    author?: {
+        proxy_icon_url: string;
+        url: string;
+        name: string;
+    };
+    fields?: {
         name: string;
         value: string;
         inline: boolean;
     }[];
-    constructor(opts?: Embed);
+}
+declare class Embed {
+    protected type: string | null;
+    protected title: string | null;
+    protected description: string | null;
+    protected url: string | null;
+    protected timestamp: Date | null;
+    protected color: string | number | null;
+    protected footer: {
+        text: string;
+        icon_url: string | null;
+        proxy_icon_url: string | null;
+    } | null;
+    protected image: {
+        url: string;
+        proxy_url: string | null;
+        height: number | null;
+        width: number | null;
+    } | null;
+    protected thumbnail: {
+        url: string;
+        proxy_url: string | null;
+        height: number | null;
+        width: number | null;
+    } | null;
+    protected video: {
+        url: string;
+        proxy_url: string | null;
+        height: number | null;
+        width: number | null;
+    } | null;
+    protected provider: {
+        url: string | null;
+        name: string | null;
+    } | null;
+    protected author: {
+        proxy_icon_url: string | null;
+        url: string | null;
+        name: string | null;
+    } | null;
+    protected fields: Object[] | null;
+    constructor(data?: EmbedOptions);
     /**
      * @param description  Description For Embed
      */
@@ -42,7 +94,6 @@ declare class Embed {
     /**
      * @param imageUrl Url of the image, this can also be a file name
      * @param obj Extra Options For Embed
-     * @example
      * ```js
      * const Fuwa = require('fuwa.js');
      *
@@ -68,7 +119,7 @@ declare class Embed {
     setTitle(title: string): this;
     /**
      * @param footertext text to be displayed in footer of embed
-     * @param extraOpts extra options for footer
+     * @param obj extra options for footer
      * ```js
      * //without options
      * embed.setFooter('some value')
@@ -77,13 +128,13 @@ declare class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footertext: string, extraOpts?: {
+    setFooter(footertext: string, obj?: {
         url?: string;
         proxy_icon_url?: string;
     }): this;
     /**
      * @param name author name that should be displayed in embed
-     * @param extraOpts Extra options for author
+     * @param obj extra options for author
      * ```js
      * // without options
      * embed.setAuthor('Some Name')
@@ -92,13 +143,13 @@ declare class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name: string, extraOpts?: {
+    setAuthor(name: string, obj?: {
         url?: string;
         proxy_icon_url?: string;
     }): this;
     /**
-     * @param url URL for thumbnail in embed
-     * @param extraOpts Extra options for thumbnail.
+     * @param url url for thumbnail in embed
+     * @param obj extra options for thumbnail
      * ```js
      *
      * //without options
@@ -108,20 +159,19 @@ declare class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
      * ```
      */
-    setThumbnail(url: string, extraOpts?: {
+    setThumbnail(url: string, obj?: {
         proxy_url?: string;
         height?: number;
         width?: number;
     }): this;
     /**
      * @param code  color hex code for embed
-     * @example
      * ```ts
+     *
      * embed.setColor('#6f00ff')
-     * embed.setColor(0x6f00f)
      * ```
      */
-    setColor(code: string | number): this;
+    setColor(code: string): this;
     /**
      * @param time timestamp for embed
      * ```js
@@ -139,58 +189,52 @@ declare class Embed {
      */
     setUrl(url: string): this;
     /**
-     * @param type The type of embed:
-     * - rich: The default
-     * - image
-     * - video
-     * - gif
-     * - article
-     * - link
-     * @example
-     * ```ts
+     * @param type type of embed
+     * available types are
+     * rich: the default type
+     * image: type image
+     * video: type video
+     * gif: type gif
+     * article: type article
+     * link: type link
+     * ```js
      * embed.setType('rich')
      * ```
      */
-    setType(type: EmbedType): this;
+    setType(type: 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link'): this;
     /**
-     * @param fields fields For embed
-     * ```ts
+     * @param fields fields For  embed
+     * ```js
+     *
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(...fields: {
-        name: string;
-        value: string;
-        inline: boolean;
-    }[]): this;
+    addFields(...fields: Object[]): this;
     /**
      *
      * @param field A field for embed
      */
-    addField(field: {
-        name: string;
-        value: string;
-        inline: boolean;
-    }): this;
+    addField(field: Object): this;
     /**
      * @param name name of provider if exists
      * @param obj extra options for provider
-     * ```ts
+     * ```js
+     *
      * embed.setProvider('some name')
      * ```
      */
-    setProvider(name: string, extraOpts?: {
+    setProvider(name: string, obj?: {
         url: string;
     }): this;
     /**
      * @param url url for video in embed
-     * @param extraOpts extra options
+     * @param obj extra options
      * ```js
      *
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    setVideo(url: string, extraOpts?: {
+    setVideo(url: string, obj?: {
         height: number;
         width: number;
         proxy_url: string;

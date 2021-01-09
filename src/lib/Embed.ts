@@ -16,7 +16,7 @@ class Embed {
     protected description?: string;
     protected url?: string;
     protected timestamp?: Date;
-    color?: string | number;
+    protected color?: string | number;
     protected footer?: {
         text: string;
         icon_url: string | null;
@@ -152,7 +152,7 @@ class Embed {
     }
 
     /**
-     * @param url URL for thumbnail in embed
+     * @param url Url for thumbnail in embed
      * @param extraOpts Extra options for thumbnail.
      * ```js
      *

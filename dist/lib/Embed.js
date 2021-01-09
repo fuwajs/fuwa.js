@@ -6,25 +6,90 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 class Embed {
-    constructor(opts) {
-        this.provider = null;
-        // Rich Embed by default
+    constructor(data) {
         this.type = 'rich';
-        if (opts) {
-            // Don't override the defualt unless specified
-            this.type = opts.type || 'rich';
-            this.title = opts.title;
-            this.description = opts.description;
-            this.url = opts.url;
-            this.timestamp = opts.timestamp;
-            this.color = opts.color;
-            this.footer = opts.footer;
-            this.image = opts.image;
-            this.thumbnail = opts.thumbnail;
-            this.video = opts.video;
-            this.provider = opts.provider;
-            this.author = opts.author;
-            this.fields = opts.fields;
+        this.title = null;
+        this.description = null;
+        this.url = null;
+        this.timestamp = null;
+        this.color = null;
+        this.footer = null;
+        this.image = null;
+        this.thumbnail = null;
+        this.video = null;
+        this.provider = null;
+        this.author = null;
+        this.fields = null;
+        if (data) {
+            this.type = data.type || 'rich';
+            this.title = data.title ? data.title : null;
+            this.description = data.description ? data.description : null;
+            this.url = data.url ? data.url : null;
+            this.timestamp = data.timestamp ? data.timestamp : null;
+            this.color = data.color ? data.color : null;
+            this.footer = data.footer
+                ? {
+                    text: data.footer.text,
+                    icon_url: data.footer.url ? data.footer.url : null,
+                    proxy_icon_url: data.footer.proxy_icon_url
+                        ? data.footer.proxy_icon_url
+                        : null,
+                }
+                : null;
+            this.image = data.image
+                ? {
+                    url: data.image.url,
+                    height: data.image.height ? data.image.height : null,
+                    width: data.image.width ? data.image.width : null,
+                    proxy_url: data.image.proxy_url
+                        ? data.image.proxy_url
+                        : null,
+                }
+                : null;
+            this.thumbnail = data.thumbnail
+                ? {
+                    url: data.thumbnail.url,
+                    height: data.thumbnail.height
+                        ? data.thumbnail.height
+                        : null,
+                    width: data.thumbnail.width ? data.thumbnail.width : null,
+                    proxy_url: data.thumbnail.proxy_url
+                        ? data.thumbnail.proxy_url
+                        : null,
+                }
+                : null;
+            this.video = data.video
+                ? {
+                    url: data.video.url,
+                    height: data.video.height ? data.video.height : null,
+                    width: data.video.width ? data.video.width : null,
+                    proxy_url: data.video.proxy_url
+                        ? data.video.proxy_url
+                        : null,
+                }
+                : null;
+            this.author = data.author
+                ? {
+                    name: data.author.name ? data.author.name : null,
+                    url: data.author.url ? data.author.url : null,
+                    proxy_icon_url: data.author.proxy_icon_url
+                        ? data.author.proxy_icon_url
+                        : null,
+                }
+                : null;
+            this.provider = data.provider
+                ? {
+                    url: data.provider.url ? data.provider.url : null,
+                    name: data.provider.name ? data.provider.name : null,
+                }
+                : null;
+            this.fields = data.fields
+                ? data.fields.map((c) => this.fields.push({
+                    name: c.name,
+                    value: c.value,
+                    inline: c.inline ? true : false,
+                }))
+                : null;
         }
     }
     /**
@@ -37,7 +102,6 @@ class Embed {
     /**
      * @param imageUrl Url of the image, this can also be a file name
      * @param obj Extra Options For Embed
-     * @example
      * ```js
      * const Fuwa = require('fuwa.js');
      *
@@ -52,16 +116,15 @@ class Embed {
     setImage(imageUrl, obj) {
         if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
             let ext = path_1.default.extname(imageUrl).replace('.', '');
-            if (ext === 'svg')
-                ext = 'svg+xml';
+            ext === 'svg' ? (ext = 'svg+xml') : 0;
             const base64 = fs_1.default.readFileSync(imageUrl).toString('base64');
             imageUrl = `data:image/${ext};base64,${base64}`;
         }
         this.image = {
             url: imageUrl,
-            proxy_url: obj.proxy_url,
-            height: obj.height,
-            width: obj.width,
+            proxy_url: obj && obj.proxy_url ? obj.proxy_url : null,
+            height: obj && obj.height ? obj.height : null,
+            width: obj && obj.width ? obj.width : null,
         };
         return this;
     }
@@ -77,7 +140,7 @@ class Embed {
     }
     /**
      * @param footertext text to be displayed in footer of embed
-     * @param extraOpts extra options for footer
+     * @param obj extra options for footer
      * ```js
      * //without options
      * embed.setFooter('some value')
@@ -86,17 +149,17 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footertext, extraOpts) {
+    setFooter(footertext, obj) {
         this.footer = {
             text: footertext,
-            icon_url: extraOpts.url,
-            proxy_icon_url: extraOpts.proxy_icon_url,
+            icon_url: obj && obj.url ? obj.url : null,
+            proxy_icon_url: obj && obj.proxy_icon_url ? obj.proxy_icon_url : null,
         };
         return this;
     }
     /**
      * @param name author name that should be displayed in embed
-     * @param extraOpts Extra options for author
+     * @param obj extra options for author
      * ```js
      * // without options
      * embed.setAuthor('Some Name')
@@ -105,17 +168,17 @@ class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name, extraOpts) {
+    setAuthor(name, obj) {
         this.author = {
             name: name,
-            url: extraOpts.url,
-            proxy_icon_url: extraOpts.proxy_icon_url,
+            url: obj && obj.url ? obj.url : null,
+            proxy_icon_url: obj && obj.proxy_icon_url ? obj.proxy_icon_url : null,
         };
         return this;
     }
     /**
-     * @param url URL for thumbnail in embed
-     * @param extraOpts Extra options for thumbnail.
+     * @param url url for thumbnail in embed
+     * @param obj extra options for thumbnail
      * ```js
      *
      * //without options
@@ -125,21 +188,20 @@ class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
      * ```
      */
-    setThumbnail(url, extraOpts) {
+    setThumbnail(url, obj) {
         this.thumbnail = {
             url: url,
-            proxy_url: extraOpts.proxy_url,
-            height: extraOpts.height,
-            width: extraOpts.width,
+            proxy_url: obj && obj.proxy_url ? obj.proxy_url : null,
+            height: obj && obj.height ? obj.height : null,
+            width: obj && obj.width ? obj.width : null,
         };
         return this;
     }
     /**
      * @param code  color hex code for embed
-     * @example
      * ```ts
+     *
      * embed.setColor('#6f00ff')
-     * embed.setColor(0x6f00f)
      * ```
      */
     setColor(code) {
@@ -169,15 +231,15 @@ class Embed {
         return this;
     }
     /**
-     * @param type The type of embed:
-     * - rich: The default
-     * - image
-     * - video
-     * - gif
-     * - article
-     * - link
-     * @example
-     * ```ts
+     * @param type type of embed
+     * available types are
+     * rich: the default type
+     * image: type image
+     * video: type video
+     * gif: type gif
+     * article: type article
+     * link: type link
+     * ```js
      * embed.setType('rich')
      * ```
      */
@@ -186,13 +248,14 @@ class Embed {
         return this;
     }
     /**
-     * @param fields fields For embed
-     * ```ts
+     * @param fields fields For  embed
+     * ```js
+     *
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
     addFields(...fields) {
-        this.fields.push(...fields);
+        this.fields = [...fields];
         return this;
     }
     /**
@@ -200,34 +263,35 @@ class Embed {
      * @param field A field for embed
      */
     addField(field) {
-        this.fields.push(field);
+        this.fields ? this.fields.push(field) : (this.fields = [field]);
         return this;
     }
     /**
      * @param name name of provider if exists
      * @param obj extra options for provider
-     * ```ts
+     * ```js
+     *
      * embed.setProvider('some name')
      * ```
      */
-    setProvider(name, extraOpts) {
-        this.provider = { name: name, url: extraOpts.url };
+    setProvider(name, obj) {
+        this.provider = { name: name, url: obj && obj.url ? obj.url : null };
         return this;
     }
     /**
      * @param url url for video in embed
-     * @param extraOpts extra options
+     * @param obj extra options
      * ```js
      *
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    setVideo(url, extraOpts) {
+    setVideo(url, obj) {
         this.video = {
             url: url,
-            height: extraOpts.height,
-            width: extraOpts.width,
-            proxy_url: extraOpts.proxy_url,
+            height: obj && obj.height ? obj.height : null,
+            width: obj && obj.width ? obj.width : null,
+            proxy_url: obj && obj.proxy_url ? obj.proxy_url : null,
         };
         return this;
     }

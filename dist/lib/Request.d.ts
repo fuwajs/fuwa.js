@@ -1,7 +1,3 @@
-interface Request {
-    author: {
-        id: string;
-    };
-    channel_id: string;
+declare class Req {
 }
-export default Request;
+export default Req;

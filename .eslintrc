@@ -18,7 +18,6 @@
     "rules": {
         "no-ternary": "warn",
         "no-eq-null": "warn",
-        "semi": "error",
-        "quotes": ["error", "single"]
+        "semi": "error"
     }
   }

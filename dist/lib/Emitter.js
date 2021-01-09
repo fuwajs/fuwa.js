@@ -6,15 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = __importDefault(require("ws"));
 class Emitter {
     constructor() {
+        this.OPevents = {};
+        this.APIEvents = {};
+        this.WSEvents = {};
         this.response = {
             op: {
                 emit: (op, d) => {
-                    this.ws.send(JSON.stringify({ op, d, t: null, }));
+                    this.ws.send(JSON.stringify({
+                        op,
+                        d,
+                        t: null,
+                    }));
                 },
             },
             events: {
                 emit: (t, d) => {
-                    this.ws.send(JSON.stringify({ t, d, op: 0 }));
+                    this.ws.send(JSON.stringify({
+                        t,
+                        d,
+                        op: 0,
+                    }));
                 },
             },
         };
@@ -24,19 +35,18 @@ class Emitter {
         this.ws.on('open', () => {
             var _a;
             console.log('Connected');
-            this.WSEvents.open();
+            this.WSEvents.open ? this.WSEvents.open() : 0;
             (_a = this.ws) === null || _a === void 0 ? void 0 : _a.on('message', (data) => {
-                this.WSEvents.message();
-                const res = JSON.parse(data.toString());
+                this.WSEvents.message ? this.WSEvents.message() : 0;
+                let res = JSON.parse(data.toString());
                 console.log(res);
                 if (res.op === 0) {
                     if (!res.t)
                         throw new Error(`The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`);
-                    if (this.APIEvents[res.t])
-                        this.APIEvents[res.t](res.d);
+                    this.APIEvents[res.t] ? this.APIEvents[res.t](res.d) : 0;
                 }
-                else if (this.OPevents[res.op])
-                    this.OPevents[res.op](res.d);
+                else
+                    this.OPevents[res.op] ? this.OPevents[res.op](res.d) : 0;
             });
         });
     }
