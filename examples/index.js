@@ -32,3 +32,5 @@ client.command('ping', (req, res, next) => {
         .setColor(fuwa.Colors.rgb(13, 186, 120))
     );
 });
+
+client.set('')

@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import User from './User';
-import Request from './Request';
+import Message from './Message';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -31,6 +31,10 @@ export interface statusOptions {
      * whether or not the bot is afk
      */
     afk?: boolean;
+    /**
+     *
+     */
+    useMentionAsPrefix: boolean;
 }
 /**
  * Options for your command
@@ -59,7 +63,7 @@ export interface commandOptions {
  * Callback for commands
  * TODO: change request res and next function types to actual types
  */
-export declare type commandCallback = (req: Request | null, res: Response, next: any) => Promise<void> | void;
+export declare type commandCallback = (msg: Message, res: Response, next: void) => Promise<void> | void;
 export interface Events {
     ready(): void | Promise<void>;
     msg(req: Request): void | Promise<void>;
@@ -88,10 +92,10 @@ declare class Client extends Emitter {
     bot: User | null;
     private sessionId;
     protected debugMode: boolean;
-    protected status: any;
-    protected events: Map<keyof Events, Function>;
+    protected status: unknown[];
+    protected events: Map<keyof Events, unknown>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
-    protected options: Map<string, any>;
+    protected options: clientOptions;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<string, {
         cb: commandCallback;
@@ -106,10 +110,11 @@ declare class Client extends Emitter {
     protected debug(bug: Error | any): void;
     /**
      * Command function
-     * @param name Name of the command,
+     * @param name Name and aliases of the command,
      * @param cb The function that is called when the command is ran
      * @param  options Options for your command
-     * @returns client
+     * @returns Client
+     * @example
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
@@ -124,7 +129,7 @@ declare class Client extends Emitter {
      * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
-    on<T extends keyof Events>(event: T, cb: Events[T]): this;
+    set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this;
     /**
      * a function that is ran before every command
      * @param  cb Your middleware function
@@ -148,6 +153,5 @@ declare class Client extends Emitter {
      */
     login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
-    set(opt: string, val: any): this;
 }
 export default Client;

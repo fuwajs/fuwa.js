@@ -1,10 +1,11 @@
 import User from './User';
-import Request from './Request';
-import { discordAPI, opCodes } from './_DiscordAPI';
+import { discordAPI, opCodes, Message } from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
+
+// }
 /**
  * status options for bot
  */
@@ -34,6 +35,11 @@ export interface statusOptions {
      * whether or not the bot is afk
      */
     afk?: boolean;
+
+    /**
+     * 
+     */
+    useMentionAsPrefix: boolean;
 }
 /**
  * Options for your command
@@ -64,7 +70,7 @@ export interface commandOptions {
  * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Request | null,
+    msg: Message,
     res: Response,
     next: void
 ) => Promise<void> | void;
@@ -102,7 +108,7 @@ class Client extends Emitter {
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
-    protected options: Map<string, any>;
+    protected options: clientOptions;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
@@ -116,6 +122,8 @@ class Client extends Emitter {
         custom: 4,
         competing: 5,
     };
+
+
     /**
      * @param prefix The prefix for your bot
      */
@@ -142,10 +150,11 @@ class Client extends Emitter {
 
     /**
      * Command function
-     * @param name Name of the command,
+     * @param name Name and aliases of the command,
      * @param cb The function that is called when the command is ran
      * @param  options Options for your command
-     * @returns client
+     * @returns Client
+     * @example
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
@@ -156,7 +165,7 @@ class Client extends Emitter {
         name: string | string[],
         cb: commandCallback,
         options?: commandOptions
-    ) {
+    ): this {
         if (Array.isArray(name)) {
             name.forEach((key) => {
                 const option: commandOptions = options || {
@@ -183,8 +192,8 @@ class Client extends Emitter {
      * cli.on('ready', () => console.log('Up and ready to go!'));
      * ```
      */
-    on<T extends keyof Events>(event: T, cb: Events[T]) {
-        this.events.set(event, cb);
+    set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this {
+        this.options[key] = val;
         return this;
     }
     /**
@@ -224,14 +233,14 @@ class Client extends Emitter {
                 arr[i + 1]
                     ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
                     : secoundArr
-                    ? secoundArr[0]
-                        ? secoundArr[0].cb(
-                              req,
-                              res,
-                              next(req, res, secoundArr, i++)
-                          )
-                        : 0
-                    : 0;
+                        ? secoundArr[0]
+                            ? secoundArr[0].cb(
+                                req,
+                                res,
+                                next(req, res, secoundArr, i++)
+                            )
+                            : 0
+                        : 0;
             };
         };
         console.log(token.toString());
@@ -264,15 +273,15 @@ class Client extends Emitter {
             ready ? ready() : 0;
         });
         this.event('messageCreate', async (data) => {
-            const req = null;
+            const req = new Request();
             const res = new Response(data, token.toString());
             const prefix =
                 typeof this.prefix === 'function'
                     ? await this.prefix(req)
                     : Array.isArray(this.prefix)
-                    ? this.prefix.find((p) => data.content.startsWith(p)) ||
-                      false
-                    : this.prefix;
+                        ? this.prefix.find((p) => data.content.startsWith(p)) ||
+                        false
+                        : this.prefix;
             if (prefix === false) return;
             if (prefix === null || prefix === undefined) return;
             const commandName = data.content
@@ -283,9 +292,7 @@ class Client extends Emitter {
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
-            this.middleware[0]
-                ? this.middleware[0](req, res, next(req, res, _, 0, command))
-                : 0;
+            if (this.middleware[0]) this.middleware[0](req, res, next(req, res, _, 0, command));
             command[0].cb(req, res, next(req, res, command, 0));
         });
         //         this.ws.on('open', async function () {
@@ -413,10 +420,7 @@ class Client extends Emitter {
             if (end) process.exit();
         }
     }
-    set(opt: string, val: unknown): this {
-        this.options.set('opt', val);
-        return this;
-    }
+
     // setStatus(status: statusOptions) {
     //     let cred: any = {};
     //     let activities: any = [

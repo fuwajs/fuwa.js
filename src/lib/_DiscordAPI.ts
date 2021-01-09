@@ -13,6 +13,8 @@
 //     // HEARTBEAT_ACK: 11,
 // };
 
+import Embed from './Embed';
+
 export enum opCodes {
     dispatch,
     heartbeat,
@@ -40,7 +42,7 @@ export enum opCodes {
 
 export const discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
-    api: `https://discord.com/api/v8/`,
+    api: 'https://discord.com/api/v8/',
     discord: 'https://discord.com',
 };
 
@@ -79,8 +81,8 @@ export interface Message {
     member: Member;
     id: string;
     flags: number;
-    embeds: any[];
-    edited_timestamp: null;
+    embeds: Embed[];
+    edited_timestamp: Date;
     content: string;
     channel_id: string;
     author: Author;
