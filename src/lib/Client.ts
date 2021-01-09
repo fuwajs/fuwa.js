@@ -72,10 +72,10 @@ export type commandCallback = (
     next: any
 ) => Promise<void> | void;
 export interface Events {
-    ready(): void | Promise<void>;
-    msg(req: Request): void | Promise<void>;
-    cmdNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
-    err(err: Error): void | Promise<void>;
+    READY(): void | Promise<void>;
+    MSG(req: Request): void | Promise<void>;
+    CMD_NOT_FND(req: Request, cmd: commandCallback): void | Promise<void>;
+    ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -88,6 +88,13 @@ export interface clientOptions {
      */
     debug?: boolean;
 }
+
+type eventCallback =
+    | (() => void | Promise<void>)
+    | ((req: Request) => void | Promise<void>) 
+    | ((req: Request, cmd: commandCallback) => void | Promise<void>) 
+    | ((err: Error) => void | Promise<void>);
+
 /**
  * Client Class
  * ```typescript
@@ -100,6 +107,8 @@ class Client extends Emitter {
     private sessionId = '';
     protected debugMode: boolean;
     protected status: any = [];
+    // protected events: Map<keyof Events, eventCallback> = new Map();
+    /* eslint-disable */
     protected events: Map<keyof Events, Function> = new Map();
     protected prefix:
         | string
@@ -165,7 +174,7 @@ class Client extends Emitter {
                 const option: commandOptions = options || {
                     desc: 'No description was provided',
                 };
-                let commands = this.commands.get(key);
+                const commands = this.commands.get(key);
                 commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
@@ -173,7 +182,7 @@ class Client extends Emitter {
             const option: commandOptions = options || {
                 desc: 'No description was provided',
             };
-            let commands = this.commands.get(this.prefix + name);
+            const commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
@@ -227,14 +236,14 @@ class Client extends Emitter {
                 arr[i + 1]
                     ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
                     : secoundArr
-                    ? secoundArr[0]
-                        ? secoundArr[0].cb(
-                              req,
-                              res,
-                              next(req, res, secoundArr, i++)
-                          )
-                        : 0
-                    : 0;
+                        ? secoundArr[0]
+                            ? secoundArr[0].cb(
+                                req,
+                                res,
+                                next(req, res, secoundArr, i++)
+                            )
+                            : 0
+                        : 0;
             };
         };
         console.log(token.toString());
@@ -260,10 +269,10 @@ class Client extends Emitter {
             throw new Error('Invalid token');
         });
 
-        this.event('ready', (data) => {
+        this.event('READY', (data) => {
             this.sessionId = data.session_id;
             this.bot = data.user;
-            let ready = this.events.get('ready');
+            const ready = this.events.get('READY');
             ready ? ready() : 0;
         });
         this.event('MESSAGE_CREATE', async (data) => {
@@ -273,9 +282,9 @@ class Client extends Emitter {
                 typeof this.prefix === 'function'
                     ? await this.prefix(req)
                     : Array.isArray(this.prefix)
-                    ? this.prefix.find((p) => data.content.startsWith(p)) ||
-                      false
-                    : this.prefix;
+                        ? this.prefix.find((p) => data.content.startsWith(p)) ||
+                        false
+                        : this.prefix;
             if (prefix === false) return;
             if (prefix === null || prefix === undefined) return;
             const commandName = data.content
@@ -284,7 +293,7 @@ class Client extends Emitter {
                 .toLowerCase();
             const command = this.commands.get(commandName);
             if (!command) return;
-            let _: any[] = [];
+            const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
             this.middleware[0]
                 ? this.middleware[0](req, res, next(req, res, _, 0, command))
@@ -410,7 +419,7 @@ class Client extends Emitter {
         //             });
         //         });
     }
-    logout(end: boolean = true) {
+    logout(end = true) {
         if (this.ws && this.loop) {
             clearInterval(this.loop);
             end ? process.exit() : 0;

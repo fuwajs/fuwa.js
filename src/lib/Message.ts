@@ -1,5 +1,9 @@
 import User from './User';
 
-class Message {}
+class Message {
+    constructor() {
+        /* eslint-disable */
+    }
+}
 
 export default Message;

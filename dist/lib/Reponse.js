@@ -13,104 +13,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _unicdi_1 = __importDefault(require("./_unicdi"));
-class Res {
+class Response {
     constructor(req, token) {
         this.req = req;
         this.token = token;
         this.data = {};
     }
     /**
-     * @param content Can Send Both Embed And Message With Author Menntion
-     * @param embed Can Only Send Embed With Author Mention
+     * @param content The message to send. Can be a message or an Embed
      */
-    reply(content, embed) {
+    reply(content) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (typeof content === 'string') {
-                this.data.content = '<@' + this.req.author.id + '> ' + content;
+            if (typeof content === 'string') { // Just a normal message
+                this.data.content = content;
                 this.data.tts = false;
             }
             else if (typeof content === 'object') {
-                Object.keys(content).map((el) => {
-                    if (el === 'color') {
-                        content[el] === null && el !== 'color'
-                            ? delete content[el]
-                            : 0;
-                        if (typeof content.color === 'string') {
-                            let colorcode = content.color
-                                ? 0 + 'x' + content.color.split('#')[1]
-                                : '0';
-                            colorcode !== '0'
-                                ? (content.color = parseInt(colorcode))
-                                : (content.color = content.color);
-                        }
-                    }
-                    this.data.embed = content;
-                    this.data.tts = false;
-                    this.data.content = '<@' + this.req.author.id + '> ';
-                });
+                if (content['color'] === null) {
+                    delete content['color'];
+                    throw new TypeError(`content: ${content} is missing member 'color'`);
+                }
+                if (typeof content.color === 'string') {
+                    content.color = parseInt('0x' + (content.color.split('#')[1] || 'ffffff'));
+                }
+                this.data.embed = content;
+                this.data.tts = false;
             }
-            if (embed) {
-                Object.keys(embed).map((el) => {
-                    embed[el] === null && el !== 'color' ? delete embed[el] : 0;
-                    if (el === 'color' && typeof embed.color === 'string') {
-                        let colorcode = embed.color
-                            ? 0 + 'x' + embed.color.split('#')[1]
-                            : '0';
-                        if (colorcode !== '0') {
-                            embed.color = parseInt(colorcode);
-                        }
-                    }
-                });
-                (this.data.embed = embed), (this.data.tts = false);
+            else {
+                throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
             }
-            let result = yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
-            return result;
+            return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
         });
     }
     /**
-     * @param content Can Send Both Embed And Message
-     * @param embed Can Only Send Embed
+     * @param content The content to send. The content can be a string or an
+     * Embed.
      */
-    send(content, embed) {
+    send(content) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (typeof content === 'string') {
-                (this.data.content = content), (this.data.tts = false);
+            if (typeof content === 'string') { // Just a normal message
+                this.data.content = content;
+                this.data.tts = false;
             }
             else if (typeof content === 'object') {
-                Object.keys(content).map((el) => {
-                    if (el === 'color') {
-                        content[el] === null && el !== 'color'
-                            ? delete content[el]
-                            : 0;
-                        if (typeof content.color === 'string') {
-                            let colorcode = content.color
-                                ? 0 + 'x' + content.color.split('#')[1]
-                                : '0';
-                            colorcode !== '0'
-                                ? (content.color = parseInt(colorcode))
-                                : (content.color = content.color);
-                        }
-                    }
-                    (this.data.embed = content), (this.data.tts = false);
-                });
+                if (content['color'] === null) {
+                    delete content['color'];
+                    throw new TypeError(`content: ${content} is missing member 'color'`);
+                }
+                if (typeof content.color === 'string') {
+                    content.color = parseInt('0x' + (content.color.split('#')[1] || 'ffffff'));
+                }
+                this.data.embed = content;
+                this.data.tts = false;
             }
-            if (embed) {
-                Object.keys(embed).map((el) => {
-                    embed[el] === null && el !== 'color' ? delete embed[el] : 0;
-                    if (el == 'color' && typeof embed.color === 'string') {
-                        let colorcode = embed.color
-                            ? 0 + 'x' + embed.color.split('#')[1]
-                            : '0';
-                        if (colorcode !== '0') {
-                            embed.color = parseInt(colorcode);
-                        }
-                    }
-                });
-                (this.data.embed = embed), (this.data.tts = false);
+            else {
+                throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
             }
-            let result = yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
-            return result;
+            return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
         });
     }
 }
-exports.default = Res;
+exports.default = Response;

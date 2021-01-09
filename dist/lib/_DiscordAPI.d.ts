@@ -20,17 +20,17 @@ export declare const discordAPI: {
 export interface DiscordAPIEvents {
     guildCreate: {
         op?: 0;
-        t?: 'guildCreate';
+        t?: 'GUILD_CREATE';
         d: Guild;
     };
-    ready: {
+    READY: {
         op?: 0;
-        t?: 'ready';
+        t?: 'READY';
         d: Ready;
     };
     channelCreate: {
         op?: 0;
-        t?: 'channelCreate';
+        t?: 'CHANNEL_CREATE';
         d: Ready;
     };
     MESSAGE_CREATE: {

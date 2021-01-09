@@ -1,18 +1,18 @@
-import { EmbedOptions } from './Embed';
-declare class Res {
+import Embed from './Embed';
+import { Message } from './_DiscordAPI';
+declare class Response {
     private req;
     private token;
     protected data: any;
-    constructor(req: any, token: string);
+    constructor(req: Message, token: string);
     /**
-     * @param content Can Send Both Embed And Message With Author Menntion
-     * @param embed Can Only Send Embed With Author Mention
+     * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | EmbedOptions, embed?: EmbedOptions): Promise<unknown>;
+    reply(content: string | Embed): Promise<unknown>;
     /**
-     * @param content Can Send Both Embed And Message
-     * @param embed Can Only Send Embed
+     * @param content The content to send. The content can be a string or an
+     * Embed.
      */
-    send(content: string | EmbedOptions, embed?: EmbedOptions): Promise<unknown>;
+    send(content: string | Embed): Promise<unknown>;
 }
-export default Res;
+export default Response;

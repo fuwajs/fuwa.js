@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Req {
+class Request {
 }
-exports.default = Req;
+exports.default = Request;

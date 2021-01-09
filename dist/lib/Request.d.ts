@@ -1,3 +1,7 @@
-declare class Req {
+declare type Author = {
+    id: string;
+};
+declare class Request {
+    author: Author;
 }
-export default Req;
+export default Request;

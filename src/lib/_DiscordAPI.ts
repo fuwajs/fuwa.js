@@ -47,17 +47,17 @@ export const discordAPI = {
 export interface DiscordAPIEvents {
     guildCreate: {
         op?: 0;
-        t?: 'guildCreate';
+        t?: 'GUILD_CREATE';
         d: Guild;
     };
-    ready: {
+    READY: {
         op?: 0;
-        t?: 'ready';
+        t?: 'READY';
         d: Ready;
     };
     channelCreate: {
         op?: 0;
-        t?: 'channelCreate';
+        t?: 'CHANNEL_CREATE';
         d: Ready;
     };
     MESSAGE_CREATE: {
@@ -218,7 +218,9 @@ export interface User {
     avatar: null | string;
 }
 
-export interface UserSettings {}
+/* eslint-disable */
+export interface UserSettings { }
+
 export interface Guild {
     description: null;
     public_updates_channel_id: null;

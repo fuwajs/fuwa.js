@@ -31,6 +31,8 @@ class Client extends Emitter_1.default {
         this.bot = null;
         this.sessionId = '';
         this.status = [];
+        // protected events: Map<keyof Events, eventCallback> = new Map();
+        /* eslint-disable */
         this.events = new Map();
         this.commands = new Map();
         this.middleware = [];
@@ -72,7 +74,7 @@ class Client extends Emitter_1.default {
                 const option = options || {
                     desc: 'No description was provided',
                 };
-                let commands = this.commands.get(key);
+                const commands = this.commands.get(key);
                 commands ? commands.push({ cb, options: option }) : 0;
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
@@ -81,7 +83,7 @@ class Client extends Emitter_1.default {
             const option = options || {
                 desc: 'No description was provided',
             };
-            let commands = this.commands.get(this.prefix + name);
+            const commands = this.commands.get(this.prefix + name);
             commands ? commands.push({ cb, options: option }) : undefined;
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
@@ -153,10 +155,10 @@ class Client extends Emitter_1.default {
             this.op(_DiscordAPI_1.opCodes.invalidSession, () => {
                 throw new Error('Invalid token');
             });
-            this.event('ready', (data) => {
+            this.event('READY', (data) => {
                 this.sessionId = data.session_id;
                 this.bot = data.user;
-                let ready = this.events.get('ready');
+                const ready = this.events.get('READY');
                 ready ? ready() : 0;
             });
             this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
@@ -179,7 +181,7 @@ class Client extends Emitter_1.default {
                 const command = this.commands.get(commandName);
                 if (!command)
                     return;
-                let _ = [];
+                const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
                 this.middleware[0]
                     ? this.middleware[0](req, res, next(req, res, _, 0, command))

@@ -9,13 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-async-promise-executor */ // should be fixed soon
 const undici_1 = require("undici");
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
     GET(path, token) {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            let res = yield http.request({
+            const res = yield http.request({
                 path,
                 method: 'GET',
                 headers: {
@@ -23,7 +24,7 @@ exports.default = {
                     Authorization: 'Bot ' + token,
                 },
             });
-            let chunks = [];
+            const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 resolve(JSON.parse(Buffer.concat(chunks).toString()));
@@ -32,7 +33,7 @@ exports.default = {
     },
     DELETE(path, token) {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            let res = yield http.request({
+            const res = yield http.request({
                 path: path,
                 method: 'DELETE',
                 headers: {
@@ -40,7 +41,7 @@ exports.default = {
                     Authorization: 'Bot ' + token,
                 },
             });
-            let chunks = [];
+            const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 resolve(JSON.parse(Buffer.concat(chunks).toString()));
@@ -49,7 +50,7 @@ exports.default = {
     },
     OTHER(method, path, token, data) {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            let res = yield http.request({
+            const res = yield http.request({
                 path: path,
                 method: method,
                 headers: {
@@ -58,7 +59,7 @@ exports.default = {
                 },
                 body: data,
             });
-            let chunks = [];
+            const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 resolve(JSON.parse(Buffer.concat(chunks).toString()));

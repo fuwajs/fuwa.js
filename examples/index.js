@@ -2,15 +2,14 @@ const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
 const fs = require('fs');
 
-const owner = fs.readFileSync(path.join(__dirname, 'owner.secret')).toString();
-const client = new fuwa.Client('?', { debug: true, owners: owner});
+const client = new fuwa.Client('?', { debug: false });
 // bot.set('prefix', '?');
 
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 
 // This function is ran when the bot is connected to discord
-client.on('ready', () => {
+client.on('READY', () => {
     console.log(`Hello, my name is ${client.bot.username}!`)
 });
 

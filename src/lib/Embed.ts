@@ -16,24 +16,23 @@ class Embed {
     protected description?: string;
     protected url?: string;
     protected timestamp?: Date;
-    protected color?: string | number;
+    color?: string | number;
     protected footer?: {
         text: string;
-        icon_url: string | null;
-        proxy_icon_url: string | null;
+        icon_url: string;
+        proxy_icon_url: string;
     };
     protected image?: Media;
-    protected thumbnail: Media;
-    protected video: Media;
-    protected provider: {
-        url: string | null;
-        name: string | null;
-    } | null = null;
+    protected thumbnail?: Media;
+    protected video?: Media;
+    protected provider?: {
+        url: string;
+        name: string;
+    };
     protected author?: {
-        proxy_icon_url: string | null;
-        url: string | null;
-        name: string | null;
-<<<<<<< HEAD
+        proxy_icon_url: string;
+        url: string;
+        name: string;
     };
     protected fields?: { name: string; value: string; inline: boolean }[];
     constructor(opts?: Embed) {
@@ -54,83 +53,6 @@ class Embed {
             this.provider = opts.provider;
             this.author = opts.author;
             this.fields = opts.fields;
-=======
-    } | null = null;
-    protected fields: Object[] | null = null;
-    constructor(data?: EmbedOptions) {
-        if (data) {
-            this.type = data.type || 'rich';
-            this.title = data.title ? data.title : null;
-            this.description = data.description ? data.description : null;
-            this.url = data.url ? data.url : null;
-            this.timestamp = data.timestamp ? data.timestamp : null;
-            this.color = data.color ? data.color : null;
-            this.footer = data.footer
-                ? {
-                      text: data.footer.text,
-                      icon_url: data.footer.url ? data.footer.url : null,
-                      proxy_icon_url: data.footer.proxy_icon_url
-                          ? data.footer.proxy_icon_url
-                          : null,
-                  }
-                : null;
-            this.image = data.image
-                ? {
-                      url: data.image.url,
-                      height: data.image.height ? data.image.height : null,
-                      width: data.image.width ? data.image.width : null,
-                      proxy_url: data.image.proxy_url
-                          ? data.image.proxy_url
-                          : null,
-                  }
-                : null;
-            this.thumbnail = data.thumbnail
-                ? {
-                      url: data.thumbnail.url,
-                      height: data.thumbnail.height
-                          ? data.thumbnail.height
-                          : null,
-                      width: data.thumbnail.width ? data.thumbnail.width : null,
-                      proxy_url: data.thumbnail.proxy_url
-                          ? data.thumbnail.proxy_url
-                          : null,
-                  }
-                : null;
-            this.video = data.video
-                ? {
-                      url: data.video.url,
-                      height: data.video.height ? data.video.height : null,
-                      width: data.video.width ? data.video.width : null,
-                      proxy_url: data.video.proxy_url
-                          ? data.video.proxy_url
-                          : null,
-                  }
-                : null;
-            this.author = data.author
-                ? {
-                      name: data.author.name ? data.author.name : null,
-                      url: data.author.url ? data.author.url : null,
-                      proxy_icon_url: data.author.proxy_icon_url
-                          ? data.author.proxy_icon_url
-                          : null,
-                  }
-                : null;
-            this.provider = data.provider
-                ? {
-                      url: data.provider.url ? data.provider.url : null,
-                      name: data.provider.name ? data.provider.name : null,
-                  }
-                : null;
-            this.fields = data.fields
-                ? data.fields.map((c) =>
-                      this.fields!.push({
-                          name: c.name,
-                          value: c.value,
-                          inline: c.inline ? true : false,
-                      })
-                  )
-                : null;
->>>>>>> parent of 852cbb0... eslint
         }
     }
 
@@ -144,7 +66,6 @@ class Embed {
     /**
      * @param imageUrl Url of the image, this can also be a file name
      * @param obj Extra Options For Embed
-     * @example
      * ```js
      * const Fuwa = require('fuwa.js');
      *
@@ -233,7 +154,6 @@ class Embed {
      * @param url Url for thumbnail in embed
      * @param extraOpts Extra options for thumbnail.
      * ```js
-     *
      * //without options
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
      *
@@ -243,13 +163,8 @@ class Embed {
      */
     setThumbnail(
         url: string,
-<<<<<<< HEAD
         extraOpts?: { proxy_url?: string; height?: number; width?: number }
     ): this {
-=======
-        obj?: { proxy_url?: string; height?: number; width?: number }
-    ) {
->>>>>>> parent of 852cbb0... eslint
         this.thumbnail = {
             url: url,
             proxy_url: extraOpts.proxy_url,
@@ -275,7 +190,6 @@ class Embed {
     /**
      * @param time timestamp for embed
      * ```js
-     *
      * embed.setTimestamp()
      * ```
      */
@@ -304,7 +218,6 @@ class Embed {
      * - gif
      * - article
      * - link
-     * @example
      * ```ts
      * embed.setType('rich')
      * ```
@@ -320,26 +233,15 @@ class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-<<<<<<< HEAD
     addFields(...fields: { name: string; value: string; inline: boolean; }[]): this {
         this.fields.push(...fields);
-=======
-    addFields(...fields: Object[]) {
-        this.fields = [...fields];
->>>>>>> parent of 852cbb0... eslint
         return this;
     }
     /**
-     *
      * @param field A field for embed
      */
-<<<<<<< HEAD
     addField(field: { name: string; value: string; inline: boolean; }): this {
         this.fields.push(field);
-=======
-    addField(field: Object) {
-        this.fields ? this.fields.push(field) : (this.fields = [field]);
->>>>>>> parent of 852cbb0... eslint
         return this;
     }
 

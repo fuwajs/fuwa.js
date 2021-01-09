@@ -61,10 +61,10 @@ export interface commandOptions {
  */
 export declare type commandCallback = (req: Request | null, res: Response, next: any) => Promise<void> | void;
 export interface Events {
-    ready(): void | Promise<void>;
-    msg(req: Request): void | Promise<void>;
-    cmdNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
-    err(err: Error): void | Promise<void>;
+    READY(): void | Promise<void>;
+    MSG(req: Request): void | Promise<void>;
+    CMD_NOT_FND(req: Request, cmd: commandCallback): void | Promise<void>;
+    ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
