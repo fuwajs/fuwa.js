@@ -17,10 +17,12 @@ class Response {
                         ? delete content[el]
                         : 0;
                     if (typeof content.color === 'string') {
-                        const colorcode: string = content.color
+                        let colorcode: string = content.color
                             ? 0 + 'x' + content.color.split('#')[1]
                             : '0';
-                        if (colorcode !== '0') content.color = parseInt(colorcode);
+                        colorcode !== '0'
+                            ? (content.color = parseInt(colorcode))
+                            : (content.color = content.color);
                     }
                 }
 
@@ -30,7 +32,26 @@ class Response {
             });
         }
 
+<<<<<<< HEAD
         return await undici.OTHER(
+=======
+        if (embed) {
+            Object.keys(embed).map((el: any) => {
+                embed[el] === null && el !== 'color' ? delete embed[el] : 0;
+                if (el === 'color' && typeof embed.color === 'string') {
+                    let colorcode: string = embed.color
+                        ? 0 + 'x' + embed.color.split('#')[1]
+                        : '0';
+                    if (colorcode !== '0') {
+                        embed.color = parseInt(colorcode);
+                    }
+                }
+            });
+            (this.data.embed = embed), (this.data.tts = false);
+        }
+
+        let result = await undici.OTHER(
+>>>>>>> parent of 852cbb0... eslint
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
@@ -47,6 +68,7 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (typeof content === 'object') {
+<<<<<<< HEAD
             if (content['color'] === null) {
                 delete content['color'];
                 throw new TypeError(`content: ${content} is missing member 'color'`);
@@ -62,6 +84,42 @@ class Response {
             throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
         }
         return await undici.OTHER(
+=======
+            Object.keys(content).map((el) => {
+                if (el === 'color') {
+                    content[el] === null && el !== 'color'
+                        ? delete content[el]
+                        : 0;
+                    if (typeof content.color === 'string') {
+                        let colorcode: string = content.color
+                            ? 0 + 'x' + content.color.split('#')[1]
+                            : '0';
+                        colorcode !== '0'
+                            ? (content.color = parseInt(colorcode))
+                            : (content.color = content.color);
+                    }
+                }
+                (this.data.embed = content), (this.data.tts = false);
+            });
+        }
+
+        if (embed) {
+            Object.keys(embed).map((el: any) => {
+                embed[el] === null && el !== 'color' ? delete embed[el] : 0;
+                if (el == 'color' && typeof embed.color === 'string') {
+                    let colorcode: string = embed.color
+                        ? 0 + 'x' + embed.color.split('#')[1]
+                        : '0';
+                    if (colorcode !== '0') {
+                        embed.color = parseInt(colorcode);
+                    }
+                }
+            });
+            (this.data.embed = embed), (this.data.tts = false);
+        }
+
+        let result = await undici.OTHER(
+>>>>>>> parent of 852cbb0... eslint
             'POST',
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,

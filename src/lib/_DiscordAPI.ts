@@ -60,9 +60,9 @@ export interface DiscordAPIEvents {
         t?: 'channelCreate';
         d: Ready;
     };
-    messageCreate: {
+    MESSAGE_CREATE: {
         op?: 0;
-        t?: 'messageCreate';
+        t?: 'MESSAGE_CREATE';
         d: Message;
     };
 }
@@ -218,9 +218,7 @@ export interface User {
     avatar: null | string;
 }
 
-export interface UserSettings {
-    _: any;
-}
+export interface UserSettings {}
 export interface Guild {
     description: null;
     public_updates_channel_id: null;
