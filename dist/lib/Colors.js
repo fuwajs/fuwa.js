@@ -25,4 +25,8 @@ exports.default = {
     blue: '#0000ff',
     blueViolet: '#8a2be2',
     brown: '#a52a2a',
+    lightGreen: '#5af78e',
+    orange: '#ff3403',
+    pink: '#ff6ac1',
+    yellow: '#f3f99d'
 };

@@ -113,7 +113,6 @@ declare class Embed {
     }): this;
     /**
      * @param code  color hex code for embed
-     * @example
      * ```ts
      * embed.setColor('#6f00ff')
      * embed.setColor(0x6f00f)

@@ -1,7 +1,3 @@
-declare type Author = {
-    id: string;
-};
-declare class Request {
-    author: Author;
-}
-export default Request;
+import { Message } from "./_DiscordAPI";
+declare type Req = Message;
+export default Req;

@@ -13,7 +13,7 @@ export default {
     mind: '#3EB489',
     white: '#FFFFFF',
     snow: '#FFFAFA',
-    aliceBlue: '#f0f8ff',
+    aliceBlue: '#f0f8ff', // yo girl
     antiqueWhite: '#faebd7',
     aqua: '#00ffff',
     aquaMarine: '#7fffd4',
@@ -25,4 +25,9 @@ export default {
     blue: '#0000ff',
     blueViolet: '#8a2be2',
     brown: '#a52a2a',
+    lightGreen: '#5af78e',
+    orange: '#ff3403',
+    pink: '#ff6ac1',
+    yellow: '#f3f99d'
+
 };

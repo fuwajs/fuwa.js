@@ -21,5 +21,9 @@ declare const _default: {
     blue: string;
     blueViolet: string;
     brown: string;
+    lightGreen: string;
+    orange: string;
+    pink: string;
+    yellow: string;
 };
 export default _default;

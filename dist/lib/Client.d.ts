@@ -70,12 +70,17 @@ export interface clientOptions {
     /**
      * The owners' discord ID
      */
-    owners: string[] | string;
+    owners?: string[] | string;
     /**
      * To turn on the debug mode, not recommed to turn this on unless your debugging
-     * the library itthis
+     * the library.
      */
     debug?: boolean;
+    /**
+     * If this is turned on (true) When someone mentions your bot it will behave
+     * as a prefix.
+     */
+    useMentionPrefix?: boolean;
 }
 /**
  * Client Class
@@ -91,7 +96,7 @@ declare class Client extends Emitter {
     protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
-    protected options: Map<string, any>;
+    protected options: clientOptions;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<string, {
         cb: commandCallback;
@@ -148,6 +153,6 @@ declare class Client extends Emitter {
      */
     login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
-    set(opt: string, val: any): this;
+    set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this;
 }
 export default Client;

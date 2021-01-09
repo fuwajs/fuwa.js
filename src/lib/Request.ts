@@ -1,11 +1,10 @@
+import { Message } from "./_DiscordAPI";
 
 type Author = {
     id: string
 }
 
-class Request {
-    author: Author
-}
+type Req = Message;
 
 
-export default Request;
+export default Req;

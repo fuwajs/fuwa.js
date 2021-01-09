@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */ // should be fixed soon
 import { Client } from 'undici';
 import { discordAPI } from './_DiscordAPI';

@@ -81,18 +81,23 @@ export interface clientOptions {
     /**
      * The owners' discord ID
      */
-    owners: string[] | string;
+    owners?: string[] | string;
     /**
      * To turn on the debug mode, not recommed to turn this on unless your debugging
-     * the library itthis
+     * the library.
      */
     debug?: boolean;
+    /**
+     * If this is turned on (true) When someone mentions your bot it will behave
+     * as a prefix.
+     */
+    useMentionPrefix?: boolean;
 }
 
 type eventCallback =
     | (() => void | Promise<void>)
-    | ((req: Request) => void | Promise<void>) 
-    | ((req: Request, cmd: commandCallback) => void | Promise<void>) 
+    | ((req: Request) => void | Promise<void>)
+    | ((req: Request, cmd: commandCallback) => void | Promise<void>)
     | ((err: Error) => void | Promise<void>);
 
 /**
@@ -114,7 +119,7 @@ class Client extends Emitter {
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
-    protected options: Map<string, any>;
+    protected options: clientOptions;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
@@ -139,7 +144,7 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.debugMode = options?.debug || false;
+        this.options = options;
         this.prefix = prefix;
     }
     protected debug(bug: Error | any) {
@@ -175,7 +180,7 @@ class Client extends Emitter {
                     desc: 'No description was provided',
                 };
                 const commands = this.commands.get(key);
-                commands ? commands.push({ cb, options: option }) : 0;
+                commands?.push({ cb, options: option });
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         } else {
@@ -246,7 +251,9 @@ class Client extends Emitter {
                         : 0;
             };
         };
-        console.log(token.toString());
+
+        console.log(`Your Bot Token: ${token.toString()}`);
+
         this.connect(discordAPI.gateway);
 
         this.op(opCodes.hello, (data) => {
@@ -276,7 +283,7 @@ class Client extends Emitter {
             ready ? ready() : 0;
         });
         this.event('MESSAGE_CREATE', async (data) => {
-            const req = null;
+            const req = data;
             const res = new Response(data, token.toString());
             const prefix =
                 typeof this.prefix === 'function'
@@ -287,17 +294,34 @@ class Client extends Emitter {
                         : this.prefix;
             if (prefix === false) return;
             if (prefix === null || prefix === undefined) return;
-            const commandName = data.content
-                .replace(prefix, '')
-                .split(' ')[0]
-                .toLowerCase();
+
+            let commandName: string = '';
+
+            if (this.options.useMentionPrefix) {
+                const firstWord = data.content.split(' ')[0];
+                if (firstWord === `<@!${this.bot.id}>`) {
+                    commandName = data.content.split(' ')[1].toLowerCase();
+                } else {
+                    commandName = data.content
+                        .replace(prefix, '')
+                        .split(' ')[0]
+                        .toLowerCase();
+                }
+            } else {
+                data.content
+                    .replace(prefix, '')
+                    .split(' ')[0]
+                    .toLowerCase();
+            }
+
             const command = this.commands.get(commandName);
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
-            this.middleware[0]
-                ? this.middleware[0](req, res, next(req, res, _, 0, command))
-                : 0;
+            if (this.middleware[0]) {
+                this.middleware[0](req, res, next(req, res, _, 0, command));
+            }
+            this.bot.id
             command[0].cb(req, res, next(req, res, command, 0));
         });
         //         this.ws.on('open', async function () {
@@ -422,11 +446,11 @@ class Client extends Emitter {
     logout(end = true) {
         if (this.ws && this.loop) {
             clearInterval(this.loop);
-            end ? process.exit() : 0;
+            if (end) process.exit();
         }
     }
-    set(opt: string, val: any) {
-        this.options.set('opt', val);
+    set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this {
+        this.options[key] = val;
         return this;
     }
     // setStatus(status: statusOptions) {

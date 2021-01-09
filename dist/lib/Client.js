@@ -43,7 +43,7 @@ class Client extends Emitter_1.default {
             custom: 4,
             competing: 5,
         };
-        this.debugMode = (options === null || options === void 0 ? void 0 : options.debug) || false;
+        this.options = options;
         this.prefix = prefix;
     }
     debug(bug) {
@@ -75,7 +75,7 @@ class Client extends Emitter_1.default {
                     desc: 'No description was provided',
                 };
                 const commands = this.commands.get(key);
-                commands ? commands.push({ cb, options: option }) : 0;
+                commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         }
@@ -137,7 +137,7 @@ class Client extends Emitter_1.default {
                             : 0;
                 };
             };
-            console.log(token.toString());
+            console.log(`Your Bot Token: ${token.toString()}`);
             this.connect(_DiscordAPI_1.discordAPI.gateway);
             this.op(_DiscordAPI_1.opCodes.hello, (data) => {
                 console.log(data);
@@ -162,7 +162,7 @@ class Client extends Emitter_1.default {
                 ready ? ready() : 0;
             });
             this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
-                const req = null;
+                const req = data;
                 const res = new Reponse_1.default(data, token.toString());
                 const prefix = typeof this.prefix === 'function'
                     ? yield this.prefix(req)
@@ -174,18 +174,34 @@ class Client extends Emitter_1.default {
                     return;
                 if (prefix === null || prefix === undefined)
                     return;
-                const commandName = data.content
-                    .replace(prefix, '')
-                    .split(' ')[0]
-                    .toLowerCase();
+                let commandName = '';
+                if (this.options.useMentionPrefix) {
+                    const firstWord = data.content.split(' ')[0];
+                    if (firstWord === `<@!${this.bot.id}>`) {
+                        commandName = data.content.split(' ')[1].toLowerCase();
+                    }
+                    else {
+                        commandName = data.content
+                            .replace(prefix, '')
+                            .split(' ')[0]
+                            .toLowerCase();
+                    }
+                }
+                else {
+                    data.content
+                        .replace(prefix, '')
+                        .split(' ')[0]
+                        .toLowerCase();
+                }
                 const command = this.commands.get(commandName);
                 if (!command)
                     return;
                 const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
-                this.middleware[0]
-                    ? this.middleware[0](req, res, next(req, res, _, 0, command))
-                    : 0;
+                if (this.middleware[0]) {
+                    this.middleware[0](req, res, next(req, res, _, 0, command));
+                }
+                this.bot.id;
                 command[0].cb(req, res, next(req, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
@@ -305,11 +321,12 @@ class Client extends Emitter_1.default {
     logout(end = true) {
         if (this.ws && this.loop) {
             clearInterval(this.loop);
-            end ? process.exit() : 0;
+            if (end)
+                process.exit();
         }
     }
-    set(opt, val) {
-        this.options.set('opt', val);
+    set(key, val) {
+        this.options[key] = val;
         return this;
     }
 }

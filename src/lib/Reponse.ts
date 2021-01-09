@@ -66,6 +66,5 @@ class Response {
             JSON.stringify(this.data)
         );
     }
-
 }
 export default Response;

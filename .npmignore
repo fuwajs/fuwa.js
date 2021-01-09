@@ -5,8 +5,6 @@ docs/
 .vscode/
 .gitignore
 tsconfig.json
-jsdoc.json
-custom.css
 .prettierrc.json
 .eslintcache
 .eslintignore
