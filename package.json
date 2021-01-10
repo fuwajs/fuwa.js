@@ -18,14 +18,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Artrix9095/Fuwa.js.git"
+        "url": "git+https://github.com/Fuwajs/Fuwa.js.git"
     },
     "author": "Artrix",
     "license": "Apache-2.0",
     "bugs": {
-        "url": "https://github.com/Artrix9095/Fuwa.js/issues"
+        "url": "https://github.com/Fuwajs/Fuwa.js/issues"
     },
-    "homepage": "https://github.com/Artrix9095/Fuwa.js#readme",
+    "homepage": "https://github.com/Fuwajs/Fuwa.js#readme",
     "dependencies": {
         "undici": "^3.0.0",
         "ws": "^7.4.1"

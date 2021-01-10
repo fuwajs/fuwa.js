@@ -8,7 +8,7 @@ This assumes you have already setup a discord bot application in Discord. See
 
 ```bash
 $ npm init -y
-$ npm i Artrix9095/Fuwa.js
+$ npm i Fuwajs/Fuwa.js
 $ echo > index.js
 ```
 A file called index.js should be in your directory, open that in your IDE of choice and type
@@ -32,6 +32,6 @@ client.command(['hi', 'hello'], (req, res) => {
 });
 
 ```
-Check the [docs](https://artrix9095.github.io/Fuwa.js) for more in depth examples.
+Check the [docs](https://Fuwajs.github.io/Fuwa.js) for more in depth examples.
 
 join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
