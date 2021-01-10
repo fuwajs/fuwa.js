@@ -45,24 +45,24 @@ export const discordAPI = {
 };
 
 export interface DiscordAPIEvents {
-    guildCreate: {
-        op?: 0;
-        t?: 'GUILD_CREATE';
+    GUILD_CREATE: {
+        op: 0;
+        t: 'GUILD_CREATE';
         d: Guild;
     };
     READY: {
-        op?: 0;
-        t?: 'READY';
+        op: 0;
+        t: 'READY';
         d: Ready;
     };
-    channelCreate: {
-        op?: 0;
-        t?: 'CHANNEL_CREATE';
+    CHANNEL_CREATE: {
+        op: 0;
+        t: 'CHANNEL_CREATE';
         d: Ready;
     };
     MESSAGE_CREATE: {
-        op?: 0;
-        t?: 'MESSAGE_CREATE';
+        op: 0;
+        t: 'MESSAGE_CREATE';
         d: Message;
     };
 }
@@ -72,6 +72,7 @@ export interface Message {
     timestamp: Date;
     referenced_message: null;
     pinned: boolean;
+    reactions: Reaction[]
     nonce: string;
     mentions: any[];
     mention_roles: any[];
@@ -89,9 +90,8 @@ export interface Message {
 }
 
 export interface Author {
-    username: string;
-    public_flags: number;
     id: string;
+    username: string;
     discriminator: string;
     avatar: string;
 }
@@ -182,6 +182,23 @@ export interface DiscordAPIOP {
     };
 }
 
+export interface Reaction {
+    count: number;
+    me: boolean;
+    emoji: Emoji;
+}
+
+export interface Emoji {
+    id: string,
+    name: string,
+    roles?: string[],
+    user: User;
+    require_colons?: boolean;
+    managed?: boolean;
+    animated?: boolean;
+    available?: boolean
+}
+
 export interface Ready {
     v: number;
     user_settings: UserSettings;
@@ -206,49 +223,59 @@ export interface Guild {
     id: string;
 }
 
-export interface User {
-    verified: boolean;
-    username: string;
-    mfa_enabled: boolean;
-    id: string;
-    flags: number;
-    email: null;
-    discriminator: string;
-    bot: boolean;
-    avatar: null | string;
+export interface User extends Author {
+    bot?: boolean;
+    system?: boolean;
+    mfa_enabled?: boolean; // is 2FA Enabled?
+    locale?: string;
+    verified?: boolean; // Is the user's email verfied?
+    email?: string;
+    flags?: number;
+    premium_type?: number;
+    public_flags?: number;
 }
+
 
 /* eslint-disable */
 export interface UserSettings { }
 
+// volt didnt do a good job he set some stuff to 'null' for some reason
+// he left some things out also
 export interface Guild {
-    description: null;
+    id: string;
+    name: string;
+    icon: string | null;
+    icon_hash?: string | null;
+    splash: string | null;
+    discovery_splash: string | null; // so like this?
+    owner?: boolean;
+    owner_id: string;
+    permissions?: string;
+    region: string;
+    afk_channel_id: string | null;
+    afk_timeout: number;
+    widget_enabled?: boolean;
+    widget_channel_id?: string;
+
+    description: string;
     public_updates_channel_id: null;
     large: boolean;
     features: any[];
     unavailable: boolean;
-    afk_channel_id: null;
     member_count: number;
     max_members: number;
     guild_hashes: GuildHashes;
     system_channel_flags: number;
     premium_tier: number;
     emojis: any[];
-    discovery_splash: null;
-    name: string;
     voice_states: any[];
     members: Member[];
     presences: any[];
     banner: null;
-    region: string;
     channels: Channel[];
-    icon: null;
     max_video_channel_users: number;
-    afk_timeout: number;
-    owner_id: string;
     preferred_locale: string;
     rules_channel_id: null;
-    splash: null;
     verification_level: number;
     roles: Role[];
     lazy: boolean;
@@ -258,7 +285,6 @@ export interface Guild {
     vanity_url_code: null;
     system_channel_id: string;
     threads: any[];
-    id: string;
     default_message_notifications: number;
     premium_subscription_count: number;
     joined_at: string;

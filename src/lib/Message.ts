@@ -1,9 +1,12 @@
-import User from './User';
+import { Message as MessageOptions, User } from './_DiscordAPI';
 
-class Message {
+
+class Message implements MessageOptions {
+    author: User
     constructor() {
-        /* eslint-disable */
+        // i used to be python dev when i was 8 or smthn
     }
+    
 }
 
 export default Message;

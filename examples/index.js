@@ -18,7 +18,7 @@ client.on('READY', () => {
 
 client.use((req, res, next) => {
     console.log('Someone used me.');
-    // next();
+    next();
 });
 
 // A basic 'ping' command. Responds with 'pong' in an embed.

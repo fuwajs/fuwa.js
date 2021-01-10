@@ -1,9 +1,7 @@
-import WebSocket from 'ws';
-import User from './User';
 import { join } from 'path';
 import { readFileSync as readFile } from 'fs';
 import Request from './Request';
-import { discordAPI, opCodes } from './_DiscordAPI';
+import { discordAPI, opCodes, User } from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -308,7 +306,7 @@ class Client extends Emitter {
                         .toLowerCase();
                 }
             } else {
-                data.content
+                commandName = data.content
                     .replace(prefix, '')
                     .split(' ')[0]
                     .toLowerCase();
@@ -321,8 +319,8 @@ class Client extends Emitter {
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, _, 0, command));
             }
-            this.bot.id
-            command[0].cb(req, res, next(req, res, command, 0));
+            this.bot;
+            if(!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
         });
         //         this.ws.on('open', async function () {
         //             this.debug(`Connect to ${discordAPI.gateway}`);
