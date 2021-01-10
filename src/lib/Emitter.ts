@@ -6,13 +6,14 @@ import {
     DiscordAPIOP,
     opCodes,
 } from './_DiscordAPI';
+
 class Emitter {
     protected ws?: WebSocket;
     private OPevents: { [key: number]: (data: any) => any } = {};
 
     private APIEvents: { [key: string]: (data: any) => any } = {};
     private WSEvents: { [key: string]: () => any };
-    response = {
+    protected response = {
         op: {
             emit: <T extends keyof DiscordAPIOPResponse>(
                 op: T,
@@ -30,7 +31,7 @@ class Emitter {
             },
         },
     };
-    connect(url: string): void {
+    protected connect(url: string): void {
         this.ws = new WebSocket(url);
         this.ws.on('open', () => {
             console.log('Connected');
@@ -59,7 +60,7 @@ class Emitter {
     ): void {
         this.OPevents[op] = cb;
     }
-    event<T extends keyof DiscordAPIEvents>(
+    protected event<T extends keyof DiscordAPIEvents>(
         e: T,
         cb: (data: DiscordAPIEvents[T]['d']) => void
     ): void {

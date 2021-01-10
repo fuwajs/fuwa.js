@@ -1,24 +1,20 @@
-export class User {
+import { User as UserOptions } from './_DiscordAPI';
+export class User implements UserOptions {
     id: string;
     username: string;
     discriminator: string;
-    bot: boolean;
-    avatar: null | string;
-    verified?: boolean;
-    mfa_enabled?: boolean;
-    flags?: number;
+    avatar: string;
+    bot?: boolean;
+    system?: boolean;
+    mfa_enabled?: boolean; // is 2FA Enabled?
+    locale?: string;
+    verified?: boolean; // Is the user's email verfied?
     email?: string;
-    constructor(data: {
-        id: string;
-        username: string;
-        discriminator: string;
-        bot: boolean;
-        avatar: null | string;
-        verified?: boolean;
-        mfa_enabled?: boolean;
-        flags?: number;
-        email?: null | string;
-    }) {
+    flags?: number;
+    premium_type?: number;
+    public_flags?: number;
+
+    constructor(data: UserOptions) {
         this.id = data.id;
         this.username = data.username;
         this.discriminator = data.discriminator;
