@@ -4,7 +4,6 @@
 This assumes you have already setup a discord bot application in Discord. See
 - [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
 - [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
-- Source: (https://discordjs.guide/)
 
 ```bash
 $ npm init -y
@@ -32,6 +31,6 @@ client.command(['hi', 'hello'], (req, res) => {
 });
 
 ```
-Check the [docs](https://Fuwajs.github.io/Fuwa.js) for more in depth examples.
+Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
 
 join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
