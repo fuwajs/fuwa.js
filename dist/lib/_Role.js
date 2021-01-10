@@ -11,24 +11,11 @@ class Role {
         this.name = data.name;
         this.id = data.id;
         this.position = data.position;
-        if (data.permissions_new) {
-            this.permissionsNew = data.permissions_new;
-        }
-        if (data.permissions) {
-            this.permissions = data.permissions;
-        }
-        if (data.color) {
-            this.color = data.color;
-        }
-        else {
-            this.color = 0;
-        }
-        if (data.hoist) {
-            this.hoist = true;
-        }
-        if (data.mentionable) {
-            this.mentionable = true;
-        }
+        this.permissionsNew = data === null || data === void 0 ? void 0 : data.permissions_new;
+        this.permissions = data === null || data === void 0 ? void 0 : data.permissions;
+        this.color = data === null || data === void 0 ? void 0 : data.color;
+        this.hoist = data === null || data === void 0 ? void 0 : data.hoist;
+        this.mentionable = data === null || data === void 0 ? void 0 : data.mentionable;
     }
     get roles() {
         return this;

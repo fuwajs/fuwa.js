@@ -1,7 +1,6 @@
 const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
 const fs = require('fs');
-const http = require('http');
 const fetch = require('node-fetch')
 
 const client = new fuwa.Client('?', { debug: false });
@@ -30,16 +29,42 @@ client.command('ping', (req, res, next) => {
 });
 
 // More complex example command using the GitHub API
-client.command('repo-count', async (req, res) => {
-    const user = req.content.split(' ')[1] || 'torvalds';
+client.command(['gh', 'github'], async (req, res) => {
+    console.log('');
+    const username = req.content.split(' ')[1] || 'torvalds';
 
-    const response = await (await fetch(`https://api.github.com/users/${user}`)).json();
-
+    const user = await (await fetch(`https://api.github.com/users/${username}`)).json();
+    const fields = [
+        {
+            name: 'Repositories',
+            value: user['public_repos']
+        },
+        {
+            name: 'Followers',
+            value: user['followers'],
+            inline: true
+        },
+        {
+            name: 'Following',
+            value: user['following'],
+            inline: true
+        },
+        {
+            name: 'Bio',
+            value: user['bio']
+        }
+    ]
     res.send(new fuwa.Embed()
-        .setTitle(`${user} | Repos`)
-        .setDescription(`${user} has ${response['public_repos']} repo(s)`)
+        .setTitle(`${username} | GitHub`)
+        .setThumbnail(
+            'https://upload.wikimedia.org/wikipedia/commons/9/95/Font_Awesome_5_brands_github.svg', {
+            height: 50,
+            width: 50
+        })
+        .addFields(fields)
         .setColor(fuwa.Colors.rgb(255, 145, 81))
-    )
+        .setFooter('GitHub')
+    );
 });
 
 // Log the bot into discord

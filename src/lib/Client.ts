@@ -1,9 +1,9 @@
-import { join } from 'path';
-import { readFileSync as readFile } from 'fs';
 import Request from './Request';
 import { discordAPI, opCodes, User } from './_DiscordAPI';
-import Response from './Reponse';
+import Response from './Response';
 import Emitter from './Emitter';
+import { commandCallback, commandOptions } from './Command';
+
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -36,39 +36,9 @@ export interface statusOptions {
      */
     afk?: boolean;
 }
-/**
- * Options for your command
- * @interface
- */
-export interface commandOptions {
-    /**
-     * Description for your command.
-     */
-    desc: string;
-    /**
-     * Command Arguments
-     */
-    args?: {
-        /**
-         * Length of your argument (including spaces).
-         */
-        length: number;
-        /**
-         * Defualt value for argument if one is not passed.
-         */
-        default: string;
-    }[];
-}
 
-/**
- * Callback for commands
- * TODO: change request res and next function types to actual types
- */
-export type commandCallback = (
-    req: Request | null,
-    res: Response,
-    next: any
-) => Promise<void> | void;
+
+
 export interface Events {
     READY(): void | Promise<void>;
     MSG(req: Request): void | Promise<void>;
@@ -145,6 +115,7 @@ class Client extends Emitter {
         this.options = options;
         this.prefix = prefix;
     }
+
     protected debug(bug: Error | any) {
         if (this.debugMode) {
             if (bug instanceof Error) {
@@ -186,7 +157,7 @@ class Client extends Emitter {
                 desc: 'No description was provided',
             };
             const commands = this.commands.get(this.prefix + name);
-            commands ? commands.push({ cb, options: option }) : undefined;
+            commands?.push({ cb, options: option });
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
         return this;
@@ -233,22 +204,17 @@ class Client extends Emitter {
             res: Response,
             arr: { cb: commandCallback }[],
             i = 0,
-            secoundArr?: { cb: commandCallback }[]
+            secondArr?: { cb: commandCallback }[]
         ) => {
             return () => {
-                arr[i + 1]
-                    ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
-                    : secoundArr
-                        ? secoundArr[0]
-                            ? secoundArr[0].cb(
-                                req,
-                                res,
-                                next(req, res, secoundArr, i++)
-                            )
-                            : 0
-                        : 0;
-            };
-        };
+                if (arr[i + 1]) {
+                    arr[i + 1]?.cb(req, res, next(req, res, arr, i++));
+                } else if (secondArr) {
+                    secondArr[0]?.cb(req, res, next(req, res, secondArr, i++));
+                }
+            }
+        }
+
 
         console.log(`Your Bot Token: ${token.toString()}`);
 
@@ -278,55 +244,55 @@ class Client extends Emitter {
             this.sessionId = data.session_id;
             this.bot = data.user;
             const ready = this.events.get('READY');
-            ready ? ready() : 0;
+            if (ready) ready();
         });
-        this.event('MESSAGE_CREATE', async (data) => {
-            const req = data;
-            const res = new Response(data, token.toString());
+        this.event('MESSAGE_CREATE', async (msg) => {
+            const res = new Response(msg, token.toString());
             const prefix =
                 typeof this.prefix === 'function'
-                    ? await this.prefix(req)
+                    ? await this.prefix(msg)
                     : Array.isArray(this.prefix)
-                        ? this.prefix.find((p) => data.content.startsWith(p)) ||
-                        false
+                        ? this.prefix.find((p) => msg.content.startsWith(p)) || false
                         : this.prefix;
             if (prefix === false) return;
             if (prefix === null || prefix === undefined) return;
 
             let commandName: string = '';
-
+            let args: string[] = [];
             if (this.options.useMentionPrefix) {
-                const firstWord = data.content.split(' ')[0];
+                const firstWord = msg.content.split(' ')[0];
                 if (firstWord === `<@!${this.bot.id}>`) {
-                    commandName = data.content.split(' ')[1].toLowerCase();
+                    commandName = msg.content.split(' ')[1].toLowerCase();
                 } else {
-                    commandName = data.content
+                    args = msg.content
+                        .split(' ')
+                        .splice(0, 1);
+                    commandName = msg.content
                         .replace(prefix, '')
                         .split(' ')[0]
                         .toLowerCase();
                 }
             } else {
-                commandName = data.content
+                commandName = msg.content
                     .replace(prefix, '')
                     .split(' ')[0]
                     .toLowerCase();
             }
-
             const command = this.commands.get(commandName);
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
             if (this.middleware[0]) {
-                this.middleware[0](req, res, next(req, res, _, 0, command));
+                this.middleware[0](msg, res, next(msg, res, _, 0, command));
             }
             this.bot;
-            if(!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
+            if (!this.middleware[0]) command[0].cb(msg, res, next(msg, res, command, 0));
         });
         //         this.ws.on('open', async function () {
-        //             this.debug(`Connect to ${discordAPI.gateway}`);
+        //             this.debug(`Connect to ${ discordAPI.gateway } `);
         //             this.on('message', async (e) => {
         //                 const res = JSON.parse(e.toString());
-        //                 this.debug(`Incoming message from ${discordAPI.gateway}:
+        //                 this.debug(`Incoming message from ${ discordAPI.gateway }:
         // Event: ${res.t}
         // OPCOde: ${res.op}
         // Other: ${res.s}

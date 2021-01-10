@@ -32,7 +32,7 @@ declare class Embed {
     protected fields?: {
         name: string;
         value: string;
-        inline: boolean;
+        inline?: boolean;
     }[];
     constructor(opts?: Embed);
     /**
@@ -53,8 +53,8 @@ declare class Embed {
      * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg')
      * ```
      */
-    setImage(imageUrl: string, obj?: {
-        proxy_url?: string;
+    setImage(imageUrl: string, opts?: {
+        proxyUrl?: string;
         height?: number;
         width?: number;
     }): this;
@@ -76,13 +76,13 @@ declare class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footertext: string, extraOpts?: {
-        url?: string;
-        proxy_icon_url?: string;
+    setFooter(footerText: string, opts: {
+        iconUrl?: string;
+        proxyIconUrl?: string;
     }): this;
     /**
      * @param name author name that should be displayed in embed
-     * @param extraOpts Extra options for author
+     * @param opts Extra options for author
      * ```js
      * // without options
      * embed.setAuthor('Some Name')
@@ -91,13 +91,13 @@ declare class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name: string, extraOpts?: {
+    setAuthor(name: string, opts?: {
         url?: string;
-        proxy_icon_url?: string;
+        proxyIconUrl?: string;
     }): this;
     /**
      * @param url Url for thumbnail in embed
-     * @param extraOpts Extra options for thumbnail.
+     * @param opts Extra options for thumbnail.
      * ```js
      * //without options
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
@@ -106,8 +106,8 @@ declare class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
      * ```
      */
-    setThumbnail(url: string, extraOpts?: {
-        proxy_url?: string;
+    setThumbnail(url: string, opts?: {
+        proxyUrl?: string;
         height?: number;
         width?: number;
     }): this;
@@ -153,7 +153,7 @@ declare class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(...fields: {
+    addFields(fields: {
         name: string;
         value: string;
         inline: boolean;
@@ -173,21 +173,21 @@ declare class Embed {
      * embed.setProvider('some name')
      * ```
      */
-    setProvider(name: string, extraOpts?: {
+    setProvider(name: string, opts?: {
         url: string;
     }): this;
     /**
      * @param url url for video in embed
-     * @param extraOpts extra options
+     * @param opts extra options
      * ```js
      *
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    setVideo(url: string, extraOpts?: {
+    setVideo(url: string, opts?: {
         height: number;
         width: number;
-        proxy_url: string;
+        proxyUrl: string;
     }): this;
 }
 export default Embed;

@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = __importDefault(require("ws"));
+const _DiscordAPI_1 = require("./_DiscordAPI");
 class Emitter {
     constructor() {
         this.OPevents = {};
@@ -29,11 +30,10 @@ class Emitter {
             (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.open();
             (_b = this.ws) === null || _b === void 0 ? void 0 : _b.on('message', (data) => {
                 var _a;
-                console.log('message');
                 (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.message();
                 const res = JSON.parse(data.toString());
                 console.log(res);
-                if (res.op === 0) {
+                if (res.op === _DiscordAPI_1.opCodes.dispatch) {
                     if (!res.t)
                         throw new Error(`The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`);
                     if (this.APIEvents[res.t])

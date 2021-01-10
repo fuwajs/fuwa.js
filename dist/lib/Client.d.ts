@@ -1,8 +1,8 @@
 /// <reference types="node" />
 import Request from './Request';
 import { User } from './_DiscordAPI';
-import Response from './Reponse';
 import Emitter from './Emitter';
+import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
 /**
@@ -32,34 +32,6 @@ export interface statusOptions {
      */
     afk?: boolean;
 }
-/**
- * Options for your command
- * @interface
- */
-export interface commandOptions {
-    /**
-     * Description for your command.
-     */
-    desc: string;
-    /**
-     * Command Arguments
-     */
-    args?: {
-        /**
-         * Length of your argument (including spaces).
-         */
-        length: number;
-        /**
-         * Defualt value for argument if one is not passed.
-         */
-        default: string;
-    }[];
-}
-/**
- * Callback for commands
- * TODO: change request res and next function types to actual types
- */
-export declare type commandCallback = (req: Request | null, res: Response, next: any) => Promise<void> | void;
 export interface Events {
     READY(): void | Promise<void>;
     MSG(req: Request): void | Promise<void>;

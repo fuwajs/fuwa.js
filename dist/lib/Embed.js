@@ -8,6 +8,7 @@ const fs_1 = __importDefault(require("fs"));
 class Embed {
     constructor(opts) {
         // Rich Embed by default
+        this.fields = [];
         this.type = 'rich';
         if (opts) {
             // Don't override the defualt unless specified
@@ -47,7 +48,7 @@ class Embed {
      * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg')
      * ```
      */
-    setImage(imageUrl, obj) {
+    setImage(imageUrl, opts) {
         if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
             let ext = path_1.default.extname(imageUrl).replace('.', '');
             if (ext === 'svg')
@@ -57,9 +58,9 @@ class Embed {
         }
         this.image = {
             url: imageUrl,
-            proxy_url: obj.proxy_url,
-            height: obj.height,
-            width: obj.width,
+            proxy_url: opts === null || opts === void 0 ? void 0 : opts.proxyUrl,
+            height: opts === null || opts === void 0 ? void 0 : opts.height,
+            width: opts === null || opts === void 0 ? void 0 : opts.width,
         };
         return this;
     }
@@ -84,17 +85,17 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footertext, extraOpts) {
+    setFooter(footerText, opts) {
         this.footer = {
-            text: footertext,
-            icon_url: extraOpts.url,
-            proxy_icon_url: extraOpts.proxy_icon_url,
+            text: footerText,
+            icon_url: opts === null || opts === void 0 ? void 0 : opts.iconUrl,
+            proxy_icon_url: opts === null || opts === void 0 ? void 0 : opts.proxyIconUrl,
         };
         return this;
     }
     /**
      * @param name author name that should be displayed in embed
-     * @param extraOpts Extra options for author
+     * @param opts Extra options for author
      * ```js
      * // without options
      * embed.setAuthor('Some Name')
@@ -103,17 +104,17 @@ class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name, extraOpts) {
+    setAuthor(name, opts) {
         this.author = {
             name: name,
-            url: extraOpts.url,
-            proxy_icon_url: extraOpts.proxy_icon_url,
+            url: opts.url,
+            proxy_icon_url: opts.proxyIconUrl,
         };
         return this;
     }
     /**
      * @param url Url for thumbnail in embed
-     * @param extraOpts Extra options for thumbnail.
+     * @param opts Extra options for thumbnail.
      * ```js
      * //without options
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
@@ -122,12 +123,12 @@ class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
      * ```
      */
-    setThumbnail(url, extraOpts) {
+    setThumbnail(url, opts) {
         this.thumbnail = {
             url: url,
-            proxy_url: extraOpts.proxy_url,
-            height: extraOpts.height,
-            width: extraOpts.width,
+            proxy_url: opts === null || opts === void 0 ? void 0 : opts.proxyUrl,
+            height: opts === null || opts === void 0 ? void 0 : opts.height,
+            width: opts === null || opts === void 0 ? void 0 : opts.width,
         };
         return this;
     }
@@ -185,7 +186,7 @@ class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(...fields) {
+    addFields(fields) {
         this.fields.push(...fields);
         return this;
     }
@@ -203,24 +204,24 @@ class Embed {
      * embed.setProvider('some name')
      * ```
      */
-    setProvider(name, extraOpts) {
-        this.provider = { name: name, url: extraOpts.url };
+    setProvider(name, opts) {
+        this.provider = { name: name, url: opts.url };
         return this;
     }
     /**
      * @param url url for video in embed
-     * @param extraOpts extra options
+     * @param opts extra options
      * ```js
      *
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    setVideo(url, extraOpts) {
+    setVideo(url, opts) {
         this.video = {
             url: url,
-            height: extraOpts.height,
-            width: extraOpts.width,
-            proxy_url: extraOpts.proxy_url,
+            height: opts.height,
+            width: opts.width,
+            proxy_url: opts.proxyUrl,
         };
         return this;
     }

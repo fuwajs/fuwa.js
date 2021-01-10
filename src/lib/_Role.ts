@@ -7,9 +7,9 @@ class Role {
     name: string;
     permissions: string;
     color: number;
-    hoist: boolean = false;
-    mentionable: boolean = false;
-    managed: boolean = false;
+    hoist = false;
+    mentionable = false;
+    managed = false;
     position: number;
     id: string;
     permissionsNew: string;
@@ -17,25 +17,13 @@ class Role {
         this.name = data.name;
         this.id = data.id;
         this.position = data.position;
-        if (data.permissions_new) {
-            this.permissionsNew = data.permissions_new;
-        }
-        if (data.permissions) {
-            this.permissions = data.permissions;
-        }
-        if (data.color) {
-            this.color = data.color;
-        } else {
-            this.color = 0;
-        }
-        if (data.hoist) {
-            this.hoist = true;
-        }
-        if (data.mentionable) {
-            this.mentionable = true;
-        }
+        this.permissionsNew = data?.permissions_new;
+        this.permissions = data?.permissions;
+        this.color = data?.color;
+        this.hoist = data?.hoist;
+        this.mentionable = data?.mentionable;
     }
-    get roles() {
+    get roles(): this {
         return this;
     }
 }

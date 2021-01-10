@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _DiscordAPI_1 = require("./_DiscordAPI");
-const Reponse_1 = __importDefault(require("./Reponse"));
+const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 /**
  * Client Class
@@ -84,7 +84,7 @@ class Client extends Emitter_1.default {
                 desc: 'No description was provided',
             };
             const commands = this.commands.get(this.prefix + name);
-            commands ? commands.push({ cb, options: option }) : undefined;
+            commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
             this.commands.set(name, commands || [{ cb, options: option }]);
         }
         return this;
@@ -126,15 +126,15 @@ class Client extends Emitter_1.default {
      */
     login(token) {
         return __awaiter(this, void 0, void 0, function* () {
-            const next = (req, res, arr, i = 0, secoundArr) => {
+            const next = (req, res, arr, i = 0, secondArr) => {
                 return () => {
-                    arr[i + 1]
-                        ? arr[i + 1].cb(req, res, next(req, res, arr, i++))
-                        : secoundArr
-                            ? secoundArr[0]
-                                ? secoundArr[0].cb(req, res, next(req, res, secoundArr, i++))
-                                : 0
-                            : 0;
+                    var _a, _b;
+                    if (arr[i + 1]) {
+                        (_a = arr[i + 1]) === null || _a === void 0 ? void 0 : _a.cb(req, res, next(req, res, arr, i++));
+                    }
+                    else if (secondArr) {
+                        (_b = secondArr[0]) === null || _b === void 0 ? void 0 : _b.cb(req, res, next(req, res, secondArr, i++));
+                    }
                 };
             };
             console.log(`Your Bot Token: ${token.toString()}`);
@@ -159,36 +159,39 @@ class Client extends Emitter_1.default {
                 this.sessionId = data.session_id;
                 this.bot = data.user;
                 const ready = this.events.get('READY');
-                ready ? ready() : 0;
+                if (ready)
+                    ready();
             });
-            this.event('MESSAGE_CREATE', (data) => __awaiter(this, void 0, void 0, function* () {
-                const req = data;
-                const res = new Reponse_1.default(data, token.toString());
+            this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
+                const res = new Response_1.default(msg, token.toString());
                 const prefix = typeof this.prefix === 'function'
-                    ? yield this.prefix(req)
+                    ? yield this.prefix(msg)
                     : Array.isArray(this.prefix)
-                        ? this.prefix.find((p) => data.content.startsWith(p)) ||
-                            false
+                        ? this.prefix.find((p) => msg.content.startsWith(p)) || false
                         : this.prefix;
                 if (prefix === false)
                     return;
                 if (prefix === null || prefix === undefined)
                     return;
                 let commandName = '';
+                let args = [];
                 if (this.options.useMentionPrefix) {
-                    const firstWord = data.content.split(' ')[0];
+                    const firstWord = msg.content.split(' ')[0];
                     if (firstWord === `<@!${this.bot.id}>`) {
-                        commandName = data.content.split(' ')[1].toLowerCase();
+                        commandName = msg.content.split(' ')[1].toLowerCase();
                     }
                     else {
-                        commandName = data.content
+                        args = msg.content
+                            .split(' ')
+                            .splice(0, 1);
+                        commandName = msg.content
                             .replace(prefix, '')
                             .split(' ')[0]
                             .toLowerCase();
                     }
                 }
                 else {
-                    commandName = data.content
+                    commandName = msg.content
                         .replace(prefix, '')
                         .split(' ')[0]
                         .toLowerCase();
@@ -199,17 +202,17 @@ class Client extends Emitter_1.default {
                 const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
                 if (this.middleware[0]) {
-                    this.middleware[0](req, res, next(req, res, _, 0, command));
+                    this.middleware[0](msg, res, next(msg, res, _, 0, command));
                 }
                 this.bot;
                 if (!this.middleware[0])
-                    command[0].cb(req, res, next(req, res, command, 0));
+                    command[0].cb(msg, res, next(msg, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
-            //             this.debug(`Connect to ${discordAPI.gateway}`);
+            //             this.debug(`Connect to ${ discordAPI.gateway } `);
             //             this.on('message', async (e) => {
             //                 const res = JSON.parse(e.toString());
-            //                 this.debug(`Incoming message from ${discordAPI.gateway}:
+            //                 this.debug(`Incoming message from ${ discordAPI.gateway }:
             // Event: ${res.t}
             // OPCOde: ${res.op}
             // Other: ${res.s}

@@ -4,6 +4,7 @@ import {
     DiscordAPIOP as DiscordAPIOPResponse,
     DiscordAPIEvents,
     DiscordAPIOP,
+    opCodes,
 } from './_DiscordAPI';
 class Emitter {
     protected ws?: WebSocket;
@@ -35,13 +36,14 @@ class Emitter {
             console.log('Connected');
             this.WSEvents?.open();
             this.ws?.on('message', (data) => {
-                console.log('message');
                 this.WSEvents?.message();
                 const res: { op: number; t: string | null; d: unknown } = JSON.parse(
                     data.toString()
                 );
+                
                 console.log(res);
-                if (res.op === 0) {
+                
+                if (res.op === opCodes.dispatch) {
                     if (!res.t)
                         throw new Error(
                             `The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`
