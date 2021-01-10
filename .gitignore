@@ -1,6 +1,15 @@
-.vscode
-node_modules
+# Secrets and logs
 *.secret
 debug.log
 *.log
+
+
+
+# Cache
 .eslintcache
+
+
+
+# Misc
+node_modules
+.vscode

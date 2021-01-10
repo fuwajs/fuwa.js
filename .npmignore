@@ -1,10 +1,19 @@
+# Optional Things for github
 examples
-*/**/*.secret
-src/
-docs/
-.vscode/
 .gitignore
+
+
+# Secrets
+*/**/*.secret
+# Typescript features
 tsconfig.json
+src/
+
+# Misc
+node_modules
+
+# Dev utils
+.vscode/
 .prettierrc.json
 .eslintcache
 .eslintignore

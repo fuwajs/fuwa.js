@@ -10,7 +10,7 @@ declare class Emitter {
             emit: <T extends 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>(op: T, d: DiscordAPIOPResponse[T]["d"]) => void;
         };
         events: {
-            emit: <T_1 extends "READY" | "MESSAGE_CREATE" | "guildCreate" | "channelCreate">(t: T_1, d: DiscordAPIEvents[T_1]) => void;
+            emit: <T_1 extends "GUILD_CREATE" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE">(t: T_1, d: DiscordAPIEvents[T_1]) => void;
         };
     };
     connect(url: string): void;

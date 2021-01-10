@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 class Message {
     constructor() {
-        /* eslint-disable */
+        // i used to be python dev when i was 8 or smthn
     }
 }
 exports.default = Message;

@@ -18,24 +18,24 @@ export declare const discordAPI: {
     discord: string;
 };
 export interface DiscordAPIEvents {
-    guildCreate: {
-        op?: 0;
-        t?: 'GUILD_CREATE';
+    GUILD_CREATE: {
+        op: 0;
+        t: 'GUILD_CREATE';
         d: Guild;
     };
     READY: {
-        op?: 0;
-        t?: 'READY';
+        op: 0;
+        t: 'READY';
         d: Ready;
     };
-    channelCreate: {
-        op?: 0;
-        t?: 'CHANNEL_CREATE';
+    CHANNEL_CREATE: {
+        op: 0;
+        t: 'CHANNEL_CREATE';
         d: Ready;
     };
     MESSAGE_CREATE: {
-        op?: 0;
-        t?: 'MESSAGE_CREATE';
+        op: 0;
+        t: 'MESSAGE_CREATE';
         d: Message;
     };
 }
@@ -45,6 +45,7 @@ export interface Message {
     timestamp: Date;
     referenced_message: null;
     pinned: boolean;
+    reactions: Reaction[];
     nonce: string;
     mentions: any[];
     mention_roles: any[];
@@ -61,9 +62,8 @@ export interface Message {
     guild_id: string;
 }
 export interface Author {
-    username: string;
-    public_flags: number;
     id: string;
+    username: string;
     discriminator: string;
     avatar: string;
 }
@@ -151,6 +151,21 @@ export interface DiscordAPIOP {
         };
     };
 }
+export interface Reaction {
+    count: number;
+    me: boolean;
+    emoji: Emoji;
+}
+export interface Emoji {
+    id: string;
+    name: string;
+    roles?: string[];
+    user: User;
+    require_colons?: boolean;
+    managed?: boolean;
+    animated?: boolean;
+    available?: boolean;
+}
 export interface Ready {
     v: number;
     user_settings: UserSettings;
@@ -172,47 +187,53 @@ export interface Guild {
     unavailable: boolean;
     id: string;
 }
-export interface User {
-    verified: boolean;
-    username: string;
-    mfa_enabled: boolean;
-    id: string;
-    flags: number;
-    email: null;
-    discriminator: string;
-    bot: boolean;
-    avatar: null | string;
+export interface User extends Author {
+    bot?: boolean;
+    system?: boolean;
+    mfa_enabled?: boolean;
+    locale?: string;
+    verified?: boolean;
+    email?: string;
+    flags?: number;
+    premium_type?: number;
+    public_flags?: number;
 }
 export interface UserSettings {
 }
 export interface Guild {
-    description: null;
+    id: string;
+    name: string;
+    icon: string | null;
+    icon_hash?: string | null;
+    splash: string | null;
+    discovery_splash: string | null;
+    owner?: boolean;
+    owner_id: string;
+    permissions?: string;
+    region: string;
+    afk_channel_id: string | null;
+    afk_timeout: number;
+    widget_enabled?: boolean;
+    widget_channel_id?: string;
+    description: string;
     public_updates_channel_id: null;
     large: boolean;
     features: any[];
     unavailable: boolean;
-    afk_channel_id: null;
     member_count: number;
     max_members: number;
     guild_hashes: GuildHashes;
     system_channel_flags: number;
     premium_tier: number;
     emojis: any[];
-    discovery_splash: null;
-    name: string;
     voice_states: any[];
     members: Member[];
     presences: any[];
     banner: null;
-    region: string;
     channels: Channel[];
-    icon: null;
     max_video_channel_users: number;
-    afk_timeout: number;
-    owner_id: string;
     preferred_locale: string;
     rules_channel_id: null;
-    splash: null;
     verification_level: number;
     roles: Role[];
     lazy: boolean;
@@ -222,7 +243,6 @@ export interface Guild {
     vanity_url_code: null;
     system_channel_id: string;
     threads: any[];
-    id: string;
     default_message_notifications: number;
     premium_subscription_count: number;
     joined_at: string;

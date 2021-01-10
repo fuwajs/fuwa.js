@@ -188,7 +188,7 @@ class Client extends Emitter_1.default {
                     }
                 }
                 else {
-                    data.content
+                    commandName = data.content
                         .replace(prefix, '')
                         .split(' ')[0]
                         .toLowerCase();
@@ -201,8 +201,9 @@ class Client extends Emitter_1.default {
                 if (this.middleware[0]) {
                     this.middleware[0](req, res, next(req, res, _, 0, command));
                 }
-                this.bot.id;
-                command[0].cb(req, res, next(req, res, command, 0));
+                this.bot;
+                if (!this.middleware[0])
+                    command[0].cb(req, res, next(req, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
             //             this.debug(`Connect to ${discordAPI.gateway}`);

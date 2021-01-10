@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import User from './User';
 import Request from './Request';
+import { User } from './_DiscordAPI';
 import Response from './Reponse';
 import Emitter from './Emitter';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
