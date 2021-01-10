@@ -1,4 +1,11 @@
-export { default as Client } from './lib/Client';
-export { default as Embed } from './lib/Embed';
-export { default as Colors } from './lib/Colors';
-export { default as Colours } from './lib/Colors';
+import Client from './lib/Client';
+import Embed from './lib/Embed';
+import Colors from './lib/Colors';
+
+export = {
+    Colors,
+    Client,
+    Embed,
+    // for my canadian friends
+    Colours: Colors
+}

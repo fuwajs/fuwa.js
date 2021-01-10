@@ -30,40 +30,44 @@ client.command('ping', (req, res, next) => {
 
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {
-    console.log('');
-    const username = req.content.split(' ')[1] || 'torvalds';
-
+    const username = req.content.split(' ')[1] || 'Artrix9095';
     const user = await (await fetch(`https://api.github.com/users/${username}`)).json();
+    console.log(user);
     const fields = [
         {
             name: 'Repositories',
-            value: user['public_repos']
+            value: user.public_repos
         },
         {
             name: 'Followers',
-            value: user['followers'],
+            value: user.followers,
             inline: true
         },
         {
             name: 'Following',
-            value: user['following'],
+            value: user.following,
             inline: true
         },
-        {
-            name: 'Bio',
-            value: user['bio']
-        }
     ]
     res.send(new fuwa.Embed()
-        .setTitle(`${username} | GitHub`)
-        .setThumbnail(
-            'https://upload.wikimedia.org/wikipedia/commons/9/95/Font_Awesome_5_brands_github.svg', {
-            height: 50,
-            width: 50
-        })
+        .setTitle(`${user.name} | GitHub`)
+        .setUrl(user.html_url)
+        .setDescription(user.bio)
+        .setThumbnail(user.avatar_url)
         .addFields(fields)
         .setColor(fuwa.Colors.rgb(255, 145, 81))
-        .setFooter('GitHub')
+        .setFooter(`Joined github at ${new Date(user.created_at)
+            .toLocaleTimeString([], // Fancy date stuff C:
+                {
+                    year: 'numeric', 
+                    month: 'numeric', 
+                    day: 'numeric', 
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                }
+            )}
+        `)
+        .setTimestamp(Date.now())
     );
 });
 
