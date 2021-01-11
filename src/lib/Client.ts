@@ -1,5 +1,5 @@
 import Request from './Request';
-import { discordAPI, Message, opCodes, User } from './_DiscordAPI';
+import { discordAPI, Message, opCodes, User, Guild } from './_DiscordAPI';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
@@ -88,6 +88,9 @@ class Client extends Emitter {
     public bot: User;
     private sessionId = '';
     protected debugMode: boolean;
+    public cache = {
+        guilds: new Map<string, Guild>()
+    };
     protected status: any = [];
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
@@ -128,7 +131,7 @@ class Client extends Emitter {
             if (bug instanceof Error) {
                 throw bug;
             } else {
-                console.log(bug + '\n');
+                // console.log (bug + '\n');
             }
         }
     }
@@ -166,7 +169,7 @@ class Client extends Emitter {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => // console.log ('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]) {
@@ -216,12 +219,12 @@ class Client extends Emitter {
         }
 
         this.token = token.toString();
-        console.log(`Your Bot Token: ${token.toString()}`);
+        // console.log (`Your Bot Token: ${token.toString()}`);
 
         this.connect(discordAPI.gateway);
 
         this.op(opCodes.hello, (data) => {
-            console.log(data);
+            // console.log (data);
             this.loop = setInterval(
                 () => this.response.op.emit(1, 251),
                 data.heartbeat_interval
@@ -246,6 +249,7 @@ class Client extends Emitter {
             const ready = this.events.get('READY');
             if (ready) ready();
         });
+        this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             // Bootleg auto-help command
             // TODO: Make it less bootleg 
@@ -309,8 +313,9 @@ class Client extends Emitter {
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
-            const req = new Request(msg);
+            const req = new Request(msg, token.toString(), this.cache);
             req.args = args;
+            // console.log (req)
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, _, 0, command));
             }
@@ -404,8 +409,8 @@ class Client extends Emitter {
         //                         let command = this.commands.get(
         //                             res.d.content.replace(prefix, '').toLowerCase()
         //                         );
-        //                         console.log(command);
-        //                         console.log(this.commands);
+        //                         // console.log (command);
+        //                         // console.log (this.commands);
         //                         if (!command) {
         //                             let ___ = this.events.get('CMD_NOT_FOUND');
         //                             ___ ? ___() : 0;
@@ -477,7 +482,7 @@ class Client extends Emitter {
         
         msgs.map(msg => msg.id).forEach(async id => {
             const del = await undici.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
-            console.log(del);
+            // console.log (del);
         });
     }
 }

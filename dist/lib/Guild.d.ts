@@ -1,5 +1,5 @@
 import { Guild as GuildOptions, GuildHashes, Member, Channel, Role } from './_DiscordAPI';
-declare class Guild implements GuildOptions {
+declare class Guild {
     id: string;
     name: string;
     icon: string | null;
@@ -26,10 +26,10 @@ declare class Guild implements GuildOptions {
     premium_tier: number;
     emojis: any[];
     voice_states: any[];
-    members: Member[];
+    members: Map<string, Member>;
     presences: any[];
     banner: null;
-    channels: Channel[];
+    channels: Map<string, Channel>;
     max_video_channel_users: number;
     preferred_locale: string;
     rules_channel_id: null;
@@ -45,5 +45,6 @@ declare class Guild implements GuildOptions {
     default_message_notifications: number;
     premium_subscription_count: number;
     joined_at: string;
+    constructor(data: GuildOptions);
 }
 export default Guild;

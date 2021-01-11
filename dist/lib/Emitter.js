@@ -32,7 +32,6 @@ class Emitter {
                 var _a;
                 (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.message();
                 const res = JSON.parse(data.toString());
-                console.log(res);
                 if (res.op === _DiscordAPI_1.opCodes.dispatch) {
                     if (!res.t)
                         throw new Error(`The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`);

@@ -40,6 +40,9 @@ class Client extends Emitter_1.default {
     constructor(prefix, options) {
         super();
         this.sessionId = '';
+        this.cache = {
+            guilds: new Map()
+        };
         this.status = [];
         // protected events: Map<keyof Events, eventCallback> = new Map();
         /* eslint-disable */
@@ -56,7 +59,7 @@ class Client extends Emitter_1.default {
                 throw bug;
             }
             else {
-                console.log(bug + '\n');
+                // console.log (bug + '\n');
             }
         }
     }
@@ -94,7 +97,7 @@ class Client extends Emitter_1.default {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => // console.log ('Up and ready to go!'));
      * ```
      */
     on(event, cb) {
@@ -139,10 +142,10 @@ class Client extends Emitter_1.default {
                 };
             };
             this.token = token.toString();
-            console.log(`Your Bot Token: ${token.toString()}`);
+            // console.log (`Your Bot Token: ${token.toString()}`);
             this.connect(_DiscordAPI_1.discordAPI.gateway);
             this.op(_DiscordAPI_1.opCodes.hello, (data) => {
-                console.log(data);
+                // console.log (data);
                 this.loop = setInterval(() => this.response.op.emit(1, 251), data.heartbeat_interval);
                 this.response.op.emit(_DiscordAPI_1.opCodes.indentify, {
                     token: token.toString(),
@@ -164,6 +167,7 @@ class Client extends Emitter_1.default {
                 if (ready)
                     ready();
             });
+            this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 // Bootleg auto-help command
                 // TODO: Make it less bootleg 
@@ -229,8 +233,9 @@ class Client extends Emitter_1.default {
                     return;
                 const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
-                const req = new Request_1.default(msg);
+                const req = new Request_1.default(msg, token.toString(), this.cache);
                 req.args = args;
+                // console.log (req)
                 if (this.middleware[0]) {
                     this.middleware[0](req, res, next(req, res, _, 0, command));
                 }
@@ -320,8 +325,8 @@ class Client extends Emitter_1.default {
             //                         let command = this.commands.get(
             //                             res.d.content.replace(prefix, '').toLowerCase()
             //                         );
-            //                         console.log(command);
-            //                         console.log(this.commands);
+            //                         // console.log (command);
+            //                         // console.log (this.commands);
             //                         if (!command) {
             //                             let ___ = this.events.get('CMD_NOT_FOUND');
             //                             ___ ? ___() : 0;
@@ -389,7 +394,7 @@ class Client extends Emitter_1.default {
             const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token);
             msgs.map(msg => msg.id).forEach((id) => __awaiter(this, void 0, void 0, function* () {
                 const del = yield _unicdi_1.default.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
-                console.log(del);
+                // console.log (del);
             }));
         });
     }

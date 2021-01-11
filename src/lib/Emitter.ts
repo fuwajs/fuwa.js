@@ -41,9 +41,6 @@ class Emitter {
                 const res: { op: number; t: string | null; d: unknown } = JSON.parse(
                     data.toString()
                 );
-                
-                console.log(res);
-                
                 if (res.op === opCodes.dispatch) {
                     if (!res.t)
                         throw new Error(

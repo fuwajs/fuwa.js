@@ -68,12 +68,13 @@ export interface Author {
     avatar: string;
 }
 export interface Member {
-    roles: null[];
-    premium_since: null;
+    user: User;
+    roles: string;
+    premium_since?: null | number;
     pending: boolean;
-    nick: null;
+    nick: string | null;
     mute: boolean;
-    joined_at: Date;
+    joined_at: number;
     is_pending: boolean;
     hoisted_role: string;
     deaf: boolean;

@@ -24,6 +24,8 @@ client.use((req, res, next) => {
 
 // A basic 'ping' command. Responds with 'pong' in an embed.
 client.command('ping', (req, res) => {
+    console.log(req);
+    req.guild.
     res.send(new fuwa.Embed()
         .setTitle('Pong')
         .setColor(fuwa.Colors.rgb(13, 186, 120))

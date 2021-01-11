@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import Request from './Request';
-import { User } from './_DiscordAPI';
+import { User, Guild } from './_DiscordAPI';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -70,6 +70,9 @@ declare class Client extends Emitter {
     bot: User;
     private sessionId;
     protected debugMode: boolean;
+    cache: {
+        guilds: Map<string, Guild>;
+    };
     protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);
@@ -106,7 +109,7 @@ declare class Client extends Emitter {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => console.log('Up and ready to go!'));
+     * cli.on('ready', () => // console.log ('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]): this;

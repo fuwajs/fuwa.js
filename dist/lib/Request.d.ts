@@ -3,7 +3,7 @@ import Guild from './Guild';
 import { Message as MessageOptions } from "./_DiscordAPI";
 declare class Request {
     readonly author: User;
-    readonly guild: Guild;
+    guild: Guild;
     readonly message: {
         content: string;
     };
@@ -12,6 +12,6 @@ declare class Request {
      * An array of the arguments passed into your command
      */
     args: string[];
-    constructor(msg: MessageOptions);
+    constructor(msg: MessageOptions, token: string, cache: any);
 }
 export default Request;
