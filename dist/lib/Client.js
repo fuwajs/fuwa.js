@@ -201,15 +201,13 @@ class Client extends Emitter_1.default {
                     return;
                 let commandName = '';
                 let args = [];
-                const firstWord = msg.content.split(' ')[0];
-                if (firstWord[0] != prefix)
+                const str = msg.content.split(' ');
+                const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
+                console.log(str);
+                if (str[0][0] !== prefix && !a)
                     return;
-                args = msg.content
-                    .split(' ')
-                    .slice(this.options.useMentionPrefix
-                    && firstWord === `<@!${this.bot.id}>`
-                    ? 1 : 2);
-                commandName = firstWord
+                args = str.slice(a ? 2 : 1);
+                commandName = (a ? str[1] : str[0])
                     .replace(prefix, '')
                     .toLowerCase();
                 const command = this.commands.get(commandName);
@@ -376,7 +374,7 @@ class Client extends Emitter_1.default {
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
             const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token);
-            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify(msgs.map(m => m.id)));
+            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify(msgs.map(m => m.id))).catch(e => { throw e; });
         });
     }
 }

@@ -270,8 +270,7 @@ class Client extends Emitter {
             const res = new Response(msg, token.toString());
             let prefix = '';
             if (typeof this.prefix === 'function') {
-                throw new TypeError('functions arent supported yet.');
-                // await this.prefix(msg)
+                await this.prefix( new Request(msg, this.token, this.cache) )
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
@@ -281,22 +280,19 @@ class Client extends Emitter {
             }
 
             if (!prefix) return;
-            
 
             let commandName: string = '';
 
             let args: string[] = [];
-            const firstWord = msg.content.split(' ')[0];
-            if (firstWord[0] != prefix) return;
-            args = msg.content
-                    .split(' ')
-                    .slice(
-                        this.options.useMentionPrefix 
-                        && firstWord === `<@!${this.bot.id}>`
-                        ? 1 : 2);
-                commandName = firstWord
-                    .replace(prefix, '')
-                    .toLowerCase();
+            const str = msg.content.split(' ');
+            const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
+            console.log(str);
+            if (str[0][0] !== prefix && !a) return;
+
+            args = str.slice(a ? 2 : 1);
+            commandName = (a ? str[1] : str[0])
+                .replace(prefix, '')
+                .toLowerCase();
 
             const command = this.commands.get(commandName);
             if (!command) return;
@@ -468,11 +464,10 @@ class Client extends Emitter {
             `/api/v8/channels/${channelID}/messages?limit=${amt}`,
             this.token
         );
-
         undici.OTHER('POST',
             `/api/v8/channels/${channelID}/messages/bulk-delete`,
             this.token, JSON.stringify(msgs.map(m => m.id))
-        );
+        ).catch(e => { throw e });
     }
 }
 
