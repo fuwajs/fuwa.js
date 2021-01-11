@@ -32,8 +32,20 @@ client.command('ping', (req, res) => {
 
 // Another command. This deletes messages via the 'deleteMessages' method
 client.command(['rm', 'delete'], (req, res) => {
-    client.deleteMessages(parseInt(req.args[0]), req.rawData.channel_id);
-})
+    // The user probably wants to delete the command AND the message before.
+    const amt = parseInt(req.args[0]) + 1;
+    // Handle errors
+    if (isNaN(amt)) {
+        res.send(new fuwa.Embed()
+            .setTitle('Invalid argument(s).')
+            .setDescription('Expected a number for the 1st argument.')
+            .addField({ name: 'Usage', value: 'rm <amt>' })
+            .setColor(fuwa.Colors.red)
+        );
+        return;
+    }
+    client.deleteMessages(amt, req.rawData.channel_id);
+}, { desc: 'Remove messages.' });
 
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {

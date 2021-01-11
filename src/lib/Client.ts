@@ -270,7 +270,7 @@ class Client extends Emitter {
             const res = new Response(msg, token.toString());
             let prefix = '';
             if (typeof this.prefix === 'function') {
-                await this.prefix( new Request(msg, this.token, this.cache) )
+                await this.prefix(new Request(msg, this.token, this.cache))
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
@@ -463,11 +463,12 @@ class Client extends Emitter {
         const msgs: Message[] = await undici.GET(
             `/api/v8/channels/${channelID}/messages?limit=${amt}`,
             this.token
-        );
+        ).catch(e => { console.error(e) });
+
         undici.OTHER('POST',
             `/api/v8/channels/${channelID}/messages/bulk-delete`,
-            this.token, JSON.stringify(msgs.map(m => m.id))
-        ).catch(e => { throw e });
+            this.token, JSON.stringify({ messages: msgs.map(m => m.id) })
+        ).catch(e => { console.error(e) });
     }
 }
 

@@ -185,8 +185,7 @@ class Client extends Emitter_1.default {
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
                 if (typeof this.prefix === 'function') {
-                    throw new TypeError('functions arent supported yet.');
-                    // await this.prefix(msg)
+                    yield this.prefix(new Request_1.default(msg, this.token, this.cache));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));
@@ -373,8 +372,8 @@ class Client extends Emitter_1.default {
     }
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token);
-            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify(msgs.map(m => m.id))).catch(e => { throw e; });
+            const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
+            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
         });
     }
 }

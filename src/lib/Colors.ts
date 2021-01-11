@@ -28,5 +28,6 @@ export default {
     lightGreen: '#5af78e',
     orange: '#ff3403',
     pink: '#ff6ac1',
+    red: '#ff5c57',
     yellow: '#f3f99d'
 };

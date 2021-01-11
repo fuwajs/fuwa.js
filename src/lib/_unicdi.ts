@@ -6,8 +6,8 @@ const http = new Client(discordAPI.discord);
 
 export default {
     GET(path: string, token: string): Promise<any> {
-        
-        return new Promise(async (resolve) => {
+
+        return new Promise(async (resolve, reject) => {
             const res = await http.request({
                 path,
                 method: 'GET',
@@ -19,12 +19,16 @@ export default {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                } catch (error) {
+                    reject(error);
+                }
             });
         });
     },
     DELETE(path: string, token: string): Promise<any> {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             const res = await http.request({
                 path: path,
                 method: 'DELETE',
@@ -36,12 +40,16 @@ export default {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                } catch (error) {
+                    reject(error);
+                }
             });
         });
     },
     POST(path: string, token: string, data: string | Buffer): Promise<any> {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             const res = await http.request({
                 path: path,
                 method: 'POST',
@@ -54,12 +62,16 @@ export default {
             const chunks: any[] = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                } catch (error) {
+                    reject(error);
+                }
             });
         });
     },
     OTHER(method: string, path: string, token: string, data: any): Promise<any> {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
             const res = await http.request({
                 path: path,
                 method: method,
@@ -72,7 +84,11 @@ export default {
             const chunks: any[] = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                } catch (error) {
+                    reject(error);
+                }
             });
         });
     },

@@ -21,6 +21,7 @@ declare const _default: {
         lightGreen: string;
         orange: string;
         pink: string;
+        red: string;
         yellow: string;
     };
     Client: typeof Client;
@@ -45,6 +46,7 @@ declare const _default: {
         lightGreen: string;
         orange: string;
         pink: string;
+        red: string;
         yellow: string;
     };
 };

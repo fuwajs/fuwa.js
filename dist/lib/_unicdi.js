@@ -16,7 +16,7 @@ const _DiscordAPI_1 = require("./_DiscordAPI");
 const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
     GET(path, token) {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
                 path,
                 method: 'GET',
@@ -28,12 +28,17 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                }
+                catch (error) {
+                    reject(error);
+                }
             });
         }));
     },
     DELETE(path, token) {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
                 path: path,
                 method: 'DELETE',
@@ -45,12 +50,17 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                }
+                catch (error) {
+                    reject(error);
+                }
             });
         }));
     },
     POST(path, token, data) {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
                 path: path,
                 method: 'POST',
@@ -63,12 +73,17 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                }
+                catch (error) {
+                    reject(error);
+                }
             });
         }));
     },
     OTHER(method, path, token, data) {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
                 path: path,
                 method: method,
@@ -81,7 +96,12 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                }
+                catch (error) {
+                    reject(error);
+                }
             });
         }));
     },
