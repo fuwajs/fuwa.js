@@ -26,10 +26,9 @@ export interface commandOptions {
 
 /**
  * Callback for commands
- * TODO: change request res and next function types to actual types
  */
 export type commandCallback = (
-    req: Request | null,
+    req: Request,
     res: Response,
-    next: commandCallback
+    next: () => void,
 ) => Promise<void> | void;

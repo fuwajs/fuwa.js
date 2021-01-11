@@ -8,6 +8,7 @@ type Media = {
     width: number;
 }
 
+
 type EmbedType = 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link';
 
 class Embed {
@@ -119,7 +120,7 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footerText: string, opts: { iconUrl?: string, proxyIconUrl?: string }): this {
+    setFooter(footerText: string, opts?: { iconUrl?: string, proxyIconUrl?: string } | undefined): this {
         this.footer = {
             text: footerText,
             icon_url: opts?.iconUrl,
@@ -156,7 +157,7 @@ class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
      *
      * //with options
-     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
+     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })
      * ```
      */
     setThumbnail(
@@ -190,8 +191,8 @@ class Embed {
      * embed.setTimestamp()
      * ```
      */
-    setTimestamp(time?: Date | number): this {
-        this.timestamp = new Date(time || Date.now());
+    setTimestamp(time?: string | Date | number): this {
+        this.timestamp = new Date(time);
         return this;
     }
 
@@ -230,7 +231,7 @@ class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(fields: { name: string; value: string; inline: boolean; }[]): this {
+    addFields(fields: { name: string; value: string; inline?: boolean; }[]): this {
         this.fields.push(...fields);
         return this;
     }

@@ -76,10 +76,10 @@ declare class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footerText: string, opts: {
+    setFooter(footerText: string, opts?: {
         iconUrl?: string;
         proxyIconUrl?: string;
-    }): this;
+    } | undefined): this;
     /**
      * @param name author name that should be displayed in embed
      * @param opts Extra options for author
@@ -103,7 +103,7 @@ declare class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
      *
      * //with options
-     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
+     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })
      * ```
      */
     setThumbnail(url: string, opts?: {
@@ -125,7 +125,7 @@ declare class Embed {
      * embed.setTimestamp()
      * ```
      */
-    setTimestamp(time?: Date | number): this;
+    setTimestamp(time?: string | Date | number): this;
     /**
      * @param url url of embed
      * ```ts
@@ -156,7 +156,7 @@ declare class Embed {
     addFields(fields: {
         name: string;
         value: string;
-        inline: boolean;
+        inline?: boolean;
     }[]): this;
     /**
      * @param field A field for embed

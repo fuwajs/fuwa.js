@@ -120,7 +120,7 @@ class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')
      *
      * //with options
-     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', {height: 100, width:100 ,})
+     * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })
      * ```
      */
     setThumbnail(url, opts) {
@@ -150,7 +150,7 @@ class Embed {
      * ```
      */
     setTimestamp(time) {
-        this.timestamp = new Date(time || Date.now());
+        this.timestamp = new Date(time);
         return this;
     }
     /**

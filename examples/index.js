@@ -1,7 +1,8 @@
 const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
 const fs = require('fs');
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
+const { exec } = require('child_process');
 
 const client = new fuwa.Client('?', { debug: false });
 // Log the bot into discord
@@ -18,7 +19,9 @@ client.on('READY', () => {
 });
 
 client.use((req, res, next) => {
-    console.log('Someone used me.');
+    if(!req.author.bot) {
+        res.send('Your not a bot! 😎')
+    }
     next();
 });
 
@@ -30,12 +33,11 @@ client.command('ping', (req, res) => {
     );
 });
 
-// Another command. This deletes messages via the 'deleteMessages' method
 client.command(['rm', 'delete'], (req, res) => {
     // The user probably wants to delete the command AND the message before.
     const amt = parseInt(req.args[0]) + 1;
     // Handle errors
-    if (isNaN(amt)) {
+    if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
             .setTitle('Invalid argument(s).')
             .setDescription('Expected a number for the 1st argument.')
@@ -50,27 +52,39 @@ client.command(['rm', 'delete'], (req, res) => {
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {
     const username = req.args[0] || 'octocat';
-    const user = await (await fetch(`https://api.github.com/users/${username}`)).json();
+    const user = await (await 
+        // Fetch the github user's JSON code (as a string)
+        fetch(`https://api.github.com/users/${username}`))
+        // Turn this string into a object we can use
+        .json();
+
+    const date = new Date(user.created_at)
+        .toLocaleTimeString([], { // Fancy date stuff C:
+            year: 'numeric', month: 'numeric', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+        });
+    // Send a embed!
     res.send(new fuwa.Embed()
+        // Set your embed title!
         .setTitle(`${user.name} @ GitHub`)
+        // Url to the title,
         .setUrl(user.html_url)
+        // User's bio
         .setDescription(user.bio)
+        // Thumbnail for the embed
         .setThumbnail(user.avatar_url)
+        // Add the embed's fields
         .addFields([
             { name: 'Repositories', value: user.public_repos },
             { name: 'Followers', value: user.followers, inline: true },
             { name: 'Following', value: user.following, inline: true },
         ])
+        // Set your favorite color!
         .setColor(fuwa.Colors.rgb(255, 145, 81))
-        .setFooter(`Joined github at ${new Date(user.created_at)
-            .toLocaleTimeString([], // Fancy date stuff C:
-                {
-                    year: 'numeric', month: 'numeric', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
-                }
-            )}
-        `)
-        .setTimestamp(Date.now())
+        // Add a footer!
+        .setFooter(`Joined github at ${date}`)
+        // Set the timestamp of the embed
+        .setTimestamp()
     );
 }, { desc: 'Get GitHub user statistics.' }); // Set the help message
 

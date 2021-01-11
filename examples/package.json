@@ -4,13 +4,14 @@
   "description": "Example",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx ts-node index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.7"

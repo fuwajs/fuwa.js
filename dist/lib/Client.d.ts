@@ -58,6 +58,12 @@ export interface clientOptions {
      * as a prefix.
      */
     useMentionPrefix?: boolean;
+    /**
+     *
+     */
+    builtinCommands?: {
+        help?: boolean;
+    };
 }
 /**
  * Client Class

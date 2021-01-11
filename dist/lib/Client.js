@@ -38,6 +38,7 @@ class Client extends Emitter_1.default {
      * @param prefix The prefix for your bot
      */
     constructor(prefix, options) {
+        var _a;
         super();
         this.sessionId = '';
         this.cache = {
@@ -52,6 +53,21 @@ class Client extends Emitter_1.default {
         this.options = options;
         this.prefix = prefix;
         this.bot;
+        // Bootleg auto-help command
+        // TODO: Make it less bootleg 
+        if (((_a = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) === undefined ? true : options.builtinCommands.help) {
+            this.command(['h', 'help'], (req, res) => {
+                let embed = new Embed_1.default();
+                embed.setColor('#57c7ff')
+                    .setTitle('Help')
+                    .setThumbnail('https://cdn.discordapp.com/avatars/'
+                    + `${this.bot.id}/${this.bot.avatar}.png`);
+                this.commands.forEach((cmd, name) => {
+                    embed.addField({ name, value: cmd[0].options.desc });
+                });
+                res.send(embed);
+            });
+        }
     }
     debug(bug) {
         if (this.debugMode) {
@@ -169,19 +185,6 @@ class Client extends Emitter_1.default {
             });
             this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
-                // Bootleg auto-help command
-                // TODO: Make it less bootleg 
-                this.command(['h', 'help'], (req, res) => {
-                    let embed = new Embed_1.default();
-                    embed.setColor('#57c7ff')
-                        .setTitle('Help')
-                        .setThumbnail('https://cdn.discordapp.com/avatars/'
-                        + `${this.bot.id}/${this.bot.avatar}.png`);
-                    this.commands.forEach((cmd, name) => {
-                        embed.addField({ name, value: cmd[0].options.desc });
-                    });
-                    res.send(embed);
-                });
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
                 if (typeof this.prefix === 'function') {

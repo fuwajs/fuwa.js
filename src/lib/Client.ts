@@ -69,6 +69,12 @@ export interface clientOptions {
      * as a prefix.
      */
     useMentionPrefix?: boolean;
+    /**
+     * 
+     */
+    builtinCommands?: {
+        help?: boolean;
+    }
 }
 
 type eventCallback =
@@ -124,6 +130,25 @@ class Client extends Emitter {
         this.options = options;
         this.prefix = prefix;
         this.bot;
+        // Bootleg auto-help command
+        // TODO: Make it less bootleg 
+        if(
+            options?.builtinCommands?.help === undefined ? true : options.builtinCommands.help
+        ) {
+            this.command(['h', 'help'], (req, res) => {
+                let embed = new Embed();
+                embed.setColor('#57c7ff')
+                    .setTitle('Help')
+                    .setThumbnail(
+                        'https://cdn.discordapp.com/avatars/'
+                        + `${this.bot.id}/${this.bot.avatar}.png`
+                    );
+                this.commands.forEach((cmd, name) => {
+                    embed.addField({ name, value: cmd[0].options.desc })
+                });
+                res.send(embed);
+            })
+        }
     }
 
     protected debug(bug: Error | any) {
@@ -251,21 +276,6 @@ class Client extends Emitter {
         });
         this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
         this.event('MESSAGE_CREATE', async (msg) => {
-            // Bootleg auto-help command
-            // TODO: Make it less bootleg 
-            this.command(['h', 'help'], (req, res) => {
-                let embed = new Embed();
-                embed.setColor('#57c7ff')
-                    .setTitle('Help')
-                    .setThumbnail(
-                        'https://cdn.discordapp.com/avatars/'
-                        + `${this.bot.id}/${this.bot.avatar}.png`
-                    );
-                this.commands.forEach((cmd, name) => {
-                    embed.addField({ name, value: cmd[0].options.desc })
-                });
-                res.send(embed);
-            })
 
             const res = new Response(msg, token.toString());
             let prefix = '';
