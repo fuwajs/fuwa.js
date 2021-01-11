@@ -5,7 +5,7 @@ declare class Emitter {
     private OPevents;
     private APIEvents;
     private WSEvents;
-    response: {
+    protected response: {
         op: {
             emit: <T extends 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>(op: T, d: DiscordAPIOPResponse[T]["d"]) => void;
         };
@@ -13,8 +13,8 @@ declare class Emitter {
             emit: <T_1 extends "GUILD_CREATE" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE">(t: T_1, d: DiscordAPIEvents[T_1]) => void;
         };
     };
-    connect(url: string): void;
+    protected connect(url: string): void;
     protected op<T extends keyof DiscordAPIOPResponse>(op: T, cb: (data: DiscordAPIOPResponse[T]['d']) => void): void;
-    event<T extends keyof DiscordAPIEvents>(e: T, cb: (data: DiscordAPIEvents[T]['d']) => void): void;
+    protected event<T extends keyof DiscordAPIEvents>(e: T, cb: (data: DiscordAPIEvents[T]['d']) => void): void;
 }
 export default Emitter;

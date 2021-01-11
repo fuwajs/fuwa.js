@@ -84,7 +84,7 @@ class Client extends Emitter {
     /* eslint-disable */
     protected events: Map<keyof Events, Function> = new Map();
     protected prefix:
-        | string
+        string
         | string[]
         | ((req: Request) => Promise<string> | string);
     protected options: clientOptions;
@@ -106,7 +106,7 @@ class Client extends Emitter {
      */
     constructor(
         prefix:
-            | string
+            string
             | string[]
             | ((req: Request) => Promise<string> | string),
         options?: clientOptions
@@ -128,9 +128,9 @@ class Client extends Emitter {
 
     /**
      * Command function
-     * @param name Name of the command,
-     * @param cb The function that is called when the command is ran
-     * @param  options Options for your command
+     * @param name Command name(s).
+     * @param cb The function that is called when the command is ran.
+     * @param  options Options for your command.
      * @returns client
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
@@ -138,24 +138,17 @@ class Client extends Emitter {
      * ```
      * });
      */
-    command(
-        name: string | string[],
-        cb: commandCallback,
-        options?: commandOptions
-    ) {
+    command(name: string | string[], cb: commandCallback, options?: commandOptions) {
+        const option: commandOptions = options || {
+            desc: 'No description was provided',
+        };
         if (Array.isArray(name)) {
             name.forEach((key) => {
-                const option: commandOptions = options || {
-                    desc: 'No description was provided',
-                };
                 const commands = this.commands.get(key);
                 commands?.push({ cb, options: option });
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         } else {
-            const option: commandOptions = options || {
-                desc: 'No description was provided',
-            };
             const commands = this.commands.get(this.prefix + name);
             commands?.push({ cb, options: option });
             this.commands.set(name, commands || [{ cb, options: option }]);
@@ -248,31 +241,42 @@ class Client extends Emitter {
         });
         this.event('MESSAGE_CREATE', async (msg) => {
             const res = new Response(msg, token.toString());
-            const prefix =
-                typeof this.prefix === 'function'
-                    ? await this.prefix(msg)
-                    : Array.isArray(this.prefix)
-                        ? this.prefix.find((p) => msg.content.startsWith(p)) || false
-                        : this.prefix;
-            if (prefix === false) return;
-            if (prefix === null || prefix === undefined) return;
+            let prefix = '';
+            if (typeof this.prefix === 'function') {
+                throw new TypeError('functions arent supported yet.');
+                // await this.prefix(msg)
+            } else if (Array.isArray(this.prefix)) {
+                prefix = this.prefix.find((p) => msg.content.startsWith(p));
+            } else if (typeof this.prefix === 'string') {
+                prefix = this.prefix;
+            } else {
+                throw new TypeError('Invalid prefix type');
+            }
+
+            if (!prefix) return;
 
             let commandName: string = '';
             let args: string[] = [];
             if (this.options.useMentionPrefix) {
                 const firstWord = msg.content.split(' ')[0];
                 if (firstWord === `<@!${this.bot.id}>`) {
+                    args = msg.content
+                        .split(' ')
+                        .slice(2); // 'delete' 1st 2 items (@mention & cmd name)
                     commandName = msg.content.split(' ')[1].toLowerCase();
                 } else {
                     args = msg.content
                         .split(' ')
-                        .splice(0, 1);
+                        .splice(1);
                     commandName = msg.content
                         .replace(prefix, '')
                         .split(' ')[0]
                         .toLowerCase();
                 }
             } else {
+                args = msg.content
+                    .split(' ')
+                    .splice(1);
                 commandName = msg.content
                     .replace(prefix, '')
                     .split(' ')[0]
@@ -282,11 +286,13 @@ class Client extends Emitter {
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
+            const req = new Request(msg);
+            req.args = args;
             if (this.middleware[0]) {
-                this.middleware[0](msg, res, next(msg, res, _, 0, command));
+                this.middleware[0](req, res, next(req, res, _, 0, command));
             }
             this.bot;
-            if (!this.middleware[0]) command[0].cb(msg, res, next(msg, res, command, 0));
+            if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
         });
         //         this.ws.on('open', async function () {
         //             this.debug(`Connect to ${ discordAPI.gateway } `);

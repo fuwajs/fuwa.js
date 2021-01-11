@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Request_1 = __importDefault(require("./Request"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
@@ -58,9 +59,9 @@ class Client extends Emitter_1.default {
     }
     /**
      * Command function
-     * @param name Name of the command,
-     * @param cb The function that is called when the command is ran
-     * @param  options Options for your command
+     * @param name Command name(s).
+     * @param cb The function that is called when the command is ran.
+     * @param  options Options for your command.
      * @returns client
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
@@ -69,20 +70,17 @@ class Client extends Emitter_1.default {
      * });
      */
     command(name, cb, options) {
+        const option = options || {
+            desc: 'No description was provided',
+        };
         if (Array.isArray(name)) {
             name.forEach((key) => {
-                const option = options || {
-                    desc: 'No description was provided',
-                };
                 const commands = this.commands.get(key);
                 commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
                 this.commands.set(key, commands || [{ cb, options: option }]);
             });
         }
         else {
-            const option = options || {
-                desc: 'No description was provided',
-            };
             const commands = this.commands.get(this.prefix + name);
             commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
             this.commands.set(name, commands || [{ cb, options: option }]);
@@ -164,26 +162,36 @@ class Client extends Emitter_1.default {
             });
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 const res = new Response_1.default(msg, token.toString());
-                const prefix = typeof this.prefix === 'function'
-                    ? yield this.prefix(msg)
-                    : Array.isArray(this.prefix)
-                        ? this.prefix.find((p) => msg.content.startsWith(p)) || false
-                        : this.prefix;
-                if (prefix === false)
-                    return;
-                if (prefix === null || prefix === undefined)
+                let prefix = '';
+                if (typeof this.prefix === 'function') {
+                    throw new TypeError('functions arent supported yet.');
+                    // await this.prefix(msg)
+                }
+                else if (Array.isArray(this.prefix)) {
+                    prefix = this.prefix.find((p) => msg.content.startsWith(p));
+                }
+                else if (typeof this.prefix === 'string') {
+                    prefix = this.prefix;
+                }
+                else {
+                    throw new TypeError('Invalid prefix type');
+                }
+                if (!prefix)
                     return;
                 let commandName = '';
                 let args = [];
                 if (this.options.useMentionPrefix) {
                     const firstWord = msg.content.split(' ')[0];
                     if (firstWord === `<@!${this.bot.id}>`) {
+                        args = msg.content
+                            .split(' ')
+                            .slice(2); // 'delete' 1st 2 items (@mention & cmd name)
                         commandName = msg.content.split(' ')[1].toLowerCase();
                     }
                     else {
                         args = msg.content
                             .split(' ')
-                            .splice(0, 1);
+                            .splice(1);
                         commandName = msg.content
                             .replace(prefix, '')
                             .split(' ')[0]
@@ -191,6 +199,9 @@ class Client extends Emitter_1.default {
                     }
                 }
                 else {
+                    args = msg.content
+                        .split(' ')
+                        .splice(1);
                     commandName = msg.content
                         .replace(prefix, '')
                         .split(' ')[0]
@@ -201,12 +212,14 @@ class Client extends Emitter_1.default {
                     return;
                 const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
+                const req = new Request_1.default(msg);
+                req.args = args;
                 if (this.middleware[0]) {
-                    this.middleware[0](msg, res, next(msg, res, _, 0, command));
+                    this.middleware[0](req, res, next(req, res, _, 0, command));
                 }
                 this.bot;
                 if (!this.middleware[0])
-                    command[0].cb(msg, res, next(msg, res, command, 0));
+                    command[0].cb(req, res, next(req, res, command, 0));
             }));
             //         this.ws.on('open', async function () {
             //             this.debug(`Connect to ${ discordAPI.gateway } `);

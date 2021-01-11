@@ -18,7 +18,7 @@ export interface commandOptions {
          */
         length: number;
         /**
-         * Defualt value for argument if one is not passed.
+         * Default value for argument if one is not passed.
          */
         default: string;
     }[];
@@ -31,5 +31,5 @@ export interface commandOptions {
 export type commandCallback = (
     req: Request | null,
     res: Response,
-    next: any
+    next: commandCallback
 ) => Promise<void> | void;

@@ -1,4 +1,4 @@
-import User from "./User";
+import User from './User';
 import Guild from './Guild';
 import { Message as MessageOptions, Guild as GuildOptions } from "./_DiscordAPI";
 
@@ -13,6 +13,8 @@ class Request {
     message: {
         content: string
     };
+    // An array of the arguments passed into your command
+    args: string[];
     constructor(msg: MessageOptions) {
         this.author = new User(msg.author);
         this.message = { content: msg.content };
@@ -20,4 +22,4 @@ class Request {
     }
 }
 
-export default Req;
+export default Request;

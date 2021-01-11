@@ -1,3 +1,13 @@
-import { Message } from "./_DiscordAPI";
-declare type Req = Message;
-export default Req;
+import User from './User';
+import Guild from './Guild';
+import { Message as MessageOptions } from "./_DiscordAPI";
+declare class Request {
+    author: User;
+    guild: Guild;
+    message: {
+        content: string;
+    };
+    args: string[];
+    constructor(msg: MessageOptions);
+}
+export default Request;

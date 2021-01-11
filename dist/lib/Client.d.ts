@@ -83,9 +83,9 @@ declare class Client extends Emitter {
     protected debug(bug: Error | any): void;
     /**
      * Command function
-     * @param name Name of the command,
-     * @param cb The function that is called when the command is ran
-     * @param  options Options for your command
+     * @param name Command name(s).
+     * @param cb The function that is called when the command is ran.
+     * @param  options Options for your command.
      * @returns client
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
