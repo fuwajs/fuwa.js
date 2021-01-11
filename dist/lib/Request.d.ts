@@ -7,6 +7,9 @@ declare class Request {
     message: {
         content: string;
     };
+    /**
+     * An array of the arguments passed into your command
+     */
     args: string[];
     constructor(msg: MessageOptions);
 }

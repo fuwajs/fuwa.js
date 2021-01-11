@@ -3,36 +3,44 @@ import { discordAPI, opCodes, User } from './_DiscordAPI';
 import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
+import Embed from './Embed';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
-export type status = 'dnd' | 'offline' | 'idle' | 'online';
+
+enum statusCode {
+    playing,
+    streaming,
+    listening,
+    custom,
+    competing
+}
+// export type status = ;
 /**
  * status options for bot
  */
 export interface statusOptions {
     /**
-     * status that will be displayed
+     * The status message to be displayed
      */
     name: string;
+
     /**
-     * available types are playing , listening , streaming ,  competing
+     * The available status types are playing, listening, streaming, and 
+     * competing.
      */
-    type?: statusType;
+    type?: statusCode;
     /**
-     * only if type is streaming
-     * supports youtube and twitch
+     * The URL of a stream
      */
 
     url?: string;
 
     /**
-     * status of your bot
-     * default is online
+     * The status of your bot. Online by default
      */
-
-    status?: status;
+    status?: 'dnd' | 'offline' | 'idle' | 'online';
     /**
-     * whether or not the bot is afk
+     * Whether or not the bot is afk.
      */
     afk?: boolean;
 }
@@ -76,7 +84,7 @@ type eventCallback =
  * ```
  */
 class Client extends Emitter {
-    public bot: User | null = null;
+    public bot: User;
     private sessionId = '';
     protected debugMode: boolean;
     protected status: any = [];
@@ -94,13 +102,6 @@ class Client extends Emitter {
         { cb: commandCallback; options: commandOptions }[]
     > = new Map();
     protected middleware: commandCallback[] = [];
-    protected statusTypeOp: any = {
-        playing: 0,
-        streaming: 1,
-        listening: 2,
-        custom: 4,
-        competing: 5,
-    };
     /**
      * @param prefix The prefix for your bot
      */
@@ -114,6 +115,7 @@ class Client extends Emitter {
         super();
         this.options = options;
         this.prefix = prefix;
+        this.bot;
     }
 
     protected debug(bug: Error | any) {
@@ -240,6 +242,22 @@ class Client extends Emitter {
             if (ready) ready();
         });
         this.event('MESSAGE_CREATE', async (msg) => {
+            // Bootleg auto-help command
+            // TODO: Make it less bootleg 
+            this.command(['h', 'help'], (req, res) => {
+                let embed = new Embed();
+                embed.setColor('#57c7ff')
+                    .setTitle('Help')
+                    .setThumbnail(
+                        'https://cdn.discordapp.com/avatars/'
+                        + `${this.bot.id}/${this.bot.avatar}.png`
+                    );
+                this.commands.forEach((cmd, name) => {
+                    embed.addField({ name, value: cmd[0].options.desc })
+                });
+                res.send(embed);
+            })
+
             const res = new Response(msg, token.toString());
             let prefix = '';
             if (typeof this.prefix === 'function') {
@@ -423,31 +441,29 @@ class Client extends Emitter {
         this.options[key] = val;
         return this;
     }
-    // setStatus(status: statusOptions) {
-    //     let cred: any = {};
-    //     let activities: any = [
-    //         {
-    //             name: status.name,
-    //         },
-    //     ];
-    //     status.type && status.type.toLowerCase() !== 'streaming'
-    //         ? (activities[0]['type'] = this.statusTypeOp[
-    //               status.type.toLowerCase()
-    //           ])
-    //         : status.type &&
-    //           status.type.toLowerCase() === 'streaming' &&
-    //           status.url
-    //         ? ((activities[0].type = 1), (activities[0].url = status.url))
-    //         : (activities[0]['type'] = 4);
-    //     cred.d.presence.activities = activities;
-    //     status.status
-    //         ? (cred.d.presence.status = status.status)
-    //         : (cred.d.presence.status = 'online');
-    //     status.afk
-    //         ? (cred.d.presence.afk = status.afk)
-    //     : (cred.d.presence.afk = 'false');
-    // this.status = cred;
-    // }
+    setStatus(status: statusOptions) {
+        let cred = {
+            d: {
+                presence: {
+                    activities: [],
+                    status: 'online',
+                    afk: false,
+                },
+            }
+        };
+        let activities: any = [
+            {
+                name: status.name,
+            },
+        ];
+        activities[0] = status?.type;
+
+        cred.d.presence.activities = activities;
+        cred.d.presence.status = status.status || 'online';
+        cred.d.presence.afk = status.afk || false;
+
+        this.status = cred;
+    }
 }
 
 export default Client;

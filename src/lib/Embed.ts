@@ -237,7 +237,7 @@ class Embed {
     /**
      * @param field A field for embed
      */
-    addField(field: { name: string; value: string; inline: boolean; }): this {
+    addField(field: { name: string; value: string; inline?: boolean; }): this {
         this.fields.push(field);
         return this;
     }

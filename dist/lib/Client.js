@@ -16,6 +16,15 @@ const Request_1 = __importDefault(require("./Request"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
+const Embed_1 = __importDefault(require("./Embed"));
+var statusCode;
+(function (statusCode) {
+    statusCode[statusCode["playing"] = 0] = "playing";
+    statusCode[statusCode["streaming"] = 1] = "streaming";
+    statusCode[statusCode["listening"] = 2] = "listening";
+    statusCode[statusCode["custom"] = 3] = "custom";
+    statusCode[statusCode["competing"] = 4] = "competing";
+})(statusCode || (statusCode = {}));
 /**
  * Client Class
  * ```typescript
@@ -29,7 +38,6 @@ class Client extends Emitter_1.default {
      */
     constructor(prefix, options) {
         super();
-        this.bot = null;
         this.sessionId = '';
         this.status = [];
         // protected events: Map<keyof Events, eventCallback> = new Map();
@@ -37,15 +45,9 @@ class Client extends Emitter_1.default {
         this.events = new Map();
         this.commands = new Map();
         this.middleware = [];
-        this.statusTypeOp = {
-            playing: 0,
-            streaming: 1,
-            listening: 2,
-            custom: 4,
-            competing: 5,
-        };
         this.options = options;
         this.prefix = prefix;
+        this.bot;
     }
     debug(bug) {
         if (this.debugMode) {
@@ -161,6 +163,19 @@ class Client extends Emitter_1.default {
                     ready();
             });
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
+                // Bootleg auto-help command
+                // TODO: Make it less bootleg 
+                this.command(['h', 'help'], (req, res) => {
+                    let embed = new Embed_1.default();
+                    embed.setColor('#57c7ff')
+                        .setTitle('Help')
+                        .setThumbnail('https://cdn.discordapp.com/avatars/'
+                        + `${this.bot.id}/${this.bot.avatar}.png`);
+                    this.commands.forEach((cmd, name) => {
+                        embed.addField({ name, value: cmd[0].options.desc });
+                    });
+                    res.send(embed);
+                });
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
                 if (typeof this.prefix === 'function') {
@@ -345,6 +360,27 @@ class Client extends Emitter_1.default {
     set(key, val) {
         this.options[key] = val;
         return this;
+    }
+    setStatus(status) {
+        let cred = {
+            d: {
+                presence: {
+                    activities: [],
+                    status: 'online',
+                    afk: false,
+                },
+            }
+        };
+        let activities = [
+            {
+                name: status.name,
+            },
+        ];
+        activities[0] = status === null || status === void 0 ? void 0 : status.type;
+        cred.d.presence.activities = activities;
+        cred.d.presence.status = status.status || 'online';
+        cred.d.presence.afk = status.afk || false;
+        this.status = cred;
     }
 }
 exports.default = Client;

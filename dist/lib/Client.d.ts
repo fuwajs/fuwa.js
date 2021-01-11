@@ -4,31 +4,36 @@ import { User } from './_DiscordAPI';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
-export declare type status = 'dnd' | 'offline' | 'idle' | 'online';
+declare enum statusCode {
+    playing = 0,
+    streaming = 1,
+    listening = 2,
+    custom = 3,
+    competing = 4
+}
 /**
  * status options for bot
  */
 export interface statusOptions {
     /**
-     * status that will be displayed
+     * The status message to be displayed
      */
     name: string;
     /**
-     * available types are playing , listening , streaming ,  competing
+     * The available status types are playing, listening, streaming, and
+     * competing.
      */
-    type?: statusType;
+    type?: statusCode;
     /**
-     * only if type is streaming
-     * supports youtube and twitch
+     * The URL of a stream
      */
     url?: string;
     /**
-     * status of your bot
-     * default is online
+     * The status of your bot. Online by default
      */
-    status?: status;
+    status?: 'dnd' | 'offline' | 'idle' | 'online';
     /**
-     * whether or not the bot is afk
+     * Whether or not the bot is afk.
      */
     afk?: boolean;
 }
@@ -62,7 +67,7 @@ export interface clientOptions {
  * ```
  */
 declare class Client extends Emitter {
-    bot: User | null;
+    bot: User;
     private sessionId;
     protected debugMode: boolean;
     protected status: any;
@@ -75,7 +80,6 @@ declare class Client extends Emitter {
         options: commandOptions;
     }[]>;
     protected middleware: commandCallback[];
-    protected statusTypeOp: any;
     /**
      * @param prefix The prefix for your bot
      */
@@ -126,5 +130,6 @@ declare class Client extends Emitter {
     login(token: string | Buffer): Promise<void>;
     logout(end?: boolean): void;
     set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this;
+    setStatus(status: statusOptions): void;
 }
 export default Client;

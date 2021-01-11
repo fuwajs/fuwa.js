@@ -164,7 +164,7 @@ declare class Embed {
     addField(field: {
         name: string;
         value: string;
-        inline: boolean;
+        inline?: boolean;
     }): this;
     /**
      * @param name name of provider if exists

@@ -4,6 +4,8 @@ const fs = require('fs');
 const fetch = require('node-fetch')
 
 const client = new fuwa.Client('?', { debug: false });
+// Log the bot into discord
+client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
@@ -21,7 +23,7 @@ client.use((req, res, next) => {
 });
 
 // A basic 'ping' command. Responds with 'pong' in an embed.
-client.command('ping', (req, res, next) => {
+client.command('ping', (req, res) => {
     res.send(new fuwa.Embed()
         .setTitle('Pong')
         .setColor(fuwa.Colors.rgb(13, 186, 120))
@@ -31,11 +33,9 @@ client.command('ping', (req, res, next) => {
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {
     const username = req.args[0] || 'octocat';
-    console.log(req.args);
     const user = await (await fetch(`https://api.github.com/users/${username}`)).json();
-    console.log(user);
     res.send(new fuwa.Embed()
-        .setTitle(`${user.name} | GitHub`)
+        .setTitle(`${user.name} @ GitHub`)
         .setUrl(user.html_url)
         .setDescription(user.bio)
         .setThumbnail(user.avatar_url)
@@ -48,17 +48,12 @@ client.command(['gh', 'github'], async (req, res) => {
         .setFooter(`Joined github at ${new Date(user.created_at)
             .toLocaleTimeString([], // Fancy date stuff C:
                 {
-                    year: 'numeric',
-                    month: 'numeric',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
+                    year: 'numeric', month: 'numeric', day: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
                 }
             )}
         `)
         .setTimestamp(Date.now())
     );
-});
+}, { desc: 'Get GitHub user statistics.' }); // Set the help message
 
-// Log the bot into discord
-client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));

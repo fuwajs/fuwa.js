@@ -13,7 +13,9 @@ class Request {
     message: {
         content: string
     };
-    // An array of the arguments passed into your command
+    /** 
+     * An array of the arguments passed into your command
+     */
     args: string[];
     constructor(msg: MessageOptions) {
         this.author = new User(msg.author);
