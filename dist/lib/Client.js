@@ -201,33 +201,17 @@ class Client extends Emitter_1.default {
                     return;
                 let commandName = '';
                 let args = [];
-                if (this.options.useMentionPrefix) {
-                    const firstWord = msg.content.split(' ')[0];
-                    if (firstWord === `<@!${this.bot.id}>`) {
-                        args = msg.content
-                            .split(' ')
-                            .slice(2); // 'delete' 1st 2 items (@mention & cmd name)
-                        commandName = msg.content.split(' ')[1].toLowerCase();
-                    }
-                    else {
-                        args = msg.content
-                            .split(' ')
-                            .splice(1);
-                        commandName = msg.content
-                            .replace(prefix, '')
-                            .split(' ')[0]
-                            .toLowerCase();
-                    }
-                }
-                else {
-                    args = msg.content
-                        .split(' ')
-                        .splice(1);
-                    commandName = msg.content
-                        .replace(prefix, '')
-                        .split(' ')[0]
-                        .toLowerCase();
-                }
+                const firstWord = msg.content.split(' ')[0];
+                if (firstWord[0] != prefix)
+                    return;
+                args = msg.content
+                    .split(' ')
+                    .slice(this.options.useMentionPrefix
+                    && firstWord === `<@!${this.bot.id}>`
+                    ? 1 : 2);
+                commandName = firstWord
+                    .replace(prefix, '')
+                    .toLowerCase();
                 const command = this.commands.get(commandName);
                 if (!command)
                     return;
@@ -392,10 +376,7 @@ class Client extends Emitter_1.default {
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
             const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token);
-            msgs.map(msg => msg.id).forEach((id) => __awaiter(this, void 0, void 0, function* () {
-                const del = yield _unicdi_1.default.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
-                // console.log (del);
-            }));
+            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify(msgs.map(m => m.id)));
         });
     }
 }

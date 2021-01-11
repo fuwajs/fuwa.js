@@ -281,34 +281,23 @@ class Client extends Emitter {
             }
 
             if (!prefix) return;
+            
 
             let commandName: string = '';
+
             let args: string[] = [];
-            if (this.options.useMentionPrefix) {
-                const firstWord = msg.content.split(' ')[0];
-                if (firstWord === `<@!${this.bot.id}>`) {
-                    args = msg.content
-                        .split(' ')
-                        .slice(2); // 'delete' 1st 2 items (@mention & cmd name)
-                    commandName = msg.content.split(' ')[1].toLowerCase();
-                } else {
-                    args = msg.content
-                        .split(' ')
-                        .splice(1);
-                    commandName = msg.content
-                        .replace(prefix, '')
-                        .split(' ')[0]
-                        .toLowerCase();
-                }
-            } else {
-                args = msg.content
+            const firstWord = msg.content.split(' ')[0];
+            if (firstWord[0] != prefix) return;
+            args = msg.content
                     .split(' ')
-                    .splice(1);
-                commandName = msg.content
+                    .slice(
+                        this.options.useMentionPrefix 
+                        && firstWord === `<@!${this.bot.id}>`
+                        ? 1 : 2);
+                commandName = firstWord
                     .replace(prefix, '')
-                    .split(' ')[0]
                     .toLowerCase();
-            }
+
             const command = this.commands.get(commandName);
             if (!command) return;
             const _: any[] = [];
@@ -475,15 +464,15 @@ class Client extends Emitter {
         this.status = cred;
     }
     async deleteMessages(amt: number, channelID: string) {
-        const msgs: Array<Message> = await undici.GET(
-            `/api/v8/channels/${channelID}/messages?limit=${amt}`, 
+        const msgs: Message[] = await undici.GET(
+            `/api/v8/channels/${channelID}/messages?limit=${amt}`,
             this.token
         );
-        
-        msgs.map(msg => msg.id).forEach(async id => {
-            const del = await undici.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
-            // console.log (del);
-        });
+
+        undici.OTHER('POST',
+            `/api/v8/channels/${channelID}/messages/bulk-delete`,
+            this.token, JSON.stringify(msgs.map(m => m.id))
+        );
     }
 }
 
