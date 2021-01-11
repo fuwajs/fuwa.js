@@ -9,6 +9,7 @@ class Request {
     constructor(msg) {
         this.author = new User_1.default(msg.author);
         this.message = { content: msg.content };
+        this.rawData = msg;
         this.guild = new Guild_1.default();
     }
 }

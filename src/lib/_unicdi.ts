@@ -16,7 +16,7 @@ export default {
                     Authorization: 'Bot ' + token,
                 },
             });
-            const chunks: any[] = [];
+            const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 resolve(JSON.parse(Buffer.concat(chunks).toString()));
@@ -32,6 +32,24 @@ export default {
                     'Content-Type': 'application/json',
                     Authorization: 'Bot ' + token,
                 },
+            });
+            const chunks = [];
+            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('end', () => {
+                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+            });
+        });
+    },
+    POST(path: string, token: string, data: string | Buffer): Promise<any> {
+        return new Promise(async (resolve) => {
+            const res = await http.request({
+                path: path,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bot ' + token,
+                },
+                body: data,
             });
             const chunks: any[] = [];
             res.body.on('data', (chunk) => chunks.push(chunk));

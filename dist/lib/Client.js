@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Request_1 = __importDefault(require("./Request"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
+const _unicdi_1 = __importDefault(require("./_unicdi"));
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 const Embed_1 = __importDefault(require("./Embed"));
@@ -137,6 +138,7 @@ class Client extends Emitter_1.default {
                     }
                 };
             };
+            this.token = token.toString();
             console.log(`Your Bot Token: ${token.toString()}`);
             this.connect(_DiscordAPI_1.discordAPI.gateway);
             this.op(_DiscordAPI_1.opCodes.hello, (data) => {
@@ -381,6 +383,15 @@ class Client extends Emitter_1.default {
         cred.d.presence.status = status.status || 'online';
         cred.d.presence.afk = status.afk || false;
         this.status = cred;
+    }
+    deleteMessages(amt, channelID) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token);
+            msgs.map(msg => msg.id).forEach((id) => __awaiter(this, void 0, void 0, function* () {
+                const del = yield _unicdi_1.default.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
+                console.log(del);
+            }));
+        });
     }
 }
 exports.default = Client;

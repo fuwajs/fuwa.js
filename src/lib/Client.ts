@@ -1,5 +1,6 @@
 import Request from './Request';
-import { discordAPI, opCodes, User } from './_DiscordAPI';
+import { discordAPI, Message, opCodes, User } from './_DiscordAPI';
+import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
@@ -102,6 +103,10 @@ class Client extends Emitter {
         { cb: commandCallback; options: commandOptions }[]
     > = new Map();
     protected middleware: commandCallback[] = [];
+    /**
+     * The Bot Token
+     */
+    token: string;
     /**
      * @param prefix The prefix for your bot
      */
@@ -210,7 +215,7 @@ class Client extends Emitter {
             }
         }
 
-
+        this.token = token.toString();
         console.log(`Your Bot Token: ${token.toString()}`);
 
         this.connect(discordAPI.gateway);
@@ -463,6 +468,17 @@ class Client extends Emitter {
         cred.d.presence.afk = status.afk || false;
 
         this.status = cred;
+    }
+    async deleteMessages(amt: number, channelID: string) {
+        const msgs: Array<Message> = await undici.GET(
+            `/api/v8/channels/${channelID}/messages?limit=${amt}`, 
+            this.token
+        );
+        
+        msgs.map(msg => msg.id).forEach(async id => {
+            const del = await undici.DELETE(`/api/v8/channels/${channelID}/${id}`, this.token);
+            console.log(del);
+        });
     }
 }
 

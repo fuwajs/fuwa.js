@@ -30,6 +30,11 @@ client.command('ping', (req, res) => {
     );
 });
 
+// Another command. This deletes messages via the 'deleteMessages' method
+client.command(['rm', 'delete'], (req, res) => {
+    client.deleteMessages(parseInt(req.args[0]), req.rawData.channel_id);
+})
+
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {
     const username = req.args[0] || 'octocat';

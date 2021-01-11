@@ -49,6 +49,24 @@ exports.default = {
             });
         }));
     },
+    POST(path, token, data) {
+        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+            const res = yield http.request({
+                path: path,
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bot ' + token,
+                },
+                body: data,
+            });
+            const chunks = [];
+            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('end', () => {
+                resolve(JSON.parse(Buffer.concat(chunks).toString()));
+            });
+        }));
+    },
     OTHER(method, path, token, data) {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
