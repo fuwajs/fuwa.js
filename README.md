@@ -1,6 +1,6 @@
 <div align="center">
     <img src="misc/Logo.png">
-    <p>The <b>new</b> way to create <em>progesssive</em> Discord bots.</p>
+    <p>The <b>new</b> way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
