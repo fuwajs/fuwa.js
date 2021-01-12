@@ -12,6 +12,7 @@
 - Express-like syntax
 - Lightweight (only **two** dependencies)
 - Fast
+- 
 # Quickstart
 This assumes you have already setup a discord bot application in Discord. See
 - [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
@@ -26,13 +27,12 @@ A file called index.js should be in your directory, open that in your IDE of cho
 ```js
 const { Client } = require('fuwa');
 
+const client = new Client(
+    '?' // Your bot prefix here
+);
+
 // replace with your bot token
 client.login('<your bot token>');
-
-const client = new Client(
-    /* Your prefix here */
-    '?'
-);
 
 client.on('READY', () => {
     console.log('I am alive!')

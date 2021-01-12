@@ -2,7 +2,6 @@ const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
-const { exec } = require('child_process');
 
 const client = new fuwa.Client('?', { debug: false });
 // Log the bot into discord
@@ -20,15 +19,19 @@ client.on('READY', () => {
 
 client.use((req, res, next) => {
     if (!req.author.bot) {
-        res.send('Your not a bot! 😎')
+        res.send('Your not a bot! :sunglasses:')
     }
     next();
 });
 
-// A basic 'ping' command. Responds with 'pong' in an embed.
+// A basic 'ping' command. Responds with 'pong' and
+// the latency (in milliseconds) within an embed.
 client.command('ping', (req, res) => {
+    console.log(Date.now());
     res.send(new fuwa.Embed()
         .setTitle('Pong')
+        .addField({ name: 'Latency', value: `${Date.now() - Date.parse(req.rawData.timestamp)}ms`})
+        .setDescription()
         .setColor(fuwa.Colors.rgb(13, 186, 120))
     );
 });
