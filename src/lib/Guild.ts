@@ -15,9 +15,9 @@ class Guild {
     afk_timeout: number;
     widget_enabled?: boolean;
     widget_channel_id?: string;
-
+    verification_level: number;
     description: string;
-    public_updates_channel_id: null;
+    public_updates_channel_id: string | null;
     large: boolean;
     features: any[];
     unavailable: boolean;
@@ -35,7 +35,7 @@ class Guild {
     max_video_channel_users: number;
     preferred_locale: string;
     rules_channel_id: null;
-    verification_level: number;
+
     roles: Role[];
     lazy: boolean;
     application_id: null;

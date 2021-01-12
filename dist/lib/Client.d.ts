@@ -116,7 +116,7 @@ declare class Client extends Emitter {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => // console.log ('Up and ready to go!'));
+     * cli.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]): this;

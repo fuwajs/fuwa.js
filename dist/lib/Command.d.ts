@@ -19,7 +19,11 @@ export interface commandOptions {
     /**
      * Description for your command.
      */
-    desc: string;
+    desc?: string;
+    /**
+     * Aliases for your command
+     */
+    aliases?: string[];
     /**
      * Command Arguments
      */

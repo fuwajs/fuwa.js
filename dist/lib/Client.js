@@ -113,26 +113,25 @@ class Client extends Emitter_1.default {
     command(name, cb, options) {
         const option = options || {
             desc: 'No description was provided',
+            aliases: Array.isArray(name) ? name.slice(1) : undefined
         };
-        if (Array.isArray(name)) {
-            name.forEach((key) => {
-                const commands = this.commands.get(key);
-                commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
-                this.commands.set(key, commands || [{ cb, options: option }]);
-            });
+        let defaultName = Array.isArray(name) ? name[0] : name;
+        let old = this.commands.get(defaultName);
+        let cmd = { cb, options: option };
+        if (old) {
+            old.push(cmd);
         }
         else {
-            const commands = this.commands.get(this.prefix + name);
-            commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
-            this.commands.set(name, commands || [{ cb, options: option }]);
+            old = [cmd];
         }
+        this.commands.set(defaultName, old);
         return this;
     }
     /**
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => // console.log ('Up and ready to go!'));
+     * cli.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
     on(event, cb) {
@@ -204,6 +203,10 @@ class Client extends Emitter_1.default {
             });
             this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
+                console.timeEnd('command-all');
+                console.time('command-all');
+                if (!msg.content)
+                    return;
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
                 if (typeof this.prefix === 'function') {
@@ -224,7 +227,7 @@ class Client extends Emitter_1.default {
                 let args = [];
                 const str = msg.content.split(' ');
                 const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-                console.log(str);
+                // console.log(str);
                 if (str[0][0] !== prefix && !a)
                     return;
                 args = str.slice(a ? 2 : 1);
@@ -245,6 +248,7 @@ class Client extends Emitter_1.default {
                 this.bot;
                 if (!this.middleware[0])
                     command[0].cb(req, res, next(req, res, command, 0));
+                console.timeEnd('command-all');
             }));
             //         this.ws.on('open', async function () {
             //             this.debug(`Connect to ${ discordAPI.gateway } `);
