@@ -136,24 +136,36 @@ class Client extends Emitter {
         if (
             options?.builtinCommands?.help === undefined ? true : options.builtinCommands.help
         ) {
-            this.command(['h', 'help'], (req, res) => {
+            this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed().setColor(Colors.blue);
                 if (req.args.length > 0) {
-                    const cmd = req.args[0];
-                    if (!this.commands.has(cmd)) {
+                    const cmdName = req.args[0];
+                    const cmd = this.commands.get(cmdName.toLowerCase())
+                    if (!cmd) {
                         res.send(embed.setColor(Colors.red)
                             .setTitle('Error')
-                            .setDescription(`${cmd} is not a valid command name.`)
+                            .setDescription(`${cmdName} is not a valid command name.`)
                         );
                         return;
+                    } else {
+                        const fields = [
+                            {
+                                name: 'Example',
+                                value: 'Soon'
+                            }
+                        ];
+                        if(cmd[0].options.aliases) {
+                            fields.push({ 
+                                name: 'Aliases', 
+                                value: `\`${cmd[0].options.aliases.join(', ')}\``
+                            });
+                        }
+                        embed
+                            .setTitle(`Help | ${cmdName}`)
+                            .setDescription(cmd[0].options.desc)
+                            .addFields(fields)
                     }
-                    embed.setTitle(`Help | ${cmd}`)
-                    embed.addField({
-                        name: 'Description', value: this.commands.get(cmd)[0].options.desc
-                    });
-                    embed.addField({
-                        name: 'Usage', value: 'Coming Soon!'
-                    });
+                    
                 } else {
                     embed.setTitle('Help | All')
                     embed.setThumbnail(
@@ -165,6 +177,7 @@ class Client extends Emitter {
                     });
                 }
                 res.send(embed);
+                next();
             }, { desc: 'Get help on the usage of a command.' });
         }
     }

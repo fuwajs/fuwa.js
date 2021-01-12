@@ -26,7 +26,7 @@ client.on('READY', () => {
 
 // A basic 'ping' command. Responds with 'pong' and
 // the latency (in milliseconds) within an embed.
-client.command('ping', (req, res) => {
+client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
@@ -38,7 +38,7 @@ client.command('ping', (req, res) => {
     );
 });
 
-client.command(['rm', 'delete'], (req, res) => {
+client.command(['delete', 'rm', 'purge'], (req, res) => {
     // The user probably wants to delete the command AND the message before.
     const amt = parseInt(req.args[0]) + 1;
     // Handle errors
@@ -55,7 +55,7 @@ client.command(['rm', 'delete'], (req, res) => {
 }, { desc: 'Remove messages.' });
 
 // More complex example command using the GitHub API
-client.command(['gh', 'github'], async (req, res) => {
+client.command(['github', 'gh'], async (req, res) => {
     const username = req.args[0] || 'octocat';
     const user = await (await
         // Fetch the github user's JSON code (as a string)

@@ -61,20 +61,32 @@ class Client extends Emitter_1.default {
             this.command(['h', 'help'], (req, res) => {
                 let embed = new Embed_1.default().setColor(Colors_1.default.blue);
                 if (req.args.length > 0) {
-                    const cmd = req.args[0];
-                    if (!this.commands.has(cmd)) {
+                    const cmdName = req.args[0];
+                    const cmd = this.commands.get(cmdName.toLowerCase());
+                    if (!cmd) {
                         res.send(embed.setColor(Colors_1.default.red)
                             .setTitle('Error')
-                            .setDescription(`${cmd} is not a valid command name.`));
+                            .setDescription(`${cmdName} is not a valid command name.`));
                         return;
                     }
-                    embed.setTitle(`Help | ${cmd}`);
-                    embed.addField({
-                        name: 'Description', value: this.commands.get(cmd)[0].options.desc
-                    });
-                    embed.addField({
-                        name: 'Usage', value: 'Coming Soon!'
-                    });
+                    else {
+                        const fields = [
+                            {
+                                name: 'Example',
+                                value: 'Soon'
+                            }
+                        ];
+                        if (cmd[0].options.aliases) {
+                            fields.push({
+                                name: 'Aliases',
+                                value: `\`${cmd[0].options.aliases.join(', ')}\``
+                            });
+                        }
+                        embed
+                            .setTitle(`Help | ${cmdName}`)
+                            .setDescription(cmd[0].options.desc)
+                            .addFields(fields);
+                    }
                 }
                 else {
                     embed.setTitle('Help | All');
