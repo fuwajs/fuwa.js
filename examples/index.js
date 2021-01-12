@@ -19,7 +19,7 @@ client.on('READY', () => {
 });
 
 client.use((req, res, next) => {
-    if(!req.author.bot) {
+    if (!req.author.bot) {
         res.send('Your not a bot! 😎')
     }
     next();
@@ -52,7 +52,7 @@ client.command(['rm', 'delete'], (req, res) => {
 // More complex example command using the GitHub API
 client.command(['gh', 'github'], async (req, res) => {
     const username = req.args[0] || 'octocat';
-    const user = await (await 
+    const user = await (await
         // Fetch the github user's JSON code (as a string)
         fetch(`https://api.github.com/users/${username}`))
         // Turn this string into a object we can use
@@ -63,7 +63,7 @@ client.command(['gh', 'github'], async (req, res) => {
             year: 'numeric', month: 'numeric', day: 'numeric',
             hour: '2-digit', minute: '2-digit'
         });
-    // Send a embed!
+    // Send an embed!
     res.send(new fuwa.Embed()
         // Set your embed title!
         .setTitle(`${user.name} @ GitHub`)

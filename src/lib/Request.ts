@@ -1,13 +1,12 @@
 import User from './User';
 import http from './_unicdi';
+import { Argument } from './Command';
 import Guild from './Guild';
 import { Message as MessageOptions, Guild as GuildOptions } from "./_DiscordAPI";
 
 type Author = {
     id: string
 }
-
-type Req = MessageOptions;
 class Request {
     readonly author: User;
     guild: Guild;
@@ -19,8 +18,9 @@ class Request {
      * An array of the arguments passed into your command
      */
     args: string[];
+
     constructor(msg: MessageOptions, token: string, cache: any) {
-      
+
         this.author = new User(msg.author);
         this.message = { content: msg.content };
         this.rawData = msg;

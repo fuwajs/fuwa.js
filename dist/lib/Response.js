@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Embed_1 = __importDefault(require("./Embed"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class Response {
     constructor(req, token) {
@@ -55,7 +56,7 @@ class Response {
                 this.data.content = content;
                 this.data.tts = false;
             }
-            else if (typeof content === 'object') {
+            else if (content instanceof Embed_1.default) {
                 if (content['color'] === null) {
                     delete content['color'];
                     throw new TypeError(`content: ${content} is missing member 'color'`);

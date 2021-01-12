@@ -8,8 +8,8 @@
         "fuwa",
         "fuwajs",
         "discord",
-        "bots",
-        "discordapi"
+        "discordapi",
+        "discordbot"
     ],
     "scripts": {
         "docs": "npx typedoc --options ./docs.js",

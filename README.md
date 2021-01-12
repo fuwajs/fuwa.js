@@ -1,6 +1,6 @@
-# Fuwa.js
-<br/>
 <div align="center">
+    <img src="misc/Logo.png">
+    <p>The <b>new</b> way to create <em>progesssive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
@@ -8,7 +8,11 @@
     </p>
 </div>
 
-## Quickstart
+# Highlights
+- Express-like syntax
+- Lightweight (only **two** dependencies)
+- Fast
+# Quickstart
 This assumes you have already setup a discord bot application in Discord. See
 - [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
 - [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
@@ -20,7 +24,7 @@ $ echo > index.js
 ```
 A file called index.js should be in your directory, open that in your IDE of choice and type
 ```js
-const { Client } = require('fuwa.js');
+const { Client } = require('fuwa');
 
 // replace with your bot token
 client.login('<your bot token>');
@@ -35,7 +39,7 @@ client.on('READY', () => {
 );
 
 client.command(['hi', 'hello'], (req, res) => { 
-    res.send(`Hello there my name is ${client.bot.username}!`); 
+    res.send(`Hello there, my name is ${client.bot.username}!`); 
 });
 
 ```

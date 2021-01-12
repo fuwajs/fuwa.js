@@ -18,6 +18,7 @@ const _unicdi_1 = __importDefault(require("./_unicdi"));
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 const Embed_1 = __importDefault(require("./Embed"));
+const Colors_1 = __importDefault(require("./Colors"));
 var statusCode;
 (function (statusCode) {
     statusCode[statusCode["playing"] = 0] = "playing";
@@ -27,10 +28,11 @@ var statusCode;
     statusCode[statusCode["competing"] = 4] = "competing";
 })(statusCode || (statusCode = {}));
 /**
- * Client Class
+ * The Client Class
+ * @description The client class is the main starting point of your discord bot.
  * ```typescript
  * const fuwa = require('fuwa.js'); // Import Fuwa library
- * const cli = new Fuwa.Client('?'); // Init The Client
+ * const client = new fuwa.Client('?'); // Create and initialize a Client
  * ```
  */
 class Client extends Emitter_1.default {
@@ -57,16 +59,33 @@ class Client extends Emitter_1.default {
         // TODO: Make it less bootleg 
         if (((_a = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) === undefined ? true : options.builtinCommands.help) {
             this.command(['h', 'help'], (req, res) => {
-                let embed = new Embed_1.default();
-                embed.setColor('#57c7ff')
-                    .setTitle('Help')
-                    .setThumbnail('https://cdn.discordapp.com/avatars/'
-                    + `${this.bot.id}/${this.bot.avatar}.png`);
-                this.commands.forEach((cmd, name) => {
-                    embed.addField({ name, value: cmd[0].options.desc });
-                });
+                let embed = new Embed_1.default().setColor(Colors_1.default.blue);
+                if (req.args.length > 0) {
+                    const cmd = req.args[0];
+                    if (!this.commands.has(cmd)) {
+                        res.send(embed.setColor(Colors_1.default.red)
+                            .setTitle('Error')
+                            .setDescription(`${cmd} is not a valid command name.`));
+                        return;
+                    }
+                    embed.setTitle(`Help | ${cmd}`);
+                    embed.addField({
+                        name: 'Description', value: this.commands.get(cmd)[0].options.desc
+                    });
+                    embed.addField({
+                        name: 'Usage', value: 'Coming Soon!'
+                    });
+                }
+                else {
+                    embed.setTitle('Help | All');
+                    embed.setThumbnail('https://cdn.discordapp.com/avatars/'
+                        + `${this.bot.id}/${this.bot.avatar}.png`);
+                    this.commands.forEach((cmd, name) => {
+                        embed.addField({ name, value: cmd[0].options.desc });
+                    });
+                }
                 res.send(embed);
-            });
+            }, { desc: 'Get help on the usage of a command.' });
         }
     }
     debug(bug) {

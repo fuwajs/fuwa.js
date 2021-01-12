@@ -44,7 +44,7 @@ class Response {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
-        } else if (typeof content === 'object') {
+        } else if (content instanceof Embed) {
             if (content['color'] === null) {
                 delete content['color'];
                 throw new TypeError(`content: ${content} is missing member 'color'`);

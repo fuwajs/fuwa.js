@@ -1,5 +1,23 @@
 import Request from './Request';
 import Response from './Response';
+
+export class Argument<T> {
+    /**
+     * Default value of the argument
+     */
+    readonly defaultValue: T;
+
+    /**
+     * A description of the argument
+     */
+    readonly desc: string;
+
+    constructor({ defaultValue, desc }: Argument<T>) {
+        this.defaultValue = defaultValue;
+        this.desc = desc;
+    }
+}
+
 /**
  * Options for your command
  * @interface
@@ -12,16 +30,7 @@ export interface commandOptions {
     /**
      * Command Arguments
      */
-    args?: {
-        /**
-         * Length of your argument (including spaces).
-         */
-        length: number;
-        /**
-         * Default value for argument if one is not passed.
-         */
-        default: string;
-    }[];
+    args?: Map<string, Argument<unknown>>;
 }
 
 /**
