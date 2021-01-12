@@ -1,3 +1,4 @@
+import Colors from './Colors';
 import Embed from './Embed';
 import { Message } from './_DiscordAPI';
 import undici from './_unicdi';
@@ -13,19 +14,20 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
-            if (!content['color']) {
-                delete content['color'];
-                throw new TypeError(`content: ${content} is missing member 'color'`);
+            if (!content.color) {
+                content.color = Colors.rgb(
+                    Math.random() * 255, Math.random() * 255, Math.random() * 255
+                );
             }
             if (typeof content.color === 'string') {
                 content.color = parseInt(
-                    '0x' + (content.color.split('#')[1] || 'ffffff')
+                    '0x' + (content?.color?.split('#')[1] || 'ffffff')
                 );
             }
             this.data.embed = content;
             this.data.tts = false;
         } else {
-            throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
 
         return await undici.POST(
@@ -44,9 +46,10 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
-            if (!content['color']) {
-                delete content['color'];
-                throw new TypeError(`content: ${content} is missing member 'color'`);
+            if (!content.color) {
+                content.color = Colors.rgb(
+                    Math.random() * 255, Math.random() * 255, Math.random() * 255
+                );
             }
             if (typeof content.color === 'string') {
                 content.color = parseInt(
