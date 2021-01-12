@@ -111,18 +111,11 @@ class Client extends Emitter_1.default {
      * });
      */
     command(name, cb, options) {
-<<<<<<< HEAD
         const option = {
             desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
             aliases: Array.isArray(name) ? name.slice(1) : []
         };
         console.log(option);
-=======
-        const option = options || {
-            desc: 'No description was provided',
-            aliases: Array.isArray(name) ? name.slice(1) : undefined
-        };
->>>>>>> 5e3faa53733b13bedaa01fdf2e2966c311578059
         let defaultName = Array.isArray(name) ? name[0] : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
@@ -211,8 +204,6 @@ class Client extends Emitter_1.default {
             });
             this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
-                console.timeEnd('command-all');
-                console.time('command-all');
                 if (!msg.content)
                     return;
                 const res = new Response_1.default(msg, token.toString());
@@ -267,7 +258,6 @@ class Client extends Emitter_1.default {
                 this.bot;
                 if (!this.middleware[0])
                     command[0].cb(req, res, next(req, res, command, 0));
-                console.timeEnd('command-all');
             }));
             //         this.ws.on('open', async function () {
             //             this.debug(`Connect to ${ discordAPI.gateway } `);

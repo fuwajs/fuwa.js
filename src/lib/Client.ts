@@ -318,7 +318,6 @@ class Client extends Emitter {
             commandName = (a ? str[1] : str[0])
                 .replace(prefix, '')
                 .toLowerCase();
-<<<<<<< HEAD
             let command = [...this.commands.entries()].find(v => {
                 if(
                     v[0] === commandName 
@@ -331,9 +330,6 @@ class Client extends Emitter {
             })[1];
             console.log(command)
 
-=======
-            const command = this.commands.get(commandName);
->>>>>>> 5e3faa53733b13bedaa01fdf2e2966c311578059
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
