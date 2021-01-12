@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="misc/Logo.png">
+    <img src="misc/Logo.svg" width="512" height="512">
     <p>The <b>new</b> way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
