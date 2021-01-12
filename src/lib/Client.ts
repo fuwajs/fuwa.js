@@ -192,10 +192,11 @@ class Client extends Emitter {
      * });
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions) {
-        const option: commandOptions = options || {
-            desc: 'No description was provided',
-            aliases: Array.isArray(name) ? name.slice(1) : undefined
+        const option: commandOptions = {
+            desc: options?.desc||'No description was provided',
+            aliases: Array.isArray(name) ? name.slice(1) : []
         };
+        console.log(option)
         let defaultName = Array.isArray(name) ? name[0] : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option }
@@ -316,8 +317,18 @@ class Client extends Emitter {
             commandName = (a ? str[1] : str[0])
                 .replace(prefix, '')
                 .toLowerCase();
+            let command = [...this.commands.entries()].find(v => {
+                if(
+                    v[0] === commandName 
+                 || v[1][0]
+                    .options
+                    .aliases
+                    ?.includes(commandName)) {
+                        return true;
+                    } else return false;
+            })[1];
+            console.log(command)
 
-            const command = this.commands.get(commandName);
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));

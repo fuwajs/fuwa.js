@@ -29,6 +29,7 @@ export interface commandOptions {
     desc?: string;
     /**
      * Aliases for your command
+     * @private
      */
     aliases?: string[]
     /**

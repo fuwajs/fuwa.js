@@ -111,28 +111,28 @@ class Client extends Emitter_1.default {
      * });
      */
     command(name, cb, options) {
-        const option = options || {
-            desc: 'No description was provided',
+        const option = {
+            desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
+            aliases: Array.isArray(name) ? name.slice(1) : []
         };
-        if (Array.isArray(name)) {
-            name.forEach((key) => {
-                const commands = this.commands.get(key);
-                commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
-                this.commands.set(key, commands || [{ cb, options: option }]);
-            });
+        console.log(option);
+        let defaultName = Array.isArray(name) ? name[0] : name;
+        let old = this.commands.get(defaultName);
+        let cmd = { cb, options: option };
+        if (old) {
+            old.push(cmd);
         }
         else {
-            const commands = this.commands.get(this.prefix + name);
-            commands === null || commands === void 0 ? void 0 : commands.push({ cb, options: option });
-            this.commands.set(name, commands || [{ cb, options: option }]);
+            old = [cmd];
         }
+        this.commands.set(defaultName, old);
         return this;
     }
     /**
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => // console.log ('Up and ready to go!'));
+     * cli.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
     on(event, cb) {
@@ -231,7 +231,18 @@ class Client extends Emitter_1.default {
                 commandName = (a ? str[1] : str[0])
                     .replace(prefix, '')
                     .toLowerCase();
-                const command = this.commands.get(commandName);
+                let command = [...this.commands.entries()].find(v => {
+                    var _a;
+                    if (v[0] === commandName
+                        || ((_a = v[1][0]
+                            .options
+                            .aliases) === null || _a === void 0 ? void 0 : _a.includes(commandName))) {
+                        return true;
+                    }
+                    else
+                        return false;
+                })[1];
+                console.log(command);
                 if (!command)
                     return;
                 const _ = [];
