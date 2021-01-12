@@ -1,5 +1,6 @@
 import Client from './lib/Client';
 import Embed from './lib/Embed';
+import { Argument } from './lib/Command';
 declare const _default: {
     Colors: {
         rgb(r: number, g: number, b: number): string;
@@ -26,6 +27,7 @@ declare const _default: {
     };
     Client: typeof Client;
     Embed: typeof Embed;
+    Argument: typeof Argument;
     Colours: {
         rgb(r: number, g: number, b: number): string;
         mind: string;

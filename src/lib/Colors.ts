@@ -11,7 +11,7 @@ export default {
         );
     },
     mind: '#3EB489',
-    white: '#FFFFFF',
+    white: '#fffff',
     snow: '#FFFAFA',
     aliceBlue: '#f0f8ff',
     antiqueWhite: '#faebd7',
@@ -22,7 +22,7 @@ export default {
     bisque: '#ffe4c4',
     black: '#000000',
     blanchedAlmond: '#ffebcd',
-    blue: '#0000ff',
+    blue: '#57c7ff',
     blueViolet: '#8a2be2',
     brown: '#a52a2a',
     lightGreen: '#5af78e',

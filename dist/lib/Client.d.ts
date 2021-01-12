@@ -66,10 +66,11 @@ export interface clientOptions {
     };
 }
 /**
- * Client Class
+ * The Client Class
+ * @description The client class is the main starting point of your discord bot.
  * ```typescript
  * const fuwa = require('fuwa.js'); // Import Fuwa library
- * const cli = new Fuwa.Client('?'); // Init The Client
+ * const client = new fuwa.Client('?'); // Create and initialize a Client
  * ```
  */
 declare class Client extends Emitter {
