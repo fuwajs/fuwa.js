@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const fetch = require('node-fetch');
 
-const client = new fuwa.Client('?', { debug: false });
+const client = new fuwa.Client(req => '$', { debug: false });
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 

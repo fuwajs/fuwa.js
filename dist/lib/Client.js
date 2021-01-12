@@ -58,7 +58,7 @@ class Client extends Emitter_1.default {
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
         if (((_a = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) === undefined ? true : options.builtinCommands.help) {
-            this.command(['h', 'help'], (req, res) => {
+            this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed_1.default().setColor(Colors_1.default.blue);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
@@ -97,6 +97,7 @@ class Client extends Emitter_1.default {
                     });
                 }
                 res.send(embed);
+                next();
             }, { desc: 'Get help on the usage of a command.' });
         }
     }
@@ -221,7 +222,7 @@ class Client extends Emitter_1.default {
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
                 if (typeof this.prefix === 'function') {
-                    yield this.prefix(new Request_1.default(msg, this.token, this.cache));
+                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));

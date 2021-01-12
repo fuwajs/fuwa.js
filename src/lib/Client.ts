@@ -308,7 +308,7 @@ class Client extends Emitter {
             let prefix = '';
 
             if (typeof this.prefix === 'function') {
-                await this.prefix(new Request(msg, this.token, this.cache))
+                prefix = await this.prefix(new Request(msg, this.token, this.cache))
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
