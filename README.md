@@ -12,7 +12,8 @@
 - Express-like syntax
 - Lightweight (only **two** dependencies)
 - Fast
-- 
+- Built-In Command Parser
+
 # Quickstart
 This assumes you have already setup a discord bot application in Discord. See
 - [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
