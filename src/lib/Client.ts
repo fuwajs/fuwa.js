@@ -15,7 +15,6 @@ enum statusCode {
     custom,
     competing
 }
-// export type status = ;
 /**
  * status options for bot
  */
@@ -176,25 +175,20 @@ class Client extends Emitter {
     command(name: string | string[], cb: commandCallback, options?: commandOptions) {
         const option: commandOptions = options || {
             desc: 'No description was provided',
+            aliases: Array.isArray(name) ? name.slice(1) : undefined
         };
-        if (Array.isArray(name)) {
-            name.forEach((key) => {
-                const commands = this.commands.get(key);
-                commands?.push({ cb, options: option });
-                this.commands.set(key, commands || [{ cb, options: option }]);
-            });
-        } else {
-            const commands = this.commands.get(this.prefix + name);
-            commands?.push({ cb, options: option });
-            this.commands.set(name, commands || [{ cb, options: option }]);
-        }
+        let defaultName = Array.isArray(name) ? name[0] : name;
+        let old = this.commands.get(defaultName);
+        let cmd = { cb, options: option }
+        if(old) { old.push(cmd) } else { old = [cmd] }
+        this.commands.set(defaultName, old);
         return this;
     }
     /**
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * cli.on('ready', () => // console.log ('Up and ready to go!'));
+     * cli.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
     on<T extends keyof Events>(event: T, cb: Events[T]) {
