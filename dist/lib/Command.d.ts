@@ -22,7 +22,10 @@ export interface commandOptions {
     desc?: string;
     /**
      * Aliases for your command
+<<<<<<< HEAD
      * @private
+=======
+>>>>>>> 5e3faa53733b13bedaa01fdf2e2966c311578059
      */
     aliases?: string[];
     /**

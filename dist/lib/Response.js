@@ -29,8 +29,8 @@ class Response {
                 this.data.content = content;
                 this.data.tts = false;
             }
-            else if (typeof content === 'object') {
-                if (content['color'] === null) {
+            else if (content instanceof Embed_1.default) {
+                if (!content['color']) {
                     delete content['color'];
                     throw new TypeError(`content: ${content} is missing member 'color'`);
                 }
@@ -43,7 +43,7 @@ class Response {
             else {
                 throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
             }
-            return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
+            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
         });
     }
     /**
@@ -57,7 +57,7 @@ class Response {
                 this.data.tts = false;
             }
             else if (content instanceof Embed_1.default) {
-                if (content['color'] === null) {
+                if (!content['color']) {
                     delete content['color'];
                     throw new TypeError(`content: ${content} is missing member 'color'`);
                 }
@@ -68,7 +68,7 @@ class Response {
                 this.data.tts = false;
             }
             else {
-                throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
+                throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
             return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
         });

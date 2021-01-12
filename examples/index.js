@@ -17,20 +17,22 @@ client.on('READY', () => {
     console.log(`Hello, my name is ${client.bot.username}!`)
 });
 
-client.use((req, res, next) => {
-    if (!req.author.bot) {
-        res.send('Your not a bot! :sunglasses:')
-    }
-    next();
-});
+// client.use((req, res, next) => {
+//     if (!req.author.bot) {
+//         res.send('Your not a bot! :sunglasses:')
+//     }
+//     next();
+// });
 
 // A basic 'ping' command. Responds with 'pong' and
 // the latency (in milliseconds) within an embed.
 client.command('ping', (req, res) => {
-    console.log(Date.now());
+    const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
-        .addField({ name: 'Latency', value: `${Date.now() - Date.parse(req.rawData.timestamp)}ms`})
+        .addField({
+            name: 'Latency', value: `${Date.now() - timestamp}ms`
+        })
         .setDescription()
         .setColor(fuwa.Colors.rgb(13, 186, 120))
     );
@@ -90,4 +92,3 @@ client.command(['gh', 'github'], async (req, res) => {
         .setTimestamp()
     );
 }, { desc: 'Get GitHub user statistics.' }); // Set the help message
-

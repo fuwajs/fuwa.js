@@ -12,8 +12,8 @@ class Response {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
-        } else if (typeof content === 'object') {
-            if (content['color'] === null) {
+        } else if (content instanceof Embed) {
+            if (!content['color']) {
                 delete content['color'];
                 throw new TypeError(`content: ${content} is missing member 'color'`);
             }
@@ -28,8 +28,7 @@ class Response {
             throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
         }
 
-        return await undici.OTHER(
-            'POST',
+        return await undici.POST(
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
@@ -45,7 +44,7 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
-            if (content['color'] === null) {
+            if (!content['color']) {
                 delete content['color'];
                 throw new TypeError(`content: ${content} is missing member 'color'`);
             }
@@ -57,7 +56,7 @@ class Response {
             this.data.embed = content;
             this.data.tts = false;
         } else {
-            throw new TypeError(`Expected type 'string | EmbedOptions' instead found ${typeof content}`);
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
         return await undici.OTHER(
             'POST',

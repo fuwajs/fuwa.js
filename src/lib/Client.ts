@@ -200,7 +200,7 @@ class Client extends Emitter {
         let defaultName = Array.isArray(name) ? name[0] : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option }
-        if(old) { old.push(cmd) } else { old = [cmd] }
+        if (old) { old.push(cmd) } else { old = [cmd] }
         this.commands.set(defaultName, old);
         return this;
     }
@@ -290,9 +290,10 @@ class Client extends Emitter {
         });
         this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
         this.event('MESSAGE_CREATE', async (msg) => {
-
+            if (!msg.content) return;
             const res = new Response(msg, token.toString());
             let prefix = '';
+
             if (typeof this.prefix === 'function') {
                 await this.prefix(new Request(msg, this.token, this.cache))
             } else if (Array.isArray(this.prefix)) {
@@ -310,13 +311,14 @@ class Client extends Emitter {
             let args: string[] = [];
             const str = msg.content.split(' ');
             const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-            console.log(str);
+            // console.log(str);
             if (str[0][0] !== prefix && !a) return;
 
             args = str.slice(a ? 2 : 1);
             commandName = (a ? str[1] : str[0])
                 .replace(prefix, '')
                 .toLowerCase();
+<<<<<<< HEAD
             let command = [...this.commands.entries()].find(v => {
                 if(
                     v[0] === commandName 
@@ -329,6 +331,9 @@ class Client extends Emitter {
             })[1];
             console.log(command)
 
+=======
+            const command = this.commands.get(commandName);
+>>>>>>> 5e3faa53733b13bedaa01fdf2e2966c311578059
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
