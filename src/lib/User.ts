@@ -19,7 +19,7 @@ export class User implements UserOptions {
         this.username = data.username;
         this.discriminator = data.discriminator;
         this.bot = data.bot;
-        this.avatar = data.avatar;
+        this.avatar = `https://cdn.discordapp.com/avatars/${this.id}/${data.avatar}.png`;
         this.verified = data.verified;
         this.mfa_enabled = data.mfa_enabled;
         this.flags = data.flags;

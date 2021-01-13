@@ -28,6 +28,7 @@ client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
+        .setAuthor(req.author.username, { icon: req.author.avatar })
         .addField({
             name: 'Latency', value: `${Date.now() - timestamp}ms`
         })
@@ -43,6 +44,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
             .setTitle('Invalid argument(s).')
+            .setAuthor(req.author.username, { icon: req.author.avatar })
             .setDescription('Expected a number for the 1st argument.')
             .addField({ name: 'Usage', value: 'rm <amt>' })
             .setColor(fuwa.Colors.red)
@@ -70,6 +72,8 @@ client.command(['github', 'gh'], async (req, res) => {
     res.reply(new fuwa.Embed()
         // Set your embed title!
         .setTitle(`${user.name} @ GitHub`)
+        // Set the author of the message
+        .setAuthor(req.author.username, { icon: req.author.avatar })
         // Url to the title,
         .setUrl(user.html_url)
         // User's bio
@@ -101,7 +105,7 @@ client.command('logout', (req, res) => {
     // wait until we have sent the logout message
     res.send(new fuwa.Embed()
         .setTitle('Logging Out')
-        .setFooter(``)
+        .setAuthor(req.author.username, { icon: req.author.avatar })
         .setColor(fuwa.Colors.red)
         .setTimestamp()
     ).then(client.logout);

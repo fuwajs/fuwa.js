@@ -26,6 +26,7 @@ declare class Embed {
     };
     protected author?: {
         proxy_icon_url: string;
+        icon_url: string;
         url: string;
         name: string;
     };
@@ -77,7 +78,7 @@ declare class Embed {
      * ```
      */
     setFooter(footerText: string, opts?: {
-        iconUrl?: string;
+        icon?: string;
         proxyIconUrl?: string;
     } | undefined): this;
     /**
@@ -92,6 +93,7 @@ declare class Embed {
      * ```
      */
     setAuthor(name: string, opts?: {
+        icon: string;
         url?: string;
         proxyIconUrl?: string;
     }): this;

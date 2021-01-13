@@ -88,7 +88,7 @@ class Embed {
     setFooter(footerText, opts) {
         this.footer = {
             text: footerText,
-            icon_url: opts === null || opts === void 0 ? void 0 : opts.iconUrl,
+            icon_url: opts === null || opts === void 0 ? void 0 : opts.icon,
             proxy_icon_url: opts === null || opts === void 0 ? void 0 : opts.proxyIconUrl,
         };
         return this;
@@ -108,6 +108,7 @@ class Embed {
         this.author = {
             name: name,
             url: opts.url,
+            icon_url: opts.icon,
             proxy_icon_url: opts.proxyIconUrl,
         };
         return this;

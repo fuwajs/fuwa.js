@@ -135,7 +135,9 @@ class Client extends Emitter {
         // TODO: Make it less bootleg 
         if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
-                let embed = new Embed().setColor(Colors.blue);
+                let embed = new Embed()
+                .setColor(Colors.blue)
+                .setThumbnail(this.bot.avatar);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
                     const cmd = this.commands.get(cmdName.toLowerCase())
@@ -166,10 +168,6 @@ class Client extends Emitter {
 
                 } else {
                     embed.setTitle('Help | All')
-                    embed.setThumbnail(
-                        'https://cdn.discordapp.com/avatars/'
-                        + `${this.bot.id}/${this.bot.avatar}.png`
-                    );
                     this.commands.forEach((cmd, name) => {
                         embed.addField({ name, value: cmd[0].options.desc })
                     });
