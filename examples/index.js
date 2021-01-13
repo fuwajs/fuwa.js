@@ -18,9 +18,6 @@ client.on('READY', () => {
 
 // This function will be ran before every other command
 client.use((req, res, next) => {
-    if (!req.author.bot) {
-        res.send('Your not a bot! :sunglasses:')
-    }
     res.send(JSON.stringify(req.reactions));
     next();
 });
@@ -96,18 +93,18 @@ client.command(['github', 'gh'], async (req, res) => {
 
 // In reailty you would **not** want a command like this
 // This is for demonstration purposes only
-client.command('logout', async (req, res) => {
+client.command('logout', (req, res) => {
     const now = new Date(Date.now()).toLocaleTimeString([], {
         year: 'numeric', month: 'numeric', day: 'numeric',
         hour: '2-digit', minute: '2-digit'
     });
     // wait until we have sent the logout message
-    await res.send(new fuwa.Embed()
+    res.send(new fuwa.Embed()
         .setTitle('Logging Out')
         .setFooter(``)
+        .setColor(fuwa.Colors.red)
         .setTimestamp()
-    );
-    client.logout(true);
+    ).then(client.logout);
 }, { desc: 'Log the bot out of discord.' });
 
 client.command('reply', (req, res) => {
