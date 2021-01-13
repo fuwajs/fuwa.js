@@ -7,7 +7,7 @@ const User_1 = __importDefault(require("./User"));
 const Guild_1 = __importDefault(require("./Guild"));
 class Request {
     constructor(msg, token, cache) {
-        this.author = new User_1.default(msg.author);
+        this.author = new User_1.default(msg.author, token);
         this.message = { content: msg.content };
         this.rawData = msg;
         this.reactions = msg.reactions;

@@ -176,7 +176,7 @@ declare class Embed {
      * ```
      */
     setProvider(name: string, opts?: {
-        url: string;
+        url?: string;
     }): this;
     /**
      * @param url url for video in embed
@@ -187,9 +187,9 @@ declare class Embed {
      * ```
      */
     setVideo(url: string, opts?: {
-        height: number;
-        width: number;
-        proxyUrl: string;
+        height?: number;
+        width?: number;
+        proxyUrl?: string;
     }): this;
 }
 export default Embed;

@@ -1,5 +1,6 @@
 import Request from './Request';
-import { discordAPI, Message, opCodes, User, Guild } from './_DiscordAPI';
+import { discordAPI, Message, opCodes, Guild } from './_DiscordAPI';
+import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
@@ -283,7 +284,8 @@ class Client extends Emitter {
 
         this.event('READY', (data) => {
             this.sessionId = data.session_id;
-            this.bot = data.user;
+            this.bot = new User(data.user, token.toString());
+            data.guilds.forEach(g => g.unavailable ? '' : this.cache.guilds.set(g.id, g))
             const ready = this.events.get('READY');
             if (ready) ready();
         });

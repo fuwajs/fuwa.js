@@ -1,4 +1,7 @@
-import { User as UserOptions } from './_DiscordAPI';
+import Embed from './Embed';
+import Colors from './Colors';
+import { Channel, Message, User as UserOptions } from './_DiscordAPI';
+import undici from './_unicdi';
 export class User implements UserOptions {
     id: string;
     username: string;
@@ -14,7 +17,7 @@ export class User implements UserOptions {
     premium_type?: number;
     public_flags?: number;
 
-    constructor(data: UserOptions) {
+    constructor(data: UserOptions, private token: string) {
         this.id = data.id;
         this.username = data.username;
         this.discriminator = data.discriminator;
@@ -24,6 +27,39 @@ export class User implements UserOptions {
         this.mfa_enabled = data.mfa_enabled;
         this.flags = data.flags;
         this.email = data.email;
+    }
+    async dm(content: string | Embed): Promise<Message> {
+        const data: any = {};
+        data.recipient_id = this.id;
+        if (typeof content === 'string') { // Just a normal message
+            data.content = content;
+            data.tts = false;
+        } else if (content instanceof Embed) {
+            if (!content.color) {
+                content.color = Colors.rgb(
+                    Math.random() * 255, Math.random() * 255, Math.random() * 255
+                );
+            }
+            if (typeof content.color === 'string') {
+                content.color = parseInt(
+                    '0x' + (content?.color?.split('#')[1] || 'ffffff')
+                );
+            }
+            data.embed = content;
+            data.tts = false;
+        } else {
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+        }
+        const dm: Channel = JSON.parse(await undici.POST(
+            '/api/v8/users/@me/channels', 
+            this.token, 
+            JSON.stringify({ recipient_id: this.id })));
+
+        return JSON.parse(await undici.POST(
+            `/api/v8/channels/${dm.id}/messages`,
+            this.token,
+            JSON.stringify(data)
+        ));
     }
 }
 

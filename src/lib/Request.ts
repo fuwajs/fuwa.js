@@ -22,7 +22,7 @@ class Request {
 
     constructor(msg: MessageOptions, token: string, cache: any) {
 
-        this.author = new User(msg.author);
+        this.author = new User(msg.author, token);
         this.message = { content: msg.content };
         this.rawData = msg;
         this.reactions = msg.reactions;

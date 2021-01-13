@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import Request from './Request';
-import { User, Guild } from './_DiscordAPI';
+import { Guild } from './_DiscordAPI';
+import User from './User';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
