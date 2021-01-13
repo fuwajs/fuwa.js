@@ -25,6 +25,7 @@ $ npm init -y
 $ npm i Fuwajs/Fuwa.js
 $ echo > index.js
 ```
+
 A file called index.js should be in your directory, open that in your IDE of choice and type
 ```js
 const fuwa = require('fuwa.js');
@@ -33,9 +34,7 @@ const client = new fuwa.Client('?'); // Your bot prefix here
 
 
 
-client.on('READY', () => {
-    console.log('I am alive!');
-});
+client.on('READY', () => console.log('I am alive!') );
 
 client.command(['hi', 'hello'], (req, res) => { 
     res.send(`Hello there, my name is ${client.bot.username}!`); 

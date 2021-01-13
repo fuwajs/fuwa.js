@@ -18,9 +18,6 @@ client.on('READY', () => {
 
 // This function will be ran before every other command
 client.use((req, res, next) => {
-    if (!req.author.bot) {
-        res.send('Your not a bot! :sunglasses:')
-    }
     res.send(JSON.stringify(req.reactions));
     next();
 });
@@ -31,6 +28,7 @@ client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
+        .setAuthor(req.author.username, { icon: req.author.avatar })
         .addField({
             name: 'Latency', value: `${Date.now() - timestamp}ms`
         })
@@ -46,6 +44,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
             .setTitle('Invalid argument(s).')
+            .setAuthor(req.author.username, { icon: req.author.avatar })
             .setDescription('Expected a number for the 1st argument.')
             .addField({ name: 'Usage', value: 'rm <amt>' })
             .setColor(fuwa.Colors.red)
@@ -73,6 +72,8 @@ client.command(['github', 'gh'], async (req, res) => {
     res.reply(new fuwa.Embed()
         // Set your embed title!
         .setTitle(`${user.name} @ GitHub`)
+        // Set the author of the message
+        .setAuthor(req.author.username, { icon: req.author.avatar })
         // Url to the title,
         .setUrl(user.html_url)
         // User's bio
@@ -96,18 +97,18 @@ client.command(['github', 'gh'], async (req, res) => {
 
 // In reailty you would **not** want a command like this
 // This is for demonstration purposes only
-client.command('logout', async (req, res) => {
+client.command('logout', (req, res) => {
     const now = new Date(Date.now()).toLocaleTimeString([], {
         year: 'numeric', month: 'numeric', day: 'numeric',
         hour: '2-digit', minute: '2-digit'
     });
     // wait until we have sent the logout message
-    await res.send(new fuwa.Embed()
+    res.send(new fuwa.Embed()
         .setTitle('Logging Out')
-        .setFooter(``)
+        .setAuthor(req.author.username, { icon: req.author.avatar })
+        .setColor(fuwa.Colors.red)
         .setTimestamp()
-    );
-    client.logout(true);
+    ).then(client.logout);
 }, { desc: 'Log the bot out of discord.' });
 
 client.command('reply', (req, res) => {

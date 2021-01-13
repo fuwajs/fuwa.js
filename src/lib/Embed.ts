@@ -32,6 +32,7 @@ class Embed {
     };
     protected author?: {
         proxy_icon_url: string;
+        icon_url: string;
         url: string;
         name: string;
     };
@@ -120,10 +121,10 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footerText: string, opts?: { iconUrl?: string, proxyIconUrl?: string } | undefined): this {
+    setFooter(footerText: string, opts?: { icon?: string, proxyIconUrl?: string } | undefined): this {
         this.footer = {
             text: footerText,
-            icon_url: opts?.iconUrl,
+            icon_url: opts?.icon,
             proxy_icon_url: opts?.proxyIconUrl,
         };
         return this;
@@ -140,10 +141,11 @@ class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name: string, opts?: { url?: string; proxyIconUrl?: string }): this {
+    setAuthor(name: string, opts?: { icon: string, url?: string; proxyIconUrl?: string }): this {
         this.author = {
             name: name,
             url: opts.url,
+            icon_url: opts.icon,
             proxy_icon_url: opts.proxyIconUrl,
         };
         return this;
