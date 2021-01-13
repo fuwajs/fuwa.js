@@ -82,6 +82,29 @@ exports.default = {
             });
         }));
     },
+    PUT(path, token, data) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            const res = yield http.request({
+                path: '/api/v8' + path,
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bot ' + token,
+                },
+                body: data,
+            });
+            const chunks = [];
+            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('end', () => {
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                }
+                catch (error) {
+                    reject(error);
+                }
+            });
+        }));
+    },
     OTHER(method, path, token, data) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({

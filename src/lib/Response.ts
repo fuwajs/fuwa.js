@@ -4,7 +4,7 @@ import { Message } from './_DiscordAPI';
 import undici from './_unicdi';
 
 class Response {
-    protected data: any = {};
+    protected data: Message | any = {};
     constructor(private req: Message, private token: string) { }
     /**
      * @param content The message to send. Can be a message or an Embed
@@ -35,7 +35,7 @@ class Response {
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
-        );
+        ).catch(e => { console.error(e); } );
     }
 
     /**
@@ -63,12 +63,21 @@ class Response {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        return await undici.OTHER(
-            'POST',
+        return await undici.POST(
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
-        );
+        ).catch(e => { console.error(e); });
     }
+
+    async react(emoji: string): Promise<any> {
+        return await undici.PUT(
+            `/channels/${this.req.channel_id}/messages/${this.req.id}`
+            + `/reactions/${encodeURI(emoji)}/@me`,
+            this.token,
+            encodeURI(emoji)
+        ).catch(e => { console.error(e); });
+    }
+
 }
 export default Response;

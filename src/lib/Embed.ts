@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-
+import { Embed as _Embed } from './_DiscordAPI';
 type Media = {
     url: string;
     proxy_url: string;

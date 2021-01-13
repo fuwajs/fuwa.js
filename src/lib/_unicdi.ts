@@ -48,7 +48,7 @@ export default {
             });
         });
     },
-    POST(path: string, token: string, data: string | Buffer): Promise<any> {
+    POST(path: string, token: string, data: string | Buffer): Promise<string> {
         return new Promise(async (resolve, reject) => {
             const res = await http.request({
                 path: path,
@@ -62,11 +62,25 @@ export default {
             const chunks: any[] = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                } catch (error) {
-                    reject(error);
-                }
+                resolve(Buffer.concat(chunks).toString());
+            });
+        });
+    },
+    PUT(path: string, token: string, data: any): Promise<string> {
+        return new Promise(async (resolve, reject) => {
+            const res = await http.request({
+                path: '/api/v8' + path,
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bot ' + token,
+                },
+                body: data,
+            });
+            const chunks: any[] = [];
+            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('end', () => {
+                resolve(Buffer.concat(chunks).toString());
             });
         });
     },

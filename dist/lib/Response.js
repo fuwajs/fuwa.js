@@ -45,7 +45,7 @@ class Response {
             else {
                 throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
+            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
         });
     }
     /**
@@ -72,7 +72,13 @@ class Response {
                 // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
                 return;
             }
-            return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
+            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
+        });
+    }
+    react(emoji) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                + `/reactions/${encodeURI(emoji)}/@me`, this.token, encodeURI(emoji)).catch(e => { console.error(e); });
         });
     }
 }

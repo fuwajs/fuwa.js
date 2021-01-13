@@ -111,5 +111,9 @@ client.command('logout', async (req, res) => {
 }, { desc: 'Log the bot out of discord.' });
 
 client.command('reply', (req, res) => {
-    res.reply('get replied to')
-})
+    res.reply('get replied to');
+});
+
+client.command('react', (req, res) => {
+    res.react('🧢');
+});

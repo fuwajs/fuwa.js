@@ -1,3 +1,6 @@
+/********************************************************
+ *
+ */
 export declare enum opCodes {
     dispatch = 0,
     heartbeat = 1,
@@ -40,26 +43,152 @@ export interface DiscordAPIEvents {
     };
 }
 export interface Message {
-    type: number;
-    tts: boolean;
-    timestamp: Date;
-    referenced_message: null;
-    pinned: boolean;
-    reactions: Reaction[];
-    nonce: string;
-    mentions: any[];
-    mention_roles: any[];
-    mention_everyone: boolean;
-    member: Member;
     id: string;
-    flags: number;
-    embeds: any[];
-    edited_timestamp: null;
-    content: string;
     channel_id: string;
+    guild_id?: string;
     author: Author;
-    attachments: any[];
+    member?: Member;
+    /** The actual contents of the message */
+    content: string;
+    timestamp: Date;
+    edited_timestamp: Date | null;
+    tts: boolean;
+    mention_everyone: boolean;
+    mentions: User[];
+    mention_roles: string[];
+    mention_channels?: ChannelMention[];
+    attachments: Attachment[];
+    embeds: Embed[];
+    reactions: Reaction[];
+    nonce: number | string;
+    pinned: boolean;
+    webhook_id?: string;
+    type: MessageType;
+    activity?: MessageActivity;
+    application?: MessageApplication;
+    message_reference?: MessageReference;
+    flags?: number;
+    stickers: Sticker[];
+    referenced_message?: Message | null;
+}
+interface Sticker {
+    id: string;
+    pack_id: string;
+    name: string;
+    description: string;
+    tags?: string;
+    asset: string;
+    preview_asset: string | null;
+    format_type: StickerFormat;
+}
+declare enum StickerFormat {
+    png = 1,
+    apng = 2,
+    lottie = 3
+}
+declare enum MessageType {
+    default = 0,
+    recipientAdd = 1,
+    recipientRemove = 2,
+    call = 3,
+    channelNameChange = 4,
+    channelIconChange = 5,
+    channelPinnedMessage = 6,
+    guildMemberJoin = 7,
+    userPremiumGuildSubscription = 8,
+    userPremiumGuildSubscriptionTier1 = 9,
+    userPremiumGuildSubscriptionTier2 = 10,
+    userPremiumGuildSubscriptionTier3 = 11,
+    channelFollowAdd = 12,
+    guildFollowAdd = 13,
+    guildDiscorveryDisqualified = 14,
+    guildDiscoveryRequalified = 15,
+    reply = 16,
+    applicationCommand = 17
+}
+interface MessageActivity {
+    type: number;
+    party_id?: string;
+}
+interface MessageApplication {
+    id: string;
+    cover_image?: string;
+    description: string;
+    icon: string | null;
+    name: string;
+}
+interface MessageReference {
+    message_id?: string;
+    channel_id?: string;
+    guild_id?: string;
+}
+export interface Attachment {
+    id: string;
+    filename: string;
+    /** Size of the file **in bytes** */
+    size: number;
+    url: string;
+    proxy_url: string;
+    height: number | null;
+    width: number | null;
+}
+export interface Embed {
+    title?: string;
+    type?: string;
+    description?: string;
+    url?: string;
+    timestamp?: Date;
+    color?: number;
+    footer?: EmbedFooter;
+    image?: EmbedImage;
+    thumbnail?: EmbedThumbnail;
+    video?: EmbedVideo;
+    provider?: EmbedProvider;
+    author?: EmbedAuthor;
+    fields?: EmbedField[];
+}
+interface EmbedThumbnail {
+    url?: string;
+    proxy_url?: string;
+    height?: number;
+    width?: number;
+}
+interface EmbedVideo {
+    url?: string;
+    height?: number;
+    width?: number;
+}
+interface EmbedImage {
+    url?: string;
+    proxy_url?: string;
+    height?: number;
+    width?: number;
+}
+interface EmbedFooter {
+    text: string;
+    icon_url?: string;
+    proxy_icon_url?: string;
+}
+interface EmbedProvider {
+    name?: string;
+    url?: string;
+}
+interface EmbedAuthor {
+    name?: string;
+    url?: string;
+    icon_url?: string;
+    proxy_icon_url?: string;
+}
+interface EmbedField {
+    name: string;
+    value: string;
+    inline?: boolean;
+}
+export interface ChannelMention {
+    id: string;
     guild_id: string;
+    type: number;
+    name: string;
 }
 export interface Author {
     id: string;
@@ -191,8 +320,10 @@ export interface Guild {
 export interface User extends Author {
     bot?: boolean;
     system?: boolean;
+    /** IS 2FA Enabled */
     mfa_enabled?: boolean;
     locale?: string;
+    /** Is the user's email verfied? */
     verified?: boolean;
     email?: string;
     flags?: number;
@@ -295,3 +426,4 @@ export interface DiscordAPIEventResponse<T extends keyof DiscordAPIEvents> {
     t: T;
     d: DiscordAPIEvents[T];
 }
+export {};

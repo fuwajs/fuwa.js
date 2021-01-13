@@ -1,18 +1,7 @@
 "use strict";
-// export const OPCodes = {
-//     // DISPATCH: 0,
-//     HEARTBEAT: 1,
-//     IDENTIFY: 2,
-//     STATUS_UPDATE: 3,
-//     VOICE_STATE_UPDATE: 4,
-//     // VOICE_GUILD_PING: 5,
-//     RESUME: 6,
-//     // RECONNECT: 7,
-//     REQUEST_GUILD_MEMBERS: 8,
-//     INVALID_SESSION: 9,
-//     HELLO: 10,
-//     // HEARTBEAT_ACK: 11,
-// };
+/********************************************************
+ *
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.discordAPI = exports.opCodes = void 0;
 var opCodes;
@@ -30,17 +19,35 @@ var opCodes;
     opCodes[opCodes["hello"] = 10] = "hello";
     opCodes[opCodes["heartbeatAck"] = 11] = "heartbeatAck";
 })(opCodes = exports.opCodes || (exports.opCodes = {}));
-// export const OPCodeMap = new Map<keyof typeof OPCodes, keyof DiscordAPIOP>()
-//     .set('HEARTBEAT', 1)
-//     .set('IDENTIFY', 2)
-//     .set('STATUS_UPDATE', 3)
-//     .set('VOICE_STATE_UPDATE', 4)
-//     .set('RESUME', 6)
-//     .set('REQUEST_GUILD_MEMBERS', 8)
-//     .set('INVALID_SESSION', 9)
-//     .set('HELLO', 10);
 exports.discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
     api: `https://discord.com/api/v8/`,
     discord: 'https://discord.com',
 };
+var StickerFormat;
+(function (StickerFormat) {
+    StickerFormat[StickerFormat["png"] = 1] = "png";
+    StickerFormat[StickerFormat["apng"] = 2] = "apng";
+    StickerFormat[StickerFormat["lottie"] = 3] = "lottie";
+})(StickerFormat || (StickerFormat = {}));
+var MessageType;
+(function (MessageType) {
+    MessageType[MessageType["default"] = 0] = "default";
+    MessageType[MessageType["recipientAdd"] = 1] = "recipientAdd";
+    MessageType[MessageType["recipientRemove"] = 2] = "recipientRemove";
+    MessageType[MessageType["call"] = 3] = "call";
+    MessageType[MessageType["channelNameChange"] = 4] = "channelNameChange";
+    MessageType[MessageType["channelIconChange"] = 5] = "channelIconChange";
+    MessageType[MessageType["channelPinnedMessage"] = 6] = "channelPinnedMessage";
+    MessageType[MessageType["guildMemberJoin"] = 7] = "guildMemberJoin";
+    MessageType[MessageType["userPremiumGuildSubscription"] = 8] = "userPremiumGuildSubscription";
+    MessageType[MessageType["userPremiumGuildSubscriptionTier1"] = 9] = "userPremiumGuildSubscriptionTier1";
+    MessageType[MessageType["userPremiumGuildSubscriptionTier2"] = 10] = "userPremiumGuildSubscriptionTier2";
+    MessageType[MessageType["userPremiumGuildSubscriptionTier3"] = 11] = "userPremiumGuildSubscriptionTier3";
+    MessageType[MessageType["channelFollowAdd"] = 12] = "channelFollowAdd";
+    MessageType[MessageType["guildFollowAdd"] = 13] = "guildFollowAdd";
+    MessageType[MessageType["guildDiscorveryDisqualified"] = 14] = "guildDiscorveryDisqualified";
+    MessageType[MessageType["guildDiscoveryRequalified"] = 15] = "guildDiscoveryRequalified";
+    MessageType[MessageType["reply"] = 16] = "reply";
+    MessageType[MessageType["applicationCommand"] = 17] = "applicationCommand";
+})(MessageType || (MessageType = {}));

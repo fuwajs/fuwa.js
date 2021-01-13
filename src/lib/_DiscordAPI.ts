@@ -1,17 +1,6 @@
-// export const OPCodes = {
-//     // DISPATCH: 0,
-//     HEARTBEAT: 1,
-//     IDENTIFY: 2,
-//     STATUS_UPDATE: 3,
-//     VOICE_STATE_UPDATE: 4,
-//     // VOICE_GUILD_PING: 5,
-//     RESUME: 6,
-//     // RECONNECT: 7,
-//     REQUEST_GUILD_MEMBERS: 8,
-//     INVALID_SESSION: 9,
-//     HELLO: 10,
-//     // HEARTBEAT_ACK: 11,
-// };
+/********************************************************
+ * 
+ */
 
 export enum opCodes {
     dispatch,
@@ -27,16 +16,6 @@ export enum opCodes {
     hello,
     heartbeatAck,
 }
-
-// export const OPCodeMap = new Map<keyof typeof OPCodes, keyof DiscordAPIOP>()
-//     .set('HEARTBEAT', 1)
-//     .set('IDENTIFY', 2)
-//     .set('STATUS_UPDATE', 3)
-//     .set('VOICE_STATE_UPDATE', 4)
-//     .set('RESUME', 6)
-//     .set('REQUEST_GUILD_MEMBERS', 8)
-//     .set('INVALID_SESSION', 9)
-//     .set('HELLO', 10);
 
 export const discordAPI = {
     gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
@@ -67,26 +46,164 @@ export interface DiscordAPIEvents {
     };
 }
 export interface Message {
-    type: number;
-    tts: boolean;
-    timestamp: Date;
-    referenced_message: null;
-    pinned: boolean;
-    reactions: Reaction[]
-    nonce: string;
-    mentions: any[];
-    mention_roles: any[];
-    mention_everyone: boolean;
-    member: Member;
     id: string;
-    flags: number;
-    embeds: any[];
-    edited_timestamp: null;
-    content: string;
     channel_id: string;
+    guild_id?: string;
     author: Author;
-    attachments: any[];
+    member?: Member;
+    /** The actual contents of the message */
+    content: string;
+    timestamp: Date;
+    edited_timestamp: Date | null;
+    tts: boolean;
+    mention_everyone: boolean;
+    mentions: User[];
+    mention_roles: string[];
+    mention_channels?: ChannelMention[];
+    attachments: Attachment[];
+    embeds: Embed[];
+    reactions: Reaction[]
+    nonce: number | string;
+    pinned: boolean;
+    webhook_id?: string;
+    type: MessageType;
+    activity?: MessageActivity;
+    application?: MessageApplication;
+    message_reference?: MessageReference;
+    flags?: number;
+    stickers: Sticker[];
+    referenced_message?: Message | null;
+}
+
+interface Sticker {
+    id: string;
+    pack_id: string;
+    name: string;
+    description: string;
+    tags?: string;
+    asset: string;
+    preview_asset: string | null;
+    format_type:  StickerFormat;
+}
+
+enum StickerFormat {
+    png = 1,
+    apng,
+    lottie,
+}
+enum MessageType {
+    default,
+    recipientAdd,
+    recipientRemove,
+    call,
+    channelNameChange,
+    channelIconChange,
+    channelPinnedMessage,
+    guildMemberJoin,
+    userPremiumGuildSubscription,
+    userPremiumGuildSubscriptionTier1,
+    userPremiumGuildSubscriptionTier2,
+    userPremiumGuildSubscriptionTier3,
+    channelFollowAdd,
+    guildFollowAdd,
+    guildDiscorveryDisqualified,
+    guildDiscoveryRequalified,
+    reply,
+    applicationCommand,
+}
+
+interface MessageActivity {
+    type: number;
+    party_id?: string;
+}
+
+interface MessageApplication {
+    id: string;
+    cover_image?: string;
+    description: string;
+    icon: string | null;
+    name: string;
+}
+
+interface MessageReference {
+    message_id?: string;
+    channel_id?: string;
+    guild_id?: string;
+}
+
+export interface Attachment {
+    id: string;
+    filename: string;
+    /** Size of the file **in bytes** */
+    size: number;
+    url: string;
+    proxy_url: string;
+    height: number | null;
+    width: number | null;
+}
+
+export interface Embed {
+    title?:	string;
+    type?:	string;
+    description?: string;
+    url?: string;
+    timestamp?:	Date;
+    color?:	number;
+    footer?: EmbedFooter;
+    image?:	EmbedImage;
+    thumbnail?:	EmbedThumbnail;
+    video?:	EmbedVideo;
+    provider?:	EmbedProvider;
+    author?:	EmbedAuthor;
+    fields?:	EmbedField[];
+}
+
+interface EmbedThumbnail {
+    url?: string;
+    proxy_url?: string;
+    height?: number;
+    width?: number;
+}
+
+interface EmbedVideo {
+    url?: string;
+    height?: number;
+    width?: number;
+}
+interface EmbedImage {
+    url?: string;
+    proxy_url?: string;
+    height?: number;
+    width?: number;
+}
+interface EmbedFooter {
+    text: string;
+    icon_url?: string;
+    proxy_icon_url?: string;
+}
+
+interface EmbedProvider {
+    name?: string;
+    url?: string;
+}
+
+interface EmbedAuthor {
+    name?: string;
+    url?: string;
+    icon_url?: string;
+    proxy_icon_url?: string;
+}
+
+interface EmbedField {
+    name: string;
+    value: string;
+    inline?: boolean;
+}
+export interface ChannelMention {
+    id: string;
     guild_id: string;
+    type: number;
+    name: string;
 }
 
 export interface Author {
@@ -227,9 +344,11 @@ export interface Guild {
 export interface User extends Author {
     bot?: boolean;
     system?: boolean;
-    mfa_enabled?: boolean; // is 2FA Enabled?
+    /** IS 2FA Enabled */
+    mfa_enabled?: boolean;
     locale?: string;
-    verified?: boolean; // Is the user's email verfied?
+    /** Is the user's email verfied? */
+    verified?: boolean; 
     email?: string;
     flags?: number;
     premium_type?: number;
