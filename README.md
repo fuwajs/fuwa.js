@@ -5,6 +5,7 @@
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
         </a>
+        <img src="https://travis-ci.com/Fuwajs/Fuwa.js.svg?branch=main"/>
     </p>
 </div>
 
