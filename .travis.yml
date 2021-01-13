@@ -25,6 +25,7 @@ matrix:
 cache:
   directories:
     - node_modules
+    - examples/node_modules
 install:
   - npm install
   - npm run build
