@@ -10,6 +10,7 @@ class Request {
         this.author = new User_1.default(msg.author);
         this.message = { content: msg.content };
         this.rawData = msg;
+        this.reactions = msg.reactions;
         // this.getGuild(msg.guild_id, token);
         this.guild = new Guild_1.default(cache.guilds.get(msg.guild_id));
     }

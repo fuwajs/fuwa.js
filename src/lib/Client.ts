@@ -133,9 +133,7 @@ class Client extends Emitter {
         this.bot;
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
-        if (
-            options?.builtinCommands?.help === undefined ? true : options.builtinCommands.help
-        ) {
+        if (options.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed().setColor(Colors.blue);
                 if (req.args.length > 0) {
@@ -154,9 +152,9 @@ class Client extends Emitter {
                                 value: 'Soon'
                             }
                         ];
-                        if(cmd[0].options.aliases) {
-                            fields.push({ 
-                                name: 'Aliases', 
+                        if (cmd[0].options.aliases) {
+                            fields.push({
+                                name: 'Aliases',
                                 value: `\`${cmd[0].options.aliases.join(', ')}\``
                             });
                         }
@@ -165,7 +163,7 @@ class Client extends Emitter {
                             .setDescription(cmd[0].options.desc)
                             .addFields(fields)
                     }
-                    
+
                 } else {
                     embed.setTitle('Help | All')
                     embed.setThumbnail(
@@ -179,16 +177,6 @@ class Client extends Emitter {
                 res.send(embed);
                 next();
             }, { desc: 'Get help on the usage of a command.' });
-        }
-    }
-
-    protected debug(bug: Error | any) {
-        if (this.debugMode) {
-            if (bug instanceof Error) {
-                throw bug;
-            } else {
-                // console.log (bug + '\n');
-            }
         }
     }
 
@@ -206,10 +194,9 @@ class Client extends Emitter {
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions) {
         const option: commandOptions = {
-            desc: options?.desc||'No description was provided',
+            desc: options?.desc || 'No description was provided',
             aliases: Array.isArray(name) ? name.slice(1) : []
         };
-        console.log(option)
         let defaultName = Array.isArray(name) ? name[0] : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option }
@@ -324,25 +311,27 @@ class Client extends Emitter {
             let args: string[] = [];
             const str = msg.content.split(' ');
             const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-            // console.log(str);
+
             if (str[0][0] !== prefix && !a) return;
+
+            if ( this.options.debug ) console.log(str);
 
             args = str.slice(a ? 2 : 1);
             commandName = (a ? str[1] : str[0])
                 .replace(prefix, '')
                 .toLowerCase();
-            let command = [...this.commands.entries()].find(v => {
-                if(
-                    v[0] === commandName 
-                 || v[1][0]
-                    .options
-                    .aliases
-                    ?.includes(commandName)) {
-                        return true;
-                    } else return false;
-            })[1];
-            console.log(command)
-
+            let c = [...this.commands.entries()].find(v => {
+                if (
+                    v[0] === commandName
+                    || v[1][0]
+                        .options
+                        .aliases
+                        ?.includes(commandName)) {
+                    return true;
+                } else return false;
+            });
+            if(!c) return;
+            const command = c[1];
             if (!command) return;
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));

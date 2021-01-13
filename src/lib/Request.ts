@@ -2,7 +2,7 @@ import User from './User';
 import http from './_unicdi';
 import { Argument } from './Command';
 import Guild from './Guild';
-import { Message as MessageOptions, Guild as GuildOptions } from "./_DiscordAPI";
+import { Message as MessageOptions, Guild as GuildOptions, Reaction } from "./_DiscordAPI";
 
 type Author = {
     id: string
@@ -18,12 +18,14 @@ class Request {
      * An array of the arguments passed into your command
      */
     args: string[];
+    readonly reactions: Reaction[];
 
     constructor(msg: MessageOptions, token: string, cache: any) {
 
         this.author = new User(msg.author);
         this.message = { content: msg.content };
         this.rawData = msg;
+        this.reactions = msg.reactions;
         // this.getGuild(msg.guild_id, token);
         this.guild = new Guild(cache.guilds.get(msg.guild_id));
     }

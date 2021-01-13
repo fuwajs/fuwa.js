@@ -1,12 +1,12 @@
 const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
-const fs = require('fs');
 const fetch = require('node-fetch');
+const { token } = require('./bot-config.json')
 
-const client = new fuwa.Client(req => '$', { debug: false });
+const client = new fuwa.Client('$', { debug: false });
 
 // Log the bot into discord
-client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
+client.login(token);
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
@@ -17,12 +17,13 @@ client.on('READY', () => {
 });
 
 // This function will be ran before every other command
-// client.use((req, res, next) => {
-//     if (!req.author.bot) {
-//         res.send('Your not a bot! :sunglasses:')
-//     }
-//     next();
-// });
+client.use((req, res, next) => {
+    if (!req.author.bot) {
+        res.send('Your not a bot! :sunglasses:')
+    }
+    res.send(JSON.stringify(req.reactions));
+    next();
+});
 
 // A basic 'ping' command. Responds with 'pong' and
 // the latency (in milliseconds) within an embed.
@@ -96,12 +97,11 @@ client.command(['github', 'gh'], async (req, res) => {
 // In reailty you would **not** want a command like this
 // This is for demonstration purposes only
 client.command('logout', async (req, res) => {
+    const now = new Date(Date.now()).toLocaleTimeString([], {
+        year: 'numeric', month: 'numeric', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+    });
     // wait until we have sent the logout message
-    const now = new Date(Date.now())
-        .toLocaleTimeString([], { // Fancy date stuff C:
-            year: 'numeric', month: 'numeric', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
     await res.send(new fuwa.Embed()
         .setTitle('Logging Out')
         .setFooter(``)

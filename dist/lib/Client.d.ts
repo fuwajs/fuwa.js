@@ -98,7 +98,6 @@ declare class Client extends Emitter {
      * @param prefix The prefix for your bot
      */
     constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
-    protected debug(bug: Error | any): void;
     /**
      * Command function
      * @param name Command name(s).

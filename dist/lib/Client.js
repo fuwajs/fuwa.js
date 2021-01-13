@@ -40,7 +40,7 @@ class Client extends Emitter_1.default {
      * @param prefix The prefix for your bot
      */
     constructor(prefix, options) {
-        var _a;
+        var _a, _b;
         super();
         this.sessionId = '';
         this.cache = {
@@ -57,7 +57,7 @@ class Client extends Emitter_1.default {
         this.bot;
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
-        if (((_a = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) === undefined ? true : options.builtinCommands.help) {
+        if ((_b = (_a = options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) !== null && _b !== void 0 ? _b : true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed_1.default().setColor(Colors_1.default.blue);
                 if (req.args.length > 0) {
@@ -101,16 +101,6 @@ class Client extends Emitter_1.default {
             }, { desc: 'Get help on the usage of a command.' });
         }
     }
-    debug(bug) {
-        if (this.debugMode) {
-            if (bug instanceof Error) {
-                throw bug;
-            }
-            else {
-                // console.log (bug + '\n');
-            }
-        }
-    }
     /**
      * Command function
      * @param name Command name(s).
@@ -128,7 +118,6 @@ class Client extends Emitter_1.default {
             desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
             aliases: Array.isArray(name) ? name.slice(1) : []
         };
-        console.log(option);
         let defaultName = Array.isArray(name) ? name[0] : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
@@ -239,14 +228,15 @@ class Client extends Emitter_1.default {
                 let args = [];
                 const str = msg.content.split(' ');
                 const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-                // console.log(str);
                 if (str[0][0] !== prefix && !a)
                     return;
+                if (this.options.debug)
+                    console.log(str);
                 args = str.slice(a ? 2 : 1);
                 commandName = (a ? str[1] : str[0])
                     .replace(prefix, '')
                     .toLowerCase();
-                let command = [...this.commands.entries()].find(v => {
+                let c = [...this.commands.entries()].find(v => {
                     var _a;
                     if (v[0] === commandName
                         || ((_a = v[1][0]
@@ -256,8 +246,10 @@ class Client extends Emitter_1.default {
                     }
                     else
                         return false;
-                })[1];
-                console.log(command);
+                });
+                if (!c)
+                    return;
+                const command = c[1];
                 if (!command)
                     return;
                 const _ = [];
