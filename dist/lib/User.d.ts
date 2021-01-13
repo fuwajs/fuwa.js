@@ -1,5 +1,7 @@
-import { User as UserOptions } from './_DiscordAPI';
+import Embed from './Embed';
+import { Message, User as UserOptions } from './_DiscordAPI';
 export declare class User implements UserOptions {
+    private token;
     id: string;
     username: string;
     discriminator: string;
@@ -13,6 +15,7 @@ export declare class User implements UserOptions {
     flags?: number;
     premium_type?: number;
     public_flags?: number;
-    constructor(data: UserOptions);
+    constructor(data: UserOptions, token: string);
+    dm(content: string | Embed): Promise<Message>;
 }
 export default User;

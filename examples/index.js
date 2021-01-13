@@ -113,6 +113,7 @@ client.command('logout', (req, res) => {
 
 client.command('reply', (req, res) => {
     res.reply('get replied to');
+    req.author.dm('get dmed').then(console.log);
 });
 
 client.command('react', async (req, res) => {

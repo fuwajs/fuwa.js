@@ -252,7 +252,7 @@ class Embed {
      * embed.setProvider('some name')
      * ```
      */
-    setProvider(name: string, opts?: { url: string }): this {
+    setProvider(name: string, opts?: { url?: string }): this {
         this.provider = { name: name, url: opts.url };
         return this;
     }
@@ -267,7 +267,7 @@ class Embed {
      */
     setVideo(
         url: string,
-        opts?: { height: number; width: number; proxyUrl: string }
+        opts?: { height?: number; width?: number; proxyUrl?: string }
     ): this {
         this.video = {
             url: url,
