@@ -1,7 +1,8 @@
 import Request from './Request';
 import Response from './Response';
 
-export class Argument<T> {
+
+export class Argument<T extends number|string|unknown> {
     /**
      * Default value of the argument
      */
@@ -17,6 +18,7 @@ export class Argument<T> {
         this.desc = desc;
     }
 }
+
 
 /**
  * Options for your command

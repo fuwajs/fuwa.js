@@ -290,10 +290,11 @@ class Client extends Emitter {
         });
         this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
         this.event('MESSAGE_CREATE', async (msg) => {
+            console.time('command run');
             if (!msg.content) return;
             const res = new Response(msg, token.toString());
             let prefix = '';
-
+            console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
                 prefix = await this.prefix(new Request(msg, this.token, this.cache))
             } else if (Array.isArray(this.prefix)) {
@@ -303,9 +304,9 @@ class Client extends Emitter {
             } else {
                 throw new TypeError('Invalid prefix type');
             }
-
+            console.timeEnd('prefix parsing');
             if (!prefix) return;
-
+            console.time('command parsing')
             let commandName: string = '';
 
             let args: string[] = [];
@@ -333,6 +334,8 @@ class Client extends Emitter {
             if(!c) return;
             const command = c[1];
             if (!command) return;
+            console.timeEnd('command parsing')
+            console.time('middleware')
             const _: any[] = [];
             this.middleware.forEach((v) => _.push({ cb: v }));
             const req = new Request(msg, token.toString(), this.cache);
@@ -341,8 +344,11 @@ class Client extends Emitter {
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, _, 0, command));
             }
-            this.bot;
+            console.timeEnd('middleware')
+            console.time('run command')
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
+            console.timeEnd('run command')
+            console.timeEnd('command run')
         });
         //         this.ws.on('open', async function () {
         //             this.debug(`Connect to ${ discordAPI.gateway } `);

@@ -13,6 +13,7 @@ class Response {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
+            this.data.message_reference = { message_id: this.req.id };
         } else if (content instanceof Embed) {
             if (!content.color) {
                 content.color = Colors.rgb(
