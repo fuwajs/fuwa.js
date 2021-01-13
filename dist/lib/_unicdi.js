@@ -73,12 +73,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                }
-                catch (error) {
-                    reject(error);
-                }
+                resolve(Buffer.concat(chunks).toString());
             });
         }));
     },
@@ -96,12 +91,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                }
-                catch (error) {
-                    reject(error);
-                }
+                resolve(Buffer.concat(chunks).toString());
             });
         }));
     },

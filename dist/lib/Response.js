@@ -77,7 +77,7 @@ class Response {
     }
     react(emoji) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+            return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                 + `/reactions/${encodeURI(emoji)}/@me`, this.token, encodeURI(emoji)).catch(e => { console.error(e); });
         });
     }

@@ -4,7 +4,7 @@ declare type Media = {
     height: number;
     width: number;
 };
-declare type EmbedType = 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link';
+declare type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 declare class Embed {
     protected type: EmbedType;
     protected title?: string;

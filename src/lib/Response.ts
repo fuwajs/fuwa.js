@@ -71,7 +71,7 @@ class Response {
     }
 
     async react(emoji: string): Promise<any> {
-        return await undici.PUT(
+        return undici.PUT(
             `/channels/${this.req.channel_id}/messages/${this.req.id}`
             + `/reactions/${encodeURI(emoji)}/@me`,
             this.token,

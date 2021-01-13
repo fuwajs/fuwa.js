@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs')
 const fetch = require('node-fetch');
 
-const client = new fuwa.Client('$', { debug: false });
+const client = new fuwa.Client(['!', '?', '$'], { debug: false });
 
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
@@ -115,6 +115,15 @@ client.command('reply', (req, res) => {
     res.reply('get replied to');
 });
 
-client.command('react', (req, res) => {
-    res.react('🧢');
+client.command('react', async (req, res) => {
+    const len = Object.keys(fuwa.Emojis).length;
+    for (const i in [...Array(20).keys()]) {
+        setTimeout(() => {
+            const emoji = Object.values(fuwa.Emojis)[Math.floor(Math.random() * len)];
+            res.react(emoji)
+                .catch(e => {
+                    throw e;
+                });
+        }, 1000)
+    }
 });

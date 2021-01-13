@@ -9,7 +9,7 @@ type Media = {
 }
 
 
-type EmbedType = 'rich' | 'image' | 'video' | 'gif' | 'article' | 'link';
+type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
 class Embed {
     protected type: EmbedType;
