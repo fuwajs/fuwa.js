@@ -25,6 +25,7 @@ export class User implements UserOptions {
         this.flags = data.flags;
         this.email = data.email;
     }
+
 }
 
 export default User;

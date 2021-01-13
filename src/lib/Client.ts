@@ -136,8 +136,8 @@ class Client extends Emitter {
         if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed()
-                .setColor(Colors.blue)
-                .setThumbnail(this.bot.avatar);
+                    .setColor(Colors.blue)
+                    .setThumbnail(this.bot.avatar);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
                     const cmd = this.commands.get(cmdName.toLowerCase())
@@ -239,7 +239,7 @@ class Client extends Emitter {
      * @param status Your Bot Status Options
      */
     async login(token: string | Buffer) {
-        
+
         const next = (
             req: Request,
             res: Response,
@@ -260,7 +260,7 @@ class Client extends Emitter {
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         this.connect(discordAPI.gateway);
-        
+
         this.op(opCodes.hello, (data) => {
             // console.log (data);
             this.loop = setInterval(
@@ -314,7 +314,7 @@ class Client extends Emitter {
 
             if (str[0][0] !== prefix && !a) return;
 
-            if ( this.options.debug ) console.log(str);
+            if (this.options.debug) console.log(str);
 
             args = str.slice(a ? 2 : 1);
             commandName = (a ? str[1] : str[0])
@@ -330,7 +330,7 @@ class Client extends Emitter {
                     return true;
                 } else return false;
             });
-            if(!c) return;
+            if (!c) return;
             const command = c[1];
             if (!command) return;
             console.timeEnd('command parsing')

@@ -2,7 +2,7 @@ import Request from './Request';
 import Response from './Response';
 
 
-export class Argument<T extends number|string|unknown> {
+export class Argument<T extends number | string | unknown> {
     /**
      * Default value of the argument
      */
