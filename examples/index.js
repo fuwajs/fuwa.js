@@ -69,7 +69,7 @@ client.command(['github', 'gh'], async (req, res) => {
             hour: '2-digit', minute: '2-digit'
         });
     // Send an embed!
-    res.send(new fuwa.Embed()
+    res.reply(new fuwa.Embed()
         // Set your embed title!
         .setTitle(`${user.name} @ GitHub`)
         // Url to the title,
@@ -97,15 +97,14 @@ client.command(['github', 'gh'], async (req, res) => {
 // This is for demonstration purposes only
 client.command('logout', async (req, res) => {
     // wait until we have sent the logout message
-    const now = new Date(Date.now())
-        .toLocaleTimeString([], { // Fancy date stuff C:
-            year: 'numeric', month: 'numeric', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
     await res.send(new fuwa.Embed()
         .setTitle('Logging Out')
         .setFooter(``)
-        .setTimestamp(now)
+        .setTimestamp()
     );
     client.logout(true);
 }, { desc: 'Log the bot out of discord.' });
+
+client.command('reply', (req, res) => {
+    res.reply('get replied to')
+})
