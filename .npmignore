@@ -1,6 +1,6 @@
 # Optional Things for github
 examples
-.gitignore
+misc
 
 
 # Secrets
@@ -11,6 +11,10 @@ src/
 
 # Misc
 node_modules
+*.md 
+docs.js 
+LICENSE
+
 
 # Dev utils
 .vscode/
