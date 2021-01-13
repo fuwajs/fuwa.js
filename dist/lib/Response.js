@@ -75,10 +75,12 @@ class Response {
             return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
         });
     }
-    react(emoji) {
+    react(...emojis) {
         return __awaiter(this, void 0, void 0, function* () {
-            return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                + `/reactions/${encodeURI(emoji)}/@me`, this.token, encodeURI(emoji)).catch(e => { console.error(e); });
+            return emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                return yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => { console.error(e); });
+            }));
         });
     }
 }

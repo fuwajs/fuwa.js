@@ -14,6 +14,6 @@ declare class Response {
      * Embed.
      */
     send(content: string | Embed): Promise<unknown>;
-    react(emoji: string): Promise<any>;
+    react(...emojis: string[]): Promise<any>;
 }
 export default Response;

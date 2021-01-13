@@ -35,7 +35,7 @@ class Response {
             `/api/v8/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
-        ).catch(e => { console.error(e); } );
+        ).catch(e => { console.error(e); });
     }
 
     /**
@@ -70,13 +70,13 @@ class Response {
         ).catch(e => { console.error(e); });
     }
 
-    async react(emoji: string): Promise<any> {
-        return undici.PUT(
+    async react(...emojis: string[]): Promise<any> {
+        return emojis.forEach(async e => await undici.PUT(
             `/channels/${this.req.channel_id}/messages/${this.req.id}`
-            + `/reactions/${encodeURI(emoji)}/@me`,
+            + `/reactions/${encodeURI(e)}/@me`,
             this.token,
-            encodeURI(emoji)
-        ).catch(e => { console.error(e); });
+            encodeURI(e)
+        ).catch(e => { console.error(e); }));
     }
 
 }

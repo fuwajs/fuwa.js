@@ -239,6 +239,7 @@ class Client extends Emitter {
      * @param status Your Bot Status Options
      */
     async login(token: string | Buffer) {
+        
         const next = (
             req: Request,
             res: Response,
@@ -259,7 +260,7 @@ class Client extends Emitter {
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         this.connect(discordAPI.gateway);
-
+        
         this.op(opCodes.hello, (data) => {
             // console.log (data);
             this.loop = setInterval(

@@ -18,7 +18,7 @@ client.on('READY', () => {
 
 // This function will be ran before every other command
 client.use((req, res, next) => {
-    res.send(JSON.stringify(req.reactions));
+    res.react('✅');
     next();
 });
 
@@ -116,14 +116,5 @@ client.command('reply', (req, res) => {
 });
 
 client.command('react', async (req, res) => {
-    const len = Object.keys(fuwa.Emojis).length;
-    for (const i in [...Array(20).keys()]) {
-        setTimeout(() => {
-            const emoji = Object.values(fuwa.Emojis)[Math.floor(Math.random() * len)];
-            res.react(emoji)
-                .catch(e => {
-                    throw e;
-                });
-        }, 1000)
-    }
+    res.react('🧢');
 });
