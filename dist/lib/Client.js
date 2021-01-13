@@ -217,10 +217,12 @@ class Client extends Emitter_1.default {
             });
             this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
+                console.time('command run');
                 if (!msg.content)
                     return;
                 const res = new Response_1.default(msg, token.toString());
                 let prefix = '';
+                console.time('prefix parsing');
                 if (typeof this.prefix === 'function') {
                     prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache));
                 }
@@ -233,8 +235,10 @@ class Client extends Emitter_1.default {
                 else {
                     throw new TypeError('Invalid prefix type');
                 }
+                console.timeEnd('prefix parsing');
                 if (!prefix)
                     return;
+                console.time('command parsing');
                 let commandName = '';
                 let args = [];
                 const str = msg.content.split(' ');
@@ -257,9 +261,10 @@ class Client extends Emitter_1.default {
                     else
                         return false;
                 })[1];
-                console.log(command);
+                console.timeEnd('command parsing');
                 if (!command)
                     return;
+                console.time('middleware');
                 const _ = [];
                 this.middleware.forEach((v) => _.push({ cb: v }));
                 const req = new Request_1.default(msg, token.toString(), this.cache);
@@ -268,9 +273,12 @@ class Client extends Emitter_1.default {
                 if (this.middleware[0]) {
                     this.middleware[0](req, res, next(req, res, _, 0, command));
                 }
-                this.bot;
+                console.timeEnd('middleware');
+                console.time('run command');
                 if (!this.middleware[0])
                     command[0].cb(req, res, next(req, res, command, 0));
+                console.timeEnd('run command');
+                console.timeEnd('command run');
             }));
             //         this.ws.on('open', async function () {
             //             this.debug(`Connect to ${ discordAPI.gateway } `);

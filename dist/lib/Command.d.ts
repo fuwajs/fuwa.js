@@ -1,6 +1,6 @@
 import Request from './Request';
 import Response from './Response';
-export declare class Argument<T> {
+export declare class Argument<T extends number | string | unknown> {
     /**
      * Default value of the argument
      */
