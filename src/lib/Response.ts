@@ -60,7 +60,8 @@ class Response {
             this.data.embed = content;
             this.data.tts = false;
         } else {
-            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+            // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+            return;
         }
         return await undici.OTHER(
             'POST',

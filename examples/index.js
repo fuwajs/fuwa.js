@@ -1,12 +1,12 @@
 const fuwa = require('../dist/index'); // Import fuwa.js here!
 const path = require('path');
+const fs = require('fs')
 const fetch = require('node-fetch');
-const { token } = require('./bot-config.json')
 
 const client = new fuwa.Client('$', { debug: false });
 
 // Log the bot into discord
-client.login(token);
+client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);

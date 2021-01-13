@@ -69,7 +69,8 @@ class Response {
                 this.data.tts = false;
             }
             else {
-                throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+                // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+                return;
             }
             return yield _unicdi_1.default.OTHER('POST', `/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data));
         });
