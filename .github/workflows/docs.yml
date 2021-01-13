@@ -36,5 +36,6 @@ jobs:
           git clone https://github.com/fuwajs/fuwajs.github.io/ docs
       - name: Build Docs
         run: |
+          npm install
           npm run docs
           git commit -m "Docs - $(date)"
