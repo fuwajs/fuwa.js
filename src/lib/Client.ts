@@ -133,7 +133,7 @@ class Client extends Emitter {
         this.bot;
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
-        if (options.builtinCommands?.help ?? true) {
+        if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed().setColor(Colors.blue);
                 if (req.args.length > 0) {
