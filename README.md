@@ -47,4 +47,6 @@ client.login('<your bot token>');
 ```
 Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
 
-join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
+Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
+
+Join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
