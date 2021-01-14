@@ -5,6 +5,7 @@
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
         </a>
+        <img src="https://travis-ci.com/Fuwajs/Fuwa.js.svg?branch=main"/>
     </p>
 </div>
 
@@ -46,4 +47,6 @@ client.login('<your bot token>');
 ```
 Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
 
-join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
+Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
+
+Join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
