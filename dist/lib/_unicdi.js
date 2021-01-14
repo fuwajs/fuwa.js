@@ -43,10 +43,10 @@ exports.default = {
                     reject(e);
                 }
                 if (res.statusCode === 429) { // Handle Discord Rate Limits
-                    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                    setTimeout(() => {
                         this.REQUEST(method, path, token, data)
                             .catch(e => console.error(e));
-                    }), (d === null || d === void 0 ? void 0 : d.retry_after) * 1000);
+                    }, (d === null || d === void 0 ? void 0 : d.retry_after) * 1000);
                 }
                 resolve(d);
             });

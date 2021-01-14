@@ -20,6 +20,7 @@ export declare const discordAPI: {
     api: string;
     discord: string;
 };
+export declare const discordCDN = "https://cdn.discordapp.com";
 export interface DiscordAPIEvents {
     GUILD_CREATE: {
         op: 0;

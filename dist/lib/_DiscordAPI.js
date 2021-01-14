@@ -3,7 +3,7 @@
  *
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChannelType = exports.discordAPI = exports.opCodes = void 0;
+exports.ChannelType = exports.discordCDN = exports.discordAPI = exports.opCodes = void 0;
 var opCodes;
 (function (opCodes) {
     opCodes[opCodes["dispatch"] = 0] = "dispatch";
@@ -20,10 +20,11 @@ var opCodes;
     opCodes[opCodes["heartbeatAck"] = 11] = "heartbeatAck";
 })(opCodes = exports.opCodes || (exports.opCodes = {}));
 exports.discordAPI = {
-    gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
+    gateway: 'wss://gateway.discord.gg/',
     api: `https://discord.com/api/v8/`,
     discord: 'https://discord.com',
 };
+exports.discordCDN = 'https://cdn.discordapp.com';
 var StickerFormat;
 (function (StickerFormat) {
     StickerFormat[StickerFormat["png"] = 1] = "png";

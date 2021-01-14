@@ -7,6 +7,9 @@ import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 import Embed from './Embed';
 import Colors from './Colors';
+import { EPROTO } from 'constants';
+
+const erlpack = import('erlpack');
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -260,12 +263,25 @@ class Client extends Emitter {
         this.token = token.toString();
         // console.log (`Your Bot Token: ${token.toString()}`);
 
-        this.connect(discordAPI.gateway);
+        // this.connect(discordAPI.gateway);
+
+        erlpack.then(() => {
+            this.connect(discordAPI.gateway, {
+                v: 8, 
+                encoding: 'etf'
+            });
+        });
+        erlpack.catch(() => {
+            this.connect(discordAPI.gateway, {
+                v: 8,
+                encoding: 'json'
+            });
+        })
 
         this.op(opCodes.hello, (data) => {
             // console.log (data);
             this.loop = setInterval(
-                () => this.response.op.emit(1, 251),
+                () => this.response.op.emit(opCodes.heartbeat, 251),
                 data.heartbeat_interval
             );
             this.response.op.emit(opCodes.indentify, {

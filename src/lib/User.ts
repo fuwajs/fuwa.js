@@ -1,6 +1,6 @@
 import Embed from './Embed';
 import Colors from './Colors';
-import { Channel, Message, User as UserOptions } from './_DiscordAPI';
+import { Channel, discordCDN, Message, User as UserOptions } from './_DiscordAPI';
 import undici from './_unicdi';
 export class User implements UserOptions {
     id: string;
@@ -22,7 +22,7 @@ export class User implements UserOptions {
         this.username = data.username;
         this.discriminator = data.discriminator;
         this.bot = data.bot;
-        this.avatar = `https://cdn.discordapp.com/avatars/${this.id}/${data.avatar}.png`;
+        this.avatar = `${discordCDN}/avatars/${this.id}/${data.avatar}.png`;
         this.verified = data.verified;
         this.mfa_enabled = data.mfa_enabled;
         this.flags = data.flags;

@@ -18,11 +18,12 @@ export enum opCodes {
 }
 
 export const discordAPI = {
-    gateway: 'wss://gateway.discord.gg/?v=6&encoding=json',
+    gateway: 'wss://gateway.discord.gg/', // ?v=6&encoding=json',
     api: `https://discord.com/api/v8/`,
     discord: 'https://discord.com',
 };
 
+export const discordCDN = 'https://cdn.discordapp.com';
 export interface DiscordAPIEvents {
     GUILD_CREATE: {
         op: 0;

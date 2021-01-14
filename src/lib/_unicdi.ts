@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */ // should be fixed soon
 import { Client } from 'undici';
-import Response from './Response';
 import { discordAPI } from './_DiscordAPI';
 const http = new Client(discordAPI.discord);
 
@@ -37,7 +36,7 @@ export default {
                 }
 
                 if (res.statusCode === 429) { // Handle Discord Rate Limits
-                    setTimeout(async () => {
+                    setTimeout(() => {
                         this.REQUEST(method, path, token, data)
                             .catch(e => console.error(e));
                     }, d?.retry_after * 1000);

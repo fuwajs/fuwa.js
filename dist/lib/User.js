@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const Embed_1 = __importDefault(require("./Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
+const _DiscordAPI_1 = require("./_DiscordAPI");
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class User {
     constructor(data, token) {
@@ -23,7 +24,7 @@ class User {
         this.username = data.username;
         this.discriminator = data.discriminator;
         this.bot = data.bot;
-        this.avatar = `https://cdn.discordapp.com/avatars/${this.id}/${data.avatar}.png`;
+        this.avatar = `${_DiscordAPI_1.discordCDN}/avatars/${this.id}/${data.avatar}.png`;
         this.verified = data.verified;
         this.mfa_enabled = data.mfa_enabled;
         this.flags = data.flags;

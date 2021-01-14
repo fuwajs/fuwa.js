@@ -44,8 +44,7 @@ class Response {
         else {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
-        _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
-        return this;
+        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
     }
     /**
      * @param content The content to send. The content can be a string or an

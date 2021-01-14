@@ -14,8 +14,8 @@
         "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-        "no-ternary": "warn",
-        "no-eq-null": "warn",
+        // "no-ternary": "warn",
+        // "no-eq-null": "warn",
         "semi": "error"
     }
 }

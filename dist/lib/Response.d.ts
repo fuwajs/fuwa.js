@@ -8,7 +8,7 @@ declare class Response {
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | Embed): this;
+    reply(content: string | Embed): Promise<Message>;
     /**
      * @param content The content to send. The content can be a string or an
      * Embed.

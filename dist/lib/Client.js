@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -20,6 +39,7 @@ const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 const Embed_1 = __importDefault(require("./Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
+const erlpack = Promise.resolve().then(() => __importStar(require('erlpack')));
 var statusCode;
 (function (statusCode) {
     statusCode[statusCode["playing"] = 0] = "playing";
@@ -181,10 +201,22 @@ class Client extends Emitter_1.default {
             };
             this.token = token.toString();
             // console.log (`Your Bot Token: ${token.toString()}`);
-            this.connect(_DiscordAPI_1.discordAPI.gateway);
+            // this.connect(discordAPI.gateway);
+            erlpack.then(() => {
+                this.connect(_DiscordAPI_1.discordAPI.gateway, {
+                    v: 8,
+                    encoding: 'etf'
+                });
+            });
+            erlpack.catch(() => {
+                this.connect(_DiscordAPI_1.discordAPI.gateway, {
+                    v: 8,
+                    encoding: 'json'
+                });
+            });
             this.op(_DiscordAPI_1.opCodes.hello, (data) => {
                 // console.log (data);
-                this.loop = setInterval(() => this.response.op.emit(1, 251), data.heartbeat_interval);
+                this.loop = setInterval(() => this.response.op.emit(_DiscordAPI_1.opCodes.heartbeat, 251), data.heartbeat_interval);
                 this.response.op.emit(_DiscordAPI_1.opCodes.indentify, {
                     token: token.toString(),
                     intents: 513,

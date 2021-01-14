@@ -13,7 +13,7 @@ client.set('useMentionPrefix', true);
 
 // This function is ran when the bot is connected to discord
 client.on('READY', () => {
-    console.log(`Hello, my name is ${client.bot.username}!`)
+    console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
 // This function will be ran before every other command
@@ -119,5 +119,5 @@ client.command('reply', (req, res) => {
 });
 
 client.command('react', (req, res) => {
-    res.react('🧢', '😂', '👌', '😃', '🍔');
+    res.react('🧢', '😂', '👌', '😃', '🤡');
 });

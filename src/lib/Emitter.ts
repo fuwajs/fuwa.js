@@ -1,11 +1,35 @@
 import WebSocket from 'ws';
 import {
-    DiscordAPIEventResponse,
     DiscordAPIOP as DiscordAPIOPResponse,
     DiscordAPIEvents,
-    DiscordAPIOP,
     opCodes,
 } from './_DiscordAPI';
+
+
+const erlpackPromise = import('erlpack');
+
+let hasErlPack = true;
+
+let PACK: (data: any) => string | Buffer;
+let UNPACK: (data: Buffer) => any;
+
+erlpackPromise.then(v => {
+    // Has erlpack
+    hasErlPack = true;
+    console.info('Hooray! You have erlpack.');
+    console.info('Enjoy your boost of speed.');
+    PACK = v.pack;
+    UNPACK = v.unpack;
+});
+
+erlpackPromise.catch(e => {
+    // Doesnt have erlpack
+    hasErlPack = false;
+    console.info('You don\'t have erlpack.');
+    console.info('That\'s ok, fuwa still works without it.');
+    PACK = a => JSON.stringify(a);
+    UNPACK = a => JSON.parse(a.toString('utf-8'));
+});
 
 class Emitter {
     protected ws?: WebSocket;
@@ -18,8 +42,9 @@ class Emitter {
             emit: <T extends keyof DiscordAPIOPResponse>(
                 op: T,
                 d: DiscordAPIOPResponse[T]['d']
-            ) => {
-                this.ws.send(JSON.stringify({ op, d, t: null, }));
+            ): void => {
+                //this.ws.send(JSON.stringify({ op, d, t: null, }));
+                this.ws?.send(PACK({ op, d, t: null }));
             },
         },
         events: {
@@ -27,24 +52,32 @@ class Emitter {
                 t: T,
                 d: DiscordAPIEvents[T]
             ): void => {
-                this.ws.send(JSON.stringify({ t, d, op: 0 }));
+                // this.ws.send(JSON.stringify({ t, d, op: 0 }));
+                this.ws.send(PACK({ t, d, op: opCodes.dispatch }));
             },
         },
     };
-    protected connect(url: string): void {
-        this.ws = new WebSocket(url);
+    protected connect(url: string, query?: {
+        v?: number,
+        encoding?: 'json' | 'etf',
+        compress?: boolean,
+    }): void {
+        
+        const encoding = query?.encoding || (hasErlPack ? 'etf' : 'json');
+        if (!hasErlPack && encoding === 'etf') {
+            throw new Error('ETF encoding selected but erlpack not found');
+        }
+        this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
         this.ws.on('open', () => {
             console.log('Connected');
             this.WSEvents?.open();
-            this.ws?.on('message', (data) => {
+            this.ws?.on('message', (data: Buffer) => {
+                const res: { op: opCodes; t: string | null; d: unknown } = UNPACK(data);
                 this.WSEvents?.message();
-                const res: { op: number; t: string | null; d: unknown } = JSON.parse(
-                    data.toString()
-                );
                 if (res.op === opCodes.dispatch) {
                     if (!res.t)
                         throw new Error(
-                            `The event is undefined while the OP Code is 0\n ${res.t}\n${res.d}\n${res.op}`
+                            `The event is undefined while the OP Code is 0\n ${res}`
                         );
                     if (this.APIEvents[res.t]) this.APIEvents[res.t](res.d);
                 } else if (this.OPevents[res.op]) this.OPevents[res.op](res.d);
