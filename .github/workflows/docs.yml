@@ -33,7 +33,7 @@ jobs:
       - name: Clone Docs
         run: |
           echo Cloning Docs...
-          git clone https://github.com/fuwajs/fuwajs.github.io/docs
+          git clone https://github.com/fuwajs/fuwajs.github.io/
       - name: Build Docs
         run: |
           npm install
