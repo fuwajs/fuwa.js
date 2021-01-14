@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */ // should be fixed soon
 import { Client } from 'undici';
+import Response from './Response';
 import { discordAPI } from './_DiscordAPI';
 const http = new Client(discordAPI.discord);
-
 
 export default {
     /** 
@@ -12,29 +12,35 @@ export default {
      */
     REQUEST(
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-        path: string, token: string, data?: any
+        path: string, token: string, data?: string | Buffer
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
             const res = await http.request({
-                path: '/api/v8/' + path,
+                path: '/api/v8' + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bot ' + token,
                 },
-                body: data || null
+                body: data
             });
 
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 let d;
-                try { d = JSON.parse(Buffer.concat(chunks).toString()); } catch (e) {
+                if (!Buffer.concat(chunks).toString()) resolve({});
+                try {
+                    d = JSON.parse(Buffer.concat(chunks).toString());
+                } catch (e) {
                     reject(e);
                 }
 
                 if (res.statusCode === 429) { // Handle Discord Rate Limits
-                    setTimeout(() => this.REQUEST(method, path, token, data), parseInt(d?.retry_after));
+                    setTimeout(async () => {
+                        this.REQUEST(method, path, token, data)
+                            .catch(e => console.error(e));
+                    }, d?.retry_after * 1000);
                 }
                 resolve(d);
             });
@@ -43,109 +49,15 @@ export default {
     },
 
     GET(path: string, token: string): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            const res = await http.request({
-                path,
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        });
+        return this.REQUEST('GET', path, token);
     },
     DELETE(path: string, token: string): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            const res = await http.request({
-                path: path,
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(JSON.parse(Buffer.concat(chunks).toString()));
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        });
+        return this.REQUEST('DELETE', path, token);
     },
-    POST(path: string, token: string, data: string | Buffer): Promise<string> {
-        return new Promise(async (resolve, reject) => {
-            const res = await http.request({
-                path: path,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-            const chunks: any[] = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                resolve(Buffer.concat(chunks).toString());
-            });
-        });
+    POST(path: string, token: string, data: string | Buffer): Promise<any> {
+        return this.REQUEST('POST', path, token, data);
     },
-    PUT(path: string, token: string, data: any): Promise<string> {
-        return new Promise(async (resolve, reject) => {
-            const res = await http.request({
-                path: '/api/v8' + path,
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-
-            const chunks: any[] = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                resolve(Buffer.concat(chunks).toString());
-
-            });
-        });
-    },
-    OTHER(method: string, path: string, token: string, data: any): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            const res = await http.request({
-                path: path,
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-            const chunks: any[] = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                try {
-                    resolve(Buffer.concat(chunks).toString());
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        });
-    },
+    PUT(path: string, token: string, data: string | Buffer): Promise<any> {
+        return this.REQUEST('PUT', path, token, data);
+    }
 };

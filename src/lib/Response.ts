@@ -9,7 +9,7 @@ class Response {
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    async reply(content: string | Embed): Promise<unknown> {
+    reply(content: string | Embed): Promise<Message> {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
@@ -31,8 +31,8 @@ class Response {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
 
-        return await undici.POST(
-            `/api/v8/channels/${this.req.channel_id}/messages`,
+        return undici.POST(
+            `/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
         ).catch(e => { console.error(e); });
@@ -42,7 +42,7 @@ class Response {
      * @param content The content to send. The content can be a string or an 
      * Embed.
      */
-    async send(content: string | Embed): Promise<unknown> {
+    send(content: string | Embed): this {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
@@ -63,31 +63,30 @@ class Response {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        return await undici.POST(
-            `/api/v8/channels/${this.req.channel_id}/messages`,
+        undici.POST(
+            `/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
         ).catch(e => { console.error(e); });
+
+        return this;
     }
 
-    async react(...emojis: string[]): Promise<void> {
-        return emojis.forEach(async e => {
-            // await undici.PUT(
-            //     `/channels/${this.req.channel_id}/messages/${this.req.id}`
-            //     + `/reactions/${encodeURI(e)}/@me`,
-            //     this.token,
-            //     encodeURI(e)
-            // ).catch(e => console.error(e));
-
-            await undici.REQUEST(
-                'PUT',
+    /**
+     * 
+     * @param emojis The emoji(s) to send
+     * @returns
+     */
+    react(...emojis: string[]): this {
+        emojis.forEach(async e => {
+            undici.PUT(
                 `/channels/${this.req.channel_id}/messages/${this.req.id}`
                 + `/reactions/${encodeURI(e)}/@me`,
                 this.token,
                 encodeURI(e)
             ).catch(e => console.error(e));
-        }
-        );
+        });
+        return this;
     }
 
 }

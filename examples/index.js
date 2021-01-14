@@ -18,6 +18,8 @@ client.on('READY', () => {
 
 // This function will be ran before every other command
 client.use((req, res, next) => {
+    // For example, you could notify the user you have recieved their command
+    // by reacting with a green checkmark
     res.react('✅');
     next();
 });
@@ -113,9 +115,9 @@ client.command('logout', (req, res) => {
 
 client.command('reply', (req, res) => {
     res.reply('get replied to');
-    req.author.dm('get dmed').then(console.log);
+    req.author.dm('get dmed');
 });
 
-client.command('react', async (req, res) => {
-    res.react('🧢');
+client.command('react', (req, res) => {
+    res.react('🧢', '😂', '👌', '😃', '🍔');
 });

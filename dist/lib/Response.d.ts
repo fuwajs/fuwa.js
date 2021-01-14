@@ -8,12 +8,17 @@ declare class Response {
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | Embed): Promise<unknown>;
+    reply(content: string | Embed): this;
     /**
      * @param content The content to send. The content can be a string or an
      * Embed.
      */
-    send(content: string | Embed): Promise<unknown>;
-    react(...emojis: string[]): Promise<void>;
+    send(content: string | Embed): this;
+    /**
+     *
+     * @param emojis The emoji(s) to send
+     * @returns
+     */
+    react(...emojis: string[]): this;
 }
 export default Response;

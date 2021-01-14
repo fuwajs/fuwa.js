@@ -423,8 +423,8 @@ class Client extends Emitter_1.default {
     }
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msgs = yield _unicdi_1.default.GET(`/api/v8/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
-            _unicdi_1.default.OTHER('POST', `/api/v8/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
+            const msgs = yield _unicdi_1.default.GET(`/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
+            _unicdi_1.default.POST(`/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
         });
     }
 }

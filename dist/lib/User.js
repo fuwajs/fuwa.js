@@ -55,8 +55,8 @@ class User {
             else {
                 throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            const dm = JSON.parse(yield _unicdi_1.default.POST('/api/v8/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })));
-            return JSON.parse(yield _unicdi_1.default.POST(`/api/v8/channels/${dm.id}/messages`, this.token, JSON.stringify(data)));
+            const dm = yield _unicdi_1.default.POST('/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id }));
+            return _unicdi_1.default.POST(`/channels/${dm.id}/messages`, this.token, JSON.stringify(data));
         });
     }
 }

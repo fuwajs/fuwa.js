@@ -22,135 +22,46 @@ exports.default = {
     REQUEST(method, path, token, data) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
-                path: '/api/v8/' + path,
+                path: '/api/v8' + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: 'Bot ' + token,
                 },
-                body: data || null
+                body: data
             });
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                let d;
+                if (!Buffer.concat(chunks).toString())
+                    resolve({});
                 try {
-                    const d = JSON.parse(Buffer.concat(chunks).toString());
-                    if (res.statusCode === 429) { // Handle Discord Rate Limits
-                        setTimeout(() => this.REQUEST(method, path, token, data), parseInt(d?.retry_after));
-                    }
-                    resolve(d);
+                    d = JSON.parse(Buffer.concat(chunks).toString());
                 }
-                catch (error) {
-                    reject(error);
+                catch (e) {
+                    reject(e);
                 }
+                if (res.statusCode === 429) { // Handle Discord Rate Limits
+                    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        this.REQUEST(method, path, token, data)
+                            .catch(e => console.error(e));
+                    }), (d === null || d === void 0 ? void 0 : d.retry_after) * 1000);
+                }
+                resolve(d);
             });
         }));
     },
     GET(path, token) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
-                path,
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                }
-                catch (error) {
-                    reject(error);
-                }
-            });
-        }));
+        return this.REQUEST('GET', path, token);
     },
     DELETE(path, token) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
-                path: path,
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(JSON.parse(Buffer.concat(chunks).toString()));
-                try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
-                }
-                catch (error) {
-                    reject(error);
-                }
-            });
-        }));
+        return this.REQUEST('DELETE', path, token);
     },
     POST(path, token, data) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
-                path: path,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                resolve(Buffer.concat(chunks).toString());
-            });
-        }));
+        return this.REQUEST('POST', path, token, data);
     },
     PUT(path, token, data) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
-                path: '/api/v8' + path,
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                console.log(Buffer.concat(chunks).toString());
-                resolve(Buffer.concat(chunks).toString());
-            });
-        }));
-    },
-    OTHER(method, path, token, data) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
-                path: path,
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
-                },
-                body: data,
-            });
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                try {
-                    resolve(Buffer.concat(chunks).toString());
-                }
-                catch (error) {
-                    reject(error);
-                }
-            });
-        }));
-    },
+        return this.REQUEST('PUT', path, token, data);
+    }
 };

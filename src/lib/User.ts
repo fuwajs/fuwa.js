@@ -55,17 +55,17 @@ export class User implements UserOptions {
         } else {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
-        const dm: Channel = JSON.parse(await undici.POST(
-            '/api/v8/users/@me/channels',
+        const dm: Channel = await undici.POST(
+            '/users/@me/channels',
             this.token,
             JSON.stringify({ recipient_id: this.id })
-        ));
+        );
 
-        return JSON.parse(await undici.POST(
-            `/api/v8/channels/${dm.id}/messages`,
+        return undici.POST(
+            `/channels/${dm.id}/messages`,
             this.token,
             JSON.stringify(data)
-        ));
+        );
     }
 }
 

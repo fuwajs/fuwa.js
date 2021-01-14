@@ -26,68 +26,64 @@ class Response {
      */
     reply(content) {
         var _a;
-        return __awaiter(this, void 0, void 0, function* () {
-            if (typeof content === 'string') { // Just a normal message
-                this.data.content = content;
-                this.data.tts = false;
-                this.data.message_reference = { message_id: this.req.id };
+        if (typeof content === 'string') { // Just a normal message
+            this.data.content = content;
+            this.data.tts = false;
+            this.data.message_reference = { message_id: this.req.id };
+        }
+        else if (content instanceof Embed_1.default) {
+            if (!content.color) {
+                content.color = Colors_1.default.rgb(Math.random() * 255, Math.random() * 255, Math.random() * 255);
             }
-            else if (content instanceof Embed_1.default) {
-                if (!content.color) {
-                    content.color = Colors_1.default.rgb(Math.random() * 255, Math.random() * 255, Math.random() * 255);
-                }
-                if (typeof content.color === 'string') {
-                    content.color = parseInt('0x' + (((_a = content === null || content === void 0 ? void 0 : content.color) === null || _a === void 0 ? void 0 : _a.split('#')[1]) || 'ffffff'));
-                }
-                this.data.embed = content;
-                this.data.tts = false;
+            if (typeof content.color === 'string') {
+                content.color = parseInt('0x' + (((_a = content === null || content === void 0 ? void 0 : content.color) === null || _a === void 0 ? void 0 : _a.split('#')[1]) || 'ffffff'));
             }
-            else {
-                throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-            }
-            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
-        });
+            this.data.embed = content;
+            this.data.tts = false;
+        }
+        else {
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+        }
+        _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
+        return this;
     }
     /**
      * @param content The content to send. The content can be a string or an
      * Embed.
      */
     send(content) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (typeof content === 'string') { // Just a normal message
-                this.data.content = content;
-                this.data.tts = false;
+        if (typeof content === 'string') { // Just a normal message
+            this.data.content = content;
+            this.data.tts = false;
+        }
+        else if (content instanceof Embed_1.default) {
+            if (!content.color) {
+                content.color = Colors_1.default.rgb(Math.random() * 255, Math.random() * 255, Math.random() * 255);
             }
-            else if (content instanceof Embed_1.default) {
-                if (!content.color) {
-                    content.color = Colors_1.default.rgb(Math.random() * 255, Math.random() * 255, Math.random() * 255);
-                }
-                if (typeof content.color === 'string') {
-                    content.color = parseInt('0x' + (content.color.split('#')[1] || 'ffffff'));
-                }
-                this.data.embed = content;
-                this.data.tts = false;
+            if (typeof content.color === 'string') {
+                content.color = parseInt('0x' + (content.color.split('#')[1] || 'ffffff'));
             }
-            else {
-                // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-                return;
-            }
-            return yield _unicdi_1.default.POST(`/api/v8/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
-        });
+            this.data.embed = content;
+            this.data.tts = false;
+        }
+        else {
+            // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+            return;
+        }
+        _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
+        return this;
     }
+    /**
+     *
+     * @param emojis The emoji(s) to send
+     * @returns
+     */
     react(...emojis) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                // await undici.PUT(
-                //     `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                //     + `/reactions/${encodeURI(e)}/@me`,
-                //     this.token,
-                //     encodeURI(e)
-                // ).catch(e => console.error(e));
-                yield _unicdi_1.default.REQUEST('PUT', `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => console.error(e));
-            }));
-        });
+        emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+            _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => console.error(e));
+        }));
+        return this;
     }
 }
 exports.default = Response;

@@ -345,11 +345,11 @@ class Client extends Emitter {
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, _, 0, command));
             }
-            console.timeEnd('middleware')
-            console.time('run command')
+            console.timeEnd('middleware');
+            console.time('run command');
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
-            console.timeEnd('run command')
-            console.timeEnd('command run')
+            console.timeEnd('run command');
+            console.timeEnd('command run');
         });
         //         this.ws.on('open', async function () {
         //             this.debug(`Connect to ${ discordAPI.gateway } `);
@@ -505,13 +505,14 @@ class Client extends Emitter {
     }
     async deleteMessages(amt: number, channelID: string) {
         const msgs: Message[] = await undici.GET(
-            `/api/v8/channels/${channelID}/messages?limit=${amt}`,
+            `/channels/${channelID}/messages?limit=${amt}`,
             this.token
         ).catch(e => { console.error(e) });
 
-        undici.OTHER('POST',
-            `/api/v8/channels/${channelID}/messages/bulk-delete`,
-            this.token, JSON.stringify({ messages: msgs.map(m => m.id) })
+        undici.POST(
+            `/channels/${channelID}/messages/bulk-delete`,
+            this.token,
+            JSON.stringify({ messages: msgs.map(m => m.id) })
         ).catch(e => { console.error(e) });
     }
 }
