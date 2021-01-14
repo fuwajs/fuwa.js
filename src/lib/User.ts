@@ -9,7 +9,7 @@ export class User implements UserOptions {
     avatar: string;
     bot?: boolean;
     system?: boolean;
-    mfa_enabled?: boolean; // is 2FA Enabled?
+    mfa_enabled?: boolean; // does the user have 2FA Enabled?
     locale?: string;
     verified?: boolean; // Is the user's email verfied?
     email?: string;
@@ -28,6 +28,11 @@ export class User implements UserOptions {
         this.flags = data.flags;
         this.email = data.email;
     }
+
+    /** 
+     * Send a Direct Message to 'this' user. 
+     * @param content The contents of the message. Can be a string or an Embed.
+     */
     async dm(content: string | Embed): Promise<Message> {
         const data: any = {};
         data.recipient_id = this.id;
@@ -51,9 +56,10 @@ export class User implements UserOptions {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
         const dm: Channel = JSON.parse(await undici.POST(
-            '/api/v8/users/@me/channels', 
-            this.token, 
-            JSON.stringify({ recipient_id: this.id })));
+            '/api/v8/users/@me/channels',
+            this.token,
+            JSON.stringify({ recipient_id: this.id })
+        ));
 
         return JSON.parse(await undici.POST(
             `/api/v8/channels/${dm.id}/messages`,

@@ -15,6 +15,37 @@ const undici_1 = require("undici");
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
+    /**
+     * Use this if you want to handle Discord Rate limits automatically.
+     * Be aware that this function is **recursive**
+     */
+    REQUEST(method, path, token, data) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            const res = yield http.request({
+                path: '/api/v8/' + path,
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bot ' + token,
+                },
+                body: data || null
+            });
+            const chunks = [];
+            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('end', () => {
+                try {
+                    const d = JSON.parse(Buffer.concat(chunks).toString());
+                    if (res.statusCode === 429) { // Handle Discord Rate Limits
+                        setTimeout(() => this.REQUEST(method, path, token, data), parseInt(d?.retry_after));
+                    }
+                    resolve(d);
+                }
+                catch (error) {
+                    reject(error);
+                }
+            });
+        }));
+    },
     GET(path, token) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const res = yield http.request({
@@ -28,6 +59,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                console.log(Buffer.concat(chunks).toString());
                 try {
                     resolve(JSON.parse(Buffer.concat(chunks).toString()));
                 }
@@ -50,6 +82,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                console.log(JSON.parse(Buffer.concat(chunks).toString()));
                 try {
                     resolve(JSON.parse(Buffer.concat(chunks).toString()));
                 }
@@ -73,6 +106,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                console.log(Buffer.concat(chunks).toString());
                 resolve(Buffer.concat(chunks).toString());
             });
         }));
@@ -91,6 +125,7 @@ exports.default = {
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                console.log(Buffer.concat(chunks).toString());
                 resolve(Buffer.concat(chunks).toString());
             });
         }));
@@ -110,7 +145,7 @@ exports.default = {
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 try {
-                    resolve(JSON.parse(Buffer.concat(chunks).toString()));
+                    resolve(Buffer.concat(chunks).toString());
                 }
                 catch (error) {
                     reject(error);

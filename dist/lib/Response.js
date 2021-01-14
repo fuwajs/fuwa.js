@@ -78,8 +78,14 @@ class Response {
     react(...emojis) {
         return __awaiter(this, void 0, void 0, function* () {
             return emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                return yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => { console.error(e); });
+                // await undici.PUT(
+                //     `/channels/${this.req.channel_id}/messages/${this.req.id}`
+                //     + `/reactions/${encodeURI(e)}/@me`,
+                //     this.token,
+                //     encodeURI(e)
+                // ).catch(e => console.error(e));
+                yield _unicdi_1.default.REQUEST('PUT', `/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => console.error(e));
             }));
         });
     }

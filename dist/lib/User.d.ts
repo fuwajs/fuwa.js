@@ -16,6 +16,10 @@ export declare class User implements UserOptions {
     premium_type?: number;
     public_flags?: number;
     constructor(data: UserOptions, token: string);
+    /**
+     * Send a Direct Message to 'this' user.
+     * @param content The contents of the message. Can be a string or an Embed.
+     */
     dm(content: string | Embed): Promise<Message>;
 }
 export default User;

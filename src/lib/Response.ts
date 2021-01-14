@@ -70,13 +70,24 @@ class Response {
         ).catch(e => { console.error(e); });
     }
 
-    async react(...emojis: string[]): Promise<any> {
-        return emojis.forEach(async e => await undici.PUT(
-            `/channels/${this.req.channel_id}/messages/${this.req.id}`
-            + `/reactions/${encodeURI(e)}/@me`,
-            this.token,
-            encodeURI(e)
-        ).catch(e => { console.error(e); }));
+    async react(...emojis: string[]): Promise<void> {
+        return emojis.forEach(async e => {
+            // await undici.PUT(
+            //     `/channels/${this.req.channel_id}/messages/${this.req.id}`
+            //     + `/reactions/${encodeURI(e)}/@me`,
+            //     this.token,
+            //     encodeURI(e)
+            // ).catch(e => console.error(e));
+
+            await undici.REQUEST(
+                'PUT',
+                `/channels/${this.req.channel_id}/messages/${this.req.id}`
+                + `/reactions/${encodeURI(e)}/@me`,
+                this.token,
+                encodeURI(e)
+            ).catch(e => console.error(e));
+        }
+        );
     }
 
 }

@@ -1,5 +1,5 @@
 import { Channel as _Channel } from './_DiscordAPI';
-import { Overwrites as _Overwrites } from './_DiscordAPI';
+import { Overwrite as _Overwrites } from './_DiscordAPI';
 /**
  * Channel Class
  */

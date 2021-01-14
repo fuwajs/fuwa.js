@@ -3,7 +3,7 @@
  *
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.discordAPI = exports.opCodes = void 0;
+exports.ChannelType = exports.discordAPI = exports.opCodes = void 0;
 var opCodes;
 (function (opCodes) {
     opCodes[opCodes["dispatch"] = 0] = "dispatch";
@@ -51,3 +51,13 @@ var MessageType;
     MessageType[MessageType["reply"] = 16] = "reply";
     MessageType[MessageType["applicationCommand"] = 17] = "applicationCommand";
 })(MessageType || (MessageType = {}));
+var ChannelType;
+(function (ChannelType) {
+    ChannelType[ChannelType["text"] = 0] = "text";
+    ChannelType[ChannelType["dm"] = 1] = "dm";
+    ChannelType[ChannelType["voice"] = 2] = "voice";
+    ChannelType[ChannelType["groupDM"] = 3] = "groupDM";
+    ChannelType[ChannelType["catergory"] = 4] = "catergory";
+    ChannelType[ChannelType["news"] = 5] = "news";
+    ChannelType[ChannelType["store"] = 6] = "store";
+})(ChannelType = exports.ChannelType || (exports.ChannelType = {}));

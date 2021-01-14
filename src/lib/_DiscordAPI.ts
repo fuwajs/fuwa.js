@@ -83,7 +83,7 @@ interface Sticker {
     tags?: string;
     asset: string;
     preview_asset: string | null;
-    format_type:  StickerFormat;
+    format_type: StickerFormat;
 }
 
 enum StickerFormat {
@@ -143,19 +143,19 @@ export interface Attachment {
 }
 
 export interface Embed {
-    title?:	string;
-    type?:	string;
+    title?: string;
+    type?: string;
     description?: string;
     url?: string;
-    timestamp?:	Date;
-    color?:	number;
+    timestamp?: Date;
+    color?: number;
     footer?: EmbedFooter;
-    image?:	EmbedImage;
-    thumbnail?:	EmbedThumbnail;
-    video?:	EmbedVideo;
-    provider?:	EmbedProvider;
-    author?:	EmbedAuthor;
-    fields?:	EmbedField[];
+    image?: EmbedImage;
+    thumbnail?: EmbedThumbnail;
+    video?: EmbedVideo;
+    provider?: EmbedProvider;
+    author?: EmbedAuthor;
+    fields?: EmbedField[];
 }
 
 interface EmbedThumbnail {
@@ -216,9 +216,9 @@ export interface Author {
 export interface Member {
     user: User;
     roles: string;
-    premium_since?: null|number;
+    premium_since?: null | number;
     pending: boolean;
-    nick: string|null;
+    nick: string | null;
     mute: boolean;
     joined_at: number;
     is_pending: boolean;
@@ -348,7 +348,7 @@ export interface User extends Author {
     mfa_enabled?: boolean;
     locale?: string;
     /** Is the user's email verfied? */
-    verified?: boolean; 
+    verified?: boolean;
     email?: string;
     flags?: number;
     premium_type?: number;
@@ -410,26 +410,41 @@ export interface Guild {
     joined_at: string;
 }
 
-export interface Overwrites {
+export interface Overwrite {
     id: string;
     type: number;
     allow: string;
     deny: string;
 }
 export interface Channel {
-    type: number;
-    nsfw?: boolean;
-    position?: number;
-    permission_overwrites?: Overwrites[];
-    name?: string;
     id: string;
-    topic?: null;
-    rate_limit_per_user?: number;
-    parent_id?: string;
-    last_message_id?: string;
-    user_limit?: number;
-    bitrate?: number;
+    type: ChannelType;
     guild_id?: string;
+    position?: number;
+    permission_overwrites?: Overwrite[];
+    name?: string;
+    topic?: string | null;
+    nsfw?: boolean;
+    last_message_id?: string;
+    bitrate?: number;
+    user_limit?: number;
+    rate_limit_per_user?: number;
+    recipients?: User[];
+    icon?: string | null;
+    owner_id?: string;
+    application_id?: string;
+    parent_id?: string | null;
+    last_pin_timestamp?: Date | null;
+}
+
+export enum ChannelType {
+    text,
+    dm,
+    voice,
+    groupDM,
+    catergory,
+    news,
+    store
 }
 
 export interface GuildHashes {

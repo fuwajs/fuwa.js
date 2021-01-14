@@ -379,26 +379,40 @@ export interface Guild {
     premium_subscription_count: number;
     joined_at: string;
 }
-export interface Overwrites {
+export interface Overwrite {
     id: string;
     type: number;
     allow: string;
     deny: string;
 }
 export interface Channel {
-    type: number;
-    nsfw?: boolean;
-    position?: number;
-    permission_overwrites?: Overwrites[];
-    name?: string;
     id: string;
-    topic?: null;
-    rate_limit_per_user?: number;
-    parent_id?: string;
-    last_message_id?: string;
-    user_limit?: number;
-    bitrate?: number;
+    type: ChannelType;
     guild_id?: string;
+    position?: number;
+    permission_overwrites?: Overwrite[];
+    name?: string;
+    topic?: string | null;
+    nsfw?: boolean;
+    last_message_id?: string;
+    bitrate?: number;
+    user_limit?: number;
+    rate_limit_per_user?: number;
+    recipients?: User[];
+    icon?: string | null;
+    owner_id?: string;
+    application_id?: string;
+    parent_id?: string | null;
+    last_pin_timestamp?: Date | null;
+}
+export declare enum ChannelType {
+    text = 0,
+    dm = 1,
+    voice = 2,
+    groupDM = 3,
+    catergory = 4,
+    news = 5,
+    store = 6
 }
 export interface GuildHashes {
     version: number;

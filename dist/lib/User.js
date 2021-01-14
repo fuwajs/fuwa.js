@@ -29,10 +29,14 @@ class User {
         this.flags = data.flags;
         this.email = data.email;
     }
+    /**
+     * Send a Direct Message to 'this' user.
+     * @param content The contents of the message. Can be a string or an Embed.
+     */
     dm(content) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            let data = {};
+            const data = {};
             data.recipient_id = this.id;
             if (typeof content === 'string') { // Just a normal message
                 data.content = content;
@@ -51,7 +55,7 @@ class User {
             else {
                 throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            let dm = JSON.parse(yield _unicdi_1.default.POST('/api/v8/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })));
+            const dm = JSON.parse(yield _unicdi_1.default.POST('/api/v8/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })));
             return JSON.parse(yield _unicdi_1.default.POST(`/api/v8/channels/${dm.id}/messages`, this.token, JSON.stringify(data)));
         });
     }
