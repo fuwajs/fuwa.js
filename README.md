@@ -23,7 +23,17 @@ This assumes you have already setup a discord bot application in Discord. See
 
 ```bash
 $ npm init -y
+```
+For the lightweight version on Fuwa.js install with
+```bash
+$ npm i Fuwajs/Fuwa.js --no-optional
+```
+For increased speed (better for production)
+```bash
 $ npm i Fuwajs/Fuwa.js
+```
+
+```bash
 $ echo > index.js
 ```
 
