@@ -1,4 +1,5 @@
 import Request from './Request';
+import Cache from './_Cache';
 import { discordAPI, Message, opCodes, Guild } from './_DiscordAPI';
 import User from './User';
 import undici from './_unicdi';
@@ -7,7 +8,6 @@ import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 import Embed from './Embed';
 import Colors from './Colors';
-import { EPROTO } from 'constants';
 
 const erlpack = import('erlpack');
 
@@ -78,14 +78,33 @@ export interface clientOptions {
      */
     builtinCommands?: {
         help?: boolean;
+    },
+    /**
+     * If the bot should cache guilds/channels/users or not. 
+     * It's suggested to keep this on for smaller bots
+     * but for larger ones turn this off,
+     * caching increases the speed of sending messages, but takes up memory.
+     * meaning caching on = faster guild replies
+     * caching off = more memory for other tasks
+     */
+    cache?: true,
+    /**
+     * Settings for caching
+     */
+    cachingSettings?: {
+        /**
+         * Clear the cache after a certain amount of time (in ms)
+         * If this is false then the cache will never be cleared
+         */
+        clearAfter?: number|false,
+        cacheOptions?: {
+            guilds: boolean
+            channels: boolean
+            users: boolean
+        }
     }
 }
 
-type eventCallback =
-    | (() => void | Promise<void>)
-    | ((req: Request) => void | Promise<void>)
-    | ((req: Request, cmd: commandCallback) => void | Promise<void>)
-    | ((err: Error) => void | Promise<void>);
 
 /**
  * The Client Class
@@ -99,9 +118,7 @@ class Client extends Emitter {
     public bot: User;
     private sessionId = '';
     protected debugMode: boolean;
-    public cache = {
-        guilds: new Map<string, Guild>()
-    };
+    public cache: Cache
     protected status: any = [];
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
@@ -134,7 +151,17 @@ class Client extends Emitter {
         super();
         this.options = options;
         this.prefix = prefix;
-        this.bot;
+        const caching: typeof options.cachingSettings = {
+            clearAfter: options
+                ?.cachingSettings
+                ?.clearAfter === false ? false : 1.08e+7, // 30 minutes
+            cacheOptions: options?.cachingSettings?.cacheOptions|| {
+                channels: true,
+                guilds: true,
+                users: true
+            }
+        } 
+        this.cache = new Cache(caching)
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
         if (options?.builtinCommands?.help ?? true) {
@@ -301,11 +328,11 @@ class Client extends Emitter {
         this.event('READY', (data) => {
             this.sessionId = data.session_id;
             this.bot = new User(data.user, token.toString());
-            data.guilds.forEach(g => g.unavailable ? '' : this.cache.guilds.set(g.id, g))
+            data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g))
             const ready = this.events.get('READY');
             if (ready) ready();
         });
-        this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
+        this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             console.time('command run');
             if (!msg.content) return;

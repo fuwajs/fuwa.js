@@ -32,6 +32,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Request_1 = __importDefault(require("./Request"));
+const _Cache_1 = __importDefault(require("./_Cache"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const User_1 = __importDefault(require("./User"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
@@ -48,6 +49,7 @@ var statusCode;
     statusCode[statusCode["custom"] = 3] = "custom";
     statusCode[statusCode["competing"] = 4] = "competing";
 })(statusCode || (statusCode = {}));
+;
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
@@ -61,12 +63,9 @@ class Client extends Emitter_1.default {
      * @param prefix The prefix for your bot
      */
     constructor(prefix, options) {
-        var _a, _b;
+        var _a, _b, _c, _d;
         super();
         this.sessionId = '';
-        this.cache = {
-            guilds: new Map()
-        };
         this.status = [];
         // protected events: Map<keyof Events, eventCallback> = new Map();
         /* eslint-disable */
@@ -75,10 +74,18 @@ class Client extends Emitter_1.default {
         this.middleware = [];
         this.options = options;
         this.prefix = prefix;
-        this.bot;
+        const caching = {
+            clearAfter: ((_a = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _a === void 0 ? void 0 : _a.clearAfter) === false ? false : 1.08e+7,
+            cacheOptions: ((_b = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _b === void 0 ? void 0 : _b.cacheOptions) || {
+                channels: true,
+                guilds: true,
+                users: true
+            }
+        };
+        this.cache = new _Cache_1.default(caching);
         // Bootleg auto-help command
         // TODO: Make it less bootleg 
-        if ((_b = (_a = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _a === void 0 ? void 0 : _a.help) !== null && _b !== void 0 ? _b : true) {
+        if ((_d = (_c = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _c === void 0 ? void 0 : _c.help) !== null && _d !== void 0 ? _d : true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed_1.default()
                     .setColor(Colors_1.default.blue)
@@ -233,12 +240,12 @@ class Client extends Emitter_1.default {
             this.event('READY', (data) => {
                 this.sessionId = data.session_id;
                 this.bot = new User_1.default(data.user, token.toString());
-                data.guilds.forEach(g => g.unavailable ? '' : this.cache.guilds.set(g.id, g));
+                data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g));
                 const ready = this.events.get('READY');
                 if (ready)
                     ready();
             });
-            this.event('GUILD_CREATE', guild => this.cache.guilds.set(guild.id, guild));
+            this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 console.time('command run');
                 if (!msg.content)

@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import Request from './Request';
-import { Guild } from './_DiscordAPI';
+import Cache from './_Cache';
 import User from './User';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
@@ -65,6 +65,30 @@ export interface clientOptions {
     builtinCommands?: {
         help?: boolean;
     };
+    /**
+     * If the bot should cache guilds/channels/users or not.
+     * It's suggested to keep this on for smaller bots
+     * but for larger ones turn this off,
+     * caching increases the speed of sending messages, but takes up memory.
+     * meaning caching on = faster guild replies
+     * caching off = more memory for other tasks
+     */
+    cache?: true;
+    /**
+     * Settings for caching
+     */
+    cachingSettings?: {
+        /**
+         * Clear the cache after a certain amount of time (in ms)
+         * If this is false then the cache will never be cleared
+         */
+        clearAfter?: number | false;
+        cacheOptions?: {
+            guilds: boolean;
+            channels: boolean;
+            users: boolean;
+        };
+    };
 }
 /**
  * The Client Class
@@ -78,9 +102,7 @@ declare class Client extends Emitter {
     bot: User;
     private sessionId;
     protected debugMode: boolean;
-    cache: {
-        guilds: Map<string, Guild>;
-    };
+    cache: Cache;
     protected status: any;
     protected events: Map<keyof Events, Function>;
     protected prefix: string | string[] | ((req: Request) => Promise<string> | string);

@@ -1,6 +1,7 @@
 import User from './User';
 import Guild from './Guild';
 import { Message as MessageOptions, Reaction } from "./_DiscordAPI";
+import Cache from './_Cache';
 declare class Request {
     readonly author: User;
     guild: Guild;
@@ -13,6 +14,6 @@ declare class Request {
      */
     args: string[];
     readonly reactions: Reaction[];
-    constructor(msg: MessageOptions, token: string, cache: any);
+    constructor(msg: MessageOptions, token: string, cache: Cache);
 }
 export default Request;

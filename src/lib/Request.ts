@@ -3,6 +3,7 @@ import http from './_unicdi';
 import { Argument } from './Command';
 import Guild from './Guild';
 import { Message as MessageOptions, Guild as GuildOptions, Reaction } from "./_DiscordAPI";
+import Cache from './_Cache';
 
 type Author = {
     id: string
@@ -20,14 +21,14 @@ class Request {
     args: string[];
     readonly reactions: Reaction[];
 
-    constructor(msg: MessageOptions, token: string, cache: any) {
+    constructor(msg: MessageOptions, token: string, cache: Cache) {
 
         this.author = new User(msg.author, token);
         this.message = { content: msg.content };
         this.rawData = msg;
         this.reactions = msg.reactions;
         // this.getGuild(msg.guild_id, token);
-        this.guild = new Guild(cache.guilds.get(msg.guild_id));
+        this.guild = new Guild(cache.data['guilds'].get(msg.guild_id));
     }
     // private async getGuild(guildID: string, token: string) {
     //     let guild = { 
