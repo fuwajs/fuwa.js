@@ -7,7 +7,7 @@ const http = new Client(discordAPI.discord);
 export default {
     /** 
      * Use this if you want to handle Discord Rate limits automatically.
-     *! Be aware that this function is **recursive**
+     *!! Be aware that this function is **recursive**
      */
     REQUEST(
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
@@ -31,8 +31,9 @@ export default {
                 if (!Buffer.concat(chunks).toString()) resolve({});
                 try {
                     d = JSON.parse(Buffer.concat(chunks).toString());
-                } catch (e) reject(e);
-            
+                } catch (e) {
+                    reject(e);
+                }
 
                 if (res.statusCode === 429) { // Handle Discord Rate Limits
                     setTimeout(() => {
