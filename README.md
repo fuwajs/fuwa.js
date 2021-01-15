@@ -21,10 +21,11 @@ This assumes you have already setup a discord bot application in Discord. See
 - [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
 - [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
 
+Init your nodejs project
 ```bash
 $ npm init -y
 ```
-For the lightweight version on Fuwa.js install with
+For the lightweight version of Fuwa.js install with
 ```bash
 $ npm i Fuwajs/Fuwa.js --no-optional
 ```
@@ -32,12 +33,12 @@ For increased speed (better for production)
 ```bash
 $ npm i Fuwajs/Fuwa.js
 ```
-
+Create a file called index.js
 ```bash
 $ echo > index.js
 ```
 
-A file called index.js should be in your directory, open that in your IDE of choice and type
+Open index.js in your IDE of choice and copypaste this code
 ```js
 const fuwa = require('fuwa.js');
 
@@ -53,8 +54,9 @@ client.command(['hi', 'hello'], (req, res) => {
 
 // replace with your bot token
 client.login('<your bot token>');
-
 ```
+Make sure to replace `<your bot token`> with your actual bot token!
+<br>
 Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
 
 Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
