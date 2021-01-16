@@ -5,7 +5,7 @@ class _Cache {
         guilds: new Map<string, Guild>()
     };
     constructor(protected options: clientOptions['cachingSettings']) {
-        if(options.clearAfter !== false) {
+        if (options.clearAfter !== false) {
             setInterval(() => {
                 delete this.data;
                 this.data = {
@@ -14,11 +14,11 @@ class _Cache {
             }, options.clearAfter);
         }
     }
-    cache<T extends keyof typeof _Cache.prototype.data>(type: T, data: any) {
-        if(
-            this.options?.cacheOptions[type] === undefined 
-            ? true 
-            : this.options.cacheOptions[type]
+    cache<T extends keyof typeof _Cache.prototype.data>(type: T, data: any): void {
+        if (
+            this.options?.cacheOptions[type] === undefined
+                ? true
+                : this.options.cacheOptions[type]
         ) this.data[type].set(data.id, data);
     }
 

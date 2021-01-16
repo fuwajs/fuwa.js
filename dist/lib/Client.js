@@ -80,11 +80,12 @@ class Client extends Emitter_1.default {
                 channels: true,
                 guilds: true,
                 users: true
-            }
+            },
         };
         this.cache = new _Cache_1.default(caching);
         if ((_d = (_c = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _c === void 0 ? void 0 : _c.help) !== null && _d !== void 0 ? _d : true) {
-            this.command(['help', 'commands', 'h'], (req, res, next) => {
+            this.command(['help', 'commands', 'h'], (req, res) => {
+                console.log('help');
                 let embed = new Embed_1.default()
                     .setColor(Colors_1.default.blue)
                     .setThumbnail(this.bot.avatar);
@@ -104,6 +105,10 @@ class Client extends Emitter_1.default {
                                 value: 'Soon'
                             }
                         ];
+                        if (cmd[0].options.args) {
+                            const argNames = [...cmd[0].options.args.keys()];
+                            fields.push({ name: 'Arguments', value: `\`${argNames.join(', ')}\`` });
+                        }
                         if (cmd[0].options.aliases) {
                             fields.push({
                                 name: 'Aliases',
@@ -123,7 +128,6 @@ class Client extends Emitter_1.default {
                     });
                 }
                 res.send(embed);
-                next();
             }, { desc: 'Get help on the usage of a command.' });
         }
     }
@@ -183,9 +187,9 @@ class Client extends Emitter_1.default {
         return this;
     }
     /**
-     * a function that is ran before every command
+     * A function that is ran before every command
      * @param  cb Your middleware function
-     * @returns A client
+     * @returns A **client** so you can *chain* methods.
      * @description
      * ```typescript
      * cli.use((req, res, next) => {

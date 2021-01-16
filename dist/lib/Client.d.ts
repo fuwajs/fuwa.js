@@ -88,6 +88,11 @@ export interface clientOptions {
             channels: boolean;
             users: boolean;
         };
+        /**
+         * Maximum amount of items to cache at once. Set this to 0 if you want
+         * an unlimited cache size
+         */
+        maxSize?: number;
     };
 }
 /**
@@ -146,9 +151,9 @@ declare class Client extends Emitter {
      */
     on<T extends keyof Events>(event: T, cb: Events[T]): this;
     /**
-     * a function that is ran before every command
+     * A function that is ran before every command
      * @param  cb Your middleware function
-     * @returns A client
+     * @returns A **client** so you can *chain* methods.
      * @description
      * ```typescript
      * cli.use((req, res, next) => {

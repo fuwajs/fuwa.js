@@ -96,12 +96,18 @@ export interface clientOptions {
          * Clear the cache after a certain amount of time (in ms)
          * If this is false then the cache will never be cleared
          */
-        clearAfter?: number|false,
+        clearAfter?: number | false,
         cacheOptions?: {
             guilds: boolean
             channels: boolean
             users: boolean
         }
+
+        /**
+         * Maximum amount of items to cache at once. Set this to 0 if you want
+         * an unlimited cache size
+         */
+        maxSize?: number;
     }
 }
 
@@ -155,15 +161,16 @@ class Client extends Emitter {
             clearAfter: options
                 ?.cachingSettings
                 ?.clearAfter === false ? false : 1.08e+7, // 30 minutes
-            cacheOptions: options?.cachingSettings?.cacheOptions|| {
+            cacheOptions: options?.cachingSettings?.cacheOptions || {
                 channels: true,
                 guilds: true,
                 users: true
-            }
-        } 
+            },
+        }
         this.cache = new Cache(caching)
         if (options?.builtinCommands?.help ?? true) {
-            this.command(['help', 'commands', 'h'], (req, res, next) => {
+            this.command(['help', 'commands', 'h'], (req, res) => {
+                console.log('help');
                 let embed = new Embed()
                     .setColor(Colors.blue)
                     .setThumbnail(this.bot.avatar);
@@ -183,6 +190,11 @@ class Client extends Emitter {
                                 value: 'Soon'
                             }
                         ];
+
+                        if (cmd[0].options.args) {
+                            const argNames = [...cmd[0].options.args.keys()];
+                            fields.push({ name: 'Arguments', value: `\`${argNames.join(', ')}\`` })
+                        }
                         if (cmd[0].options.aliases) {
                             fields.push({
                                 name: 'Aliases',
@@ -202,7 +214,6 @@ class Client extends Emitter {
                     });
                 }
                 res.send(embed);
-                next();
             }, { desc: 'Get help on the usage of a command.' });
         }
     }
@@ -237,9 +248,9 @@ class Client extends Emitter {
                 return ret;
             },
 
-            addArgument: <T>(name: string, desc: string, defaultVal?: T, )  => {
+            addArgument: <T>(name: string, desc: string, defaultVal?: T,) => {
                 let args = old[0].options.args;
-                if(!args) args = new Map<string, Argument<unknown>>();
+                if (!args) args = new Map<string, Argument<unknown>>();
 
                 args.set(name, new Argument<T>(desc, defaultVal));
                 this.commands.set(defaultName, old);
@@ -262,9 +273,9 @@ class Client extends Emitter {
         return this;
     }
     /**
-     * a function that is ran before every command
+     * A function that is ran before every command
      * @param  cb Your middleware function
-     * @returns A client
+     * @returns A **client** so you can *chain* methods.
      * @description
      * ```typescript
      * cli.use((req, res, next) => {
@@ -311,7 +322,7 @@ class Client extends Emitter {
 
         erlpack.then(() => {
             this.connect(discordAPI.gateway, {
-                v: 8, 
+                v: 8,
                 encoding: 'etf'
             });
         });
@@ -401,6 +412,7 @@ class Client extends Emitter {
             const req = new Request(msg, token.toString(), this.cache);
             req.args = args;
             // console.log (req)
+
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, middlewareCommand, 0, command));
             }

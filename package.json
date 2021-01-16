@@ -28,7 +28,6 @@
     },
     "homepage": "https://github.com/Fuwajs/Fuwa.js#readme",
     "dependencies": {
-        "erlpack": "^0.1.3",
         "undici": "^3.0.0",
         "ws": "^7.4.1"
     },

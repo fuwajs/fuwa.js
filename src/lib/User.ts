@@ -59,13 +59,13 @@ export class User implements UserOptions {
             '/users/@me/channels',
             this.token,
             JSON.stringify({ recipient_id: this.id })
-        );
+        ).catch(console.error);
 
         return undici.POST(
             `/channels/${dm.id}/messages`,
             this.token,
             JSON.stringify(data)
-        );
+        ).catch(console.error);
     }
 }
 

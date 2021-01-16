@@ -24,17 +24,12 @@ matrix:
 
 cache:
     directories:
-        - node_modules
-        - examples/node_modules
+        - node_modules/
 build:
     - npm run build
 
 before_build:
-    # Configure npm
-    - |
-        # Skip updating shrinkwrap / lock
-        cd examples
-        npm install
+    - npm install
     # Remove all non-test dependencies
 
 # We need a better test command

@@ -10,50 +10,62 @@
 </div>
 
 # Highlights
-- Express-like syntax
-- Lightweight (only **three** dependencies)
-- Blazing Fast
-- Built-In Command Handler & Parser
 
+-   ☕️ | Express-like syntax
+-   🪶 | Lightweight (only **two** dependencies)
+-   🔨 | Built-In Command Handler & Parser
+-   🦺 | Safe (complete runtime safety for your bot.)
+-   ⚡️ | Blazing Fast
 
 # Quickstart
-This assumes you have already setup a discord bot application in Discord. See
-- [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
-- [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
 
-Init your nodejs project
+This assumes you have already setup a discord bot application in Discord. See
+
+-   [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
+-   [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
+
+Create a new ynodejs project
+
 ```bash
 $ npm init -y
 ```
+
 For the lightweight version of Fuwa.js install with
+
 ```bash
 $ npm i Fuwajs/Fuwa.js --no-optional
 ```
+
 For increased speed (better for production)
+
 ```bash
 $ npm i Fuwajs/Fuwa.js
 ```
+
 Create a file called index.js
+
 ```bash
 $ echo > index.js
 ```
 
 Open index.js in your IDE of choice and copypaste this code
+
 ```js
 const fuwa = require('fuwa.js');
 
 const client = new fuwa.Client('?'); // Your bot prefix here
 
-client.on('READY', () => console.log('I am alive!') );
+client.on('READY', () => console.log('I am alive!'));
 
-client.command(['hi', 'hello'], (req, res) => { 
-    res.send(`Hello there, my name is ${client.bot.username}!`); 
+client.command(['hi', 'hello'], (req, res) => {
+    res.send(`Hello there, my name is ${client.bot.username}!`);
 });
 
 // replace with your bot token
 client.login('<your bot token>');
 ```
-Make sure to replace `<your bot token`> with your actual bot token!
+
+Make sure to replace `<your bot token>` with your actual bot token!
 <br>
 Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
 
