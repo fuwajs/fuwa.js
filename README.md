@@ -11,7 +11,7 @@
 
 # Highlights
 - Express-like syntax
-- Lightweight (only **two** dependencies)
+- Lightweight (only **three** dependencies)
 - Blazing Fast
 - Built-In Command Handler & Parser
 
@@ -43,8 +43,6 @@ Open index.js in your IDE of choice and copypaste this code
 const fuwa = require('fuwa.js');
 
 const client = new fuwa.Client('?'); // Your bot prefix here
-
-
 
 client.on('READY', () => console.log('I am alive!') );
 

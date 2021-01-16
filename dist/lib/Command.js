@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Argument = void 0;
 class Argument {
-    constructor({ defaultValue, desc }) {
+    constructor(desc, defaultValue) {
         this.defaultValue = defaultValue;
         this.desc = desc;
     }

@@ -1,7 +1,8 @@
 "use strict";
 /********************************************************
- *
- */
+ * Discord API interfaces
+ * https://discord.com/developers/docs
+ *******************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChannelType = exports.discordCDN = exports.discordAPI = exports.opCodes = void 0;
 var opCodes;

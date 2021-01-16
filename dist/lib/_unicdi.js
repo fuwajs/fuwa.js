@@ -17,7 +17,7 @@ const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
-     * Be aware that this function is **recursive**
+     *!! Be aware that this function is **recursive**
      */
     REQUEST(method, path, token, data) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {

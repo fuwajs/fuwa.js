@@ -1,41 +1,41 @@
 language: node_js
 node_js:
-#  - "0.10"
-#  - "0.12"
-#  - "1.8"
-#  - "2.5"
-#  - "3.3"
-#  - "4.9"
-#  - "5.12"
-#  - "6.17"
-#  - "7.10"
-#  - "8.17"
-#  - "9.11"
-#  - "10.19"
-# - "11.15"
-  - "12.16"
+    #  - "0.10"
+    #  - "0.12"
+    #  - "1.8"
+    #  - "2.5"
+    #  - "3.3"
+    #  - "4.9"
+    #  - "5.12"
+    #  - "6.17"
+    #  - "7.10"
+    #  - "8.17"
+    #  - "9.11"
+    #  - "10.19"
+    # - "11.15"
+    - '12.16'
 matrix:
-  include:
-    - node_js: "13"
-      env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
-  allow_failures:
-    # Allow the nightly installs to fail
-    - env: "NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly"
+    include:
+        - node_js: '13'
+          env: 'NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly'
+    allow_failures:
+        # Allow the nightly installs to fail
+        - env: 'NVM_NODEJS_ORG_MIRROR=https://nodejs.org/download/nightly'
 
 cache:
-  directories:
-    - node_modules
-    - examples/node_modules
-install:
-  - npm run build
+    directories:
+        - node_modules
+        - examples/node_modules
+build:
+    - npm run build
 
-before_install:
-  # Configure npm
-  - |
-    # Skip updating shrinkwrap / lock
-    cd examples
-    npm install
-  # Remove all non-test dependencies
+before_build:
+    # Configure npm
+    - |
+        # Skip updating shrinkwrap / lock
+        cd examples
+        npm install
+    # Remove all non-test dependencies
 
 # We need a better test command
 # npm test doesnt end

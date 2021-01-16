@@ -35,14 +35,14 @@ class Response {
             `/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
-        ).catch(e => { console.error(e); });
+        ).catch(console.error);
     }
 
     /**
      * @param content The content to send. The content can be a string or an 
      * Embed.
      */
-    send(content: string | Embed): this {
+    send(content: string | Embed): Promise<any> {
         if (typeof content === 'string') { // Just a normal message
             this.data.content = content;
             this.data.tts = false;
@@ -63,18 +63,16 @@ class Response {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        undici.POST(
+        return undici.POST(
             `/channels/${this.req.channel_id}/messages`,
             this.token,
             JSON.stringify(this.data)
-        ).catch(e => { console.error(e); });
-
-        return this;
+        ).catch(console.error);
     }
 
     /**
      * @param emojis The emoji(s) to send
-     * @returns Another Response so you can chain functions
+     * @returns Another Response so you can chain reactions
      */
     react(...emojis: string[]): this {
         emojis.forEach(async e => {
@@ -83,7 +81,7 @@ class Response {
                 + `/reactions/${encodeURI(e)}/@me`,
                 this.token,
                 encodeURI(e)
-            ).catch(e => console.error(e));
+            ).catch(console.error);
         });
         return this;
     }

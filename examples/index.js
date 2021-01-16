@@ -54,7 +54,8 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
         return;
     }
     client.deleteMessages(amt, req.rawData.channel_id);
-}, { desc: 'Remove messages.' });
+}, { desc: 'Remove messages.' })
+    .addArgument('amount', 'The amount of messages to remove', 0);
 
 // More complex example command using the GitHub API
 client.command(['github', 'gh'], async (req, res) => {

@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandParsing = exports.InvalidPrefix = exports.InvalidToken = void 0;
+/******************************************************************************
+ * @file Errors.ts
+ * @brief Error classes
+ *****************************************************************************/
 class InvalidToken extends Error {
     constructor(msg) {
         super(msg);

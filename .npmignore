@@ -1,24 +1,24 @@
-# Optional Things for github
-examples
-misc
-
-
-# Secrets
-*/**/*.secret
-# Typescript features
-tsconfig.json
-src/
-
-# Misc
-node_modules
-*.md 
-docs.js 
-LICENSE
-
-
 # Dev utils
 .vscode/
 .prettierrc.json
 .eslintcache
 .eslintignore
 .eslintrc
+
+# Optional Things for github
+examples/
+misc/
+*.md
+
+# Secrets
+*.secret
+
+# Typescript features
+tsconfig.json
+src/
+
+# Misc
+node_modules/
+docs.js
+LICENSE
+

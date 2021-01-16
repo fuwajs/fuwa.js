@@ -1,6 +1,7 @@
 /********************************************************
- *
- */
+ * Discord API interfaces
+ * https://discord.com/developers/docs
+ *******************************************************/
 export declare enum opCodes {
     dispatch = 0,
     heartbeat = 1,

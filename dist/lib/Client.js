@@ -38,6 +38,7 @@ const User_1 = __importDefault(require("./User"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
+const Command_1 = require("./Command");
 const Embed_1 = __importDefault(require("./Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
 const erlpack = Promise.resolve().then(() => __importStar(require('erlpack')));
@@ -82,8 +83,6 @@ class Client extends Emitter_1.default {
             }
         };
         this.cache = new _Cache_1.default(caching);
-        // Bootleg auto-help command
-        // TODO: Make it less bootleg 
         if ((_d = (_c = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _c === void 0 ? void 0 : _c.help) !== null && _d !== void 0 ? _d : true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed_1.default()
@@ -133,7 +132,7 @@ class Client extends Emitter_1.default {
      * @param name Command name(s).
      * @param cb The function that is called when the command is ran.
      * @param  options Options for your command.
-     * @returns client
+     * @returns Command Options
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
@@ -145,7 +144,7 @@ class Client extends Emitter_1.default {
             desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
             aliases: Array.isArray(name) ? name.slice(1) : []
         };
-        let defaultName = Array.isArray(name) ? name[0] : name;
+        let defaultName = Array.isArray(name) ? name.pop() : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
         if (old) {
@@ -155,7 +154,22 @@ class Client extends Emitter_1.default {
             old = [cmd];
         }
         this.commands.set(defaultName, old);
-        return this;
+        const ret = {
+            addAlias: (...aliases) => {
+                old[0].options.aliases.push(...aliases);
+                this.commands.set(defaultName, old);
+                return ret;
+            },
+            addArgument: (name, desc, defaultVal) => {
+                let args = old[0].options.args;
+                if (!args)
+                    args = new Map();
+                args.set(name, new Command_1.Argument(desc, defaultVal));
+                this.commands.set(defaultName, old);
+                return ret;
+            },
+        };
+        return ret;
     }
     /**
      * @typeParam T The event name
@@ -298,13 +312,12 @@ class Client extends Emitter_1.default {
                     return;
                 console.timeEnd('command parsing');
                 console.time('middleware');
-                const _ = [];
-                this.middleware.forEach((v) => _.push({ cb: v }));
+                const middlewareCommand = this.middleware.map(cb => ({ cb }));
                 const req = new Request_1.default(msg, token.toString(), this.cache);
                 req.args = args;
                 // console.log (req)
                 if (this.middleware[0]) {
-                    this.middleware[0](req, res, next(req, res, _, 0, command));
+                    this.middleware[0](req, res, next(req, res, middlewareCommand, 0, command));
                 }
                 console.timeEnd('middleware');
                 console.time('run command');
@@ -428,7 +441,7 @@ class Client extends Emitter_1.default {
         });
     }
     logout(end = true) {
-        if (this.ws && this.loop) {
+        if ((this === null || this === void 0 ? void 0 : this.ws) && this.loop) {
             clearInterval(this.loop);
             if (end)
                 process.exit();

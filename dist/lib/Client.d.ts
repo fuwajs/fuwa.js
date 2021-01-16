@@ -126,14 +126,17 @@ declare class Client extends Emitter {
      * @param name Command name(s).
      * @param cb The function that is called when the command is ran.
      * @param  options Options for your command.
-     * @returns client
+     * @returns Command Options
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
      * ```
      * });
      */
-    command(name: string | string[], cb: commandCallback, options?: commandOptions): this;
+    command(name: string | string[], cb: commandCallback, options?: commandOptions): {
+        addAlias: (...aliases: string[]) => any;
+        addArgument: <T>(name: string, desc: string, defaultVal?: T) => any;
+    };
     /**
      * @typeParam T The event name
      * @param cb The callback function

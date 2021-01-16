@@ -44,7 +44,7 @@ class Response {
         else {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
-        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
+        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(console.error);
     }
     /**
      * @param content The content to send. The content can be a string or an
@@ -69,18 +69,16 @@ class Response {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(e => { console.error(e); });
-        return this;
+        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(console.error);
     }
     /**
-     *
      * @param emojis The emoji(s) to send
-     * @returns
+     * @returns Another Response so you can chain reactions
      */
     react(...emojis) {
         emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
             _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(e => console.error(e));
+                + `/reactions/${encodeURI(e)}/@me`, this.token, encodeURI(e)).catch(console.error);
         }));
         return this;
     }

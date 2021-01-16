@@ -13,11 +13,10 @@ declare class Response {
      * @param content The content to send. The content can be a string or an
      * Embed.
      */
-    send(content: string | Embed): this;
+    send(content: string | Embed): Promise<any>;
     /**
-     *
      * @param emojis The emoji(s) to send
-     * @returns
+     * @returns Another Response so you can chain reactions
      */
     react(...emojis: string[]): this;
 }

@@ -9,7 +9,7 @@ export declare class Argument<T extends number | string | unknown> {
      * A description of the argument
      */
     readonly desc: string;
-    constructor({ defaultValue, desc }: Argument<T>);
+    constructor(desc: string, defaultValue: T);
 }
 /**
  * Options for your command

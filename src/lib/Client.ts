@@ -5,7 +5,7 @@ import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
-import { commandCallback, commandOptions } from './Command';
+import { Argument, commandCallback, commandOptions } from './Command';
 import Embed from './Embed';
 import Colors from './Colors';
 
@@ -212,7 +212,7 @@ class Client extends Emitter {
      * @param name Command name(s).
      * @param cb The function that is called when the command is ran.
      * @param  options Options for your command.
-     * @returns client
+     * @returns Command Options
      * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!)
@@ -224,12 +224,31 @@ class Client extends Emitter {
             desc: options?.desc || 'No description was provided',
             aliases: Array.isArray(name) ? name.slice(1) : []
         };
-        let defaultName = Array.isArray(name) ? name[0] : name;
+        let defaultName = Array.isArray(name) ? name.pop() : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option }
         if (old) { old.push(cmd) } else { old = [cmd] }
         this.commands.set(defaultName, old);
-        return this;
+
+        const ret = {
+            addAlias: (...aliases: string[]) => {
+                old[0].options.aliases.push(...aliases);
+                this.commands.set(defaultName, old);
+                return ret;
+            },
+
+            addArgument: <T>(name: string, desc: string, defaultVal?: T, )  => {
+                let args = old[0].options.args;
+                if(!args) args = new Map<string, Argument<unknown>>();
+
+                args.set(name, new Argument<T>(desc, defaultVal));
+                this.commands.set(defaultName, old);
+                return ret;
+            },
+
+            // exit: () => this
+        };
+        return ret;
     }
     /**
      * @typeParam T The event name
@@ -511,7 +530,7 @@ class Client extends Emitter {
         //         });
     }
     logout(end = true) {
-        if (this.ws && this.loop) {
+        if (this?.ws && this.loop) {
             clearInterval(this.loop);
             if (end) process.exit();
         }

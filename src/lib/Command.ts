@@ -13,7 +13,7 @@ export class Argument<T extends number | string | unknown> {
      */
     readonly desc: string;
 
-    constructor({ defaultValue, desc }: Argument<T>) {
+    constructor(desc: string, defaultValue: T) {
         this.defaultValue = defaultValue;
         this.desc = desc;
     }
