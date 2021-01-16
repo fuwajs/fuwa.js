@@ -1,12 +1,18 @@
-import { Message as MessageOptions, User } from './_DiscordAPI';
+import Embed from './Embed';
+export interface MessageOptions {
+    content: string
+    nonce: string|number
+    tts: boolean;
+    file?: any // TODO: Discover what the file actually is
+    embed?: Embed | null;
+    payload_json?: string 
+}
 
+class Message {
+    constructor() {
 
-// class Message implements MessageOptions {
-//     author: User
-//     constructor() {
-//         // i used to be python dev when i was 8 or smthn
-//     }
+    }
     
-// }
+}
 
-// export default Message;
+export default Message;

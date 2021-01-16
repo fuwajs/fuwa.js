@@ -1,3 +1,7 @@
+/******************************************************************************
+ * @file Errors.ts
+ * @brief Error classes
+ *****************************************************************************/
 export class InvalidToken extends Error {
     name = 'InvalidTokenError';
     constructor(msg: string) { super(msg); }

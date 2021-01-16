@@ -162,8 +162,6 @@ class Client extends Emitter {
             }
         } 
         this.cache = new Cache(caching)
-        // Bootleg auto-help command
-        // TODO: Make it less bootleg 
         if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res, next) => {
                 let embed = new Embed()
@@ -380,13 +378,12 @@ class Client extends Emitter {
             if (!command) return;
             console.timeEnd('command parsing')
             console.time('middleware')
-            const _: any[] = [];
-            this.middleware.forEach((v) => _.push({ cb: v }));
+            const middlewareCommand = this.middleware.map(cb => ({ cb }))
             const req = new Request(msg, token.toString(), this.cache);
             req.args = args;
             // console.log (req)
             if (this.middleware[0]) {
-                this.middleware[0](req, res, next(req, res, _, 0, command));
+                this.middleware[0](req, res, next(req, res, middlewareCommand, 0, command));
             }
             console.timeEnd('middleware');
             console.time('run command');

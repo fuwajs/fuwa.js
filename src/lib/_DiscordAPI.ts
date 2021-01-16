@@ -1,6 +1,7 @@
 /********************************************************
- * 
- */
+ * Discord API interfaces
+ * https://discord.com/developers/docs
+ *******************************************************/
 
 export enum opCodes {
     dispatch,

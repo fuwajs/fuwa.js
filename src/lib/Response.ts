@@ -73,9 +73,8 @@ class Response {
     }
 
     /**
-     * 
      * @param emojis The emoji(s) to send
-     * @returns
+     * @returns Another Response so you can chain functions
      */
     react(...emojis: string[]): this {
         emojis.forEach(async e => {

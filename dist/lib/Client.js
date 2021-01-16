@@ -49,7 +49,6 @@ var statusCode;
     statusCode[statusCode["custom"] = 3] = "custom";
     statusCode[statusCode["competing"] = 4] = "competing";
 })(statusCode || (statusCode = {}));
-;
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
