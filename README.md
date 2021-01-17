@@ -18,7 +18,7 @@
 -   🔨 | Built-In Command Handler & Parser
 -   🌎 | Safe (complete runtime safety for your bot.)
 -   ⚡️ | Blazing Fast
--   🧺 | Customizable Cache
+-   🗂 | Customizable Cache
 
 # Quickstart
 
