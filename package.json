@@ -1,6 +1,6 @@
 {
     "name": "fuwa.js",
-    "version": "1.0.0",
+    "version": "0.1.0-alpha",
     "description": "A new powerful, discord bot library inspired by express",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

@@ -6,16 +6,19 @@
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
         </a>
         <img src="https://travis-ci.com/Fuwajs/Fuwa.js.svg?branch=main"/>
+        <img src="https://img.shields.io/github/license/FuwaJS/Fuwa.JS" />
+        <img src="https://img.shields.io/github/package-json/v/FuwaJS/Fuwa.JS" />
     </p>
 </div>
 
-# Highlights
+# Features
 
 -   ☕️ | Express-like syntax
 -   📦 | Lightweight (only **two** dependencies)
 -   🔨 | Built-In Command Handler & Parser
 -   🌎 | Safe (complete runtime safety for your bot.)
 -   ⚡️ | Blazing Fast
+-   🧺 | Customizable Cache
 
 # Quickstart
 
