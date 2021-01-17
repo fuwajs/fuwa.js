@@ -12,9 +12,9 @@
 # Highlights
 
 -   ☕️ | Express-like syntax
--   🪶 | Lightweight (only **two** dependencies)
+-   📦 | Lightweight (only **two** dependencies)
 -   🔨 | Built-In Command Handler & Parser
--   🦺 | Safe (complete runtime safety for your bot.)
+-   🌎 | Safe (complete runtime safety for your bot.)
 -   ⚡️ | Blazing Fast
 
 # Quickstart
