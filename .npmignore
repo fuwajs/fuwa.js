@@ -6,9 +6,14 @@
 .eslintrc
 
 # Optional Things for github
+.github/
 examples/
 misc/
 *.md
+LICENSE
+.travis.yml
+.typedoc.json
+docs.js
 
 # Secrets
 *.secret
@@ -20,5 +25,3 @@ src/
 # Misc
 node_modules/
 docs.js
-LICENSE
-

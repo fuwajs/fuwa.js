@@ -8,8 +8,7 @@ import Emitter from './Emitter';
 import { Argument, commandCallback, commandOptions } from './Command';
 import Embed from './Embed';
 import Colors from './Colors';
-
-const erlpack = import('erlpack');
+import { erlpack } from './_erlpack';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -320,18 +319,10 @@ class Client extends Emitter {
 
         // this.connect(discordAPI.gateway);
 
-        erlpack.then(() => {
-            this.connect(discordAPI.gateway, {
-                v: 8,
-                encoding: 'etf'
-            });
+        this.connect(discordAPI.gateway, {
+            v: 8,
+            encoding: erlpack ? 'etf' : 'json'
         });
-        erlpack.catch(() => {
-            this.connect(discordAPI.gateway, {
-                v: 8,
-                encoding: 'json'
-            });
-        })
 
         this.op(opCodes.hello, (data) => {
             // console.log (data);

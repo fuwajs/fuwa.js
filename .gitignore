@@ -2,9 +2,11 @@
 *.secret
 debug.log
 *.log
+
 # Cache
 .eslintcache
 
 # Misc
 node_modules
-.vscode
+.vscode/
+.typedoc.json

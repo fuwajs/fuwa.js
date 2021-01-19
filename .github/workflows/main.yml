@@ -28,6 +28,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install
         run: npm i
+      - name: LightInstall
+        run: npm i --no-optional
 
       # Runs a set of commands using the runners shell
       - name: Build
