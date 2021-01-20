@@ -16,8 +16,7 @@ declare class Response {
     send(content: string | Embed): Promise<any>;
     /**
      * @param emojis The emoji(s) to send
-     * @returns Another Response so you can chain reactions
      */
-    react(...emojis: string[]): this;
+    react(...emojis: string[]): Promise<this>;
 }
 export default Response;

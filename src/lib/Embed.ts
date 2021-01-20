@@ -84,12 +84,12 @@ class Embed {
         imageUrl: string,
         opts?: { proxyUrl?: string; height?: number; width?: number }
     ): this {
-        if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
-            let ext = path.extname(imageUrl).replace('.', '');
-            if (ext === 'svg') ext = 'svg+xml';
-            const base64 = fs.readFileSync(imageUrl).toString('base64');
-            imageUrl = `data:image/${ext};base64,${base64}`;
-        }
+        // if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
+        //     let ext = path.extname(imageUrl).replace('.', '');
+        //     if (ext === 'svg') ext = 'svg+xml';
+        //     const base64 = fs.readFileSync(imageUrl).toString('base64');
+        //     imageUrl = `data:image/${ext};base64,${base64}`;
+        // }
         this.image = {
             url: imageUrl,
             proxy_url: opts?.proxyUrl,

@@ -28,7 +28,7 @@ class Request {
         this.rawData = msg;
         this.reactions = msg.reactions;
         // this.getGuild(msg.guild_id, token);
-        this.guild = new Guild(cache.data['guilds'].get(msg.guild_id));
+        this.guild = new Guild(cache.data['guilds'].get(msg.guild_id), token);
     }
     // private async getGuild(guildID: string, token: string) {
     //     let guild = { 

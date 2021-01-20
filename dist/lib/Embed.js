@@ -1,10 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
 class Embed {
     constructor(opts) {
         // Rich Embed by default
@@ -49,13 +44,12 @@ class Embed {
      * ```
      */
     setImage(imageUrl, opts) {
-        if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
-            let ext = path_1.default.extname(imageUrl).replace('.', '');
-            if (ext === 'svg')
-                ext = 'svg+xml';
-            const base64 = fs_1.default.readFileSync(imageUrl).toString('base64');
-            imageUrl = `data:image/${ext};base64,${base64}`;
-        }
+        // if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
+        //     let ext = path.extname(imageUrl).replace('.', '');
+        //     if (ext === 'svg') ext = 'svg+xml';
+        //     const base64 = fs.readFileSync(imageUrl).toString('base64');
+        //     imageUrl = `data:image/${ext};base64,${base64}`;
+        // }
         this.image = {
             url: imageUrl,
             proxy_url: opts === null || opts === void 0 ? void 0 : opts.proxyUrl,

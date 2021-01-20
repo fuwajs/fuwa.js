@@ -52,16 +52,15 @@ class Response {
 
     /**
      * @param emojis The emoji(s) to send
-     * @returns Another Response so you can chain reactions
      */
-    react(...emojis: string[]): this {
-        emojis.forEach(e => {
-            undici.PUT(
+    async react(...emojis: string[]) {
+        emojis.forEach(async e => {
+            await undici.PUT(
                 `/channels/${this.req.channel_id}/messages/${this.req.id}`
                 + `/reactions/${encodeURI(e)}/@me`,
                 this.token,
                 JSON.stringify(emojis.map(e => encodeURI(e)))
-            ).catch(console.error);
+            );
         });
         return this;
     }

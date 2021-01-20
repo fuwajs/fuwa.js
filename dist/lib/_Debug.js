@@ -36,7 +36,7 @@ class Debug {
         let str = '';
         let tabs = '';
         for (const e of new Array(tabWidth))
-            tabs += '\t';
+            tabs += '    ';
         let i = 0;
         for (const key in obj) {
             let val = obj[key];
