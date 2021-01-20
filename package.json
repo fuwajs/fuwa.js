@@ -44,6 +44,7 @@
         "typescript": "^4.1.3"
     },
     "optionalDependencies": {
+        "chalk": "^2.4.2",
         "erlpack": "^0.1.3"
     },
     "husky": {

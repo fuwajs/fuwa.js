@@ -3,14 +3,13 @@ const path = require('path');
 const fs = require('fs')
 const fetch = require('node-fetch');
 
-const client = new fuwa.Client(['!', '?', '$'], { debug: false });
+const client = new fuwa.Client(['!', '?', '$'], { debug: true });
 
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
-
 // This function is ran when the bot is connected to discord
 client.on('ready', () => {
     console.log(`Hello, my name is ${client.bot.username}!`);
