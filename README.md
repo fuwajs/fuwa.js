@@ -1,11 +1,11 @@
 <div align="center">
     <img src="https://github.com/Fuwajs/Fuwa.js/raw/main/misc/Logo.svg" width="512" height="512">
-    <p>The <b>new</b> simple and easy way to create <em>progressive</em> Discord bots.</p>
+    <p>The <b>new</b>, simple, and easy way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
         </a>
-        <img src="https://travis-ci.com/Fuwajs/Fuwa.js.svg?branch=main"/>
+        <img src="https://github.com/Fuwajs/Fuwa.js/workflows/CI/badge.svg" />
         <img src="https://img.shields.io/github/license/FuwaJS/Fuwa.JS" />
         <img src="https://img.shields.io/github/package-json/v/FuwaJS/Fuwa.JS" />
     </p>
@@ -13,39 +13,39 @@
 
 # Features
 
--   ☕️ | Express-like syntax
--   📦 | Lightweight (only **two** dependencies)
--   🔨 | Built-In Command Handler & Parser
--   🌎 | Safe (complete runtime safety for your bot.)
--   ⚡️ | Blazing Fast
--   🗂 | Customizable Cache
+- ☕️ | Express-like syntax
+- 📦 | Lightweight (only **two** dependencies)
+- 🔨 | Built-In Command Handler & Parser
+- 🌎 | Safe (complete runtime safety for your bot.)
+- ⚡️ | Blazing Fast
+- 🗂 | Customizable Cache
 
 # Quickstart
 
 This assumes you have already setup a discord bot application in Discord. See
 
--   [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
--   [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
+- [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
+- [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
 
-Create a new ynodejs project
+## 📁 - Create a new NodeJS project
 
 ```bash
 $ npm init -y
 ```
 
-For the lightweight version of Fuwa.js install with
+## 📦 - Install FuwaJS
 
+The *Lightweight* version
 ```bash
 $ npm i Fuwajs/Fuwa.js --no-optional
 ```
 
-For increased speed (better for production)
-
+The **Full** version for increased speed (better for production)
 ```bash
 $ npm i Fuwajs/Fuwa.js
 ```
 
-Create a file called index.js
+## Create a file called index.js
 
 ```bash
 $ echo > index.js
@@ -68,9 +68,14 @@ client.command(['hi', 'hello'], (req, res) => {
 client.login('<your bot token>');
 ```
 
-Make sure to replace `<your bot token>` with your actual bot token!
-<br>
-Check the [docs](https://Fuwajs.github.io/index.html) for more in depth examples.
+**Make sure to replace `<your bot token>` with your actual bot token!**
+
+## 🧪 - Test it out
+Add your bot to a discord server and type `?hi` or `?hello` in any visible
+channel. It should respond with `Hello there, my name is <bot name>!`
+
+
+Check the [docs](https://Fuwajs.github.io/index.html) for reference.
 
 Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
 

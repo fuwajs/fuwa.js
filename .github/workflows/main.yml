@@ -1,5 +1,4 @@
 # This is a basic workflow to help you get started with Actions
-
 name: CI
 
 # Controls when the action will run. 
@@ -25,13 +24,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Install
-        run: npm i
-      - name: LightInstall
-        run: npm i --no-optional
+      # Full Version
+      - name: FullBuild
+        run: | 
+          npm ci
+          npm run build
 
-      # Runs a set of commands using the runners shell
-      - name: Build
-        run: npm run build
+      # Lightweight version (without optional deps)
+      - name: LightBuild
+        run: |
+          npm ci --no-optional
+          npm run build
+
         
