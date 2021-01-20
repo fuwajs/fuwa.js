@@ -5,9 +5,6 @@ import Guild from './Guild';
 import { Message as MessageOptions, Guild as GuildOptions, Reaction } from "./_DiscordAPI";
 import Cache from './_Cache';
 
-type Author = {
-    id: string
-}
 class Request {
     readonly author: User;
     guild: Guild;

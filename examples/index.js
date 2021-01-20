@@ -1,8 +1,8 @@
-const fuwa   = require('../dist/index'); // Import fuwa.js here!
-const path   = require('path');
-const fs     = require('fs');
-const fetch  = require('node-fetch');
-const client = new fuwa.Client(['!', '?', '$']);
+const fuwa = require('../dist/index'); // Import fuwa.js here!
+const path = require('path');
+const fs = require('fs');
+const fetch = require('node-fetch');
+const client = new fuwa.Client(['!', '?', '$'], { debug: true });
 
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
@@ -12,36 +12,44 @@ client.set('useMentionPrefix', true);
 // This function is ran when the bot is connected to discord
 client.on('ready', () => {
     console.log(`Hello, my name is ${client.bot.username}!`);
+});
+
+client.on('reaction', (req, res) => {
 
 });
 
-// client.on('message', (req, res) => {
-//     req.
-// });
+
 // This function will be ran before every other command
 client.use((req, res, next) => {
     // For example, you could notify the user you have recieved their command
     // by reacting with a green checkmark.
     res.react('✅');
-    next(); // When calling the next function, your calling the command that the message
-    // was ment for, dont forget to put this at the end ofyour function!
+    next(); // When calling the 'next' function, your calling the command that the message
+    // was ment for, dont forget to put this at the end of your function!
 });
 
+// This function will be ran on every **message** not this is different from
+// middleware because middleware is ran on each **command** here, you can do
+// custom command parsing if you want to
+// client.on('message', (req, res) => {
+//     // Don't cause a feed backloop
+//     if (!req.author.bot) res.send('I recieved a message!');
+// });
 
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
 client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
-    .setTitle('Pong')
-    .setAuthor(req.author.username, { icon: req.author.avatar })
-    .addField({
+        .setTitle('Pong')
+        .setAuthor(req.author.username, { icon: req.author.avatar })
+        .addField({
             name: 'Latency',
             value: `${Date.now() - timestamp}ms`
         })
         .setDescription()
         .setColor(fuwa.Colors.rgb(13, 186, 120))
-    ).then(console.log);
+    );
 });
 
 client.command(['delete', 'rm', 'purge'], (req, res) => {
@@ -53,7 +61,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     // 2 - Greater than 100 (Discord can only delete 100 messages at a time)
     if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
-        .setTitle('Invalid argument(s).')
+            .setTitle('Invalid argument(s).')
             .setAuthor(req.author.username, { icon: req.author.avatar })
             .setDescription('Expected a number for the 1st argument.')
             .addField({ name: 'Usage', value: 'rm <amt>' })
@@ -63,7 +71,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     }
     client.deleteMessages(amt, req.rawData.channel_id);
 }, { desc: 'Remove messages.' })
-.addArgument('amount', 'The amount of messages to remove', 0);
+    .addArgument('amount', 'The amount of messages to remove', 0);
 
 // More complex example command using the GitHub API
 client.command(['github', 'gh'], async (req, res) => {
@@ -73,7 +81,7 @@ client.command(['github', 'gh'], async (req, res) => {
         fetch(`https://api.github.com/users/${username}`))
         // Turn this string into a object we can use
         .json();
-        
+
     const date = new Date(user.created_at).toLocaleString();
     // Send an embed!
     res.reply(new fuwa.Embed()
@@ -121,7 +129,7 @@ client.command('react', (req, res) => {
 client.command(['server', 'guild-info'], (req, res) => {
     res.send(new fuwa.Embed()
         .setAuthor(req.author.username, { icon: req.author.avatar })
-        .setDescription(req.guild.description||'This server has no description')
+        .setDescription(req.guild.description || 'This server has no description')
         .setImage(req.guild.icon)
         .addFields([
             { name: 'Members', value: req.guild.size, inline: true },
@@ -130,3 +138,7 @@ client.command(['server', 'guild-info'], (req, res) => {
         ])
     )
 }, { desc: 'Get your server\'s information!' });
+
+client.command('cache', (req, res) => {
+    res.send(JSON.stringify(client.cache));
+});

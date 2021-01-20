@@ -11,22 +11,27 @@ try {
 class Debug {
     protected enabled: boolean;
     constructor(enabled = false) { this.enabled = enabled; }
-    log(event: string, str: any) {
+    /**
+     * Log a string paired with an event to stdout
+     * @param event The event to log
+     * @param str The message to log (must be a string)
+     */
+    log(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk.grey(new Date().toLocaleString())}`,
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk?.grey(new Date().toLocaleString())}`,
         )
     }
-    error(event: string, str: any) {
+    error(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk.red(str)} - ${chalk.grey(new Date().toLocaleString())}`,
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.red(str)} - ${chalk?.grey(new Date().toLocaleString())}`,
         );
     }
-    success(event: string, str: any) {
+    success(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk.green(str)} - ${chalk.grey(new Date().toLocaleString())}`,
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.green(str)} - ${chalk?.grey(new Date().toLocaleString())}`,
         );
     }
 
@@ -35,8 +40,6 @@ class Debug {
      * ! This function can be recursive
      * @param obj The object or primitive to print out.
      * @param tabWidth The indentation size in tabs (4 spaces)
-     * 
-
      */
     object(obj: any, tabWidth = 0) {
         let str = '';

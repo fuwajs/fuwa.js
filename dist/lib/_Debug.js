@@ -10,34 +10,37 @@ let chalk = {
 try {
     chalk = require('chalk');
 }
-catch { }
+catch (_a) { }
 class Debug {
     constructor(enabled = false) { this.enabled = enabled; }
+    /**
+     * Log a string paired with an event to stdout
+     * @param event The event to log
+     * @param str The message to log (must be a string)
+     */
     log(event, str) {
         var _a;
         if (!this.enabled)
             return;
-        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk.grey(new Date().toLocaleString())}`);
+        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk === null || chalk === void 0 ? void 0 : chalk.grey(new Date().toLocaleString())}`);
     }
     error(event, str) {
         var _a;
         if (!this.enabled)
             return;
-        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${chalk.red(str)} - ${chalk.grey(new Date().toLocaleString())}`);
+        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${chalk === null || chalk === void 0 ? void 0 : chalk.red(str)} - ${chalk === null || chalk === void 0 ? void 0 : chalk.grey(new Date().toLocaleString())}`);
     }
     success(event, str) {
         var _a;
         if (!this.enabled)
             return;
-        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${chalk.green(str)} - ${chalk.grey(new Date().toLocaleString())}`);
+        console.log(`${(_a = chalk === null || chalk === void 0 ? void 0 : chalk.bold) === null || _a === void 0 ? void 0 : _a.blue('[' + event.toUpperCase() + ']')}: ${chalk === null || chalk === void 0 ? void 0 : chalk.green(str)} - ${chalk === null || chalk === void 0 ? void 0 : chalk.grey(new Date().toLocaleString())}`);
     }
     /**
      * Print an object or primitive to stdout
      * ! This function can be recursive
      * @param obj The object or primitive to print out.
      * @param tabWidth The indentation size in tabs (4 spaces)
-     *
-
      */
     object(obj, tabWidth = 0) {
         let str = '';
@@ -52,17 +55,16 @@ class Debug {
             if (typeof val === 'object' && !Array.isArray(val))
                 val = '\n' + this.object(val, tabWidth + 1);
             if (Array.isArray(val))
-                val = '\n' + this.object({ ...val }, tabWidth + 1);
+                val = '\n' + this.object(Object.assign({}, val), tabWidth + 1);
             // extra syntax highlighting
-            if (typeof val === 'number') {
+            if (typeof val === 'number')
                 val = chalk.yellow(val);
-            }
             let isObj = false;
             try {
                 JSON.parse(val);
                 isObj = true;
             }
-            catch { }
+            catch (_a) { }
             if (typeof val === 'string' && isObj && val !== 'null')
                 val = chalk.green(`"${val}"`);
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''}`;

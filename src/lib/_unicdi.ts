@@ -35,12 +35,11 @@ export default {
                 } catch (e) {
                     reject(e);
                 }
-
                 if (res.statusCode === 429) { // Handle Discord Rate Limits
                     setTimeout(() => {
                         this.REQUEST(method, path, token, data)
                             .catch(e => console.error(e));
-                    }, d?.retry_after * 1000);
+                    }, d?.retry_after * 1000); // seconds -> milliseconds
                 }
                 resolve(d);
             });

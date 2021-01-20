@@ -1,11 +1,11 @@
 import { clientOptions } from './Client';
 import { Guild } from './_DiscordAPI';
-declare class _Cache {
+declare class Cache {
     protected options: clientOptions['cachingSettings'];
     data: {
         guilds: Map<string, Guild>;
     };
     constructor(options: clientOptions['cachingSettings']);
-    cache<T extends keyof typeof _Cache.prototype.data>(type: T, data: any): void;
+    cache<T extends keyof typeof Cache.prototype.data>(type: T, data: any): void;
 }
-export default _Cache;
+export default Cache;

@@ -57,6 +57,7 @@ export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    reaction(req: Request, res: Response)
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -157,7 +158,7 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.options = options||{
+        this.options = options || {
             cache: true,
             debug: false,
             useMentionPrefix: false,
@@ -236,11 +237,11 @@ class Client extends Emitter {
      * @param cb The function that is called when the command is ran.
      * @param  options Options for your command.
      * @returns Command Options
-     * ```typescript
+     * ```js
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!)
-     * ```
+     *      res.send('Pong!');
      * });
+     * ```
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions) {
         let defaultName = Array.isArray(name) ? name.shift() : name;
@@ -289,7 +290,7 @@ class Client extends Emitter {
      * @param  cb Your middleware function
      * @returns A **client** so you can *chain* methods.
      * @description
-     * ```typescript
+     * ```js
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
@@ -332,21 +333,18 @@ class Client extends Emitter {
 
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
-        let options = {
+        let options: { v: number, encoding: 'etf' | 'json' } = {
             v: 8,
             encoding: erlpack ? 'etf' : 'json'
         }
-        this.connect(discordAPI.gateway, {
-            v: 8,
-            encoding: erlpack ? 'etf' : 'json'
-        });
+        this.connect(discordAPI.gateway, options);
         this.debug.success(
-            'connected', 
-            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding`);
+            'connected',
+            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`);
         this.op(opCodes.hello, (data) => {
             this.debug.log('hello',
                 `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
-            )
+            );
             this.loop = setInterval(
                 () => this.response.op.emit(opCodes.heartbeat, 251),
                 data.heartbeat_interval
@@ -377,7 +375,9 @@ class Client extends Emitter {
         });
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
-            this.events.get('message')?.call(new Request(msg, this.token, this.cache), new Response(msg, this.token))
+            const e = this.events.get('message');
+            if (e) e(new Request(msg, this.token, this.cache), new Response(msg, this.token));
+
             // console.time('command run');
             if (!msg.content) return;
             const res = new Response(msg, this.token);
@@ -441,7 +441,6 @@ class Client extends Emitter {
     }
     logout(end = true) {
         if (this?.ws && this.loop) {
-            this.ws.close();
             clearInterval(this.loop);
             if (end) process.exit();
         }

@@ -44,6 +44,7 @@ export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    reaction(req: Request, res: Response): any;
 }
 export interface clientOptions {
     /**
@@ -134,11 +135,11 @@ declare class Client extends Emitter {
      * @param cb The function that is called when the command is ran.
      * @param  options Options for your command.
      * @returns Command Options
-     * ```typescript
+     * ```js
      * cli.command(['ping', 'latency'], (req, res) => {
-     *      res.send('Pong!)
-     * ```
+     *      res.send('Pong!');
      * });
+     * ```
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions): {
         addAlias: (...aliases: string[]) => any;
@@ -157,7 +158,7 @@ declare class Client extends Emitter {
      * @param  cb Your middleware function
      * @returns A **client** so you can *chain* methods.
      * @description
-     * ```typescript
+     * ```js
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
