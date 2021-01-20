@@ -2,6 +2,7 @@
 import Request from './Request';
 import Cache from './_Cache';
 import User from './User';
+import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
@@ -39,10 +40,9 @@ export interface statusOptions {
     afk?: boolean;
 }
 export interface Events {
-    READY(): void | Promise<void>;
-    MSG(req: Request): void | Promise<void>;
-    CMD_NOT_FND(req: Request, cmd: commandCallback): void | Promise<void>;
-    ERR(err: Error): void | Promise<void>;
+    ready(): void | Promise<void>;
+    message(req: Request, res: Response): void | Promise<void>;
+    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
 }
 export interface clientOptions {
     /**

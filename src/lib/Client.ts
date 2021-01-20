@@ -52,10 +52,10 @@ export interface statusOptions {
 
 
 export interface Events {
-    READY(): void | Promise<void>;
-    MSG(req: Request): void | Promise<void>;
-    CMD_NOT_FND(req: Request, cmd: commandCallback): void | Promise<void>;
-    ERR(err: Error): void | Promise<void>;
+    ready(): void | Promise<void>;
+    message(req: Request, res: Response): void | Promise<void>;
+    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
     /**
@@ -247,7 +247,7 @@ class Client extends Emitter {
                 return ret;
             },
 
-            addArgument: <T>(name: string, desc: string, defaultVal?: T,) => {
+            addArgument: <T>(name: string, desc: string, defaultVal?: T) => {
                 let args = old[0].options.args;
                 if (!args) args = new Map<string, Argument<unknown>>();
 
@@ -348,14 +348,15 @@ class Client extends Emitter {
             this.sessionId = data.session_id;
             this.bot = new User(data.user, token.toString());
             data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g))
-            const ready = this.events.get('READY');
+            const ready = this.events.get('ready');
             if (ready) ready();
         });
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
+            this.events.get('message')?.call(new Request(msg, this.token, this.cache), new Response(msg, this.token))
             console.time('command run');
             if (!msg.content) return;
-            const res = new Response(msg, token.toString());
+            const res = new Response(msg, this.token);
             let prefix = '';
             console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
@@ -413,124 +414,6 @@ class Client extends Emitter {
             console.timeEnd('run command');
             console.timeEnd('command run');
         });
-        //         this.ws.on('open', async function () {
-        //             this.debug(`Connect to ${ discordAPI.gateway } `);
-        //             this.on('message', async (e) => {
-        //                 const res = JSON.parse(e.toString());
-        //                 this.debug(`Incoming message from ${ discordAPI.gateway }:
-        // Event: ${res.t}
-        // OPCOde: ${res.op}
-        // Other: ${res.s}
-        // Data: ${JSON.stringify(res.d, null, this.debugMode ? 4 : 0).replace(
-        //                     '\\',
-        //                     ''
-        //                 )}`);
-        //                 switch (res.op) {
-        //                     case opCodes.hello:
-        //                         // Start heartbeat loop
-
-        //                         this.debug(
-        //                             `Attempting to identify with the following credentials: ${identify.replace(
-        //                                 '\\',
-        //                                 ''
-        //                             )}`
-        //                         );
-        //                         this.debug('Credentials sent');
-
-        //                         break;
-        //                 }
-
-        //                 switch (res.t) {
-        //                     case 'ready':
-        //                         this.debug(`
-        //                             Logged in on ${new Date().toDateString()}
-        //                         `);
-
-        //                         this.bot = new User(res.d.user);
-        //                         let fn = this.events.get('ready');
-        //                         fn ? fn() : 0;
-        //                         break;
-        //                     case 'messageCreate':
-        //                         let __ = this.events.get('msg');
-        //                         __ ? __() : 0;
-        //                         this.debug('Recived A Message :' + res.d.content);
-        //                         let request: any = null; // new Request(token.toString(), res.d);
-        //                         let response = new Response(res.d, token.toString());
-        //                         const next = (
-        //                             req: Request,
-        //                             res: Response,
-        //                             arr: { cb: commandCallback }[],
-        //                             i = 0,
-        //                             secoundArr?: { cb: commandCallback }[]
-        //                         ) => {
-        //                             return () => {
-        //                                 arr[i + 1]
-        //                                     ? arr[i + 1].cb(
-        //                                           req,
-        //                                           res,
-        //                                           next(req, res, arr, i++)
-        //                                       )
-        //                                     : secoundArr
-        //                                     ? secoundArr[0]
-        //                                         ? secoundArr[0].cb(
-        //                                               req,
-        //                                               res,
-        //                                               next(req, res, secoundArr, i++)
-        //                                           )
-        //                                         : 0
-        //                                     : 0;
-        //                             };
-        //                         };
-        //                         const prefix =
-        //                             typeof this.prefix === 'function'
-        //                                 ? await this.prefix(request)
-        //                                 : Array.isArray(this.prefix)
-        //                                 ? this.prefix.find((p) =>
-        //                                       res.d.content.startsWith(p)
-        //                                   )
-        //                                 : this.prefix;
-
-        //                         if (!prefix) {
-        //                             throw new Error('No valid prefix found');
-        //                         }
-        //                         if (!res.d.content.startsWith(prefix)) break;
-        //                         this.debug(
-        //                             res.d.content.replace(prefix, '').toLowerCase()
-        //                         );
-        //                         let command = this.commands.get(
-        //                             res.d.content.replace(prefix, '').toLowerCase()
-        //                         );
-        //                         // console.log (command);
-        //                         // console.log (this.commands);
-        //                         if (!command) {
-        //                             let ___ = this.events.get('CMD_NOT_FOUND');
-        //                             ___ ? ___() : 0;
-        //                             break;
-        //                         }
-        //                         let _: any[] = [];
-        //                         this.middleware.forEach((v) => _.push({ cb: v }));
-        //                         this.middleware[0]
-        //                             ? this.middleware[0](
-        //                                   request,
-        //                                   response,
-        //                                   next(request, response, _, 0, command)
-        //                               )
-        //                             : 0;
-
-        //                         try {
-        //                             command[0].cb(
-        //                                 request,
-        //                                 response,
-        //                                 next(request, response, command, 0)
-        //                             );
-        //                         } catch (e) {
-        //                             let ____ = this.events.get('err');
-        //                             if (!____) throw e;
-        //                             ____();
-        //                         }
-        //                 }
-        //             });
-        //         });
     }
     logout(end = true) {
         if (this?.ws && this.loop) {

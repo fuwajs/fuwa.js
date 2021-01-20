@@ -12,37 +12,44 @@ client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
 client.set('useMentionPrefix', true);
 
 // This function is ran when the bot is connected to discord
-client.on('READY', () => {
+client.on('ready', () => {
     console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
+// client.on('message', (req, res) => {
+//     req.
+// });
 // This function will be ran before every other command
 client.use((req, res, next) => {
     // For example, you could notify the user you have recieved their command
-    // by reacting with a green checkmark
+    // by reacting with a green checkmark.
     res.react('✅');
     next();
 });
 
-// A basic 'ping' command. Responds with 'pong' and
-// the latency (in milliseconds) within an embed.
+// A basic 'ping' command. Responds with 'pong' along with the latency (in
+// milliseconds) within an embed.
 client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
         .setAuthor(req.author.username, { icon: req.author.avatar })
         .addField({
-            name: 'Latency', value: `${Date.now() - timestamp}ms`
+            name: 'Latency',
+            value: `${Date.now() - timestamp}ms`
         })
         .setDescription()
         .setColor(fuwa.Colors.rgb(13, 186, 120))
-    );
+    ).then(console.log);
 });
 
 client.command(['delete', 'rm', 'purge'], (req, res) => {
-    // The user probably wants to delete the command AND the message before.
+    // The user probably wants to delete the command along with previous 
+    // messages.
     const amt = parseInt(req.args[0]) + 1;
     // Handle errors
+    // 1 - Invalid number (NaN)
+    // 2 - Greater than 100 (Discord can only delete 100 messages at a time)
     if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
             .setTitle('Invalid argument(s).')
@@ -101,10 +108,6 @@ client.command(['github', 'gh'], async (req, res) => {
 // In reailty you would **not** want a command like this
 // This is for demonstration purposes only
 client.command('logout', (req, res) => {
-    const now = new Date(Date.now()).toLocaleTimeString([], {
-        year: 'numeric', month: 'numeric', day: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-    });
     // wait until we have sent the logout message
     res.send(new fuwa.Embed()
         .setTitle('Logging Out')
