@@ -1,37 +1,31 @@
 export default {
     /**
-     * Generate a hex color string from rgb properties
+     * Generate a hex color number from rgb properties
      * @param r
      * @param g
      * @param b
      */
-    rgb(r: number, g: number, b: number): string {
-        return (
-            '#' + ((1 << 24)
-                + (r << 16)
-                + (g << 8) + b)
-                .toString(16)
-                .slice(1)
-        );
+    rgb(r: number, g: number, b: number): number {
+        return (r << 16) + (g << 8) + b;
     },
-    mind: '#3EB489',
-    white: '#fffff',
-    snow: '#FFFAFA',
-    aliceBlue: '#f0f8ff',
-    antiqueWhite: '#faebd7',
-    aqua: '#00ffff',
-    aquaMarine: '#7fffd4',
-    azure: '#f0ffff',
-    beige: '#f5f5dc',
-    bisque: '#ffe4c4',
-    black: '#000000',
-    blanchedAlmond: '#ffebcd',
-    blue: '#57c7ff',
-    blueViolet: '#8a2be2',
-    brown: '#a52a2a',
-    lightGreen: '#5af78e',
-    orange: '#ff3403',
-    pink: '#ff6ac1',
-    red: '#ff5c57',
-    yellow: '#f3f99d'
+    mind: 0x3eb489,
+    white: 0xfffff,
+    snow: 0xfffafa,
+    aliceBlue: 0xf0f8ff,
+    antiqueWhite: 0xfaebd7,
+    aqua: 0x00ffff,
+    aquaMarine: 0x7fffd4,
+    azure: 0xf0ffff,
+    beige: 0xf5f5dc,
+    bisque: 0xffe4c4,
+    black: 0x000000,
+    blanchedAlmond: 0xffebcd,
+    blue: 0x57c7ff,
+    blueViolet: 0x8a2be2,
+    brown: 0xa52a2a,
+    lightGreen: 0x5af78e,
+    orange: 0xff3403,
+    pink: 0xff6ac1,
+    red: 0xff5c57,
+    yellow: 0xf3f99d
 };

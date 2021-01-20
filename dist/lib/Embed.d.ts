@@ -11,7 +11,7 @@ declare class Embed {
     protected description?: string;
     protected url?: string;
     protected timestamp?: Date;
-    color?: string | number;
+    protected color?: number;
     protected footer?: {
         text: string;
         icon_url: string;
@@ -114,15 +114,15 @@ declare class Embed {
         width?: number;
     }): this;
     /**
-     * @param code  color hex code for embed
+     * @param color The hex color code for the embed
      * ```ts
      * embed.setColor('#6f00ff')
      * embed.setColor(0x6f00f)
      * ```
      */
-    setColor(code: string | number): this;
+    setColor(color: string | number): this;
     /**
-     * @param time timestamp for embed
+     * @param time The timestamp of the embed.
      * ```js
      * embed.setTimestamp()
      * ```

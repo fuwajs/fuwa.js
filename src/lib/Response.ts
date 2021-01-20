@@ -15,16 +15,6 @@ class Response {
             this.data.tts = false;
             this.data.message_reference = { message_id: this.req.id };
         } else if (content instanceof Embed) {
-            if (!content.color) {
-                content.color = Colors.rgb(
-                    Math.random() * 255, Math.random() * 255, Math.random() * 255
-                );
-            }
-            if (typeof content.color === 'string') {
-                content.color = parseInt(
-                    '0x' + (content?.color?.split('#')[1] || 'ffffff')
-                );
-            }
             this.data.embed = content;
             this.data.tts = false;
         } else {
@@ -47,16 +37,6 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
-            if (!content.color) {
-                content.color = Colors.rgb(
-                    Math.random() * 255, Math.random() * 255, Math.random() * 255
-                );
-            }
-            if (typeof content.color === 'string') {
-                content.color = parseInt(
-                    '0x' + (content.color.split('#')[1] || 'ffffff')
-                );
-            }
             this.data.embed = content;
             this.data.tts = false;
         } else {
@@ -75,12 +55,12 @@ class Response {
      * @returns Another Response so you can chain reactions
      */
     react(...emojis: string[]): this {
-        emojis.forEach(async e => {
+        emojis.forEach(e => {
             undici.PUT(
                 `/channels/${this.req.channel_id}/messages/${this.req.id}`
                 + `/reactions/${encodeURI(e)}/@me`,
                 this.token,
-                encodeURI(e)
+                JSON.stringify(emojis.map(e => encodeURI(e)))
             ).catch(console.error);
         });
         return this;

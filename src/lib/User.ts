@@ -40,16 +40,6 @@ export class User implements UserOptions {
             data.content = content;
             data.tts = false;
         } else if (content instanceof Embed) {
-            if (!content.color) {
-                content.color = Colors.rgb(
-                    Math.random() * 255, Math.random() * 255, Math.random() * 255
-                );
-            }
-            if (typeof content.color === 'string') {
-                content.color = parseInt(
-                    '0x' + (content?.color?.split('#')[1] || 'ffffff')
-                );
-            }
             data.embed = content;
             data.tts = false;
         } else {

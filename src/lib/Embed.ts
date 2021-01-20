@@ -17,7 +17,7 @@ class Embed {
     protected description?: string;
     protected url?: string;
     protected timestamp?: Date;
-    color?: string | number;
+    protected color?: number;
     protected footer?: {
         text: string;
         icon_url: string;
@@ -176,19 +176,31 @@ class Embed {
     }
 
     /**
-     * @param code  color hex code for embed
+     * @param color The hex color code for the embed
      * ```ts
      * embed.setColor('#6f00ff')
      * embed.setColor(0x6f00f)
      * ```
      */
-    setColor(code: string | number): this {
-        this.color = code;
+    setColor(color: string | number): this {
+        if (typeof color === 'string') {
+            this.color = parseInt('0x' + (color.split('#')[1] || 'ffffff'));
+            if (isNaN(this.color)) {
+                console.error('Not a color');
+            }
+            return this
+        } else if (typeof color === 'number') {
+            this.color = color;
+        } else {
+            console.error(`Expected a string or number instead found ${typeof color}`);
+            // 'throw' would crash the bot for such a minor issue
+        }
+
         return this;
     }
 
     /**
-     * @param time timestamp for embed
+     * @param time The timestamp of the embed.
      * ```js
      * embed.setTimestamp()
      * ```

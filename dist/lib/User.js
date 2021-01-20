@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const Embed_1 = __importDefault(require("./Embed"));
-const Colors_1 = __importDefault(require("./Colors"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class User {
@@ -35,7 +34,6 @@ class User {
      * @param content The contents of the message. Can be a string or an Embed.
      */
     dm(content) {
-        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
             data.recipient_id = this.id;
@@ -44,12 +42,6 @@ class User {
                 data.tts = false;
             }
             else if (content instanceof Embed_1.default) {
-                if (!content.color) {
-                    content.color = Colors_1.default.rgb(Math.random() * 255, Math.random() * 255, Math.random() * 255);
-                }
-                if (typeof content.color === 'string') {
-                    content.color = parseInt('0x' + (((_a = content === null || content === void 0 ? void 0 : content.color) === null || _a === void 0 ? void 0 : _a.split('#')[1]) || 'ffffff'));
-                }
                 data.embed = content;
                 data.tts = false;
             }

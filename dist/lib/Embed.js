@@ -134,18 +134,31 @@ class Embed {
         return this;
     }
     /**
-     * @param code  color hex code for embed
+     * @param color The hex color code for the embed
      * ```ts
      * embed.setColor('#6f00ff')
      * embed.setColor(0x6f00f)
      * ```
      */
-    setColor(code) {
-        this.color = code;
+    setColor(color) {
+        if (typeof color === 'string') {
+            this.color = parseInt('0x' + (color.split('#')[1] || 'ffffff'));
+            if (isNaN(this.color)) {
+                console.error('Not a color');
+            }
+            return this;
+        }
+        else if (typeof color === 'number') {
+            this.color = color;
+        }
+        else {
+            console.error(`Expected a string or number instead found ${typeof color}`);
+            // 'throw' would crash the bot for such a minor issue
+        }
         return this;
     }
     /**
-     * @param time timestamp for embed
+     * @param time The timestamp of the embed.
      * ```js
      * embed.setTimestamp()
      * ```
