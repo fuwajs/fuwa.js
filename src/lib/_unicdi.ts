@@ -53,10 +53,10 @@ export default {
     DELETE(path: string, token: string): Promise<any> {
         return this.REQUEST('DELETE', path, token);
     },
-    POST(path: string, token: string, data: string | Buffer): Promise<any> {
+    POST(path: string, token: string, data?: string | Buffer): Promise<any> {
         return this.REQUEST('POST', path, token, data);
     },
-    PUT(path: string, token: string, data: string | Buffer): Promise<any> {
+    PUT(path: string, token: string, data?: string | Buffer): Promise<any> {
         return this.REQUEST('PUT', path, token, data);
     }
 };
