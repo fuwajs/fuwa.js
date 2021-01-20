@@ -376,15 +376,15 @@ class Client extends Emitter {
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
-            if (e) e(new Request(msg, this.token, this.cache), new Response(msg, this.token));
+            if (e) e(new Request(msg, this.token, this.cache, this.bot), new Response(msg, this.token, this.bot));
 
             // console.time('command run');
             if (!msg.content) return;
-            const res = new Response(msg, this.token);
+            const res = new Response(msg, this.token, this.bot);
             let prefix = '';
             // console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
-                prefix = await this.prefix(new Request(msg, this.token, this.cache))
+                prefix = await this.prefix(new Request(msg, this.token, this.cache, this.bot))
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
@@ -425,7 +425,7 @@ class Client extends Emitter {
             // console.timeEnd('command parsing')
             // console.time('middleware')
             const middlewareCommand = this.middleware.map(cb => ({ cb }))
-            const req = new Request(msg, token.toString(), this.cache);
+            const req = new Request(msg, token.toString(), this.cache, this.bot);
             req.args = args;
             // console.log (req)
 
@@ -437,6 +437,10 @@ class Client extends Emitter {
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
             // console.timeEnd('run command');
             // console.timeEnd('command run');
+        });
+
+        this.event('MESSAGE_REACTION_ADD', () => {
+
         });
     }
     logout(end = true) {

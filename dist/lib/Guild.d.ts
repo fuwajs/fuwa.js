@@ -37,7 +37,7 @@ declare class Guild {
     rules_channel_id: null;
     roles: Role[];
     lazy: boolean;
-    application_id: null;
+    application_id: string | null;
     mfa_level: number;
     explicit_content_filter: number;
     vanity_url_code: null;

@@ -65,5 +65,8 @@ exports.default = {
     },
     PUT(path, token, data) {
         return this.REQUEST('PUT', path, token, data);
+    },
+    PATCH(path, token, data) {
+        return this.REQUEST('PATCH', path, token, data);
     }
 };

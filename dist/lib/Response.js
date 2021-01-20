@@ -13,11 +13,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Embed_1 = __importDefault(require("./Embed"));
+const Message_1 = __importDefault(require("./Message"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class Response {
-    constructor(req, token) {
+    constructor(req, token, bot) {
         this.req = req;
         this.token = token;
+        this.bot = bot;
         this.data = {};
     }
     /**
@@ -43,19 +45,21 @@ class Response {
      * Embed.
      */
     send(content) {
-        if (typeof content === 'string') { // Just a normal message
-            this.data.content = content;
-            this.data.tts = false;
-        }
-        else if (content instanceof Embed_1.default) {
-            this.data.embed = content;
-            this.data.tts = false;
-        }
-        else {
-            // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-            return;
-        }
-        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(console.error);
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof content === 'string') { // Just a normal message
+                this.data.content = content;
+                this.data.tts = false;
+            }
+            else if (content instanceof Embed_1.default) {
+                this.data.embed = content;
+                this.data.tts = false;
+            }
+            else {
+                // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+                return;
+            }
+            return new Message_1.default(yield _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)), this.token, this.bot);
+        });
     }
     /**
      * @param emojis The emoji(s) to send

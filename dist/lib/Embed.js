@@ -4,22 +4,9 @@ class Embed {
     constructor(opts) {
         // Rich Embed by default
         this.fields = [];
-        this.type = 'rich';
         if (opts) {
             // Don't override the defualt unless specified
-            this.type = opts.type || 'rich';
-            this.title = opts.title;
-            this.description = opts.description;
-            this.url = opts.url;
-            this.timestamp = opts.timestamp;
-            this.color = opts.color;
-            this.footer = opts.footer;
-            this.image = opts.image;
-            this.thumbnail = opts.thumbnail;
-            this.video = opts.video;
-            this.provider = opts.provider;
-            this.author = opts.author;
-            this.fields = opts.fields;
+            Object.assign(this, Object.assign({ type: 'rich', timestamp: new Date(opts.timestamp) }, opts));
         }
     }
     /**

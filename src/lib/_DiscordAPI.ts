@@ -39,13 +39,18 @@ export interface DiscordAPIEvents {
     CHANNEL_CREATE: {
         op: 0;
         t: 'CHANNEL_CREATE';
-        d: Ready;
+        d: Channel;
     };
     MESSAGE_CREATE: {
         op: 0;
         t: 'MESSAGE_CREATE';
         d: Message;
     };
+    MESSAGE_REACTION_ADD: {
+        op: 0;
+        t: 'MESSAGE_REACTION_ADD'
+        d: Reaction;
+    }
 }
 export interface Message {
     id: string;

@@ -259,15 +259,15 @@ class Client extends Emitter_1.default {
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 const e = this.events.get('message');
                 if (e)
-                    e(new Request_1.default(msg, this.token, this.cache), new Response_1.default(msg, this.token));
+                    e(new Request_1.default(msg, this.token, this.cache, this.bot), new Response_1.default(msg, this.token, this.bot));
                 // console.time('command run');
                 if (!msg.content)
                     return;
-                const res = new Response_1.default(msg, this.token);
+                const res = new Response_1.default(msg, this.token, this.bot);
                 let prefix = '';
                 // console.time('prefix parsing')
                 if (typeof this.prefix === 'function') {
-                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache));
+                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache, this.bot));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));
@@ -313,7 +313,7 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('command parsing')
                 // console.time('middleware')
                 const middlewareCommand = this.middleware.map(cb => ({ cb }));
-                const req = new Request_1.default(msg, token.toString(), this.cache);
+                const req = new Request_1.default(msg, token.toString(), this.cache, this.bot);
                 req.args = args;
                 // console.log (req)
                 if (this.middleware[0]) {

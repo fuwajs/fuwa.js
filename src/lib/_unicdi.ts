@@ -10,7 +10,7 @@ export default {
      *!! Be aware that this function is **recursive**
      */
     REQUEST(
-        method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+        method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         path: string, token?: string, data?: string | Buffer
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
@@ -58,5 +58,8 @@ export default {
     },
     PUT(path: string, token: string, data?: string | Buffer): Promise<any> {
         return this.REQUEST('PUT', path, token, data);
+    },
+    PATCH(path: string, token: string, data?: string | Buffer): Promise<any> {
+        return this.REQUEST('PATCH', path, token, data);
     }
 };

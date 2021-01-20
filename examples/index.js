@@ -15,7 +15,7 @@ client.on('ready', () => {
 });
 
 client.on('reaction', (req, res) => {
-
+    res.send(`You reacted with ${res}`);
 });
 
 
@@ -39,7 +39,7 @@ client.use((req, res, next) => {
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
 client.command(['ping', 'latency'], (req, res) => {
-    const timestamp = Date.parse(new Date(req.rawData.timestamp));
+    const timestamp = Date.parse(new Date(req.message.timestamp));
     res.send(new fuwa.Embed()
         .setTitle('Pong')
         .setAuthor(req.author.username, { icon: req.author.avatar })
@@ -69,7 +69,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
         );
         return;
     }
-    client.deleteMessages(amt, req.rawData.channel_id);
+    client.deleteMessages(amt, req.message.channel_id);
 }, { desc: 'Remove messages.' })
     .addArgument('amount', 'The amount of messages to remove', 0);
 
@@ -138,6 +138,10 @@ client.command(['server', 'guild-info'], (req, res) => {
         ])
     )
 }, { desc: 'Get your server\'s information!' });
+client.command(['echo', 'say'], async(req, res) => {
+    req.message.delete();
+    res.send(req.args?.join(' ')||'You didnt say anything!');
+}, { desc: 'Makes the bot repeat what you say!' });
 
 client.command('cache', (req, res) => {
     res.send(JSON.stringify(client.cache));

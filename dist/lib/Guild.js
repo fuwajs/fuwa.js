@@ -7,7 +7,9 @@ const _DiscordAPI_1 = require("./_DiscordAPI");
 const Member_1 = __importDefault(require("./Member"));
 class Guild {
     constructor(data, token) {
+        this.name = data.name;
         this.id = data.id;
+        this.owner_id = data.owner_id;
         this.description = data.description;
         this.size = data.member_count;
         this.icon = `${_DiscordAPI_1.discordCDN}/icons/${this.id}/${data.icon}.png`;
