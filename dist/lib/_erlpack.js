@@ -7,7 +7,7 @@ try {
     if (!exports.erlpack)
         exports.erlpack = null;
 }
-catch (_a) {
+catch {
     exports.erlpack = null;
 }
 exports.pack = exports.erlpack ? exports.erlpack.pack : JSON.stringify;
@@ -16,7 +16,7 @@ function unpack(data, encoding) {
         try {
             return JSON.parse(data);
         }
-        catch (_a) {
+        catch {
             return {};
         }
     }
