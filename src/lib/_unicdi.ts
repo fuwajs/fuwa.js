@@ -11,18 +11,19 @@ export default {
      */
     REQUEST(
         method: 'GET' | 'POST' | 'PUT' | 'DELETE',
-        path: string, token: string, data?: string | Buffer
+        path: string, token?: string, data?: string | Buffer
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            const res = await http.request({
+            const params: Client.RequestOptions = {
                 path: '/api/v8' + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
                 },
                 body: data
-            });
+            }
+            if(token) params.headers.authorization = `Bot ${token}`;
+            const res = await http.request(params);
 
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
@@ -47,16 +48,16 @@ export default {
         });
     },
 
-    GET(path: string, token: string): Promise<any> {
+    GET(path: string, token?: string): Promise<any> {
         return this.REQUEST('GET', path, token);
     },
-    DELETE(path: string, token: string): Promise<any> {
+    DELETE(path: string, token?: string): Promise<any> {
         return this.REQUEST('DELETE', path, token);
     },
-    POST(path: string, token: string, data: string | Buffer): Promise<any> {
+    POST(path: string, token?: string, data?: string | Buffer): Promise<any> {
         return this.REQUEST('POST', path, token, data);
     },
-    PUT(path: string, token: string, data: string | Buffer): Promise<any> {
+    PUT(path: string, token?: string, data?: string | Buffer): Promise<any> {
         return this.REQUEST('PUT', path, token, data);
     }
 };

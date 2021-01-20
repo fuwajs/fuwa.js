@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Request_1 = __importDefault(require("./Request"));
 const _Cache_1 = __importDefault(require("./_Cache"));
+const _Debug_1 = __importDefault(require("./_Debug"));
+const Errors_1 = require("./Errors");
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const User_1 = __importDefault(require("./User"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
@@ -44,8 +46,9 @@ class Client extends Emitter_1.default {
      * @param prefix The prefix for your bot
      */
     constructor(prefix, options) {
-        var _a, _b, _c, _d;
+        var _a, _b, _c, _d, _e;
         super();
+        this.debugMode = false;
         this.sessionId = '';
         this.status = [];
         // protected events: Map<keyof Events, eventCallback> = new Map();
@@ -53,18 +56,28 @@ class Client extends Emitter_1.default {
         this.events = new Map();
         this.commands = new Map();
         this.middleware = [];
-        this.options = options;
+        this.options = options || {
+            cache: true,
+            debug: false,
+            useMentionPrefix: false,
+            builtinCommands: {
+                help: true
+            }
+        };
+        ((_a = this.options) === null || _a === void 0 ? void 0 : _a.debug) === false ? this.debugMode = false : this.debugMode = true;
+        this.debug = new _Debug_1.default(this.debugMode);
         this.prefix = prefix;
         const caching = {
-            clearAfter: ((_a = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _a === void 0 ? void 0 : _a.clearAfter) === false ? false : 1.08e+7,
-            cacheOptions: ((_b = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _b === void 0 ? void 0 : _b.cacheOptions) || {
+            clearAfter: ((_b = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _b === void 0 ? void 0 : _b.clearAfter) === false ? false : 1.08e+7,
+            cacheOptions: ((_c = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _c === void 0 ? void 0 : _c.cacheOptions) || {
                 channels: true,
                 guilds: true,
                 users: true
             },
         };
         this.cache = new _Cache_1.default(caching);
-        if ((_d = (_c = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _c === void 0 ? void 0 : _c.help) !== null && _d !== void 0 ? _d : true) {
+        this.debug;
+        if ((_e = (_d = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _d === void 0 ? void 0 : _d.help) !== null && _e !== void 0 ? _e : true) {
             this.command(['help', 'commands', 'h'], (req, res) => {
                 console.log('help');
                 let embed = new Embed_1.default()
@@ -193,6 +206,7 @@ class Client extends Emitter_1.default {
      */
     login(token) {
         return __awaiter(this, void 0, void 0, function* () {
+            this.debug.log('login started', 'Login is function is attempting to run...');
             const next = (req, res, arr, i = 0, secondArr) => {
                 return () => {
                     var _a, _b;
@@ -207,13 +221,20 @@ class Client extends Emitter_1.default {
             this.token = token.toString();
             // console.log (`Your Bot Token: ${token.toString()}`);
             // this.connect(discordAPI.gateway);
+            this.debug.log('connecting', 'Attempting to connect to discord');
+            let options = {
+                v: 8,
+                encoding: _erlpack_1.erlpack ? 'etf' : 'json'
+            };
             this.connect(_DiscordAPI_1.discordAPI.gateway, {
                 v: 8,
                 encoding: _erlpack_1.erlpack ? 'etf' : 'json'
             });
+            this.debug.success('connected', `Connected to ${_DiscordAPI_1.discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding`);
             this.op(_DiscordAPI_1.opCodes.hello, (data) => {
-                // console.log (data);
+                this.debug.log('hello', `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`);
                 this.loop = setInterval(() => this.response.op.emit(_DiscordAPI_1.opCodes.heartbeat, 251), data.heartbeat_interval);
+                this.debug.log('discord login', 'Attempting to connect to discord');
                 this.response.op.emit(_DiscordAPI_1.opCodes.indentify, {
                     token: token.toString(),
                     intents: 513,
@@ -225,9 +246,11 @@ class Client extends Emitter_1.default {
                 });
             });
             this.op(_DiscordAPI_1.opCodes.invalidSession, () => {
-                throw new Error('Invalid token');
+                this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+                throw new Errors_1.InvalidToken('Invalid token');
             });
             this.event('READY', (data) => {
+                this.debug.success('bot online', 'Logged into discord, with everything intact');
                 this.sessionId = data.session_id;
                 this.bot = new User_1.default(data.user, token.toString());
                 data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g));

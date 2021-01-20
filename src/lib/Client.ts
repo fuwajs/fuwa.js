@@ -1,5 +1,7 @@
 import Request from './Request';
 import Cache from './_Cache';
+import Debug from './_Debug';
+import { InvalidToken } from './Errors';
 import { discordAPI, Message, opCodes, Guild } from './_DiscordAPI';
 import User from './User';
 import undici from './_unicdi';
@@ -121,8 +123,9 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
+    protected debugMode: boolean = false;
+    protected debug: Debug;
     private sessionId = '';
-    protected debugMode: boolean;
     public cache: Cache
     protected status: any = [];
     // protected events: Map<keyof Events, eventCallback> = new Map();
@@ -154,7 +157,16 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.options = options;
+        this.options = options||{
+            cache: true,
+            debug: false,
+            useMentionPrefix: false,
+            builtinCommands: {
+                help: true
+            }
+        };
+        this.options?.debug === false ? this.debugMode = false : this.debugMode = true;
+        this.debug = new Debug(this.debugMode);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options
@@ -166,7 +178,8 @@ class Client extends Emitter {
                 users: true
             },
         }
-        this.cache = new Cache(caching)
+        this.cache = new Cache(caching);
+        this.debug
         if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res) => {
                 console.log('help');
@@ -297,7 +310,7 @@ class Client extends Emitter {
      * @param status Your Bot Status Options
      */
     async login(token: string | Buffer) {
-
+        this.debug.log('login started', 'Login is function is attempting to run...');
         const next = (
             req: Request,
             res: Response,
@@ -318,18 +331,27 @@ class Client extends Emitter {
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
-
+        this.debug.log('connecting', 'Attempting to connect to discord');
+        let options = {
+            v: 8,
+            encoding: erlpack ? 'etf' : 'json'
+        }
         this.connect(discordAPI.gateway, {
             v: 8,
             encoding: erlpack ? 'etf' : 'json'
         });
-
+        this.debug.success(
+            'connected', 
+            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding`);
         this.op(opCodes.hello, (data) => {
-            // console.log (data);
+            this.debug.log('hello',
+                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
+            )
             this.loop = setInterval(
                 () => this.response.op.emit(opCodes.heartbeat, 251),
                 data.heartbeat_interval
             );
+            this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(opCodes.indentify, {
                 token: token.toString(),
                 intents: 513,
@@ -341,10 +363,12 @@ class Client extends Emitter {
             });
         });
         this.op(opCodes.invalidSession, () => {
-            throw new Error('Invalid token');
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+            throw new InvalidToken('Invalid token');
         });
 
         this.event('READY', (data) => {
+            this.debug.success('bot online', 'Logged into discord, with everything intact');
             this.sessionId = data.session_id;
             this.bot = new User(data.user, token.toString());
             data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g))

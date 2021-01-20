@@ -1,6 +1,7 @@
 /// <reference types="node" />
 import Request from './Request';
 import Cache from './_Cache';
+import Debug from './_Debug';
 import User from './User';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
@@ -105,8 +106,9 @@ export interface clientOptions {
  */
 declare class Client extends Emitter {
     bot: User;
-    private sessionId;
     protected debugMode: boolean;
+    protected debug: Debug;
+    private sessionId;
     cache: Cache;
     protected status: any;
     protected events: Map<keyof Events, Function>;

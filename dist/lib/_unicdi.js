@@ -21,15 +21,17 @@ exports.default = {
      */
     REQUEST(method, path, token, data) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield http.request({
+            const params = {
                 path: '/api/v8' + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bot ' + token,
                 },
                 body: data
-            });
+            };
+            if (token)
+                params.headers.authorization = `Bot ${token}`;
+            const res = yield http.request(params);
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
