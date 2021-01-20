@@ -17,7 +17,7 @@ export class User implements UserOptions {
     premium_type?: number;
     public_flags?: number;
 
-    constructor(data: UserOptions, private token: string) {
+    constructor(data: UserOptions, protected token: string) {
         this.id = data.id;
         this.username = data.username;
         this.discriminator = data.discriminator;

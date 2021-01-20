@@ -1,7 +1,7 @@
 import Embed from './Embed';
 import { Message, User as UserOptions } from './_DiscordAPI';
 export declare class User implements UserOptions {
-    private token;
+    protected token: string;
     id: string;
     username: string;
     discriminator: string;

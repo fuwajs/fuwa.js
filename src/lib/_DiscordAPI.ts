@@ -217,7 +217,7 @@ export interface Author {
 
 export interface Member {
     user: User;
-    roles: string;
+    roles: Role[];
     premium_since?: null | number;
     pending: boolean;
     nick: string | null;
@@ -239,7 +239,7 @@ export interface DiscordAPIOP {
         t?: null;
         d: {
             token: string;
-            intents: 513;
+            intents: number;
             properties: {
                 $os: string;
                 $browser: string;

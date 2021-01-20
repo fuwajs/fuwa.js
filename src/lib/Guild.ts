@@ -1,5 +1,5 @@
-import { Guild as GuildOptions, GuildHashes, Member, Channel, Role } from './_DiscordAPI';
-
+import { Guild as GuildOptions, discordCDN, GuildHashes, Channel, Role } from './_DiscordAPI';
+import Member from './Member';
 class Guild {
     id: string;
     name: string;
@@ -21,7 +21,7 @@ class Guild {
     large: boolean;
     features: any[];
     unavailable: boolean;
-    member_count: number;
+    size: number;
     max_members: number;
     guild_hashes: GuildHashes;
     system_channel_flags: number;
@@ -46,11 +46,15 @@ class Guild {
     threads: any[];
     default_message_notifications: number;
     premium_subscription_count: number;
-    joined_at: string;
-    constructor(data: GuildOptions) {
-        this.members = new Map(data.members.map(m => [m.user.id, m]));
+    created_at: Date;
+    constructor(data: GuildOptions, token: string) {
+        this.id = data.id;
+        this.description = data.description;
+        this.size = data.member_count;
+        this.icon = `${discordCDN}/icons/${this.id}/${data.icon}.png`;
+        this.members = new Map(data.members.map(m => [m.user.id, (new Member(m, token))]));
         this.channels = new Map(data.channels.map(m => [m.id, m]));
-        
+        this.created_at = new Date(data.joined_at);
     }
 }
 export default Guild;

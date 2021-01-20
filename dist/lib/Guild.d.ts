@@ -1,4 +1,5 @@
-import { Guild as GuildOptions, GuildHashes, Member, Channel, Role } from './_DiscordAPI';
+import { Guild as GuildOptions, GuildHashes, Channel, Role } from './_DiscordAPI';
+import Member from './Member';
 declare class Guild {
     id: string;
     name: string;
@@ -20,7 +21,7 @@ declare class Guild {
     large: boolean;
     features: any[];
     unavailable: boolean;
-    member_count: number;
+    size: number;
     max_members: number;
     guild_hashes: GuildHashes;
     system_channel_flags: number;
@@ -44,7 +45,7 @@ declare class Guild {
     threads: any[];
     default_message_notifications: number;
     premium_subscription_count: number;
-    joined_at: string;
-    constructor(data: GuildOptions);
+    created_at: Date;
+    constructor(data: GuildOptions, token: string);
 }
 export default Guild;

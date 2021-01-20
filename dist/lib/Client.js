@@ -129,11 +129,11 @@ class Client extends Emitter_1.default {
      * });
      */
     command(name, cb, options) {
+        let defaultName = Array.isArray(name) ? name.shift() : name;
         const option = {
             desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
-            aliases: Array.isArray(name) ? name.slice(1) : []
+            aliases: Array.isArray(name) ? name : []
         };
-        let defaultName = Array.isArray(name) ? name.pop() : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
         if (old) {
@@ -321,6 +321,7 @@ class Client extends Emitter_1.default {
     }
     logout(end = true) {
         if ((this === null || this === void 0 ? void 0 : this.ws) && this.loop) {
+            this.ws.close();
             clearInterval(this.loop);
             if (end)
                 process.exit();

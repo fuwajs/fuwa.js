@@ -1,9 +1,8 @@
-const fuwa = require('../dist/index'); // Import fuwa.js here!
-const path = require('path');
-const fs = require('fs')
-const fetch = require('node-fetch');
-
-const client = new fuwa.Client(['!', '?', '$'], { debug: true });
+const fuwa   = require('../dist/index'); // Import fuwa.js here!
+const path   = require('path');
+const fs     = require('fs');
+const fetch  = require('node-fetch');
+const client = new fuwa.Client(['!', '?', '$']);
 
 // Log the bot into discord
 client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
@@ -13,6 +12,7 @@ client.set('useMentionPrefix', true);
 // This function is ran when the bot is connected to discord
 client.on('ready', () => {
     console.log(`Hello, my name is ${client.bot.username}!`);
+
 });
 
 // client.on('message', (req, res) => {
@@ -23,17 +23,19 @@ client.use((req, res, next) => {
     // For example, you could notify the user you have recieved their command
     // by reacting with a green checkmark.
     res.react('✅');
-    next();
+    next(); // When calling the next function, your calling the command that the message
+    // was ment for, dont forget to put this at the end ofyour function!
 });
+
 
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
 client.command(['ping', 'latency'], (req, res) => {
     const timestamp = Date.parse(new Date(req.rawData.timestamp));
     res.send(new fuwa.Embed()
-        .setTitle('Pong')
-        .setAuthor(req.author.username, { icon: req.author.avatar })
-        .addField({
+    .setTitle('Pong')
+    .setAuthor(req.author.username, { icon: req.author.avatar })
+    .addField({
             name: 'Latency',
             value: `${Date.now() - timestamp}ms`
         })
@@ -51,7 +53,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     // 2 - Greater than 100 (Discord can only delete 100 messages at a time)
     if (isNaN(amt) || amt > 100) {
         res.send(new fuwa.Embed()
-            .setTitle('Invalid argument(s).')
+        .setTitle('Invalid argument(s).')
             .setAuthor(req.author.username, { icon: req.author.avatar })
             .setDescription('Expected a number for the 1st argument.')
             .addField({ name: 'Usage', value: 'rm <amt>' })
@@ -61,7 +63,7 @@ client.command(['delete', 'rm', 'purge'], (req, res) => {
     }
     client.deleteMessages(amt, req.rawData.channel_id);
 }, { desc: 'Remove messages.' })
-    .addArgument('amount', 'The amount of messages to remove', 0);
+.addArgument('amount', 'The amount of messages to remove', 0);
 
 // More complex example command using the GitHub API
 client.command(['github', 'gh'], async (req, res) => {
@@ -71,12 +73,8 @@ client.command(['github', 'gh'], async (req, res) => {
         fetch(`https://api.github.com/users/${username}`))
         // Turn this string into a object we can use
         .json();
-
-    const date = new Date(user.created_at)
-        .toLocaleTimeString([], { // Fancy date stuff C:
-            year: 'numeric', month: 'numeric', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
+        
+    const date = new Date(user.created_at).toLocaleString();
     // Send an embed!
     res.reply(new fuwa.Embed()
         // Set your embed title!
@@ -113,14 +111,22 @@ client.command('logout', (req, res) => {
         .setAuthor(req.author.username, { icon: req.author.avatar })
         .setColor(fuwa.Colors.red)
         .setTimestamp()
-    ).then(client.logout);
+    ).then(() => client.logout(true));
 }, { desc: 'Log the bot out of discord.' });
-
-client.command('reply', (req, res) => {
-    res.reply('get replied to');
-    req.author.dm('get dmed');
-});
 
 client.command('react', (req, res) => {
     res.react('🧢', '😂', '👌', '😃', '🤡');
-});
+}, { desc: 'Reacts to your message with funny emojis!' });
+
+client.command(['server', 'guild-info'], (req, res) => {
+    res.send(new fuwa.Embed()
+        .setAuthor(req.author.username, { icon: req.author.avatar })
+        .setDescription(req.guild.description||'This server has no description')
+        .setImage(req.guild.icon)
+        .addFields([
+            { name: 'Members', value: req.guild.size, inline: true },
+            { name: 'Channels', value: req.guild.channels.size, inline: true },
+            { name: 'Created at', value: req.guild.created_at.toLocaleString() }
+        ])
+    )
+}, { desc: 'Get your server\'s information!' });

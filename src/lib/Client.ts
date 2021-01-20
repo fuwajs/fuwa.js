@@ -243,11 +243,11 @@ class Client extends Emitter {
      * });
      */
     command(name: string | string[], cb: commandCallback, options?: commandOptions) {
+        let defaultName = Array.isArray(name) ? name.shift() : name;
         const option: commandOptions = {
             desc: options?.desc || 'No description was provided',
-            aliases: Array.isArray(name) ? name.slice(1) : []
+            aliases: Array.isArray(name) ? name : []
         };
-        let defaultName = Array.isArray(name) ? name.pop() : name;
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option }
         if (old) { old.push(cmd) } else { old = [cmd] }
@@ -378,11 +378,11 @@ class Client extends Emitter {
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             this.events.get('message')?.call(new Request(msg, this.token, this.cache), new Response(msg, this.token))
-            console.time('command run');
+            // console.time('command run');
             if (!msg.content) return;
             const res = new Response(msg, this.token);
             let prefix = '';
-            console.time('prefix parsing')
+            // console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
                 prefix = await this.prefix(new Request(msg, this.token, this.cache))
             } else if (Array.isArray(this.prefix)) {
@@ -392,9 +392,9 @@ class Client extends Emitter {
             } else {
                 throw new TypeError('Invalid prefix type');
             }
-            console.timeEnd('prefix parsing');
+            // console.timeEnd('prefix parsing');
             if (!prefix) return;
-            console.time('command parsing')
+            // console.time('command parsing')
             let commandName: string = '';
 
             let args: string[] = [];
@@ -422,8 +422,8 @@ class Client extends Emitter {
             if (!c) return;
             const command = c[1];
             if (!command) return;
-            console.timeEnd('command parsing')
-            console.time('middleware')
+            // console.timeEnd('command parsing')
+            // console.time('middleware')
             const middlewareCommand = this.middleware.map(cb => ({ cb }))
             const req = new Request(msg, token.toString(), this.cache);
             req.args = args;
@@ -432,15 +432,16 @@ class Client extends Emitter {
             if (this.middleware[0]) {
                 this.middleware[0](req, res, next(req, res, middlewareCommand, 0, command));
             }
-            console.timeEnd('middleware');
-            console.time('run command');
+            // console.timeEnd('middleware');
+            // console.time('run command');
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
-            console.timeEnd('run command');
-            console.timeEnd('command run');
+            // console.timeEnd('run command');
+            // console.timeEnd('command run');
         });
     }
     logout(end = true) {
         if (this?.ws && this.loop) {
+            this.ws.close();
             clearInterval(this.loop);
             if (end) process.exit();
         }

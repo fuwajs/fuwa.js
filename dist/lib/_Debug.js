@@ -40,7 +40,6 @@ class Debug {
 
      */
     object(obj, tabWidth = 0) {
-        console.time(JSON.stringify(obj));
         let str = '';
         // let tabs = '';
         // for (const e of new Array(tabWidth)) tabs += '    ';
@@ -69,7 +68,6 @@ class Debug {
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''}`;
             i++;
         }
-        console.timeEnd(JSON.stringify(obj));
         return str;
     }
 }
