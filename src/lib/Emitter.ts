@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import {
     DiscordAPIOP as DiscordAPIOPResponse,
-    DiscordAPIEvents,
+    GatewayEvents,
     opCodes,
 } from './_DiscordAPI';
 
@@ -24,9 +24,9 @@ class Emitter {
             },
         },
         events: {
-            emit: <T extends keyof DiscordAPIEvents>(
+            emit: <T extends keyof GatewayEvents>(
                 t: T,
-                d: DiscordAPIEvents[T]
+                d: GatewayEvents[T]
             ): void => {
                 // this.ws.send(JSON.stringify({ t, d, op: 0 }));
                 this.ws.send(pack({ t, d, op: opCodes.dispatch }));
@@ -66,9 +66,9 @@ class Emitter {
     ): void {
         this.OPevents[op] = cb;
     }
-    protected event<T extends keyof DiscordAPIEvents>(
+    protected event<T extends keyof GatewayEvents>(
         e: T,
-        cb: (data: DiscordAPIEvents[T]['d']) => void
+        cb: (data: GatewayEvents[T]['d']) => void
     ): void {
         this.APIEvents[e] = cb;
     }

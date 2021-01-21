@@ -25,7 +25,7 @@ export const discordAPI = {
 };
 
 export const discordCDN = 'https://cdn.discordapp.com';
-export interface DiscordAPIEvents {
+export interface GatewayEvents {
     GUILD_CREATE: {
         op: 0;
         t: 'GUILD_CREATE';
@@ -221,16 +221,14 @@ export interface Author {
 }
 
 export interface Member {
-    user: User;
-    roles: Role[];
-    premium_since?: null | number;
-    pending: boolean;
+    user?: User;
     nick: string | null;
-    mute: boolean;
-    joined_at: number;
-    is_pending: boolean;
-    hoisted_role: string;
+    roles: string[];
+    joined_at: Date;
+    premium_since?: Date | null;
     deaf: boolean;
+    mute: boolean;
+    pending?: boolean;
 }
 
 export interface DiscordAPIOP {
@@ -308,16 +306,19 @@ export interface DiscordAPIOP {
 }
 
 export interface Reaction {
-    count: number;
-    me: boolean;
+    user_id: string;
+    channel_id: string;
+    message_id: string;
+    guild_id?: string;
+    member?: Member;
     emoji: Emoji;
 }
 
 export interface Emoji {
-    id: string,
-    name: string,
-    roles?: string[],
-    user: User;
+    id: string | null;
+    name: string | null;
+    roles?: string[];
+    user?: User;
     require_colons?: boolean;
     managed?: boolean;
     animated?: boolean;
@@ -366,8 +367,6 @@ export interface User extends Author {
 /* eslint-disable */
 export interface UserSettings { }
 
-// volt didnt do a good job he set some stuff to 'null' for some reason
-// he left some things out also
 export interface Guild {
     id: string;
     name: string;
@@ -476,8 +475,8 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIEventResponse<T extends keyof DiscordAPIEvents> {
+export interface DiscordAPIEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;
-    d: DiscordAPIEvents[T];
+    d: GatewayEvents[T];
 }

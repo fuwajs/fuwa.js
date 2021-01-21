@@ -1,148 +1,86 @@
 const fuwa = require('../dist/index'); // Import fuwa.js here!
-const path = require('path');
-const fs = require('fs');
+const { join } = require('path');
+const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
-const client = new fuwa.Client(['!', '?', '$'], { debug: true });
+// Set the prefixes
+const client = new fuwa.Client(['!', '?', '$']);
 
 // Log the bot into discord
-client.login(fs.readFileSync(path.join(__dirname, 'token.secret')));
+client.login(readFileSync(join(__dirname, 'token.secret')));
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
 // This function is ran when the bot is connected to discord
-client.on('ready', () => {
+client.on('ready', function ready() {
     console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
-client.on('reaction', (req, res) => {
-    res.send(`You reacted with ${res}`);
-});
+client.on('reaction', function (req, res) {
 
+})
 
 // This function will be ran before every other command
-client.use((req, res, next) => {
+client.use(function reactMiddleware(req, res, next) {
     // For example, you could notify the user you have recieved their command
     // by reacting with a green checkmark.
     res.react('✅');
     next(); // When calling the 'next' function, your calling the command that the message
-    // was ment for, dont forget to put this at the end of your function!
+    // was meant for, dont forget to put this at the end of your function!
 });
-
-// This function will be ran on every **message** not this is different from
-// middleware because middleware is ran on each **command** here, you can do
-// custom command parsing if you want to
-// client.on('message', (req, res) => {
-//     // Don't cause a feed backloop
-//     if (!req.author.bot) res.send('I recieved a message!');
-// });
 
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
-client.command(['ping', 'latency'], (req, res) => {
+client.command(['ping', 'latency'], function ping(req, res) {
     const timestamp = Date.parse(new Date(req.message.timestamp));
-    res.send(new fuwa.Embed()
-        .setTitle('Pong')
-        .setAuthor(req.author.username, { icon: req.author.avatar })
-        .addField({
-            name: 'Latency',
-            value: `${Date.now() - timestamp}ms`
-        })
-        .setDescription()
-        .setColor(fuwa.Colors.rgb(13, 186, 120))
-    );
-});
-
-client.command(['delete', 'rm', 'purge'], (req, res) => {
-    // The user probably wants to delete the command along with previous 
-    // messages.
-    const amt = parseInt(req.args[0]) + 1;
-    // Handle errors
-    // 1 - Invalid number (NaN)
-    // 2 - Greater than 100 (Discord can only delete 100 messages at a time)
-    if (isNaN(amt) || amt > 100) {
-        res.send(new fuwa.Embed()
-            .setTitle('Invalid argument(s).')
+    res.send(
+        new fuwa.Embed()
+            .setTitle('Pong')
             .setAuthor(req.author.username, { icon: req.author.avatar })
-            .setDescription('Expected a number for the 1st argument.')
-            .addField({ name: 'Usage', value: 'rm <amt>' })
-            .setColor(fuwa.Colors.red)
-        );
-        return;
-    }
-    client.deleteMessages(amt, req.message.channel_id);
-}, { desc: 'Remove messages.' })
-    .addArgument('amount', 'The amount of messages to remove', 0);
-
-// More complex example command using the GitHub API
-client.command(['github', 'gh'], async (req, res) => {
-    const username = req.args[0] || 'octocat';
-    const user = await (await
-        // Fetch the github user's JSON code (as a string)
-        fetch(`https://api.github.com/users/${username}`))
-        // Turn this string into a object we can use
-        .json();
-
-    const date = new Date(user.created_at).toLocaleString();
-    // Send an embed!
-    res.reply(new fuwa.Embed()
-        // Set your embed title!
-        .setTitle(`${user.name} @ GitHub`)
-        // Set the author of the message
-        .setAuthor(req.author.username, { icon: req.author.avatar })
-        // Url to the title,
-        .setUrl(user.html_url)
-        // User's bio
-        .setDescription(user.bio)
-        // Thumbnail for the embed
-        .setThumbnail(user.avatar_url)
-        // Add the embed's fields
-        .addFields([
-            { name: 'Repositories', value: user.public_repos },
-            { name: 'Followers', value: user.followers, inline: true },
-            { name: 'Following', value: user.following, inline: true },
-        ])
-        // Set your favorite color!
-        .setColor(fuwa.Colors.rgb(255, 145, 81))
-        // Add a footer!
-        .setFooter(`Joined github at ${date}`)
-        // Set the timestamp of the embed
-        .setTimestamp()
+            .addField({
+                name: 'Latency',
+                value: `${Date.now() - timestamp}ms`,
+            })
+            .setDescription()
+            .setColor(fuwa.Colors.rgb(13, 186, 120))
     );
-}, { desc: 'Get GitHub user statistics.' }); // Set the help message
-
-// In reailty you would **not** want a command like this
-// This is for demonstration purposes only
-client.command('logout', (req, res) => {
-    // wait until we have sent the logout message
-    res.send(new fuwa.Embed()
-        .setTitle('Logging Out')
-        .setAuthor(req.author.username, { icon: req.author.avatar })
-        .setColor(fuwa.Colors.red)
-        .setTimestamp()
-    ).then(() => client.logout(true));
-}, { desc: 'Log the bot out of discord.' });
-
-client.command('react', (req, res) => {
-    res.react('🧢', '😂', '👌', '😃', '🤡');
-}, { desc: 'Reacts to your message with funny emojis!' });
-
-client.command(['server', 'guild-info'], (req, res) => {
-    res.send(new fuwa.Embed()
-        .setAuthor(req.author.username, { icon: req.author.avatar })
-        .setDescription(req.guild.description || 'This server has no description')
-        .setImage(req.guild.icon)
-        .addFields([
-            { name: 'Members', value: req.guild.size, inline: true },
-            { name: 'Channels', value: req.guild.channels.size, inline: true },
-            { name: 'Created at', value: req.guild.created_at.toLocaleString() }
-        ])
-    )
-}, { desc: 'Get your server\'s information!' });
-client.command(['echo', 'say'], async(req, res) => {
-    req.message.delete();
-    res.send(req.args?.join(' ')||'You didnt say anything!');
-}, { desc: 'Makes the bot repeat what you say!' });
-
-client.command('cache', (req, res) => {
-    res.send(JSON.stringify(client.cache));
 });
+// More complex example command using the GitHub API
+client.command(['github', 'gh'], async function github(req, res) {
+        const username = req.args[0] || 'octocat';
+        const user = await (
+            await fetch(`https://api.github.com/users/${username}`) // Fetch the github user's JSON code (as a string)
+        ).json(); // Turn this string into a object we can use
+
+        const date = new Date(user.created_at).toLocaleString();
+        // Send an embed!
+        res.reply(
+            new fuwa.Embed()
+                // Set your embed title!
+                .setTitle(`${user.name} @ GitHub`)
+                // Set the author of the message
+                .setAuthor(req.author.username, { icon: req.author.avatar })
+                // Url to the title,
+                .setUrl(user.html_url)
+                // User's bio
+                .setDescription(user.bio)
+                .setThumbnail(user.avatar_url)
+                // Add the embed's sections
+                .addFields([
+                    { name: 'Repositories', value: user.public_repos },
+                    { name: 'Followers', value: user.followers, inline: true },
+                    { name: 'Following', value: user.following, inline: true },
+                ])
+                // Set your favorite color!
+                .setColor(fuwa.Colors.rgb(255, 145, 81))
+                // Add a footer!
+                .setFooter(`Joined github at ${date}`)
+                // Set the timestamp of the embed
+                .setTimestamp()
+        );
+    }, { desc: 'Get GitHub user statistics.' } // Set the help message
+);
+
+client.command(['echo', 'say'], function (req, res) {
+        req.message.delete();
+        res.send(req.rawData.content || 'You didnt say anything!');
+}, { desc: 'Makes the bot repeat what you say!' });
