@@ -19,7 +19,9 @@ declare class Response {
     send(content: string | Embed): Promise<Message>;
     /**
      * @param emojis The emoji(s) to send
+     * @param inOrder Should the emojis be sent in order. Note that this function
+     * is recursive with this option set.
      */
-    react(...emojis: string[]): Promise<this>;
+    react(emojis: string[] | string, inOrder?: boolean): any;
 }
 export default Response;

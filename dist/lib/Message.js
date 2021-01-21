@@ -16,20 +16,11 @@ const Embed_1 = __importDefault(require("./Embed"));
 const _Debug_1 = __importDefault(require("./_Debug"));
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class Message {
-    constructor(
-    // hear me out. if you do await on the message it waits until the message 
-    // is sent and in that time the cb func cant do anything
-    data, // NO PROMISE BRO ????????? how to use promise in constructor?
-    token, bot) {
+    constructor(data, token, bot) {
+        var _a;
         this.token = token;
         this.bot = bot;
-        // otherwise u block the thread
-        this.id = data.id;
-        this.guild_id = data.guild_id;
-        this.author_id = data.author.id;
-        this.channel_id = data.channel_id;
-        this.content = data.content;
-        this.embeds = data.embeds.map((v) => new Embed_1.default(v));
+        Object.assign(this, Object.assign({ timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)) }, data));
     }
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -54,6 +45,31 @@ class Message {
     }
     delete() {
         return _unicdi_1.default.DELETE(`/channels/${this.channel_id}/messages/${this.id}`, this.token).catch(console.error);
+    }
+    /**
+         * @param emojis The emoji(s) to send
+         * @param inOrder Should the emojis be sent in order. Note that this function
+         * is recursive with this option set.
+         */
+    react(emojis, inOrder) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof emojis === 'string') {
+                return _unicdi_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}`
+                    + `/reactions/${emojis}/@me`, this.token);
+            }
+            else if (inOrder) {
+                return _unicdi_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}`
+                    + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(O_CREAT => this.react(emojis.slice(1), true));
+            }
+            else {
+                const ret = [];
+                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                    ret.push(_unicdi_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}`
+                        + `/reactions/${encodeURI(e)}/@me`, this.token));
+                }));
+                return ret;
+            }
+        });
     }
 }
 exports.default = Message;

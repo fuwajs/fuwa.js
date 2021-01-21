@@ -63,14 +63,27 @@ class Response {
     }
     /**
      * @param emojis The emoji(s) to send
+     * @param inOrder Should the emojis be sent in order. Note that this function
+     * is recursive with this option set.
      */
-    react(...emojis) {
+    react(emojis, inOrder) {
         return __awaiter(this, void 0, void 0, function* () {
-            emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`, this.token, JSON.stringify(emojis.map(e => encodeURI(e))));
-            }));
-            return this;
+            if (typeof emojis === 'string') {
+                return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    + `/reactions/${emojis}/@me`, this.token);
+            }
+            else if (inOrder) {
+                return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(_ => this.react(emojis.slice(1), true));
+            }
+            else {
+                const ret = [];
+                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                    ret.push(_unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                        + `/reactions/${encodeURI(e)}/@me`, this.token));
+                }));
+                return ret;
+            }
         });
     }
 }

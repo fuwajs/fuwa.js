@@ -1,4 +1,3 @@
-import Colors from './Colors';
 import Embed from './Embed';
 import Message from './Message';
 import User from './User';
@@ -55,17 +54,34 @@ class Response {
 
     /**
      * @param emojis The emoji(s) to send
+     * @param inOrder Should the emojis be sent in order. Note that this function
+     * is recursive with this option set.
      */
-    async react(...emojis: string[]) {
-        emojis.forEach(async e => {
-            await undici.PUT(
+    async react(emojis: string[] | string, inOrder?: boolean) {
+        if (typeof emojis === 'string') {
+            return undici.PUT(
                 `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                + `/reactions/${encodeURI(e)}/@me`,
+                + `/reactions/${emojis}/@me`,
                 this.token,
-                JSON.stringify(emojis.map(e => encodeURI(e)))
             );
-        });
-        return this;
+        }
+        else if (inOrder) {
+            return undici.PUT(
+                `/channels/${this.req.channel_id}/messages/${this.req.id}`
+                + `/reactions/${encodeURI(emojis[0])}/@me`,
+                this.token,
+            ).then(_ => this.react(emojis.slice(1), true));
+        } else {
+            const ret = [];
+            emojis.forEach(async e => {
+                ret.push(undici.PUT(
+                    `/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    + `/reactions/${encodeURI(e)}/@me`,
+                    this.token,
+                ));
+            });
+            return ret;
+        }
     }
 
 }

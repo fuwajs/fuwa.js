@@ -2,7 +2,10 @@ import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
-import { discordAPI, Message, opCodes, Guild } from './_DiscordAPI';
+import { 
+    discordAPI, Message, OpCodes, UserStatus,
+    ActivityType
+} from './_DiscordAPI';
 import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
@@ -14,13 +17,6 @@ import { erlpack } from './_erlpack';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
-enum statusCode {
-    playing,
-    streaming,
-    listening,
-    custom,
-    competing
-}
 /**
  * status options for bot
  */
@@ -34,7 +30,7 @@ export interface statusOptions {
      * The available status types are playing, listening, streaming, and 
      * competing.
      */
-    type?: statusCode;
+    type?: ActivityType;
     /**
      * The URL of a stream
      */
@@ -44,7 +40,7 @@ export interface statusOptions {
     /**
      * The status of your bot. Online by default
      */
-    status?: 'dnd' | 'offline' | 'idle' | 'online';
+    status?: UserStatus;
     /**
      * Whether or not the bot is afk.
      */
@@ -341,16 +337,16 @@ class Client extends Emitter {
         this.debug.success(
             'connected',
             `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`);
-        this.op(opCodes.hello, (data) => {
+        this.op(OpCodes.hello, (data) => {
             this.debug.log('hello',
                 `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
             );
             this.loop = setInterval(
-                () => this.response.op.emit(opCodes.heartbeat, 251),
+                () => this.response.op.emit(OpCodes.heartbeat, 251),
                 data.heartbeat_interval
             );
             this.debug.log('discord login', 'Attempting to connect to discord');
-            this.response.op.emit(opCodes.indentify, {
+            this.response.op.emit(OpCodes.indentify, {
                 token: token.toString(),
                 intents: 513,
                 properties: {
@@ -360,7 +356,7 @@ class Client extends Emitter {
                 },
             });
         });
-        this.op(opCodes.invalidSession, () => {
+        this.op(OpCodes.invalidSession, () => {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
@@ -373,6 +369,9 @@ class Client extends Emitter {
             const ready = this.events.get('ready');
             if (ready) ready();
         });
+        this.event('MESSAGE_REACTION_ADD', () => {
+
+        })
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');

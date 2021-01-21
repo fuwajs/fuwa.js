@@ -16,15 +16,13 @@ class Message {
         protected token: string,
         protected bot: User
     ) {
-        this.id = data.id;
-        this.timestamp = new Date(data.timestamp);
-        this.guild_id = data.guild_id;
-        this.author_id = data.author.id;
-        this.channel_id = data.channel_id;
-        this.content = data.content;
-        this.embeds = data.embeds.map((v) => new Embed(v));
+        Object.assign(this, {
+            timestamp: new Date(data?.timestamp),
+            embeds: data?.embeds?.map(v => new Embed(v)),
+            ...data
+        });
     }
-    
+
     async edit(content: string | Embed) {
         let data: any = {};
         if (this.author_id !== this.bot.id)
@@ -44,16 +42,48 @@ class Message {
             return;
         }
         return new Message(await undici.PATCH(
-                `/channels/${this.channel_id}/messages/${this.id}`,
-                this.token,
-                JSON.stringify(data)
-            ), this.token, this.bot);
+            `/channels/${this.channel_id}/messages/${this.id}`,
+            this.token,
+            JSON.stringify(data)
+        ), this.token, this.bot);
     }
     delete() {
         return undici.DELETE(
-                `/channels/${this.channel_id}/messages/${this.id}`,
-                this.token
-            ).catch(console.error);
+            `/channels/${this.channel_id}/messages/${this.id}`,
+            this.token
+        ).catch(console.error);
+    }
+
+/**
+     * @param emojis The emoji(s) to send
+     * @param inOrder Should the emojis be sent in order. Note that this function
+     * is recursive with this option set.
+     */
+    async react(emojis: string[] | string, inOrder?: boolean) {
+        if (typeof emojis === 'string') {
+            return undici.PUT(
+                `/channels/${this.channel_id}/messages/${this.id}`
+                + `/reactions/${emojis}/@me`,
+                this.token,
+            );
+        }
+        else if (inOrder) {
+            return undici.PUT(
+                `/channels/${this.channel_id}/messages/${this.id}`
+                + `/reactions/${encodeURI(emojis[0])}/@me`,
+                this.token,
+            ).then(O_CREAT => this.react(emojis.slice(1), true));
+        } else {
+            const ret = [];
+            emojis.forEach(async e => {
+                ret.push(undici.PUT(
+                    `/channels/${this.channel_id}/messages/${this.id}`
+                    + `/reactions/${encodeURI(e)}/@me`,
+                    this.token,
+                ));
+            });
+            return ret;
+        }
     }
 }
 

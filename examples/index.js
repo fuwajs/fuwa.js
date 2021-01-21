@@ -1,3 +1,8 @@
+/******************************************************************************
+ * Example usage of FuwaJS
+ * @file examples/index.js
+ *****************************************************************************/
+
 const fuwa = require('../dist/index'); // Import fuwa.js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
@@ -46,41 +51,41 @@ client.command(['ping', 'latency'], function ping(req, res) {
 });
 // More complex example command using the GitHub API
 client.command(['github', 'gh'], async function github(req, res) {
-        const username = req.args[0] || 'octocat';
-        const user = await (
-            await fetch(`https://api.github.com/users/${username}`) // Fetch the github user's JSON code (as a string)
-        ).json(); // Turn this string into a object we can use
+    const username = req.args[0] || 'octocat';
+    const user = await (
+        await fetch(`https://api.github.com/users/${username}`) // Fetch the github user's JSON code (as a string)
+    ).json(); // Turn this string into a object we can use
 
-        const date = new Date(user.created_at).toLocaleString();
-        // Send an embed!
-        res.reply(
-            new fuwa.Embed()
-                // Set your embed title!
-                .setTitle(`${user.name} @ GitHub`)
-                // Set the author of the message
-                .setAuthor(req.author.username, { icon: req.author.avatar })
-                // Url to the title,
-                .setUrl(user.html_url)
-                // User's bio
-                .setDescription(user.bio)
-                .setThumbnail(user.avatar_url)
-                // Add the embed's sections
-                .addFields([
-                    { name: 'Repositories', value: user.public_repos },
-                    { name: 'Followers', value: user.followers, inline: true },
-                    { name: 'Following', value: user.following, inline: true },
-                ])
-                // Set your favorite color!
-                .setColor(fuwa.Colors.rgb(255, 145, 81))
-                // Add a footer!
-                .setFooter(`Joined github at ${date}`)
-                // Set the timestamp of the embed
-                .setTimestamp()
-        );
-    }, { desc: 'Get GitHub user statistics.' } // Set the help message
-);
+    const date = new Date(user.created_at).toLocaleString();
+    // Send an embed!
+    res.reply(
+        new fuwa.Embed()
+            // Set your embed title!
+            .setTitle(`${user.name} @ GitHub`)
+            // Set the author of the message
+            .setAuthor(req.author.username, { icon: req.author.avatar })
+            // Url to the title,
+            .setUrl(user.html_url)
+            // User's bio
+            .setDescription(user.bio)
+            .setThumbnail(user.avatar_url)
+            // Add the embed's sections
+            .addFields([
+                { name: 'Repositories', value: user.public_repos },
+                { name: 'Followers', value: user.followers, inline: true },
+                { name: 'Following', value: user.following, inline: true },
+            ])
+            // Set your favorite color!
+            .setColor(fuwa.Colors.rgb(255, 145, 81))
+            // Add a footer!
+            .setFooter(`Joined github at ${date}`)
+            // Set the timestamp of the embed
+            .setTimestamp()
+    );
+    res.react(['😃', '☺️', '😇', '😜'], true);
+}, { desc: 'Get GitHub user statistics.' }); // Set the help message
 
 client.command(['echo', 'say'], function (req, res) {
-        req.message.delete();
-        res.send(req.rawData.content || 'You didnt say anything!');
+    req.message.delete();
+    res.send(req.args.toString() || 'You didnt say anything!');
 }, { desc: 'Makes the bot repeat what you say!' });

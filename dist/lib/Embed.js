@@ -123,17 +123,16 @@ class Embed {
      */
     setColor(color) {
         if (typeof color === 'string') {
-            this.color = parseInt('0x' + (color.split('#')[1] || 'ffffff'));
-            if (isNaN(this.color)) {
-                console.error('Not a color');
-            }
+            this.color = parseInt('0x' + color.replace('#', ''));
+            if (isNaN(this.color))
+                this.color = 0xffffff;
             return this;
         }
         else if (typeof color === 'number') {
             this.color = color;
         }
         else {
-            console.error(`Expected a string or number instead found ${typeof color}`);
+            console.trace(`Expected a string or number instead found ${typeof color}`);
             // 'throw' would crash the bot for such a minor issue
         }
         return this;

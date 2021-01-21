@@ -1,9 +1,13 @@
-/********************************************************
+/******************************************************************************
  * Discord API interfaces
- * https://discord.com/developers/docs
- *******************************************************/
+ * @see https://discord.com/developers/docs
+ * @file src/lib/_DiscordAPI.ts
+ *****************************************************************************/
 
-export enum opCodes {
+/**
+ * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ */
+export enum OpCodes {
     dispatch,
     heartbeat,
     indentify,
@@ -19,18 +23,28 @@ export enum opCodes {
 }
 
 export const discordAPI = {
-    gateway: 'wss://gateway.discord.gg/', // ?v=6&encoding=json',
+    gateway: 'wss://gateway.discord.gg/',
     api: `https://discord.com/api/v8/`,
     discord: 'https://discord.com',
 };
 
 export const discordCDN = 'https://cdn.discordapp.com';
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
+ * TODO: Add more events
+ */
 export interface GatewayEvents {
     GUILD_CREATE: {
         op: 0;
         t: 'GUILD_CREATE';
         d: Guild;
     };
+    RESUMED: {
+        op: 0;
+        t: 'RESUMED';
+        d: any; // eh
+    }
     READY: {
         op: 0;
         t: 'READY';
@@ -50,7 +64,8 @@ export interface GatewayEvents {
         op: 0;
         t: 'MESSAGE_REACTION_ADD'
         d: Reaction;
-    }
+    };
+
 }
 export interface Message {
     id: string;
@@ -98,6 +113,7 @@ enum StickerFormat {
     apng,
     lottie,
 }
+
 enum MessageType {
     default,
     recipientAdd,
@@ -220,6 +236,9 @@ export interface Author {
     avatar: string;
 }
 
+/**
+ * @see https://discord.com/developers/docs/resources/guild#guild-member-object
+ */
 export interface Member {
     user?: User;
     nick: string | null;
@@ -230,6 +249,8 @@ export interface Member {
     mute: boolean;
     pending?: boolean;
 }
+
+export type GuildMember = Member;
 
 export interface DiscordAPIOP {
     1: {
@@ -259,7 +280,7 @@ export interface DiscordAPIOP {
                 name: string;
                 type: 0 | 1 | 2 | 3 | 4 | 5;
             }[];
-            status: 'offline' | 'online' | 'dnd' | 'idle';
+            status: UserStatus;
             afk: boolean;
         };
     };
@@ -314,6 +335,9 @@ export interface Reaction {
     emoji: Emoji;
 }
 
+/**
+ *  @see https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure
+ */
 export interface Emoji {
     id: string | null;
     name: string | null;
@@ -344,10 +368,6 @@ export interface Application {
     flags: number;
 }
 
-export interface Guild {
-    unavailable: boolean;
-    id: string;
-}
 
 export interface User extends Author {
     bot?: boolean;
@@ -367,13 +387,16 @@ export interface User extends Author {
 /* eslint-disable */
 export interface UserSettings { }
 
+/** 
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure 
+ */
 export interface Guild {
     id: string;
     name: string;
     icon: string | null;
     icon_hash?: string | null;
     splash: string | null;
-    discovery_splash: string | null; // so like this?
+    discovery_splash: string | null;
     owner?: boolean;
     owner_id: string;
     permissions?: string;
@@ -382,40 +405,172 @@ export interface Guild {
     afk_timeout: number;
     widget_enabled?: boolean;
     widget_channel_id?: string;
-
-    description: string;
-    public_updates_channel_id: null;
-    large: boolean;
-    features: any[];
-    unavailable: boolean;
-    member_count: number;
-    max_members: number;
-    guild_hashes: GuildHashes;
-    system_channel_flags: number;
-    premium_tier: number;
-    emojis: any[];
-    voice_states: any[];
-    members: Member[];
-    presences: any[];
-    banner: null;
-    channels: Channel[];
-    max_video_channel_users: number;
-    preferred_locale: string;
-    rules_channel_id: null;
     verification_level: number;
-    roles: Role[];
-    lazy: boolean;
-    application_id: null;
-    mfa_level: number;
-    explicit_content_filter: number;
-    vanity_url_code: null;
-    system_channel_id: string;
-    threads: any[];
     default_message_notifications: number;
-    premium_subscription_count: number;
-    joined_at: string;
+    explicit_content_filter: number;
+    roles: Role[];
+    /** Custom guild emojis */
+    emojis: Emoji[];
+    features: GuildFeature[];
+    mfa_level: number;
+    application_id: string | null;
+    system_channel_id: string | null;
+    system_channel_flags: number;
+    rules_channel_id: string | null;
+    joined_at?: Date;
+    large?: boolean;
+    unavailable?: boolean;
+    member_count?: number;
+    voice_states: VoiceState[];
+    members?: Member[];
+    channels: Channel[];
+    presences?: PresenceUpdate[];
+    max_presences?: number;
+    max_members?: number;
+    vanity_url_code: string | null;
+    description: string | null;
+    banner: string | null;
+    premium_tier: number;
+    premium_subscription_count?: number;
+    preferred_locale: string;
+    public_updates_channel_id?: string | null;
+    max_video_channel_users?: number;
+    approximate_member_count?: number;
+    aproximate_presence_count?: number;
 }
 
+/** 
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features 
+ */
+type GuildFeature =
+    | 'INVITE_SPLASH' | 'VIP_REGIONS' | 'VANITY_URL' | 'VERIFIED'
+    | 'PARTNERED' | 'COMMUNITY' | 'COMMERCE' | 'NEWS' | 'DISCOVERABLE'
+    | 'FEATURABLE' | 'ANIMATED_ICON' | 'BANNER' | 'WELCOME_SCREEN_ENABLED'
+
+/**
+ * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
+ */
+interface VoiceState {
+    guild_id?: string;
+    channel_id?: string;
+    user_id: string;
+    member?: Member;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#presence-update-presence-update-event-fields
+ */
+interface PresenceUpdate {
+    user: User;
+    guild_id: string;
+    status: UserStatus;
+    activities: Activity[];
+    client_status: ClientStatus;
+}
+
+export type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
+
+/**
+ * Could be important for Rich Presence (the thing that allows you to see what
+ * game someone is playing)
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-structure
+ */
+interface Activity {
+    name: string;
+    type: ActivityType;
+    url?: string | null;
+    created_at: number;
+    timestamps?: ActivityTimestamps;
+    application_id?: string;
+    details?: string | null;
+    state?: string | null;
+    emoji?: ActivityEmoji | null;
+    party?: ActivityParty;
+    assets?: ActivityAssets;
+    secrets?: ActivitySecrets;
+    instance?: boolean;
+    flags?: ActivityFlags;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
+ */
+export enum ActivityType {
+    game,
+    streaming,
+    listening,
+    custom,
+    competing
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-timestamps
+ */
+interface ActivityTimestamps {
+    start?: number;
+    end?: number;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-emoji
+ */
+interface ActivityEmoji {
+    name: string;
+    id?: string;
+    animated?: boolean;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-party
+ */
+interface ActivityParty {
+    id?: string;
+    /**
+     * [0]: current_size
+     * [1]: max_size
+     */
+    size?: number[];
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-assets
+ */
+interface ActivityAssets {
+    large_image?: string;
+    large_text?: string;
+    small_image?: string;
+    small_text?: string;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-secrets
+ */
+interface ActivitySecrets {
+    join?: string;
+    spectate?: string;
+    match?: string;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-flags
+ */
+enum ActivityFlags {
+    instance = 1 << 0,
+    join = 1 << 1,
+    spectate = 1 << 2,
+    joinRequest = 1 << 3,
+    sync = 1 << 4,
+    play = 1 << 5,
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#client-status-object
+ */
+interface ClientStatus {
+    desktop?: string;
+    mobile?: string;
+    web?: string;
+}
 export interface Overwrite {
     id: string;
     type: number;
@@ -475,7 +630,7 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIEventResponse<T extends keyof GatewayEvents> {
+export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;
     d: GatewayEvents[T];

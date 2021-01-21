@@ -9,10 +9,16 @@ declare class Message {
     channel_id: string;
     embeds: Embed[];
     id: string;
+    timestamp: Date;
     content: string;
-    constructor(data: MessageOptions, // NO PROMISE BRO ????????? how to use promise in constructor?
-    token: string, bot: User);
+    constructor(data: MessageOptions, token: string, bot: User);
     edit(content: string | Embed): Promise<Message>;
     delete(): Promise<any>;
+    /**
+         * @param emojis The emoji(s) to send
+         * @param inOrder Should the emojis be sent in order. Note that this function
+         * is recursive with this option set.
+         */
+    react(emojis: string[] | string, inOrder?: boolean): any;
 }
 export default Message;

@@ -1,25 +1,26 @@
 "use strict";
 /********************************************************
  * Discord API interfaces
- * https://discord.com/developers/docs
+ * @see https://discord.com/developers/docs
+ * @file src/lib/_DiscordAPI.ts
  *******************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChannelType = exports.discordCDN = exports.discordAPI = exports.opCodes = void 0;
-var opCodes;
-(function (opCodes) {
-    opCodes[opCodes["dispatch"] = 0] = "dispatch";
-    opCodes[opCodes["heartbeat"] = 1] = "heartbeat";
-    opCodes[opCodes["indentify"] = 2] = "indentify";
-    opCodes[opCodes["statusUpdate"] = 3] = "statusUpdate";
-    opCodes[opCodes["voiceStateUpdate"] = 4] = "voiceStateUpdate";
-    opCodes[opCodes["voiceGuildPing"] = 5] = "voiceGuildPing";
-    opCodes[opCodes["resume"] = 6] = "resume";
-    opCodes[opCodes["reconnect"] = 7] = "reconnect";
-    opCodes[opCodes["requestGuildMembers"] = 8] = "requestGuildMembers";
-    opCodes[opCodes["invalidSession"] = 9] = "invalidSession";
-    opCodes[opCodes["hello"] = 10] = "hello";
-    opCodes[opCodes["heartbeatAck"] = 11] = "heartbeatAck";
-})(opCodes = exports.opCodes || (exports.opCodes = {}));
+exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = void 0;
+var OpCodes;
+(function (OpCodes) {
+    OpCodes[OpCodes["dispatch"] = 0] = "dispatch";
+    OpCodes[OpCodes["heartbeat"] = 1] = "heartbeat";
+    OpCodes[OpCodes["indentify"] = 2] = "indentify";
+    OpCodes[OpCodes["statusUpdate"] = 3] = "statusUpdate";
+    OpCodes[OpCodes["voiceStateUpdate"] = 4] = "voiceStateUpdate";
+    OpCodes[OpCodes["voiceGuildPing"] = 5] = "voiceGuildPing";
+    OpCodes[OpCodes["resume"] = 6] = "resume";
+    OpCodes[OpCodes["reconnect"] = 7] = "reconnect";
+    OpCodes[OpCodes["requestGuildMembers"] = 8] = "requestGuildMembers";
+    OpCodes[OpCodes["invalidSession"] = 9] = "invalidSession";
+    OpCodes[OpCodes["hello"] = 10] = "hello";
+    OpCodes[OpCodes["heartbeatAck"] = 11] = "heartbeatAck";
+})(OpCodes = exports.OpCodes || (exports.OpCodes = {}));
 exports.discordAPI = {
     gateway: 'wss://gateway.discord.gg/',
     api: `https://discord.com/api/v8/`,
@@ -53,6 +54,29 @@ var MessageType;
     MessageType[MessageType["reply"] = 16] = "reply";
     MessageType[MessageType["applicationCommand"] = 17] = "applicationCommand";
 })(MessageType || (MessageType = {}));
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
+ */
+var ActivityType;
+(function (ActivityType) {
+    ActivityType[ActivityType["game"] = 0] = "game";
+    ActivityType[ActivityType["streaming"] = 1] = "streaming";
+    ActivityType[ActivityType["listening"] = 2] = "listening";
+    ActivityType[ActivityType["custom"] = 3] = "custom";
+    ActivityType[ActivityType["competing"] = 4] = "competing";
+})(ActivityType = exports.ActivityType || (exports.ActivityType = {}));
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-flags
+ */
+var ActivityFlags;
+(function (ActivityFlags) {
+    ActivityFlags[ActivityFlags["instance"] = 1] = "instance";
+    ActivityFlags[ActivityFlags["join"] = 2] = "join";
+    ActivityFlags[ActivityFlags["spectate"] = 4] = "spectate";
+    ActivityFlags[ActivityFlags["joinRequest"] = 8] = "joinRequest";
+    ActivityFlags[ActivityFlags["sync"] = 16] = "sync";
+    ActivityFlags[ActivityFlags["play"] = 32] = "play";
+})(ActivityFlags || (ActivityFlags = {}));
 var ChannelType;
 (function (ChannelType) {
     ChannelType[ChannelType["text"] = 0] = "text";
