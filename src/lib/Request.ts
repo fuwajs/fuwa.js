@@ -1,6 +1,4 @@
 import User from './User';
-import http from './_unicdi';
-import { Argument } from './Command';
 import Guild from './Guild';
 import { Message as MessageOptions, Guild as GuildOptions, Reaction } from "./_DiscordAPI";
 import Cache from './_Cache';

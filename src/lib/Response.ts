@@ -1,4 +1,3 @@
-import Colors from './Colors';
 import Embed from './Embed';
 import { Message } from './_DiscordAPI';
 import undici from './_unicdi';
@@ -59,7 +58,6 @@ class Response {
                 `/channels/${this.req.channel_id}/messages/${this.req.id}`
                 + `/reactions/${encodeURI(e)}/@me`,
                 this.token,
-                JSON.stringify(emojis.map(e => encodeURI(e)))
             );
         });
         return this;

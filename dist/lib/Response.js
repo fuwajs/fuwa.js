@@ -64,7 +64,7 @@ class Response {
         return __awaiter(this, void 0, void 0, function* () {
             emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
                 yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`, this.token, JSON.stringify(emojis.map(e => encodeURI(e))));
+                    + `/reactions/${encodeURI(e)}/@me`, this.token);
             }));
             return this;
         });
