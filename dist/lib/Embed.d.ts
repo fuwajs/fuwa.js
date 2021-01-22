@@ -1,3 +1,4 @@
+import { Embed as EmbedOptions } from './_DiscordAPI';
 declare type Media = {
     url: string;
     proxy_url: string;
@@ -35,7 +36,7 @@ declare class Embed {
         value: string;
         inline?: boolean;
     }[];
-    constructor(opts?: Embed);
+    constructor(opts?: EmbedOptions);
     /**
      * @param description  Description For Embed
      */

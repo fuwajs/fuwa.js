@@ -1,8 +1,12 @@
+/******************************************************************************
+ * The emitter class. It is a baseclass for the 'Client' class
+ * @file src/lib/Emitter.ts
+ ******************************************************************************/
 import WebSocket from 'ws';
 import {
     DiscordAPIOP as DiscordAPIOPResponse,
-    DiscordAPIEvents,
-    opCodes,
+    GatewayEvents,
+    OpCodes,
 } from './_DiscordAPI';
 
 import { erlpack, pack, unpack } from './_erlpack'
@@ -24,12 +28,12 @@ class Emitter {
             },
         },
         events: {
-            emit: <T extends keyof DiscordAPIEvents>(
+            emit: <T extends keyof GatewayEvents>(
                 t: T,
-                d: DiscordAPIEvents[T]
+                d: GatewayEvents[T]
             ): void => {
                 // this.ws.send(JSON.stringify({ t, d, op: 0 }));
-                this.ws.send(pack({ t, d, op: opCodes.dispatch }));
+                this.ws.send(pack({ t, d, op: OpCodes.dispatch }));
             },
         },
     };
@@ -38,7 +42,7 @@ class Emitter {
         encoding?: 'json' | 'etf',
         compress?: boolean,
     }): void {
-        
+
         const encoding = query?.encoding || (erlpack ? 'etf' : 'json');
         if (!erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
@@ -48,9 +52,9 @@ class Emitter {
             console.log('Connected');
             this.WSEvents?.open();
             this.ws?.on('message', (data: Buffer) => {
-                const res: { op: opCodes; t: string | null; d: unknown } = unpack(data, encoding);
+                const res: { op: OpCodes; t: string | null; d: unknown } = unpack(data, encoding);
                 this.WSEvents?.message();
-                if (res.op === opCodes.dispatch) {
+                if (res.op === OpCodes.dispatch) {
                     if (!res.t)
                         throw new Error(
                             `The event is undefined while the OP Code is 0\n ${res}`
@@ -66,9 +70,9 @@ class Emitter {
     ): void {
         this.OPevents[op] = cb;
     }
-    protected event<T extends keyof DiscordAPIEvents>(
+    protected event<T extends keyof GatewayEvents>(
         e: T,
-        cb: (data: DiscordAPIEvents[T]['d']) => void
+        cb: (data: GatewayEvents[T]['d']) => void
     ): void {
         this.APIEvents[e] = cb;
     }

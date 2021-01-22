@@ -2,18 +2,12 @@
 import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
+import { UserStatus, ActivityType } from './_DiscordAPI';
 import User from './User';
 import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
-declare enum statusCode {
-    playing = 0,
-    streaming = 1,
-    listening = 2,
-    custom = 3,
-    competing = 4
-}
 /**
  * status options for bot
  */
@@ -26,7 +20,7 @@ export interface statusOptions {
      * The available status types are playing, listening, streaming, and
      * competing.
      */
-    type?: statusCode;
+    type?: ActivityType;
     /**
      * The URL of a stream
      */
@@ -34,7 +28,7 @@ export interface statusOptions {
     /**
      * The status of your bot. Online by default
      */
-    status?: 'dnd' | 'offline' | 'idle' | 'online';
+    status?: UserStatus;
     /**
      * Whether or not the bot is afk.
      */

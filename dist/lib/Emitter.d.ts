@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import { DiscordAPIOP as DiscordAPIOPResponse, DiscordAPIEvents } from './_DiscordAPI';
+import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from './_DiscordAPI';
 declare class Emitter {
     protected ws?: WebSocket;
     private OPevents;
@@ -10,7 +10,7 @@ declare class Emitter {
             emit: <T extends 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>(op: T, d: DiscordAPIOPResponse[T]["d"]) => void;
         };
         events: {
-            emit: <T_1 extends "GUILD_CREATE" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE">(t: T_1, d: DiscordAPIEvents[T_1]) => void;
+            emit: <T_1 extends "GUILD_CREATE" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE" | "MESSAGE_REACTION_ADD">(t: T_1, d: GatewayEvents[T_1]) => void;
         };
     };
     protected connect(url: string, query?: {
@@ -19,6 +19,6 @@ declare class Emitter {
         compress?: boolean;
     }): void;
     protected op<T extends keyof DiscordAPIOPResponse>(op: T, cb: (data: DiscordAPIOPResponse[T]['d']) => void): void;
-    protected event<T extends keyof DiscordAPIEvents>(e: T, cb: (data: DiscordAPIEvents[T]['d']) => void): void;
+    protected event<T extends keyof GatewayEvents>(e: T, cb: (data: GatewayEvents[T]['d']) => void): void;
 }
 export default Emitter;

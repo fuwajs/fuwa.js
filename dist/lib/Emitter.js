@@ -21,7 +21,7 @@ class Emitter {
             events: {
                 emit: (t, d) => {
                     // this.ws.send(JSON.stringify({ t, d, op: 0 }));
-                    this.ws.send(_erlpack_1.pack({ t, d, op: _DiscordAPI_1.opCodes.dispatch }));
+                    this.ws.send(_erlpack_1.pack({ t, d, op: _DiscordAPI_1.OpCodes.dispatch }));
                 },
             },
         };
@@ -40,7 +40,7 @@ class Emitter {
                 var _a;
                 const res = _erlpack_1.unpack(data, encoding);
                 (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.message();
-                if (res.op === _DiscordAPI_1.opCodes.dispatch) {
+                if (res.op === _DiscordAPI_1.OpCodes.dispatch) {
                     if (!res.t)
                         throw new Error(`The event is undefined while the OP Code is 0\n ${res}`);
                     if (this.APIEvents[res.t])

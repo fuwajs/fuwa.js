@@ -25,14 +25,6 @@ const Command_1 = require("./Command");
 const Embed_1 = __importDefault(require("./Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
 const _erlpack_1 = require("./_erlpack");
-var statusCode;
-(function (statusCode) {
-    statusCode[statusCode["playing"] = 0] = "playing";
-    statusCode[statusCode["streaming"] = 1] = "streaming";
-    statusCode[statusCode["listening"] = 2] = "listening";
-    statusCode[statusCode["custom"] = 3] = "custom";
-    statusCode[statusCode["competing"] = 4] = "competing";
-})(statusCode || (statusCode = {}));
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
@@ -228,11 +220,11 @@ class Client extends Emitter_1.default {
             };
             this.connect(_DiscordAPI_1.discordAPI.gateway, options);
             this.debug.success('connected', `Connected to ${_DiscordAPI_1.discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`);
-            this.op(_DiscordAPI_1.opCodes.hello, (data) => {
+            this.op(_DiscordAPI_1.OpCodes.hello, (data) => {
                 this.debug.log('hello', `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`);
-                this.loop = setInterval(() => this.response.op.emit(_DiscordAPI_1.opCodes.heartbeat, 251), data.heartbeat_interval);
+                this.loop = setInterval(() => this.response.op.emit(_DiscordAPI_1.OpCodes.heartbeat, 251), data.heartbeat_interval);
                 this.debug.log('discord login', 'Attempting to connect to discord');
-                this.response.op.emit(_DiscordAPI_1.opCodes.indentify, {
+                this.response.op.emit(_DiscordAPI_1.OpCodes.indentify, {
                     token: token.toString(),
                     intents: 513,
                     properties: {
@@ -242,7 +234,7 @@ class Client extends Emitter_1.default {
                     },
                 });
             });
-            this.op(_DiscordAPI_1.opCodes.invalidSession, () => {
+            this.op(_DiscordAPI_1.OpCodes.invalidSession, () => {
                 this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
                 throw new Errors_1.InvalidToken('Invalid token');
             });
@@ -255,19 +247,21 @@ class Client extends Emitter_1.default {
                 if (ready)
                     ready();
             });
+            this.event('MESSAGE_REACTION_ADD', () => {
+            });
             this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 const e = this.events.get('message');
                 if (e)
-                    e(new Request_1.default(msg, this.token, this.cache), new Response_1.default(msg, this.token));
+                    e(new Request_1.default(msg, this.token, this.cache, this.bot), new Response_1.default(msg, this.token, this.bot));
                 // console.time('command run');
                 if (!msg.content)
                     return;
-                const res = new Response_1.default(msg, this.token);
+                const res = new Response_1.default(msg, this.token, this.bot);
                 let prefix = '';
                 // console.time('prefix parsing')
                 if (typeof this.prefix === 'function') {
-                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache));
+                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache, this.bot));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));
@@ -313,7 +307,7 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('command parsing')
                 // console.time('middleware')
                 const middlewareCommand = this.middleware.map(cb => ({ cb }));
-                const req = new Request_1.default(msg, token.toString(), this.cache);
+                const req = new Request_1.default(msg, token.toString(), this.cache, this.bot);
                 req.args = args;
                 // console.log (req)
                 if (this.middleware[0]) {
@@ -326,6 +320,8 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('run command');
                 // console.timeEnd('command run');
             }));
+            this.event('MESSAGE_REACTION_ADD', () => {
+            });
         });
     }
     logout(end = true) {

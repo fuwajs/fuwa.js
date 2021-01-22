@@ -38,7 +38,7 @@ class Guild {
 
     roles: Role[];
     lazy: boolean;
-    application_id: null;
+    application_id: string | null;
     mfa_level: number;
     explicit_content_filter: number;
     vanity_url_code: null;
@@ -48,7 +48,9 @@ class Guild {
     premium_subscription_count: number;
     created_at: Date;
     constructor(data: GuildOptions, token: string) {
+        this.name = data.name;
         this.id = data.id;
+        this.owner_id = data.owner_id;
         this.description = data.description;
         this.size = data.member_count;
         this.icon = `${discordCDN}/icons/${this.id}/${data.icon}.png`;

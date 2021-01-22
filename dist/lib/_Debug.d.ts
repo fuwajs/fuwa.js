@@ -1,3 +1,7 @@
+/******************************************************************************
+ * Debugging Functions
+ * @file src/lib/_Debug.ts
+ *****************************************************************************/
 declare class Debug {
     protected enabled: boolean;
     constructor(enabled?: boolean);

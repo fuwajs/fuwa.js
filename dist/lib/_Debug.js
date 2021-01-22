@@ -1,4 +1,8 @@
 "use strict";
+/******************************************************************************
+ * Debugging Functions
+ * @file src/lib/_Debug.ts
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 let chalk = {
     bold: { blue: s => s },

@@ -12,7 +12,7 @@ class Cache {
             setInterval(() => {
                 delete this.data;
                 this.data = {
-                    guilds: new Map()
+                    guilds: new Map(),
                 };
             }, options.clearAfter);
         }
@@ -24,7 +24,7 @@ class Cache {
             : this.options.cacheOptions[type]) {
             this.data[type].set(data.id, data);
             const debug = new _Debug_1.default(true);
-            debug.log('CACHE', debug.object(this.data));
+            debug.log('cache', debug.object(this.data));
         }
     }
 }

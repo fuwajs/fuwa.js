@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { Embed as _Embed } from './_DiscordAPI';
+import { Embed as EmbedOptions } from './_DiscordAPI';
 type Media = {
     url: string;
     proxy_url: string;
@@ -37,25 +37,16 @@ class Embed {
         name: string;
     };
     protected fields?: { name: string; value: string; inline?: boolean }[] = [];
-    constructor(opts?: Embed) {
+    constructor(opts?: EmbedOptions) {
         // Rich Embed by default
 
-        this.type = 'rich';
         if (opts) {
             // Don't override the defualt unless specified
-            this.type = opts.type || 'rich';
-            this.title = opts.title;
-            this.description = opts.description;
-            this.url = opts.url;
-            this.timestamp = opts.timestamp;
-            this.color = opts.color;
-            this.footer = opts.footer;
-            this.image = opts.image;
-            this.thumbnail = opts.thumbnail;
-            this.video = opts.video;
-            this.provider = opts.provider;
-            this.author = opts.author;
-            this.fields = opts.fields;
+            Object.assign(this, { 
+                type: 'rich', 
+                timestamp: new Date(opts.timestamp), 
+                ...opts 
+            });
         }
     }
 
@@ -184,15 +175,13 @@ class Embed {
      */
     setColor(color: string | number): this {
         if (typeof color === 'string') {
-            this.color = parseInt('0x' + (color.split('#')[1] || 'ffffff'));
-            if (isNaN(this.color)) {
-                console.error('Not a color');
-            }
-            return this
+            this.color = parseInt('0x' + color.replace('#', ''));
+            if (isNaN(this.color)) this.color = 0xffffff;
+            return this;
         } else if (typeof color === 'number') {
             this.color = color;
         } else {
-            console.error(`Expected a string or number instead found ${typeof color}`);
+            console.trace(`Expected a string or number instead found ${typeof color}`)
             // 'throw' would crash the bot for such a minor issue
         }
 
