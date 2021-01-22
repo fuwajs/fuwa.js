@@ -321,6 +321,9 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('command run');
             }));
             this.event('MESSAGE_REACTION_ADD', () => {
+                // if (this.events.has('reaction')) {
+                //     this.events.get('reaction')();
+                // }
             });
         });
     }

@@ -6,7 +6,7 @@ import { UserStatus, ActivityType } from './_DiscordAPI';
 import User from './User';
 import Response from './Response';
 import Emitter from './Emitter';
-import { commandCallback, commandOptions } from './Command';
+import { CommandCallback, commandOptions } from './Command';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 /**
  * status options for bot
@@ -37,7 +37,7 @@ export interface statusOptions {
 export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
     reaction(req: Request, res: Response): any;
 }
 export interface clientOptions {
@@ -111,10 +111,10 @@ declare class Client extends Emitter {
     protected options: clientOptions;
     protected loop?: NodeJS.Timeout;
     protected commands: Map<string, {
-        cb: commandCallback;
+        cb: CommandCallback;
         options: commandOptions;
     }[]>;
-    protected middleware: commandCallback[];
+    protected middleware: CommandCallback[];
     /**
      * The Bot Token
      */
@@ -135,7 +135,7 @@ declare class Client extends Emitter {
      * });
      * ```
      */
-    command(name: string | string[], cb: commandCallback, options?: commandOptions): {
+    command(name: string | string[], cb: CommandCallback, options?: commandOptions): {
         addAlias: (...aliases: string[]) => any;
         addArgument: <T>(name: string, desc: string, defaultVal?: T) => any;
     };
@@ -159,7 +159,7 @@ declare class Client extends Emitter {
      * })
      * ```
      */
-    use(cb: commandCallback): this;
+    use(cb: CommandCallback): this;
     /**
      * options for bot status
      */

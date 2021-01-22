@@ -10,7 +10,7 @@ import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
-import { Argument, commandCallback, commandOptions } from './Command';
+import { Argument, CommandCallback, commandOptions } from './Command';
 import Embed from './Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
@@ -52,7 +52,7 @@ export interface statusOptions {
 export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
     reaction(req: Request, res: Response)
     // ERR(err: Error): void | Promise<void>;
 }
@@ -136,9 +136,9 @@ class Client extends Emitter {
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
-        { cb: commandCallback; options: commandOptions }[]
+        { cb: CommandCallback; options: commandOptions }[]
     > = new Map();
-    protected middleware: commandCallback[] = [];
+    protected middleware: CommandCallback[] = [];
     /**
      * The Bot Token
      */
@@ -239,7 +239,7 @@ class Client extends Emitter {
      * });
      * ```
      */
-    command(name: string | string[], cb: commandCallback, options?: commandOptions) {
+    command(name: string | string[], cb: CommandCallback, options?: commandOptions) {
         let defaultName = Array.isArray(name) ? name.shift() : name;
         const option: commandOptions = {
             desc: options?.desc || 'No description was provided',
@@ -293,7 +293,7 @@ class Client extends Emitter {
      * })
      * ```
      */
-    use(cb: commandCallback) {
+    use(cb: CommandCallback) {
         this.middleware.push(cb);
         return this;
     }
@@ -311,9 +311,9 @@ class Client extends Emitter {
         const next = (
             req: Request,
             res: Response,
-            arr: { cb: commandCallback }[],
+            arr: { cb: CommandCallback }[],
             i = 0,
-            secondArr?: { cb: commandCallback }[]
+            secondArr?: { cb: CommandCallback }[]
         ) => {
             return () => {
                 if (arr[i + 1]) {
@@ -439,7 +439,9 @@ class Client extends Emitter {
         });
 
         this.event('MESSAGE_REACTION_ADD', () => {
-
+            // if (this.events.has('reaction')) {
+            //     this.events.get('reaction')();
+            // }
         });
     }
     logout(end = true) {
