@@ -68,13 +68,6 @@ class Response {
      */
     react(emojis, inOrder) {
         return __awaiter(this, void 0, void 0, function* () {
-<<<<<<< HEAD
-            emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                yield _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`, this.token);
-            }));
-            return this;
-=======
             if (typeof emojis === 'string') {
                 return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                     + `/reactions/${emojis}/@me`, this.token);
@@ -91,7 +84,6 @@ class Response {
                 }));
                 return ret;
             }
->>>>>>> bdbe2b92469c8e73180e9d7ba84c7de2a36219d1
         });
     }
 }

@@ -1,3 +1,7 @@
+/******************************************************************************
+ * The emitter class. It is a baseclass for the 'Client' class
+ * @file src/lib/Emitter.ts
+ ******************************************************************************/
 import WebSocket from 'ws';
 import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from './_DiscordAPI';
 declare class Emitter {
@@ -10,7 +14,7 @@ declare class Emitter {
             emit: <T extends 1 | 2 | 3 | 4 | 6 | 8 | 9 | 10>(op: T, d: DiscordAPIOPResponse[T]["d"]) => void;
         };
         events: {
-            emit: <T_1 extends "GUILD_CREATE" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE" | "MESSAGE_REACTION_ADD">(t: T_1, d: GatewayEvents[T_1]) => void;
+            emit: <T_1 extends "GUILD_CREATE" | "RESUMED" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE" | "MESSAGE_REACTION_ADD">(t: T_1, d: GatewayEvents[T_1]) => void;
         };
     };
     protected connect(url: string, query?: {
