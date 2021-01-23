@@ -120,7 +120,6 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
-    protected debugMode: boolean = false;
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache
@@ -162,13 +161,12 @@ class Client extends Emitter {
                 help: true
             }
         };
-        this.options?.debug === false ? this.debugMode = false : this.debugMode = true;
-        this.debug = new Debug(this.debugMode);
+        this.debug = new Debug(this.options.debug ?? false);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options
                 ?.cachingSettings
-                ?.clearAfter === false ? false : 1.08e+7, // 30 minutes
+                ?.clearAfter ?? 1.08e+7, // 30 minutes
             cacheOptions: options?.cachingSettings?.cacheOptions || {
                 channels: true,
                 guilds: true,
@@ -322,7 +320,6 @@ class Client extends Emitter {
                 }
             }
         }
-
         this.token = token.toString();
         // console.log (`Your Bot Token: ${token.toString()}`);
 
