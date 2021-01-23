@@ -71,7 +71,6 @@ class Client extends Emitter_1.default {
         this.debug;
         if ((_e = (_d = options === null || options === void 0 ? void 0 : options.builtinCommands) === null || _d === void 0 ? void 0 : _d.help) !== null && _e !== void 0 ? _e : true) {
             this.command(['help', 'commands', 'h'], (req, res) => {
-                console.log('help');
                 let embed = new Embed_1.default()
                     .setColor(Colors_1.default.blue)
                     .setThumbnail(this.bot.avatar);
@@ -280,7 +279,7 @@ class Client extends Emitter_1.default {
                 let args = [];
                 const str = msg.content.split(' ');
                 const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-                if (str[0][0] !== prefix && !a)
+                if (str[0].slice(0, prefix.length) !== prefix && !a)
                     return;
                 if (this.options.debug)
                     console.log(str);

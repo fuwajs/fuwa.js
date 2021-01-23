@@ -179,7 +179,6 @@ class Client extends Emitter {
         this.debug
         if (options?.builtinCommands?.help ?? true) {
             this.command(['help', 'commands', 'h'], (req, res) => {
-                console.log('help');
                 let embed = new Embed()
                     .setColor(Colors.blue)
                     .setThumbnail(this.bot.avatar);
@@ -400,7 +399,7 @@ class Client extends Emitter {
             const str = msg.content.split(' ');
             const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
 
-            if (str[0][0] !== prefix && !a) return;
+            if (str[0].slice(0, prefix.length) !== prefix && !a) return;
 
             if (this.options.debug) console.log(str);
 

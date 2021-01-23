@@ -7,8 +7,8 @@ const fuwa = require('../dist/index'); // Import fuwa.js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
-// Set the prefixes
-const client = new fuwa.Client(['!', '?', '$']);
+// Set the prefixes. Prefixes can be any length.
+const client = new fuwa.Client(['!', 'a!']);
 
 // Log the bot into discord
 client.login(readFileSync(join(__dirname, 'token.secret')));
