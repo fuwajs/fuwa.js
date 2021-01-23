@@ -1,5 +1,5 @@
 import { clientOptions } from './Client';
-import Debug from './_Debug';
+// import Debug from './_Debug';
 import { Guild } from './_DiscordAPI';
 
 class Cache {
@@ -27,8 +27,8 @@ class Cache {
                 : this.options.cacheOptions[type]
         ) {
             this.data[type].set(data.id, data);
-            const debug = new Debug(true);
-            debug.log('cache', debug.object(this.data));
+            // const debug = new Debug(true);
+            // debug.log('cache', debug.object(this.data));
         }
     }
 }
