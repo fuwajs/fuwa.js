@@ -75,7 +75,9 @@ export interface clientOptions {
      * 
      */
     builtinCommands?: {
-        help?: boolean;
+        help?: {
+            embedColor?: string|number
+        }|false;
     },
     /**
      * If the bot should cache guilds/channels/users or not. 
@@ -153,13 +155,16 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.options = options || {
+        this.options = {
             cache: true,
             debug: false,
             useMentionPrefix: false,
             builtinCommands: {
-                help: true
-            }
+                help: {
+                    embedColor: Colors.red,
+                }
+            },
+            ...options,
         };
         this.debug = new Debug(this.options.debug ?? false);
         this.prefix = prefix;
@@ -174,11 +179,11 @@ class Client extends Emitter {
             },
         }
         this.cache = new Cache(caching);
-        this.debug
-        if (options?.builtinCommands?.help ?? true) {
+        if (this.options?.builtinCommands?.help) {
             this.command(['help', 'commands', 'h'], (req, res) => {
+                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red 
                 let embed = new Embed()
-                    .setColor(Colors.blue)
+                    .setColor(color)
                     .setThumbnail(this.bot.avatar);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
