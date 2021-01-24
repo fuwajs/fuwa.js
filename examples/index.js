@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
 
 // Set the prefixes. Prefixes can be any length.
 const client = new fuwa.Client(['!', 'a!'], { 
-    intents: 1 + (1 << 9) + (1 << 10)
+    intents: 1 + (1 << 9) // + (1 << 10)
 });
 
 // Log the bot into discord
