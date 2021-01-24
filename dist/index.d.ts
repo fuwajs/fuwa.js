@@ -1,5 +1,5 @@
 import Client from './lib/Client';
-import Embed from './lib/Embed';
+import Embed from './lib/discord/Embed';
 import { Argument } from './lib/Command';
 declare const _default: {
     Colors: {

@@ -1,5 +1,5 @@
-import Embed from './Embed';
-import Message from './Message';
+import Embed from './discord/Embed';
+import Message from './discord/Message';
 import User from './User';
 import { Message as MessageOptions } from './_DiscordAPI';
 import undici from './_unicdi';

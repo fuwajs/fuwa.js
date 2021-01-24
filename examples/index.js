@@ -7,8 +7,11 @@ const fuwa = require('../dist/index'); // Import fuwa.js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
+
 // Set the prefixes. Prefixes can be any length.
-const client = new fuwa.Client(['!', 'a!']);
+const client = new fuwa.Client(['!', 'a!'], { 
+    intents: 1 + (1 << 9) + (1 << 10)
+});
 
 // Log the bot into discord
 client.login(readFileSync(join(__dirname, 'token.secret')));
@@ -20,9 +23,11 @@ client.on('ready', function ready() {
     console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
-client.on('reaction', function (req, res) {
+client.on('reaction', async reaction => {
+    const res = await reaction.getResponse();
 
-})
+    res.reply(`You reacted with ${reaction.emoji.name}`);
+});
 
 // This function will be ran before every other command
 client.use(function reactMiddleware(req, res, next) {

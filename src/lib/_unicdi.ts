@@ -28,30 +28,32 @@ export default {
                     'Content-Type': 'application/json',
                 },
                 body: data
-            }
+
+            };
             if (token) params.headers.authorization = `Bot ${token}`;
-            const res = await http.request(params);
-
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                const str = Buffer.concat(chunks).toString();
-                let d;
-                if (!str) resolve({});
-                // Sucess 200->299
-                if (res.statusCode > 199 && res.statusCode < 300) {
-                    try {
-                        d = JSON.parse(str);
-                    } catch (e) { reject(e) }
-                } else if (res.statusCode === 429) { // Handle Discord Rate Limits
-                    setTimeout(() => {
-                        this.REQUEST(method, path, token, data)
-                            .catch(e => console.error(e));
-                    }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
-                }
-                resolve(d);
-            });
-
+            try {
+                http.request(params).then(res => {
+                    const chunks = [];
+                    res.body.on('data', (chunk) => chunks.push(chunk));
+                    res.body.on('end', () => {
+                        const str = Buffer.concat(chunks).toString();
+                        let d;
+                        if (!str) resolve({});
+                        // Sucess 200->299
+                        if (res.statusCode > 199 && res.statusCode < 300) {
+                            try {
+                                d = JSON.parse(str);
+                            } catch (e) { reject(e); }
+                        } else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                            setTimeout(() => {
+                                this.REQUEST(method, path, token, data)
+                                    .catch(e => console.error(e));
+                            }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                        }
+                        resolve(d);
+                    });
+                });
+            } catch (e) { reject(e); }
         }).catch(e => {
             new Debug(true).log(method, e);
             console.trace();

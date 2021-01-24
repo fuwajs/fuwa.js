@@ -22,9 +22,10 @@ const _unicdi_1 = __importDefault(require("./_unicdi"));
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 const Command_1 = require("./Command");
-const Embed_1 = __importDefault(require("./Embed"));
+const Embed_1 = __importDefault(require("./discord/Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
 const _erlpack_1 = require("./_erlpack");
+const Reaction_1 = __importDefault(require("./discord/Reaction"));
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
@@ -54,7 +55,8 @@ class Client extends Emitter_1.default {
             useMentionPrefix: false,
             builtinCommands: {
                 help: true
-            }
+            },
+            intents: _DiscordAPI_1.GatewayIntents.guilds + _DiscordAPI_1.GatewayIntents.guildMessages
         };
         ((_a = this.options) === null || _a === void 0 ? void 0 : _a.debug) === false ? this.debugMode = false : this.debugMode = true;
         this.debug = new _Debug_1.default(this.debugMode);
@@ -225,7 +227,7 @@ class Client extends Emitter_1.default {
                 this.debug.log('discord login', 'Attempting to connect to discord');
                 this.response.op.emit(_DiscordAPI_1.OpCodes.indentify, {
                     token: token.toString(),
-                    intents: 513,
+                    intents: this.options.intents,
                     properties: {
                         $os: process.platform,
                         $browser: 'Fuwa.js',
@@ -246,7 +248,11 @@ class Client extends Emitter_1.default {
                 if (ready)
                     ready();
             });
-            this.event('MESSAGE_REACTION_ADD', () => {
+            this.event('MESSAGE_REACTION_ADD', (json) => {
+                console.log('json');
+                if (this.events.has('reaction')) {
+                    this.events.get('reaction')(new Reaction_1.default(json, this.token, this.bot));
+                }
             });
             this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
@@ -319,11 +325,6 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('run command');
                 // console.timeEnd('command run');
             }));
-            this.event('MESSAGE_REACTION_ADD', () => {
-                // if (this.events.has('reaction')) {
-                //     this.events.get('reaction')();
-                // }
-            });
         });
     }
     logout(end = true) {

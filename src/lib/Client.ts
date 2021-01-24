@@ -2,18 +2,20 @@ import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
-import { 
+import {
     discordAPI, Message, OpCodes, UserStatus,
-    ActivityType
+    ActivityType,
+    GatewayIntents,
 } from './_DiscordAPI';
 import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
 import { Argument, CommandCallback, commandOptions } from './Command';
-import Embed from './Embed';
+import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
+import Reaction from './discord/Reaction';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -53,7 +55,7 @@ export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
-    reaction(req: Request, res: Response)
+    reaction(reaction: Reaction)
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -77,6 +79,12 @@ export interface clientOptions {
     builtinCommands?: {
         help?: boolean;
     },
+
+    /**
+     * @see GatewayIntents
+     */
+    intents: number
+
     /**
      * If the bot should cache guilds/channels/users or not. 
      * It's suggested to keep this on for smaller bots
@@ -120,7 +128,7 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
-    protected debugMode: boolean = false;
+    protected debugMode = false;
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache
@@ -160,7 +168,8 @@ class Client extends Emitter {
             useMentionPrefix: false,
             builtinCommands: {
                 help: true
-            }
+            },
+            intents: GatewayIntents.guilds + GatewayIntents.guildMessages
         };
         this.options?.debug === false ? this.debugMode = false : this.debugMode = true;
         this.debug = new Debug(this.debugMode);
@@ -347,7 +356,7 @@ class Client extends Emitter {
             this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(OpCodes.indentify, {
                 token: token.toString(),
-                intents: 513,
+                intents: this.options.intents,
                 properties: {
                     $os: process.platform,
                     $browser: 'Fuwa.js',
@@ -368,9 +377,14 @@ class Client extends Emitter {
             const ready = this.events.get('ready');
             if (ready) ready();
         });
-        this.event('MESSAGE_REACTION_ADD', () => {
-
-        })
+        this.event('MESSAGE_REACTION_ADD', (json) => {
+            console.log('json');
+            if (this.events.has('reaction'))  {
+                this.events.get('reaction')(
+                    new Reaction(json, this.token, this.bot),
+                )
+            }
+        });
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
@@ -435,12 +449,6 @@ class Client extends Emitter {
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
             // console.timeEnd('run command');
             // console.timeEnd('command run');
-        });
-
-        this.event('MESSAGE_REACTION_ADD', () => {
-            // if (this.events.has('reaction')) {
-            //     this.events.get('reaction')();
-            // }
         });
     }
     logout(end = true) {

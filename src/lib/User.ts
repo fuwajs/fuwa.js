@@ -1,4 +1,4 @@
-import Embed from './Embed';
+import Embed from './discord/Embed';
 import Colors from './Colors';
 import { Channel, discordCDN, Message, User as UserOptions } from './_DiscordAPI';
 import undici from './_unicdi';

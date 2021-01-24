@@ -1,4 +1,4 @@
-import Embed from './Embed';
+import Embed from './discord/Embed';
 import { Message, User as UserOptions } from './_DiscordAPI';
 export declare class User implements UserOptions {
     protected token: string;
