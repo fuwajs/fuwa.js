@@ -60,7 +60,9 @@ export interface clientOptions {
      *
      */
     builtinCommands?: {
-        help?: boolean;
+        help?: {
+            embedColor?: string | number;
+        } | false;
     };
     /**
      * @see GatewayIntents
@@ -106,7 +108,6 @@ export interface clientOptions {
  */
 declare class Client extends Emitter {
     bot: User;
-    protected debugMode: boolean;
     protected debug: Debug;
     private sessionId;
     cache: Cache;

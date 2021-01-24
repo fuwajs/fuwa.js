@@ -77,7 +77,9 @@ export interface clientOptions {
      * 
      */
     builtinCommands?: {
-        help?: boolean;
+        help?: {
+            embedColor?: string|number
+        }|false;
     },
 
     /**
@@ -128,7 +130,6 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
-    protected debugMode = false;
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache
@@ -162,22 +163,24 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.options = options || {
+        this.options = {
             cache: true,
             debug: false,
             useMentionPrefix: false,
             builtinCommands: {
-                help: true
+                help: {
+                    embedColor: Colors.blue
+                }
             },
-            intents: GatewayIntents.guilds + GatewayIntents.guildMessages
+            intents: GatewayIntents.guilds + GatewayIntents.guildMessages,
+            ...options,
         };
-        this.options?.debug === false ? this.debugMode = false : this.debugMode = true;
-        this.debug = new Debug(this.debugMode);
+        this.debug = new Debug(this.options.debug ?? false);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options
                 ?.cachingSettings
-                ?.clearAfter === false ? false : 1.08e+7, // 30 minutes
+                ?.clearAfter ?? 1.08e+7, // 30 minutes
             cacheOptions: options?.cachingSettings?.cacheOptions || {
                 channels: true,
                 guilds: true,
@@ -185,11 +188,11 @@ class Client extends Emitter {
             },
         }
         this.cache = new Cache(caching);
-        this.debug
-        if (options?.builtinCommands?.help ?? true) {
+        if (this.options?.builtinCommands?.help) {
             this.command(['help', 'commands', 'h'], (req, res) => {
+                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red 
                 let embed = new Embed()
-                    .setColor(Colors.blue)
+                    .setColor(color)
                     .setThumbnail(this.bot.avatar);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
@@ -331,7 +334,6 @@ class Client extends Emitter {
                 }
             }
         }
-
         this.token = token.toString();
         // console.log (`Your Bot Token: ${token.toString()}`);
 
