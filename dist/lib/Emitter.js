@@ -1,15 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /******************************************************************************
  * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
  ******************************************************************************/
-const ws_1 = __importDefault(require("ws"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
+let WebSocket;
+// @ts-ignore
+if (!process) {
+    // @ts-ignore
+    WebSocket = window.WebSocket;
+}
+else {
+    WebSocket = require('ws');
+}
 class Emitter {
     constructor() {
         this.OPevents = {};
@@ -35,12 +41,12 @@ class Emitter {
         if (!_erlpack_1.erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new ws_1.default(url + `?v=${query.v || 8}&encoding=${encoding}`);
-        this.ws.on('open', () => {
-            var _a, _b;
+        this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
+        this.ws.onopen = () => {
+            var _a;
             console.log('Connected');
             (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.open();
-            (_b = this.ws) === null || _b === void 0 ? void 0 : _b.on('message', (data) => {
+            this.ws.onmessage = ({ data }) => {
                 var _a;
                 const res = _erlpack_1.unpack(data, encoding);
                 (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.message();
@@ -52,8 +58,8 @@ class Emitter {
                 }
                 else if (this.OPevents[res.op])
                     this.OPevents[res.op](res.d);
-            });
-        });
+            };
+        };
     }
     op(op, cb) {
         this.OPevents[op] = cb;

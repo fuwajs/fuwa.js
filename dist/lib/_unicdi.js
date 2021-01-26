@@ -12,12 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */ // should be fixed soon
-const undici_1 = require("undici");
+let hasFetch = false;
+let request;
+// @ts-ignore
+if (!process) {
+    hasFetch = true;
+    // @ts-ignore
+    request = window.fetch;
+}
+let Client = {};
+try {
+    Client = require('undici').Client;
+}
+catch (_a) {
+    console.log('deno');
+}
 const _Debug_1 = __importDefault(require("./_Debug"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
-const http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
+const http = new Client(_DiscordAPI_1.discordAPI.discord);
 exports.default = {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
@@ -30,53 +46,69 @@ exports.default = {
      * @param data The data (if any) to send
      */
     REQUEST(method, path, token, data) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-            const params = {
-                path: '/api/v8' + path,
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: data
-            };
-            if (token)
-                params.headers.authorization = `Bot ${token}`;
-            try {
-                http.request(params).then(res => {
-                    const chunks = [];
-                    res.body.on('data', (chunk) => chunks.push(chunk));
-                    res.body.on('end', () => {
-                        var _a;
-                        const str = Buffer.concat(chunks).toString();
-                        let d;
-                        if (!str)
-                            resolve({});
-                        // Sucess 200->299
-                        if (res.statusCode > 199 && res.statusCode < 300) {
-                            try {
-                                d = JSON.parse(str);
+        if (!hasFetch) {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                const params = {
+                    path: '/api/v8' + path,
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: data
+                };
+                if (token)
+                    params.headers.authorization = `Bot ${token}`;
+                try {
+                    http.request(params).then(res => {
+                        const chunks = [];
+                        res.body.on('data', (chunk) => chunks.push(chunk));
+                        res.body.on('end', () => {
+                            var _a;
+                            const str = Buffer.concat(chunks).toString();
+                            let d;
+                            if (!str)
+                                resolve({});
+                            // Sucess 200->299
+                            if (res.statusCode > 199 && res.statusCode < 300) {
+                                try {
+                                    d = JSON.parse(str);
+                                }
+                                catch (e) {
+                                    reject(e);
+                                }
                             }
-                            catch (e) {
-                                reject(e);
+                            else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                                setTimeout(() => {
+                                    this.REQUEST(method, path, token, data)
+                                        .catch(e => console.error(e));
+                                }, ((_a = JSON.parse(str)) === null || _a === void 0 ? void 0 : _a.retry_after) * 1000); // seconds -> milliseconds
                             }
-                        }
-                        else if (res.statusCode === 429) { // Handle Discord Rate Limits
-                            setTimeout(() => {
-                                this.REQUEST(method, path, token, data)
-                                    .catch(e => console.error(e));
-                            }, ((_a = JSON.parse(str)) === null || _a === void 0 ? void 0 : _a.retry_after) * 1000); // seconds -> milliseconds
-                        }
-                        resolve(d);
+                            resolve(d);
+                        });
                     });
-                });
-            }
-            catch (e) {
-                reject(e);
-            }
-        })).catch(e => {
-            new _Debug_1.default(true).log(method, e);
-            console.trace();
-        });
+                }
+                catch (e) {
+                    reject(e);
+                }
+            })).catch(e => {
+                new _Debug_1.default(true).log(method, e);
+                console.trace();
+            });
+        }
+        else {
+            return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+                const params = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: data,
+                };
+                if (token)
+                    params.headers.authorization = `Bot ${token}`;
+                resolve((yield request(path, params)).json());
+            }));
+        }
     },
     GET(path, token) {
         return this.REQUEST('GET', path, token);

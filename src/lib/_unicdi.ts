@@ -1,6 +1,19 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-async-promise-executor */ // should be fixed soon
-import { Client } from 'undici';
+let hasFetch = false;
+let request;
+// @ts-ignore
+if(!process) {
+    hasFetch = true;
+    // @ts-ignore
+    request = window.fetch;
+}
+let Client: any = {};
+try {
+    Client = require('undici').Client;
+} catch { console.log('deno'); }
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
 const http = new Client(discordAPI.discord);
@@ -20,44 +33,58 @@ export default {
         method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         path: string, token?: string, data?: string | Buffer
     ): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            const params: Client.RequestOptions = {
-                path: '/api/v8' + path,
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: data
+        if(!hasFetch) {
+            return new Promise(async (resolve, reject) => {
+                const params: any = {
+                    path: '/api/v8' + path,
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: data
 
-            };
-            if (token) params.headers.authorization = `Bot ${token}`;
-            try {
-                http.request(params).then(res => {
-                    const chunks = [];
-                    res.body.on('data', (chunk) => chunks.push(chunk));
-                    res.body.on('end', () => {
-                        const str = Buffer.concat(chunks).toString();
-                        let d;
-                        if (!str) resolve({});
-                        // Sucess 200->299
-                        if (res.statusCode > 199 && res.statusCode < 300) {
-                            try {
-                                d = JSON.parse(str);
-                            } catch (e) { reject(e); }
-                        } else if (res.statusCode === 429) { // Handle Discord Rate Limits
-                            setTimeout(() => {
-                                this.REQUEST(method, path, token, data)
-                                    .catch(e => console.error(e));
-                            }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
-                        }
-                        resolve(d);
+                };
+                if (token) params.headers.authorization = `Bot ${token}`;
+                try {
+                    http.request(params).then(res => {
+                        const chunks = [];
+                        res.body.on('data', (chunk) => chunks.push(chunk));
+                        res.body.on('end', () => {
+                            const str = Buffer.concat(chunks).toString();
+                            let d;
+                            if (!str) resolve({});
+                            // Sucess 200->299
+                            if (res.statusCode > 199 && res.statusCode < 300) {
+                                try {
+                                    d = JSON.parse(str);
+                                } catch (e) { reject(e); }
+                            } else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                                setTimeout(() => {
+                                    this.REQUEST(method, path, token, data)
+                                        .catch(e => console.error(e));
+                                }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                            }
+                            resolve(d);
+                        });
                     });
-                });
-            } catch (e) { reject(e); }
-        }).catch(e => {
-            new Debug(true).log(method, e);
-            console.trace();
-        });
+                } catch (e) { reject(e); }
+            }).catch(e => {
+                new Debug(true).log(method, e);
+                console.trace();
+            });
+        } else {
+            return new Promise(async resolve => {
+                const params: any = {
+                    method: method, 
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: data,
+                  };
+                if (token) params.headers.authorization = `Bot ${token}`;           
+                resolve((await request(path, params)).json());
+            });
+        }
     },
 
     GET(path: string, token?: string): Promise<any> {
