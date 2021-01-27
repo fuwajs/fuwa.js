@@ -1,14 +1,6 @@
-import Client from './lib/Client';
-import Embed from './lib/discord/Embed';
-import Colors from './lib/Colors';
-import { Argument } from './lib/Command';
-
-export = {
-    Colors,
-    Client,
-    Embed,
-    Argument,
-    // for my canadian friends
-    Colours: Colors,
-
-}
+export {default as Client} from './lib/Client';
+export {default as Embed} from './lib/discord/Embed';
+export {default as Colors} from './lib/Colors';
+// for canadians
+export {default as Colours} from './lib/Colors';
+export { Argument } from './lib/Command';
