@@ -8,6 +8,7 @@ declare class Message {
     guild_id: string;
     channel_id: string;
     embeds: Embed[];
+    message_reference: Message;
     id: string;
     timestamp: Date;
     content: string;

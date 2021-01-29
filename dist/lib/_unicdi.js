@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let hasFetch = false;
 let request;
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     hasFetch = true;
     // @ts-ignore
     request = window.fetch;

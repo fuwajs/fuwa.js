@@ -8,6 +8,7 @@ class Message {
     guild_id: string;
     channel_id: string;
     embeds: Embed[];
+    message_reference: Message;
     id: string;
     timestamp: Date;
     content: string;
@@ -17,15 +18,17 @@ class Message {
         protected bot: User
     ) {
         Object.assign(this, {
+            ...data,
             timestamp: new Date(data?.timestamp),
             embeds: data?.embeds?.map(v => new Embed(v)),
-            ...data
+            message_reference: new Message(data, token, bot)
+
         });
     }
 
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
-        if (this.author_id !== this.bot.id)
+        if (this.author_id.toString() !== this.bot.id.toString())
             new Debug(true).error(
                 'message edit',
                 'Cannot edit a message you didn\'t send'
@@ -73,7 +76,7 @@ class Message {
                 `/channels/${this.channel_id}/messages/${this.id}`
                 + `/reactions/${encodeURI(emojis[0])}/@me`,
                 this.token,
-            ).then(_ => this.react(emojis.slice(1), true));
+            ).then(() => this.react(emojis.slice(1), true));
         } else {
             const ret: Promise<Message>[] = [];
             emojis.forEach(async e => {

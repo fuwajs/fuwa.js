@@ -54,9 +54,8 @@ class Emitter {
         if (!erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
+        this.ws = new WebSocket(url + `?v=${query.v ?? 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
-            console.log('Connected');
             this.WSEvents?.open();
             this.ws.onmessage = ({ data }) => {
                 const res: { op: OpCodes; t: string | null; d: unknown } = unpack(data, encoding);

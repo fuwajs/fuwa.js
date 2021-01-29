@@ -20,12 +20,12 @@ class Message {
         var _a;
         this.token = token;
         this.bot = bot;
-        Object.assign(this, Object.assign({ timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)) }, data));
+        Object.assign(this, Object.assign(Object.assign({}, data), { timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)), message_reference: new Message(data, token, bot) }));
     }
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
-            if (this.author_id !== this.bot.id)
+            if (this.author_id.toString() !== this.bot.id.toString())
                 new _Debug_1.default(true).error('message edit', 'Cannot edit a message you didn\'t send');
             if (typeof content === 'string') {
                 // Just a normal message
@@ -58,7 +58,7 @@ class Message {
         }
         else if (inOrder) {
             return _unicdi_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}`
-                + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(_ => this.react(emojis.slice(1), true));
+                + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(() => this.react(emojis.slice(1), true));
         }
         else {
             const ret = [];

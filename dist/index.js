@@ -9,7 +9,7 @@ const Client_1 = __importDefault(require("./lib/Client"));
 const Embed_1 = __importDefault(require("./lib/discord/Embed"));
 const Colors_1 = __importDefault(require("./lib/Colors"));
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     // For browser support
     // @ts-ignore
     window.Colors = Colors_1.default;

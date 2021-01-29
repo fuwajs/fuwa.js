@@ -9,7 +9,7 @@ const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
 let WebSocket;
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     // @ts-ignore
     WebSocket = window.WebSocket;
 }
@@ -37,14 +37,14 @@ class Emitter {
         };
     }
     connect(url, query) {
+        var _a;
         const encoding = (query === null || query === void 0 ? void 0 : query.encoding) || (_erlpack_1.erlpack ? 'etf' : 'json');
         if (!_erlpack_1.erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
+        this.ws = new WebSocket(url + `?v=${(_a = query.v) !== null && _a !== void 0 ? _a : 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
             var _a;
-            console.log('Connected');
             (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.open();
             this.ws.onmessage = ({ data }) => {
                 var _a;
