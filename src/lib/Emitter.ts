@@ -1,18 +1,25 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /******************************************************************************
  * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
  ******************************************************************************/
-import WebSocket from 'ws';
 import {
     DiscordAPIOP as DiscordAPIOPResponse,
     GatewayEvents,
     OpCodes,
 } from './_DiscordAPI';
-
-import { erlpack, pack, unpack } from './_erlpack'
+import { erlpack, pack, unpack } from './_erlpack';
+let WebSocket;
+// @ts-ignore
+if(window) {
+    // @ts-ignore
+    WebSocket = window.WebSocket;
+} else {
+    WebSocket = require('ws');
+}
 
 class Emitter {
-    protected ws?: WebSocket;
+    protected ws?: any;
     private OPevents: { [key: number]: (data: any) => any } = {};
 
     private APIEvents: { [key: string]: (data: any) => any } = {};
@@ -48,10 +55,10 @@ class Emitter {
             throw new Error('ETF encoding selected but erlpack not found');
         }
         this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
-        this.ws.on('open', () => {
+        this.ws.onopen = () => {
             console.log('Connected');
             this.WSEvents?.open();
-            this.ws?.on('message', (data: Buffer) => {
+            this.ws.onmessage = ({ data }) => {
                 const res: { op: OpCodes; t: string | null; d: unknown } = unpack(data, encoding);
                 this.WSEvents?.message();
                 if (res.op === OpCodes.dispatch) {
@@ -61,8 +68,8 @@ class Emitter {
                         );
                     if (this.APIEvents[res.t]) this.APIEvents[res.t](res.d);
                 } else if (this.OPevents[res.op]) this.OPevents[res.op](res.d);
-            });
-        });
+            };
+        };
     }
     protected op<T extends keyof DiscordAPIOPResponse>(
         op: T,

@@ -4,8 +4,29 @@
  * @file src/lib/_DiscordAPI.ts
  *****************************************************************************/
 
+ /**
+  * @see https://discord.com/developers/docs/topics/gateway#list-of-intents
+  * Add these intents together to use multiple.
+  */
+export enum GatewayIntents {
+    guilds = 1 << 0,
+    guildMembers = 1 << 1,
+    guildBans = 1 << 2,
+    guildEmojis = 1 << 3,
+    guildIntegration = 1 << 4,
+    guildWebhooks = 1 << 5,
+    guildInvites = 1 << 6,
+    guildVoiceStates = 1 << 7,
+    guildPresences = 1 << 8,
+    guildMessages = 1 << 9,
+    guildMessageReactions = 1 << 10,
+    guildMessageTyping  = 1 << 11,
+    directMessages = 1 << 12,
+    directMessageReactions = 1 << 13,
+    directMessageTyping = 1 << 14
+}
 /**
- * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
  */
 export enum OpCodes {
     dispatch,
@@ -62,7 +83,7 @@ export interface GatewayEvents {
     };
     MESSAGE_REACTION_ADD: {
         op: 0;
-        t: 'MESSAGE_REACTION_ADD'
+        t: 'MESSAGE_REACTION_ADD';
         d: Reaction;
     };
 

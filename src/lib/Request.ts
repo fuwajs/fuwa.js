@@ -1,15 +1,16 @@
 import User from './User';
-import http from './_unicdi';
-import { Argument } from './Command';
 import Guild from './Guild';
-import { Message as MessageOptions, Guild as GuildOptions, Reaction } from "./_DiscordAPI";
+import { 
+    Message as DiscordMessage, 
+    Reaction,
+} from "./_DiscordAPI";
 import Cache from './_Cache';
-import Message from './Message';
+import Message from './discord/Message';
 
 class Request {
     readonly author: User;
     readonly guild: Guild;
-    readonly rawData: MessageOptions;
+    readonly rawData: DiscordMessage;
     readonly message: Message
     /** 
      * An array of the arguments passed into your command
@@ -17,12 +18,12 @@ class Request {
     args: string[];
     readonly reactions: Reaction[];
 
-    constructor(msg: MessageOptions, token: string, cache: Cache, bot: User) {
+    constructor(msg: DiscordMessage, token: string, cache: Cache, bot: User) {
         this.author = new User(msg.author, token);
         this.rawData = msg;
         this.reactions = msg.reactions;
         this.message = new Message(msg, token, bot);
-        this.guild = new Guild(cache.data['guilds'].get(msg.guild_id), token);
+        this.guild = new Guild(cache.data.guilds.get(msg.guild_id), token);
     }
     // private async getGuild(guildID: string, token: string) {
     //     let guild = { 

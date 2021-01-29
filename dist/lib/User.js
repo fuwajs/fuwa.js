@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-const Embed_1 = __importDefault(require("./Embed"));
+const Embed_1 = __importDefault(require("./discord/Embed"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const _unicdi_1 = __importDefault(require("./_unicdi"));
 class User {

@@ -9,10 +9,10 @@ let chalk = {
     red: s => s,
     grey: s => s,
     green: s => s
-}
+};
 try {
     chalk = require('chalk');
-} catch { }
+} catch { void 0; }
 class Debug {
     protected enabled: boolean;
     constructor(enabled = false) { this.enabled = enabled; }
@@ -25,7 +25,7 @@ class Debug {
         if (!this.enabled) return;
         console.log(
             `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk?.grey(new Date().toLocaleString())}`,
-        )
+        );
     }
     error(event: string, str: any): void {
         if (!this.enabled) return;
@@ -63,10 +63,10 @@ class Debug {
             // extra syntax highlighting
             if (typeof val === 'number') val = chalk.yellow(val);
             let isObj = false;
-            try { JSON.parse(val); isObj = true } catch { }
+            try { JSON.parse(val); isObj = true; } catch { void 0;}
             if (typeof val === 'string' && isObj && val !== 'null') val = chalk.green(`"${val}"`);
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''}`;
-            i++
+            i++;
         }
         return str;
     }

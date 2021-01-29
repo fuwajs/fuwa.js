@@ -1,8 +1,8 @@
 import Embed from './Embed';
-import User from './User';
-import Debug from './_Debug';
-import { Message as MessageOptions } from './_DiscordAPI';
-import undici from './_unicdi';
+import User from '../User';
+import Debug from '../_Debug';
+import { Message as DiscordMessage } from '../_DiscordAPI';
+import undici from '../_unicdi';
 class Message {
     author_id: string;
     guild_id: string;
@@ -12,7 +12,7 @@ class Message {
     timestamp: Date;
     content: string;
     constructor(
-        data: MessageOptions,
+        data: DiscordMessage,
         protected token: string,
         protected bot: User
     ) {
@@ -23,8 +23,8 @@ class Message {
         });
     }
 
-    async edit(content: string | Embed) {
-        let data: any = {};
+    async edit(content: string | Embed): Promise<Message> {
+        const data: any = {};
         if (this.author_id !== this.bot.id)
             new Debug(true).error(
                 'message edit',
@@ -47,19 +47,20 @@ class Message {
             JSON.stringify(data)
         ), this.token, this.bot);
     }
-    delete() {
+
+    delete(): Promise<any> {
         return undici.DELETE(
             `/channels/${this.channel_id}/messages/${this.id}`,
             this.token
         ).catch(console.error);
     }
 
-/**
-     * @param emojis The emoji(s) to send
+    /**
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
+     * @param emojis The emoji(s) to send
      */
-    async react(emojis: string[] | string, inOrder?: boolean) {
+    react(emojis: string[] | string, inOrder?: boolean) {
         if (typeof emojis === 'string') {
             return undici.PUT(
                 `/channels/${this.channel_id}/messages/${this.id}`
@@ -72,9 +73,9 @@ class Message {
                 `/channels/${this.channel_id}/messages/${this.id}`
                 + `/reactions/${encodeURI(emojis[0])}/@me`,
                 this.token,
-            ).then(O_CREAT => this.react(emojis.slice(1), true));
+            ).then(_ => this.react(emojis.slice(1), true));
         } else {
-            const ret = [];
+            const ret: Promise<Message>[] = [];
             emojis.forEach(async e => {
                 ret.push(undici.PUT(
                     `/channels/${this.channel_id}/messages/${this.id}`

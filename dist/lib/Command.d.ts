@@ -33,4 +33,4 @@ export interface commandOptions {
 /**
  * Callback for commands
  */
-export declare type commandCallback = (req: Request, res: Response, next: () => void) => Promise<void> | void;
+export declare type commandCallback = (req: Request, res: Response, next: () => void) => any;

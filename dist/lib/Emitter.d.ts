@@ -2,10 +2,9 @@
  * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
  ******************************************************************************/
-import WebSocket from 'ws';
 import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from './_DiscordAPI';
 declare class Emitter {
-    protected ws?: WebSocket;
+    protected ws?: any;
     private OPevents;
     private APIEvents;
     private WSEvents;

@@ -2,18 +2,20 @@ import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
-import { 
+import {
     discordAPI, Message, OpCodes, UserStatus,
-    ActivityType
+    ActivityType,
+    GatewayIntents,
 } from './_DiscordAPI';
 import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
 import { Argument, commandCallback, commandOptions } from './Command';
-import Embed from './Embed';
+import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
+import Reaction from './discord/Reaction';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -53,7 +55,7 @@ export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
-    reaction(req: Request, res: Response)
+    reaction(reaction: Reaction)
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -75,8 +77,16 @@ export interface clientOptions {
      * 
      */
     builtinCommands?: {
-        help?: boolean;
+        help?: {
+            embedColor?: string|number
+        }|false;
     },
+
+    /**
+     * @see GatewayIntents
+     */
+    intents: number
+
     /**
      * If the bot should cache guilds/channels/users or not. 
      * It's suggested to keep this on for smaller bots
@@ -120,7 +130,6 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
-    protected debugMode: boolean = false;
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache
@@ -154,21 +163,24 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.options = options || {
+        this.options = {
             cache: true,
             debug: false,
             useMentionPrefix: false,
             builtinCommands: {
-                help: true
-            }
+                help: {
+                    embedColor: Colors.blue
+                }
+            },
+            intents: GatewayIntents.guilds + GatewayIntents.guildMessages,
+            ...options,
         };
-        this.options?.debug === false ? this.debugMode = false : this.debugMode = true;
-        this.debug = new Debug(this.debugMode);
+        this.debug = new Debug(this.options.debug ?? false);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options
                 ?.cachingSettings
-                ?.clearAfter === false ? false : 1.08e+7, // 30 minutes
+                ?.clearAfter ?? 1.08e+7, // 30 minutes
             cacheOptions: options?.cachingSettings?.cacheOptions || {
                 channels: true,
                 guilds: true,
@@ -176,12 +188,11 @@ class Client extends Emitter {
             },
         }
         this.cache = new Cache(caching);
-        this.debug
-        if (options?.builtinCommands?.help ?? true) {
+        if (this.options?.builtinCommands?.help) {
             this.command(['help', 'commands', 'h'], (req, res) => {
-                console.log('help');
+                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red 
                 let embed = new Embed()
-                    .setColor(Colors.blue)
+                    .setColor(color)
                     .setThumbnail(this.bot.avatar);
                 if (req.args.length > 0) {
                     const cmdName = req.args[0];
@@ -323,7 +334,6 @@ class Client extends Emitter {
                 }
             }
         }
-
         this.token = token.toString();
         // console.log (`Your Bot Token: ${token.toString()}`);
 
@@ -348,7 +358,7 @@ class Client extends Emitter {
             this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(OpCodes.indentify, {
                 token: token.toString(),
-                intents: 513,
+                intents: this.options.intents,
                 properties: {
                     $os: process.platform,
                     $browser: 'Fuwa.js',
@@ -369,9 +379,14 @@ class Client extends Emitter {
             const ready = this.events.get('ready');
             if (ready) ready();
         });
-        this.event('MESSAGE_REACTION_ADD', () => {
-
-        })
+        this.event('MESSAGE_REACTION_ADD', (json) => {
+            console.log('json');
+            if (this.events.has('reaction'))  {
+                this.events.get('reaction')(
+                    new Reaction(json, this.token, this.bot),
+                )
+            }
+        });
         this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
@@ -400,7 +415,7 @@ class Client extends Emitter {
             const str = msg.content.split(' ');
             const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
 
-            if (str[0][0] !== prefix && !a) return;
+            if (str[0].slice(0, prefix.length) !== prefix && !a) return;
 
             if (this.options.debug) console.log(str);
 
@@ -436,10 +451,6 @@ class Client extends Emitter {
             if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
             // console.timeEnd('run command');
             // console.timeEnd('command run');
-        });
-
-        this.event('MESSAGE_REACTION_ADD', () => {
-
         });
     }
     logout(end = true) {

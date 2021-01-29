@@ -14,7 +14,9 @@ let chalk = {
 try {
     chalk = require('chalk');
 }
-catch (_a) { }
+catch (_a) {
+    void 0;
+}
 class Debug {
     constructor(enabled = false) { this.enabled = enabled; }
     /**
@@ -68,7 +70,9 @@ class Debug {
                 JSON.parse(val);
                 isObj = true;
             }
-            catch (_a) { }
+            catch (_a) {
+                void 0;
+            }
             if (typeof val === 'string' && isObj && val !== 'null')
                 val = chalk.green(`"${val}"`);
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''}`;

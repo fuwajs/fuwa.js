@@ -5,9 +5,31 @@
  * @file src/lib/_DiscordAPI.ts
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = void 0;
+exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
 /**
- * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ * @see https://discord.com/developers/docs/topics/gateway#list-of-intents
+ * Add these intents together to use multiple.
+ */
+var GatewayIntents;
+(function (GatewayIntents) {
+    GatewayIntents[GatewayIntents["guilds"] = 1] = "guilds";
+    GatewayIntents[GatewayIntents["guildMembers"] = 2] = "guildMembers";
+    GatewayIntents[GatewayIntents["guildBans"] = 4] = "guildBans";
+    GatewayIntents[GatewayIntents["guildEmojis"] = 8] = "guildEmojis";
+    GatewayIntents[GatewayIntents["guildIntegration"] = 16] = "guildIntegration";
+    GatewayIntents[GatewayIntents["guildWebhooks"] = 32] = "guildWebhooks";
+    GatewayIntents[GatewayIntents["guildInvites"] = 64] = "guildInvites";
+    GatewayIntents[GatewayIntents["guildVoiceStates"] = 128] = "guildVoiceStates";
+    GatewayIntents[GatewayIntents["guildPresences"] = 256] = "guildPresences";
+    GatewayIntents[GatewayIntents["guildMessages"] = 512] = "guildMessages";
+    GatewayIntents[GatewayIntents["guildMessageReactions"] = 1024] = "guildMessageReactions";
+    GatewayIntents[GatewayIntents["guildMessageTyping"] = 2048] = "guildMessageTyping";
+    GatewayIntents[GatewayIntents["directMessages"] = 4096] = "directMessages";
+    GatewayIntents[GatewayIntents["directMessageReactions"] = 8192] = "directMessageReactions";
+    GatewayIntents[GatewayIntents["directMessageTyping"] = 16384] = "directMessageTyping";
+})(GatewayIntents = exports.GatewayIntents || (exports.GatewayIntents = {}));
+/**
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
  */
 var OpCodes;
 (function (OpCodes) {

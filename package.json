@@ -15,6 +15,7 @@
         "docs": "npx typedoc --options ./docs.js",
         "test": "npm run build && node examples/index",
         "test2": "npm run build && cd examples && npx ts-node index.ts",
+        "browser": "npm i && echo 'installed dependencies' && tsc -p . && echo 'compiled ts' && node browser-build && echo 'Bundle Completed'",
         "build": "npx tsc -p ."
     },
     "repository": {
@@ -28,7 +29,6 @@
     },
     "homepage": "https://github.com/Fuwajs/Fuwa.js#readme",
     "dependencies": {
-        "erlpack": "^0.1.3",
         "undici": "^3.0.0",
         "ws": "^7.4.1"
     },
@@ -37,13 +37,15 @@
         "@types/ws": "^7.4.0",
         "@typescript-eslint/eslint-plugin": "^4.12.0",
         "@typescript-eslint/parser": "^4.12.0",
+        "browserify": "^17.0.0",
         "husky": "^4.3.6",
         "lint-staged": "^10.5.3",
         "prettier": "^2.2.1",
         "typedoc": "^0.20.13",
         "typescript": "^4.1.3"
     },
-    "optionalDependencies": {
+    "optionalDependencies": {},
+    "peerDependencies": {
         "chalk": "^2.4.2",
         "erlpack": "^0.1.3"
     },

@@ -3,12 +3,15 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const fuwa = require('../dist/index'); // Import fuwa.js here!
+const { Embed, Client } = require('../dist/index'); // Import js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
-// Set the prefixes
-const client = new fuwa.Client(['!', '?', '$']);
+
+// Set the prefixes. Prefixes can be any length.
+const client = new Client(['!', 'a!'], { 
+    intents: 1 + (1 << 9) // + (1 << 10)
+});
 
 // Log the bot into discord
 client.login(readFileSync(join(__dirname, 'token.secret')));
@@ -20,9 +23,11 @@ client.on('ready', function ready() {
     console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
-client.on('reaction', function (req, res) {
+client.on('reaction', async reaction => {
+    const res = await reaction.getResponse();
 
-})
+    res.reply(`You reacted with ${reaction.emoji.name}`);
+});
 
 // This function will be ran before every other command
 client.use(function reactMiddleware(req, res, next) {
@@ -38,7 +43,7 @@ client.use(function reactMiddleware(req, res, next) {
 client.command(['ping', 'latency'], function ping(req, res) {
     const timestamp = Date.parse(new Date(req.message.timestamp));
     res.send(
-        new fuwa.Embed()
+        new Embed()
             .setTitle('Pong')
             .setAuthor(req.author.username, { icon: req.author.avatar })
             .addField({
@@ -46,7 +51,7 @@ client.command(['ping', 'latency'], function ping(req, res) {
                 value: `${Date.now() - timestamp}ms`,
             })
             .setDescription()
-            .setColor(fuwa.Colors.rgb(13, 186, 120))
+            .setColor(Colors.rgb(13, 186, 120))
     );
 });
 // More complex example command using the GitHub API
@@ -59,7 +64,7 @@ client.command(['github', 'gh'], async function github(req, res) {
     const date = new Date(user.created_at).toLocaleString();
     // Send an embed!
     res.reply(
-        new fuwa.Embed()
+        new Embed()
             // Set your embed title!
             .setTitle(`${user.name} @ GitHub`)
             // Set the author of the message
@@ -76,7 +81,7 @@ client.command(['github', 'gh'], async function github(req, res) {
                 { name: 'Following', value: user.following, inline: true },
             ])
             // Set your favorite color!
-            .setColor(fuwa.Colors.rgb(255, 145, 81))
+            .setColor(Colors.rgb(255, 145, 81))
             // Add a footer!
             .setFooter(`Joined github at ${date}`)
             // Set the timestamp of the embed

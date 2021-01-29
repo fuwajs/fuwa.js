@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const _Debug_1 = __importDefault(require("./_Debug"));
 class Cache {
     constructor(options) {
         this.options = options;
@@ -23,8 +19,8 @@ class Cache {
             ? true
             : this.options.cacheOptions[type]) {
             this.data[type].set(data.id, data);
-            const debug = new _Debug_1.default(true);
-            debug.log('cache', debug.object(this.data));
+            // const debug = new Debug(true);
+            // debug.log('cache', debug.object(this.data));
         }
     }
 }

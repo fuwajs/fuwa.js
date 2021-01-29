@@ -7,6 +7,7 @@ import User from './User';
 import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';
+import Reaction from './discord/Reaction';
 export declare type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 /**
  * status options for bot
@@ -38,7 +39,7 @@ export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
-    reaction(req: Request, res: Response): any;
+    reaction(reaction: Reaction): any;
 }
 export interface clientOptions {
     /**
@@ -59,8 +60,14 @@ export interface clientOptions {
      *
      */
     builtinCommands?: {
-        help?: boolean;
+        help?: {
+            embedColor?: string | number;
+        } | false;
     };
+    /**
+     * @see GatewayIntents
+     */
+    intents: number;
     /**
      * If the bot should cache guilds/channels/users or not.
      * It's suggested to keep this on for smaller bots
@@ -101,7 +108,6 @@ export interface clientOptions {
  */
 declare class Client extends Emitter {
     bot: User;
-    protected debugMode: boolean;
     protected debug: Debug;
     private sessionId;
     cache: Cache;

@@ -4,7 +4,28 @@
  * @file src/lib/_DiscordAPI.ts
  *****************************************************************************/
 /**
- * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ * @see https://discord.com/developers/docs/topics/gateway#list-of-intents
+ * Add these intents together to use multiple.
+ */
+export declare enum GatewayIntents {
+    guilds = 1,
+    guildMembers = 2,
+    guildBans = 4,
+    guildEmojis = 8,
+    guildIntegration = 16,
+    guildWebhooks = 32,
+    guildInvites = 64,
+    guildVoiceStates = 128,
+    guildPresences = 256,
+    guildMessages = 512,
+    guildMessageReactions = 1024,
+    guildMessageTyping = 2048,
+    directMessages = 4096,
+    directMessageReactions = 8192,
+    directMessageTyping = 16384
+}
+/**
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
  */
 export declare enum OpCodes {
     dispatch = 0,
