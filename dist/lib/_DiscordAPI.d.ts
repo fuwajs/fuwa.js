@@ -1,8 +1,11 @@
-/********************************************************
+/******************************************************************************
  * Discord API interfaces
  * @see https://discord.com/developers/docs
  * @file src/lib/_DiscordAPI.ts
- *******************************************************/
+ *****************************************************************************/
+/**
+ * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ */
 export declare enum OpCodes {
     dispatch = 0,
     heartbeat = 1,
@@ -24,13 +27,19 @@ export declare const discordAPI: {
 };
 export declare const discordCDN = "https://cdn.discordapp.com";
 /**
- * @see
+ * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
+ * TODO: Add more events
  */
 export interface GatewayEvents {
     GUILD_CREATE: {
         op: 0;
         t: 'GUILD_CREATE';
         d: Guild;
+    };
+    RESUMED: {
+        op: 0;
+        t: 'RESUMED';
+        d: any;
     };
     READY: {
         op: 0;
@@ -571,7 +580,7 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
-export interface DiscordAPIEventResponse<T extends keyof GatewayEvents> {
+export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;
     d: GatewayEvents[T];

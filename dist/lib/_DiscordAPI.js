@@ -1,11 +1,14 @@
 "use strict";
-/********************************************************
+/******************************************************************************
  * Discord API interfaces
  * @see https://discord.com/developers/docs
  * @file src/lib/_DiscordAPI.ts
- *******************************************************/
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = void 0;
+/**
+ * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ */
 var OpCodes;
 (function (OpCodes) {
     OpCodes[OpCodes["dispatch"] = 0] = "dispatch";
