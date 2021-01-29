@@ -26,14 +26,16 @@ jobs:
 
       # Full Version
       - name: FullBuild
-        run: | 
+        run: |
           npm ci
           npm run build
+          npm run browser
 
       # Lightweight version (without optional deps)
       - name: LightBuild
         run: |
           npm ci --no-optional
           npm run build
+          npm run browser
 
         

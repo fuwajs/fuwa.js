@@ -10,4 +10,4 @@ debug.log
 node_modules
 .vscode/
 .typedoc.json
-browser
+browser/bundle.js
