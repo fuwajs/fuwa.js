@@ -389,7 +389,6 @@ export interface Application {
     flags: number;
 }
 
-
 export interface User extends Author {
     bot?: boolean;
     system?: boolean;
