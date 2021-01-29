@@ -10,7 +10,7 @@ import _Response from './lib/Response';
 export { commandOptions, commandCallback } from './lib/Command';
 
 // @ts-ignore
-if(window) {
+if(typeof window !== undefined) {
     // For browser support
     // @ts-ignore
     window.Colors = _Colors;
