@@ -5,12 +5,12 @@ import _Colors from './lib/Colors';
 
 // Types
 // TODO: finish exporting types
-import _Request from'./lib/Request';
+import _Request from './lib/Request';
 import _Response from './lib/Response';
 export { commandOptions, commandCallback } from './lib/Command';
 
 // @ts-ignore
-if(typeof window !== undefined) {
+if (typeof window !== undefined) {
     // For browser support
     // @ts-ignore
     window.Colors = _Colors;
