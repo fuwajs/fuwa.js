@@ -29,7 +29,7 @@ var GatewayIntents;
     GatewayIntents[GatewayIntents["directMessageTyping"] = 16384] = "directMessageTyping";
 })(GatewayIntents = exports.GatewayIntents || (exports.GatewayIntents = {}));
 /**
- * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
  */
 var OpCodes;
 (function (OpCodes) {

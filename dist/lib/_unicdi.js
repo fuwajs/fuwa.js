@@ -19,7 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let hasFetch = false;
 let request;
 // @ts-ignore
-if (!process) {
+if (window) {
     hasFetch = true;
     // @ts-ignore
     request = window.fetch;
@@ -33,7 +33,11 @@ catch (_a) {
 }
 const _Debug_1 = __importDefault(require("./_Debug"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
-const http = new Client(_DiscordAPI_1.discordAPI.discord);
+let http;
+// @ts-ignore
+if (!hasFetch && !window) {
+    http = new Client(_DiscordAPI_1.discordAPI.discord);
+}
 exports.default = {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
@@ -106,7 +110,7 @@ exports.default = {
                 };
                 if (token)
                     params.headers.authorization = `Bot ${token}`;
-                resolve((yield request(path, params)).json());
+                resolve((yield request(_DiscordAPI_1.discordAPI.discord + '/api/v8' + path, params)).json());
             }));
         }
     },

@@ -5,7 +5,7 @@
 let hasFetch = false;
 let request;
 // @ts-ignore
-if(!process) {
+if(window) {
     hasFetch = true;
     // @ts-ignore
     request = window.fetch;
@@ -16,7 +16,9 @@ try {
 } catch { console.log('deno'); }
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
-const http = new Client(discordAPI.discord);
+let http: any;
+// @ts-ignore
+if(!hasFetch && !window) {http = new Client(discordAPI.discord);}
 
 export default {
     /** 
@@ -82,7 +84,7 @@ export default {
                     body: data,
                   };
                 if (token) params.headers.authorization = `Bot ${token}`;           
-                resolve((await request(path, params)).json());
+                resolve((await request(discordAPI.discord + '/api/v8' + path, params)).json());
             });
         }
     },

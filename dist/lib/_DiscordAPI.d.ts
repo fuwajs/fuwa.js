@@ -25,7 +25,7 @@ export declare enum GatewayIntents {
     directMessageTyping = 16384
 }
 /**
- * @see https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
+ * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
  */
 export declare enum OpCodes {
     dispatch = 0,

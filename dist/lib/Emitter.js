@@ -9,7 +9,7 @@ const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
 let WebSocket;
 // @ts-ignore
-if (!process) {
+if (window) {
     // @ts-ignore
     WebSocket = window.WebSocket;
 }

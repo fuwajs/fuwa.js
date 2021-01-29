@@ -11,7 +11,7 @@ import User from './User';
 import undici from './_unicdi';
 import Response from './Response';
 import Emitter from './Emitter';
-import { Argument, CommandCallback, commandOptions } from './Command';
+import { Argument, commandCallback, commandOptions } from './Command';
 import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
@@ -54,7 +54,7 @@ export interface statusOptions {
 export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
+    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
     reaction(reaction: Reaction)
     // ERR(err: Error): void | Promise<void>;
 }
@@ -145,9 +145,9 @@ class Client extends Emitter {
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
-        { cb: CommandCallback; options: commandOptions }[]
+        { cb: commandCallback; options: commandOptions }[]
     > = new Map();
-    protected middleware: CommandCallback[] = [];
+    protected middleware: commandCallback[] = [];
     /**
      * The Bot Token
      */
@@ -250,7 +250,7 @@ class Client extends Emitter {
      * });
      * ```
      */
-    command(name: string | string[], cb: CommandCallback, options?: commandOptions) {
+    command(name: string | string[], cb: commandCallback, options?: commandOptions) {
         let defaultName = Array.isArray(name) ? name.shift() : name;
         const option: commandOptions = {
             desc: options?.desc || 'No description was provided',
@@ -304,7 +304,7 @@ class Client extends Emitter {
      * })
      * ```
      */
-    use(cb: CommandCallback) {
+    use(cb: commandCallback) {
         this.middleware.push(cb);
         return this;
     }
@@ -322,9 +322,9 @@ class Client extends Emitter {
         const next = (
             req: Request,
             res: Response,
-            arr: { cb: CommandCallback }[],
+            arr: { cb: commandCallback }[],
             i = 0,
-            secondArr?: { cb: CommandCallback }[]
+            secondArr?: { cb: commandCallback }[]
         ) => {
             return () => {
                 if (arr[i + 1]) {

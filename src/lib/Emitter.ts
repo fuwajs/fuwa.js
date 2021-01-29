@@ -11,7 +11,7 @@ import {
 import { erlpack, pack, unpack } from './_erlpack';
 let WebSocket;
 // @ts-ignore
-if(!process) {
+if(window) {
     // @ts-ignore
     WebSocket = window.WebSocket;
 } else {
