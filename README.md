@@ -58,16 +58,15 @@ const fuwa = require('fuwa.js');
 
 const client = new fuwa.Client('?'); // Your bot prefix here
 
-client.on('READY', () => console.log('I am alive!'));
+client.on('ready', () => console.log('I am alive!'));
 
 client.command(['hi', 'hello'], (req, res) => {
-    res.send(`Hello there, my name is ${client.bot.username}!`);
+    res.reply(`Hello there, my name is ${client.bot.username}!`);
 });
 
 // replace with your bot token
 client.login('<your bot token>');
 ```
-
 **Make sure to replace `<your bot token>` with your actual bot token!**
 
 ## 🧪 - Test it out
@@ -75,8 +74,55 @@ Add your bot to a discord server and type `?hi` or `?hello` in any visible
 channel. It should respond with `Hello there, my name is <bot name>!`
 
 
+# Use your bot in the browser (still very beta and may break)
+
+## Clone the project
+```bash
+git clone Fuwajs/Fuwa.js
+```
+
+## Bundle the files
+```bash
+npm run browser
+```
+You should have a bundle.js filein the browser folder
+
+## Use the bundled file
+Create a new file called index.html and paste this code (make sure your in the browser folder)
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My bot</title>
+</head>
+<body>
+    <button 
+        onclick="client.login('token')"
+    >
+        Login!
+    </button>
+    <script src="./bundle.js"></script>
+    <script>
+        const client = new Client('?');
+        client.on('ready', () => console.log('I am alive!'));
+        client.command('browser', (req, res) => {
+            res.send(`Running on ${navigator.appCodeName}`) // this is currently brocken, we are working on fixing it
+        });
+    </script>
+</body>
+</html>
+```
+After opening up the html page, your bot should come online after clicking the login button.
+**Dont forget to replace `token` with your actual token**
+
+# Useful links
 Check the [docs](https://Fuwajs.github.io/index.html) for reference.
 
 Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
 
 Join our [discord](https://discord.gg/FGn4T9eUp5) to interact with our community and ask questions!
+
+If you find any bugs please post them to our [issues](https://github.com/Fuwajs/Fuwa.js/issues) and we will respond ASAP.

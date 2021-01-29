@@ -73,7 +73,7 @@ class Response {
             ).then(_ => this.react(emojis.slice(1), true));
         } else {
             const ret = [];
-            emojis.forEach(async e => {
+            emojis.forEach(e => {
                 ret.push(undici.PUT(
                     `/channels/${this.req.channel_id}/messages/${this.req.id}`
                     + `/reactions/${encodeURI(e)}/@me`,
