@@ -14,12 +14,13 @@
 # Features
 
 - ☕️ | Express-like syntax
-- 📦 | Lightweight (only **two** dependencies)
+- 📦 | Lightweight (only **two** dependencies)<sup>*</sup>
 - 🔨 | Built-In Command Handler & Parser
 - 🌎 | Safe (complete runtime safety for your bot.)
 - ⚡️ | Blazing Fast
 - 🗂 | Customizable Cache
 
+<sup>* Excluding Peer (and of course) </sup>
 # Quickstart
 
 This assumes you have already setup a discord bot application in Discord. See

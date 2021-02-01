@@ -78,10 +78,10 @@ class Response {
             }
             else {
                 const ret = [];
-                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                emojis.forEach(e => {
                     ret.push(_unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                         + `/reactions/${encodeURI(e)}/@me`, this.token));
-                }));
+                });
                 return ret;
             }
         });

@@ -1,4 +1,17 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const { Client } = require('../dist/index');
+
+const client = new Client('?');
+client.on('ready', () => console.log('I am alive!'));
+client.command('browser', (req, res) => {
+    res.send(`Running on ${navigator.appCodeName}`).then(() => console.log('sent!'))
+});
+
+document.querySelector('#login').onclick = () => {
+    const token = document.querySelector('#token').value;
+    client.login(token);
+}
+},{"../dist/index":2}],2:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -10,7 +23,7 @@ const Client_1 = __importDefault(require("./lib/Client"));
 const Embed_1 = __importDefault(require("./lib/discord/Embed"));
 const Colors_1 = __importDefault(require("./lib/Colors"));
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     // For browser support
     // @ts-ignore
     window.Colors = Colors_1.default;
@@ -26,7 +39,7 @@ exports.Colorus = Colors_1.default;
 exports.Client = Client_1.default;
 exports.Embed = Embed_1.default;
 
-},{"./lib/Client":2,"./lib/Colors":3,"./lib/discord/Embed":17}],2:[function(require,module,exports){
+},{"./lib/Client":3,"./lib/Colors":4,"./lib/discord/Embed":18}],3:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -393,7 +406,7 @@ class Client extends Emitter_1.default {
 exports.default = Client;
 
 }).call(this)}).call(this,require('_process'))
-},{"./Colors":3,"./Command":4,"./Emitter":5,"./Errors":6,"./Request":9,"./Response":10,"./User":11,"./_Cache":12,"./_Debug":13,"./_DiscordAPI":14,"./_erlpack":15,"./_unicdi":16,"./discord/Embed":17,"./discord/Reaction":19,"_process":37}],3:[function(require,module,exports){
+},{"./Colors":4,"./Command":5,"./Emitter":6,"./Errors":7,"./Request":10,"./Response":11,"./User":12,"./_Cache":13,"./_Debug":14,"./_DiscordAPI":15,"./_erlpack":16,"./_unicdi":17,"./discord/Embed":18,"./discord/Reaction":20,"_process":38}],4:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
@@ -428,7 +441,7 @@ exports.default = {
     yellow: 0xf3f99d
 };
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Argument = void 0;
@@ -440,7 +453,7 @@ class Argument {
 }
 exports.Argument = Argument;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -452,7 +465,7 @@ const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
 let WebSocket;
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     // @ts-ignore
     WebSocket = window.WebSocket;
 }
@@ -480,14 +493,14 @@ class Emitter {
         };
     }
     connect(url, query) {
+        var _a;
         const encoding = (query === null || query === void 0 ? void 0 : query.encoding) || (_erlpack_1.erlpack ? 'etf' : 'json');
         if (!_erlpack_1.erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(url + `?v=${query.v || 8}&encoding=${encoding}`);
+        this.ws = new WebSocket(url + `?v=${(_a = query.v) !== null && _a !== void 0 ? _a : 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
             var _a;
-            console.log('Connected');
             (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.open();
             this.ws.onmessage = ({ data }) => {
                 var _a;
@@ -513,7 +526,7 @@ class Emitter {
 }
 exports.default = Emitter;
 
-},{"./_DiscordAPI":14,"./_erlpack":15,"ws":23}],6:[function(require,module,exports){
+},{"./_DiscordAPI":15,"./_erlpack":16,"ws":24}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandParsing = exports.InvalidPrefix = exports.InvalidToken = void 0;
@@ -543,7 +556,7 @@ class CommandParsing extends Error {
 }
 exports.CommandParsing = CommandParsing;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -566,7 +579,7 @@ class Guild {
 }
 exports.default = Guild;
 
-},{"./Member":8,"./_DiscordAPI":14}],8:[function(require,module,exports){
+},{"./Member":9,"./_DiscordAPI":15}],9:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -582,7 +595,7 @@ class Member {
 }
 exports.default = Member;
 
-},{"./User":11}],9:[function(require,module,exports){
+},{"./User":12}],10:[function(require,module,exports){
 "use strict";
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -602,7 +615,7 @@ class Request {
 }
 exports.default = Request;
 
-},{"./Guild":7,"./User":11,"./discord/Message":18}],10:[function(require,module,exports){
+},{"./Guild":8,"./User":12,"./discord/Message":19}],11:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -683,10 +696,10 @@ class Response {
             }
             else {
                 const ret = [];
-                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
+                emojis.forEach(e => {
                     ret.push(_unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                         + `/reactions/${encodeURI(e)}/@me`, this.token));
-                }));
+                });
                 return ret;
             }
         });
@@ -694,7 +707,7 @@ class Response {
 }
 exports.default = Response;
 
-},{"./_unicdi":16,"./discord/Embed":17,"./discord/Message":18}],11:[function(require,module,exports){
+},{"./_unicdi":17,"./discord/Embed":18,"./discord/Message":19}],12:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -753,7 +766,7 @@ class User {
 exports.User = User;
 exports.default = User;
 
-},{"./_DiscordAPI":14,"./_unicdi":16,"./discord/Embed":17}],12:[function(require,module,exports){
+},{"./_DiscordAPI":15,"./_unicdi":17,"./discord/Embed":18}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Cache {
@@ -782,7 +795,7 @@ class Cache {
 }
 exports.default = Cache;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 /******************************************************************************
  * Debugging Functions
@@ -868,7 +881,7 @@ class Debug {
 }
 exports.default = Debug;
 
-},{"chalk":25}],14:[function(require,module,exports){
+},{"chalk":26}],15:[function(require,module,exports){
 "use strict";
 /******************************************************************************
  * Discord API interfaces
@@ -984,7 +997,7 @@ var ChannelType;
     ChannelType[ChannelType["store"] = 6] = "store";
 })(ChannelType = exports.ChannelType || (exports.ChannelType = {}));
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -1020,7 +1033,7 @@ function unpack(data, encoding) {
 exports.unpack = unpack;
 
 }).call(this)}).call(this,{"isBuffer":require("../../node_modules/is-buffer/index.js")})
-},{"../../node_modules/is-buffer/index.js":35,"erlpack":31}],16:[function(require,module,exports){
+},{"../../node_modules/is-buffer/index.js":36,"erlpack":32}],17:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -1043,7 +1056,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 let hasFetch = false;
 let request;
 // @ts-ignore
-if (window) {
+if (typeof window !== undefined) {
     hasFetch = true;
     // @ts-ignore
     request = window.fetch;
@@ -1156,7 +1169,7 @@ exports.default = {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"./_Debug":13,"./_DiscordAPI":14,"buffer":24,"undici":23}],17:[function(require,module,exports){
+},{"./_Debug":14,"./_DiscordAPI":15,"buffer":25,"undici":24}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Embed {
@@ -1381,7 +1394,7 @@ class Embed {
 }
 exports.default = Embed;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1404,12 +1417,12 @@ class Message {
         var _a;
         this.token = token;
         this.bot = bot;
-        Object.assign(this, Object.assign({ timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)) }, data));
+        Object.assign(this, Object.assign(Object.assign({}, data), { timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)), message_reference: new Message(data, token, bot) }));
     }
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
-            if (this.author_id !== this.bot.id)
+            if (this.author_id.toString() !== this.bot.id.toString())
                 new _Debug_1.default(true).error('message edit', 'Cannot edit a message you didn\'t send');
             if (typeof content === 'string') {
                 // Just a normal message
@@ -1442,7 +1455,7 @@ class Message {
         }
         else if (inOrder) {
             return _unicdi_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}`
-                + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(_ => this.react(emojis.slice(1), true));
+                + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(() => this.react(emojis.slice(1), true));
         }
         else {
             const ret = [];
@@ -1456,7 +1469,7 @@ class Message {
 }
 exports.default = Message;
 
-},{"../_Debug":13,"../_unicdi":16,"./Embed":17}],19:[function(require,module,exports){
+},{"../_Debug":14,"../_unicdi":17,"./Embed":18}],20:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -1499,7 +1512,7 @@ class Reaction {
 }
 exports.default = Reaction;
 
-},{"../Response":10,"../_unicdi":16,"./Message":18}],20:[function(require,module,exports){
+},{"../Response":11,"../_unicdi":17,"./Message":19}],21:[function(require,module,exports){
 'use strict';
 const colorConvert = require('color-convert');
 
@@ -1666,7 +1679,7 @@ Object.defineProperty(module, 'exports', {
 	get: assembleStyles
 });
 
-},{"color-convert":28}],21:[function(require,module,exports){
+},{"color-convert":29}],22:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -1818,7 +1831,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (process,__filename){(function (){
 /**
  * Module dependencies.
@@ -2043,9 +2056,9 @@ exports.getRoot = function getRoot(file) {
 };
 
 }).call(this)}).call(this,require('_process'),"/node_modules/bindings/bindings.js")
-},{"_process":37,"file-uri-to-path":33,"fs":23,"path":36}],23:[function(require,module,exports){
+},{"_process":38,"file-uri-to-path":34,"fs":24,"path":37}],24:[function(require,module,exports){
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -3826,7 +3839,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":21,"buffer":24,"ieee754":34}],25:[function(require,module,exports){
+},{"base64-js":22,"buffer":25,"ieee754":35}],26:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 const escapeStringRegexp = require('escape-string-regexp');
@@ -4058,7 +4071,7 @@ module.exports.supportsColor = stdoutColor;
 module.exports.default = module.exports; // For TypeScript
 
 }).call(this)}).call(this,require('_process'))
-},{"./templates.js":26,"_process":37,"ansi-styles":20,"escape-string-regexp":32,"supports-color":38}],26:[function(require,module,exports){
+},{"./templates.js":27,"_process":38,"ansi-styles":21,"escape-string-regexp":33,"supports-color":39}],27:[function(require,module,exports){
 'use strict';
 const TEMPLATE_REGEX = /(?:\\(u[a-f\d]{4}|x[a-f\d]{2}|.))|(?:\{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(\})|((?:.|[\r\n\f])+?)/gi;
 const STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
@@ -4188,7 +4201,7 @@ module.exports = (chalk, tmp) => {
 	return chunks.join('');
 };
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /* MIT license */
 var cssKeywords = require('color-name');
 
@@ -5058,7 +5071,7 @@ convert.rgb.gray = function (rgb) {
 	return [val / 255 * 100];
 };
 
-},{"color-name":30}],28:[function(require,module,exports){
+},{"color-name":31}],29:[function(require,module,exports){
 var conversions = require('./conversions');
 var route = require('./route');
 
@@ -5138,7 +5151,7 @@ models.forEach(function (fromModel) {
 
 module.exports = convert;
 
-},{"./conversions":27,"./route":29}],29:[function(require,module,exports){
+},{"./conversions":28,"./route":30}],30:[function(require,module,exports){
 var conversions = require('./conversions');
 
 /*
@@ -5237,7 +5250,7 @@ module.exports = function (fromModel) {
 };
 
 
-},{"./conversions":27}],30:[function(require,module,exports){
+},{"./conversions":28}],31:[function(require,module,exports){
 'use strict'
 
 module.exports = {
@@ -5391,10 +5404,10 @@ module.exports = {
 	"yellowgreen": [154, 205, 50]
 };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 module.exports = require('bindings')('erlpack');
 
-},{"bindings":22}],32:[function(require,module,exports){
+},{"bindings":23}],33:[function(require,module,exports){
 'use strict';
 
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
@@ -5407,7 +5420,7 @@ module.exports = function (str) {
 	return str.replace(matchOperatorsRe, '\\$&');
 };
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 
 /**
  * Module dependencies.
@@ -5475,7 +5488,7 @@ function fileUriToPath (uri) {
   return host + path;
 }
 
-},{"path":36}],34:[function(require,module,exports){
+},{"path":37}],35:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -5562,7 +5575,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -5585,7 +5598,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (process){(function (){
 // 'path' module extracted from Node.js v8.11.1 (only the posix part)
 // transplited with Babel
@@ -6118,7 +6131,7 @@ posix.posix = posix;
 module.exports = posix;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":37}],37:[function(require,module,exports){
+},{"_process":38}],38:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -6304,7 +6317,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 'use strict';
 module.exports = {
 	stdout: false,

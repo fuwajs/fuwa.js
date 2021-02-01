@@ -1,7 +1,7 @@
 {
     "name": "fuwa.js",
     "version": "0.1.0",
-    "description": "A new powerful, discord bot library inspired by express",
+    "description": "A new and powerful discord bot library; inspired by express",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "keywords": [
@@ -14,8 +14,7 @@
     "scripts": {
         "docs": "npx typedoc --options ./docs.js",
         "test": "npm run build && node examples/index",
-        "test2": "npm run build && cd examples && npx ts-node index.ts",
-        "browser": "npm i && echo 'installed dependencies' && tsc -p . && echo 'compiled ts' && node browser-build && echo 'Bundle Completed'",
+        "browser": "tsc -p . && node ./browser/build.js",
         "build": "npx tsc -p ."
     },
     "repository": {

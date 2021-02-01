@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2021-01-XX
+## [0.1.0] - 2021-02-XX
 IN PROGRESS
 ### Added
 
@@ -17,4 +17,4 @@ IN PROGRESS
 -   Example usage of the library [examples/index.js](https://github.com/Fuwajs/Fuwa.js/blob/main/examples/index.js)
 
 [unreleased]: https://github.com/FuwaJS/Fuwa.JS/compare/v0.1.0...HEAD
-[0.0.1]: https://github.com/FuwaJS/Fuwa.JS/releases/tag/v0.1.0
+[0.1.0]: https://github.com/FuwaJS/Fuwa.JS/releases/tag/v0.1.0
