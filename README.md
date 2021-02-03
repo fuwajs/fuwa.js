@@ -90,7 +90,7 @@ Add your bot to a discord server and type `?hi` or `?hello` in any visible
 channel. It should respond with `Hello there, my name is <bot name>!`
 
 # Use your bot in the browser (**beta**)
-
+![Browser CI](https://github.com/Fuwajs/Fuwa.js/workflows/Browser%20CI/badge.svg
 ## Clone the project
 ```bash
 git clone https://github.com/Fuwajs/Fuwa.js
