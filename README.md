@@ -76,6 +76,7 @@ channel. It should respond with `Hello there, my name is <bot name>!`
 
 
 # Use your bot in the browser (still very beta and may break)
+![Browser CI](https://github.com/Fuwajs/Fuwa.js/workflows/Browser%20CI/badge.svg)
 
 ## Clone the project
 ```bash
