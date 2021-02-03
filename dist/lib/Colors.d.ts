@@ -1,3 +1,7 @@
+/******************************************************************************
+ * Color utilities.
+ * @file src/lib/Colors.ts
+ *****************************************************************************/
 declare const _default: {
     /**
      * Generate a hex color number from rgb properties

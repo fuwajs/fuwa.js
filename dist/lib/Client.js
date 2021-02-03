@@ -1,4 +1,9 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/Client.ts
+ * @fileoverview The Client class - the main class in FuwaJS - alongside other
+ * helper functions, interfaces, types, etc.
+ *****************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -116,11 +121,13 @@ class Client extends Emitter_1.default {
      * Command function
      * @param name Command name(s).
      * @param cb The function that is called when the command is ran.
-     * @param  options Options for your command.
+     * @param options Options for your command.
      * @returns Command Options
-     * ```js
+     * @example
+     * ```typescript
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!');
+     *
      * });
      * ```
      */
@@ -168,11 +175,11 @@ class Client extends Emitter_1.default {
         return this;
     }
     /**
-     * A function that is ran before every command
+     * @description A function that is ran before every command
      * @param  cb Your middleware function
      * @returns A **client** so you can *chain* methods.
-     * @description
-     * ```js
+     * @example
+     * ```typescript
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
@@ -187,7 +194,7 @@ class Client extends Emitter_1.default {
      * options for bot status
      */
     /**
-     * Log your bot into discord
+     * @description Log your bot into discord
      * @param token Your bot token
      * @param status Your Bot Status Options
      */

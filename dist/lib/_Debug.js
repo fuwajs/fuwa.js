@@ -1,6 +1,6 @@
 "use strict";
 /******************************************************************************
- * Debugging Functions
+ * Debugging functions and class.
  * @file src/lib/_Debug.ts
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });

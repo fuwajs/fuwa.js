@@ -1,3 +1,3 @@
 # src/lib/discord
 
-Implementations of DiscordAPI Response Payloads.
+Class implementations of DiscordAPI interfaces.

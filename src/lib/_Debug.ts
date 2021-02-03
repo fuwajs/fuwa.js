@@ -1,6 +1,6 @@
 /******************************************************************************
- * Debugging Functions
  * @file src/lib/_Debug.ts
+ * @fileoverview Exports the Debug class.
  *****************************************************************************/
 
 let chalk = {
@@ -13,6 +13,11 @@ let chalk = {
 try {
     chalk = require('chalk');
 } catch { void 0; }
+
+/**
+ * @description This class acts as a namespace for pretty-printed debugging
+ * messages.
+ */
 class Debug {
     protected enabled: boolean;
     constructor(enabled = false) { this.enabled = enabled; }
@@ -63,7 +68,7 @@ class Debug {
             // extra syntax highlighting
             if (typeof val === 'number') val = chalk.yellow(val);
             let isObj = false;
-            try { JSON.parse(val); isObj = true; } catch { void 0;}
+            try { JSON.parse(val); isObj = true; } catch { void 0; }
             if (typeof val === 'string' && isObj && val !== 'null') val = chalk.green(`"${val}"`);
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''}`;
             i++;

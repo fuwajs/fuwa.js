@@ -1,4 +1,12 @@
-import { Embed as DiscordEmbed } from '../_DiscordAPI';
+/******************************************************************************
+ * @file src/lib/discord/Embed.ts
+ * @fileoverview Exports a class implementation of the Embed Interface 
+ * (IEmbed)
+ *****************************************************************************/
+
+import { 
+    Embed as IEmbed
+} from '../_DiscordAPI';
 type Media = {
     url: string;
     proxy_url: string;
@@ -35,7 +43,7 @@ class Embed {
         name: string;
     };
     protected fields?: { name: string; value: string; inline?: boolean }[] = [];
-    constructor(opts?: DiscordEmbed) {
+    constructor(opts?: IEmbed) {
         // Rich Embed by default
 
         if (opts) {

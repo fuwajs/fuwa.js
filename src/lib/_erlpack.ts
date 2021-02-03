@@ -1,10 +1,15 @@
+/******************************************************************************
+ * @file src/lib/_erlpack.ts
+ * @fileoverview Provides alternative functions if erlpack is not installed.
+ *****************************************************************************/
+
 export let erlpack: {
     pack(data: any): Buffer;
     unpack(data: Buffer): any;
 };
 
 try {
-    // import doesnt work for whatever reason
+    // import() doesnt work for whatever reason
     erlpack = require('erlpack');
     if (!erlpack) erlpack = null;
 } catch {

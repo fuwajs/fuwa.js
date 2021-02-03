@@ -1,4 +1,8 @@
 "use strict";
+/******************************************************************************
+ * Class implementation of the Channel Interface (IChannel)
+ * @file src/lib/discord/Channel.ts
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 class Embed {
     constructor(opts) {

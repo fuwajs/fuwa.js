@@ -1,6 +1,11 @@
+/******************************************************************************
+ * @file src/lib/Command.ts
+ * @fileoverview Exports the Argument class, the commandOptions interface,
+ * and the commandCallback type alias.
+ *****************************************************************************/
+
 import Request from './Request';
 import Response from './Response';
-
 
 export class Argument<T extends number | string | unknown> {
     /**

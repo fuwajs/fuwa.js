@@ -8,8 +8,8 @@ const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
 
-// Set the prefixes. Prefixes can be any length.
-const client = new Client(['!', 'a!'], { 
+// Set the bot prefixes. Prefixes can be any length.
+const client = new Client(['!', 'a!'], {
     intents: 1 + (1 << 9) // + (1 << 10)
 });
 
@@ -65,13 +65,9 @@ client.command(['github', 'gh'], async function github(req, res) {
     // Send an embed!
     res.reply(
         new Embed()
-            // Set your embed title!
             .setTitle(`${user.name} @ GitHub`)
-            // Set the author of the message
             .setAuthor(req.author.username, { icon: req.author.avatar })
-            // Url to the title,
             .setUrl(user.html_url)
-            // User's bio
             .setDescription(user.bio)
             .setThumbnail(user.avatar_url)
             // Add the embed's sections
@@ -87,7 +83,6 @@ client.command(['github', 'gh'], async function github(req, res) {
             // Set the timestamp of the embed
             .setTimestamp()
     );
-    res.react(['😃', '☺️', '😇', '😜'], true);
 }, { desc: 'Get GitHub user statistics.' }); // Set the help message
 
 client.command(['echo', 'say'], function (req, res) {

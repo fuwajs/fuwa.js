@@ -3,6 +3,11 @@
  * @file src/lib/Emitter.ts
  ******************************************************************************/
 import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from './_DiscordAPI';
+export interface QueryOptions {
+    v?: number;
+    encoding?: 'json' | 'etf';
+    compress?: boolean;
+}
 declare class Emitter {
     protected ws?: any;
     private OPevents;
@@ -16,11 +21,7 @@ declare class Emitter {
             emit: <T_1 extends "GUILD_CREATE" | "RESUMED" | "READY" | "CHANNEL_CREATE" | "MESSAGE_CREATE" | "MESSAGE_REACTION_ADD">(t: T_1, d: GatewayEvents[T_1]) => void;
         };
     };
-    protected connect(url: string, query?: {
-        v?: number;
-        encoding?: 'json' | 'etf';
-        compress?: boolean;
-    }): void;
+    protected connect(url: string, query?: QueryOptions): void;
     protected op<T extends keyof DiscordAPIOPResponse>(op: T, cb: (data: DiscordAPIOPResponse[T]['d']) => void): void;
     protected event<T extends keyof GatewayEvents>(e: T, cb: (data: GatewayEvents[T]['d']) => void): void;
 }

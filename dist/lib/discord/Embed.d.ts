@@ -1,3 +1,7 @@
+/******************************************************************************
+ * Class implementation of the Channel Interface (IChannel)
+ * @file src/lib/discord/Channel.ts
+ *****************************************************************************/
 import { Embed as DiscordEmbed } from '../_DiscordAPI';
 declare type Media = {
     url: string;

@@ -1,11 +1,11 @@
 /******************************************************************************
- * Discord API interfaces
- * @see https://discord.com/developers/docs
  * @file src/lib/_DiscordAPI.ts
+ * @fileoverview Exports (most of) the Discord API interfaces.
+ * {@link https://discord.com/developers/docs}
  *****************************************************************************/
 
  /**
-  * @see https://discord.com/developers/docs/topics/gateway#list-of-intents
+  * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
   * Add these intents together to use multiple.
   */
 export enum GatewayIntents {
@@ -26,7 +26,7 @@ export enum GatewayIntents {
     directMessageTyping = 1 << 14
 }
 /**
- * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
+ * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
  */
 export enum OpCodes {
     dispatch,

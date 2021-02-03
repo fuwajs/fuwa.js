@@ -22,7 +22,7 @@ if (typeof window !== undefined) {
     window.Embed = _Embed;
 }
 export const Colors = _Colors;
-export const Colorus = _Colors;
+export const Colours = _Colors;
 export const Client = _Client;
 export const Embed = _Embed;
 

@@ -1,4 +1,8 @@
 "use strict";
+/******************************************************************************
+ * Color utilities.
+ * @file src/lib/Colors.ts
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     /**

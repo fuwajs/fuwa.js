@@ -1,3 +1,9 @@
+/******************************************************************************
+ * @file src/lib/Client.ts
+ * @fileoverview Exports the Client class - the main class in Fuwa.JS - alongside other
+ * helper functions, interfaces, types, etc.
+ *****************************************************************************/
+
 import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
@@ -7,10 +13,10 @@ import {
     ActivityType,
     GatewayIntents,
 } from './_DiscordAPI';
-import User from './User';
-import undici from './_unicdi';
+import User from './discord/User';
+import http from './_http';
 import Response from './Response';
-import Emitter from './Emitter';
+import Emitter, { QueryOptions } from './Emitter';
 import { Argument, commandCallback, commandOptions } from './Command';
 import Embed from './discord/Embed';
 import Colors from './Colors';
@@ -78,8 +84,8 @@ export interface clientOptions {
      */
     builtinCommands?: {
         help?: {
-            embedColor?: string|number
-        }|false;
+            embedColor?: string | number
+        } | false;
     },
 
     /**
@@ -190,7 +196,7 @@ class Client extends Emitter {
         this.cache = new Cache(caching);
         if (this.options?.builtinCommands?.help) {
             this.command(['help', 'commands', 'h'], (req, res) => {
-                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red 
+                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red
                 let embed = new Embed()
                     .setColor(color)
                     .setThumbnail(this.bot.avatar);
@@ -242,11 +248,13 @@ class Client extends Emitter {
      * Command function
      * @param name Command name(s).
      * @param cb The function that is called when the command is ran.
-     * @param  options Options for your command.
+     * @param options Options for your command.
      * @returns Command Options
-     * ```js
-     * cli.command(['ping', 'latency'], (req, res) => {
+     * @example
+     * ```typescript
+     * cli.command(['ping', 'latency'], (req, res) => { 
      *      res.send('Pong!');
+     *      
      * });
      * ```
      */
@@ -293,11 +301,11 @@ class Client extends Emitter {
         return this;
     }
     /**
-     * A function that is ran before every command
+     * @description A function that is ran before every command
      * @param  cb Your middleware function
      * @returns A **client** so you can *chain* methods.
-     * @description
-     * ```js
+     * @example
+     * ```typescript
      * cli.use((req, res, next) => {
      *      req.send(`${req.command} has been used!`);
      *      next(); // call the next middlware/command
@@ -313,7 +321,7 @@ class Client extends Emitter {
      */
 
     /**
-     * Log your bot into discord
+     * @description Log your bot into discord
      * @param token Your bot token
      * @param status Your Bot Status Options
      */
@@ -339,7 +347,7 @@ class Client extends Emitter {
 
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
-        let options: { v: number, encoding: 'etf' | 'json' } = {
+        let options: QueryOptions = {
             v: 8,
             encoding: erlpack ? 'etf' : 'json'
         }
@@ -381,7 +389,7 @@ class Client extends Emitter {
         });
         this.event('MESSAGE_REACTION_ADD', (json) => {
             console.log('json');
-            if (this.events.has('reaction'))  {
+            if (this.events.has('reaction')) {
                 this.events.get('reaction')(
                     new Reaction(json, this.token, this.bot),
                 )
@@ -487,12 +495,12 @@ class Client extends Emitter {
         this.status = cred;
     }
     async deleteMessages(amt: number, channelID: string) {
-        const msgs: Message[] = await undici.GET(
+        const msgs: Message[] = await http.GET(
             `/channels/${channelID}/messages?limit=${amt}`,
             this.token
         ).catch(e => { console.error(e) });
 
-        undici.POST(
+        http.POST(
             `/channels/${channelID}/messages/bulk-delete`,
             this.token,
             JSON.stringify({ messages: msgs.map(m => m.id) })

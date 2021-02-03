@@ -1,3 +1,9 @@
+/******************************************************************************
+ * @file src/lib/_Cache.ts
+ * @fileoverview Customizable cache implementation. This isReccomended for bots 
+ * on a high amount of servers
+ *****************************************************************************/
+
 import { clientOptions } from './Client';
 // import Debug from './_Debug';
 import { Guild } from './_DiscordAPI';

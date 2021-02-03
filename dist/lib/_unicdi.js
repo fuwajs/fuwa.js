@@ -43,25 +43,25 @@ exports.default = {
      * Use this if you want to handle Discord Rate limits automatically.
      * ! Be aware that this function is **recursive**
      * Note: this automatically 'catch'es on rejection
-     * TODO: Customizable API version (v8 by default as of now)
-     * @param method The HTTP method
-     * @param path The path from 'https://discord.com/api/v8 to {method} from/on.
+     * @param method The HTTP method to execute
+     * @param path The path from 'https://discord.com/api/v{version} to execute
+     * the described {@see method} from
      * @param token The bots token (for authorization)
      * @param data The data (if any) to send
+     * @param version Discord API version to use {@default v 8}
      */
-    REQUEST(method, path, token, data) {
+    REQUEST(method, path, token, data, version) {
         if (!hasFetch) {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 const params = {
-                    path: '/api/v8' + path,
+                    path: `/api/v${version || 8}` + path,
                     method,
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: token ? `Bot ${token}` : undefined
                     },
                     body: data
                 };
-                if (token)
-                    params.headers.authorization = `Bot ${token}`;
                 try {
                     http.request(params).then(res => {
                         const chunks = [];
@@ -72,7 +72,7 @@ exports.default = {
                             let d;
                             if (!str)
                                 resolve({});
-                            // Sucess 200->299
+                            // Sucess 200<->299
                             if (res.statusCode > 199 && res.statusCode < 300) {
                                 try {
                                     d = JSON.parse(str);
@@ -105,11 +105,10 @@ exports.default = {
                     method: method,
                     headers: {
                         'Content-Type': 'application/json',
+                        authorization: token ? `Bot ${token}` : undefined
                     },
                     body: data,
                 };
-                if (token)
-                    params.headers.authorization = `Bot ${token}`;
                 resolve((yield request(_DiscordAPI_1.discordAPI.discord + '/api/v8' + path, params)).json());
             }));
         }

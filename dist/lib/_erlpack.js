@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unpack = exports.pack = exports.erlpack = void 0;
 try {
-    // import doesnt work for whatever reason
+    // import() doesnt work for whatever reason
     exports.erlpack = require('erlpack');
     if (!exports.erlpack)
         exports.erlpack = null;

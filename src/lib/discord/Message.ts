@@ -1,8 +1,15 @@
+/******************************************************************************
+ * @file src/lib/discord/Message.ts
+ * @fileoverview Exports a class 'implementation' of the Message Interface 
+ * (IMessage)
+ *****************************************************************************/
+
 import Embed from './Embed';
-import User from '../User';
+import User from './User';
 import Debug from '../_Debug';
-import { Message as DiscordMessage } from '../_DiscordAPI';
-import undici from '../_unicdi';
+import { Message as IMessage } from '../_DiscordAPI';
+import http from '../_http';
+// class Message implements IMessage {
 class Message {
     author_id: string;
     guild_id: string;
@@ -13,7 +20,7 @@ class Message {
     timestamp: Date;
     content: string;
     constructor(
-        data: DiscordMessage,
+        data: IMessage,
         protected token: string,
         protected bot: User
     ) {
@@ -44,7 +51,7 @@ class Message {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        return new Message(await undici.PATCH(
+        return new Message(await http.PATCH(
             `/channels/${this.channel_id}/messages/${this.id}`,
             this.token,
             JSON.stringify(data)
@@ -52,12 +59,11 @@ class Message {
     }
 
     delete(): Promise<any> {
-        return undici.DELETE(
+        return http.DELETE(
             `/channels/${this.channel_id}/messages/${this.id}`,
             this.token
         ).catch(console.error);
     }
-
     /**
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
@@ -65,14 +71,14 @@ class Message {
      */
     react(emojis: string[] | string, inOrder?: boolean) {
         if (typeof emojis === 'string') {
-            return undici.PUT(
+            return http.PUT(
                 `/channels/${this.channel_id}/messages/${this.id}`
                 + `/reactions/${emojis}/@me`,
                 this.token,
             );
         }
         else if (inOrder) {
-            return undici.PUT(
+            return http.PUT(
                 `/channels/${this.channel_id}/messages/${this.id}`
                 + `/reactions/${encodeURI(emojis[0])}/@me`,
                 this.token,
@@ -80,7 +86,7 @@ class Message {
         } else {
             const ret: Promise<Message>[] = [];
             emojis.forEach(async e => {
-                ret.push(undici.PUT(
+                ret.push(http.PUT(
                     `/channels/${this.channel_id}/messages/${this.id}`
                     + `/reactions/${encodeURI(e)}/@me`,
                     this.token,

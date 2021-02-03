@@ -1,4 +1,9 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/_Cache.ts
+ * Customizable cache implementation. Reccomened for bots on a high amount of
+ * servers
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 class Cache {
     constructor(options) {

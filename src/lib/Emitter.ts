@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /******************************************************************************
- * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
+ * @fileoverview Exports the emitter class. It is the baseclass for the 
+ * Client class.
  ******************************************************************************/
 import {
     DiscordAPIOP as DiscordAPIOPResponse,
@@ -11,13 +12,22 @@ import {
 import { erlpack, pack, unpack } from './_erlpack';
 let WebSocket;
 // @ts-ignore
-if(typeof window !== undefined) {
+if (typeof window !== undefined) {
     // @ts-ignore
     WebSocket = window.WebSocket;
 } else {
     WebSocket = require('ws');
 }
 
+export interface QueryOptions {
+    v?: number,
+    encoding?: 'json' | 'etf',
+    compress?: boolean,
+}
+
+/**
+ * The baseclass for the Client class.
+ */
 class Emitter {
     protected ws?: any;
     private OPevents: { [key: number]: (data: any) => any } = {};
@@ -44,11 +54,7 @@ class Emitter {
             },
         },
     };
-    protected connect(url: string, query?: {
-        v?: number,
-        encoding?: 'json' | 'etf',
-        compress?: boolean,
-    }): void {
+    protected connect(url: string, query?: QueryOptions): void {
 
         const encoding = query?.encoding || (erlpack ? 'etf' : 'json');
         if (!erlpack && encoding === 'etf') {

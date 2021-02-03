@@ -1,5 +1,18 @@
-import { Guild as GuildOptions, discordCDN, GuildHashes, Channel, Role } from './_DiscordAPI';
+/******************************************************************************
+ * @file src/lib/discord/Guild.ts
+ * @fileoverview Exports a class 'implementation' of the Guild Interface 
+ * (IGuild)
+ *****************************************************************************/
+
+import {
+    Guild as IGuild, 
+    discordCDN, 
+    GuildHashes, 
+    Channel as IChannel, 
+    Role as IRole
+} from '../_DiscordAPI';
 import Member from './Member';
+// class Guild implements IGuild {
 class Guild {
     id: string;
     name: string;
@@ -31,12 +44,12 @@ class Guild {
     members: Map<string, Member>;
     presences: any[];
     banner: null;
-    channels: Map<string, Channel>;
+    channels: Map<string, IChannel>;
     max_video_channel_users: number;
     preferred_locale: string;
     rules_channel_id: null;
 
-    roles: Role[];
+    roles: IRole[];
     lazy: boolean;
     application_id: string | null;
     mfa_level: number;
@@ -47,7 +60,7 @@ class Guild {
     default_message_notifications: number;
     premium_subscription_count: number;
     created_at: Date;
-    constructor(data: GuildOptions, token: string) {
+    constructor(data: IGuild, token: string) {
         this.name = data.name;
         this.id = data.id;
         this.owner_id = data.owner_id;

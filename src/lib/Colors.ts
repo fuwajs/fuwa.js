@@ -1,3 +1,8 @@
+/******************************************************************************
+ * @file src/lib/Colors.ts
+ * @fileoverview Provides the rgb function, and colors.
+ *****************************************************************************/
+
 export default {
     /**
      * Generate a hex color number from rgb properties
