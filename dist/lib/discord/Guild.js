@@ -1,10 +1,15 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/discord/Guild.ts
+ * @fileoverview Exports a class 'implementation' of the Guild Interface
+ * (IGuild)
+ *****************************************************************************/
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const _DiscordAPI_1 = require("../_DiscordAPI");
-const Member_1 = __importDefault(require("../Member"));
+const Member_1 = __importDefault(require("./Member"));
 // class Guild implements IGuild {
 class Guild {
     constructor(data, token) {

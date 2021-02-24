@@ -1,7 +1,11 @@
 /******************************************************************************
- * Debugging functions and class.
  * @file src/lib/_Debug.ts
+ * @fileoverview Exports the Debug class.
  *****************************************************************************/
+/**
+ * @description This class acts as a namespace for pretty-printed debugging
+ * messages.
+ */
 declare class Debug {
     protected enabled: boolean;
     constructor(enabled?: boolean);

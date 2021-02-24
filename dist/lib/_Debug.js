@@ -1,7 +1,7 @@
 "use strict";
 /******************************************************************************
- * Debugging functions and class.
  * @file src/lib/_Debug.ts
+ * @fileoverview Exports the Debug class.
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 let chalk = {
@@ -17,6 +17,10 @@ try {
 catch (_a) {
     void 0;
 }
+/**
+ * @description This class acts as a namespace for pretty-printed debugging
+ * messages.
+ */
 class Debug {
     constructor(enabled = false) { this.enabled = enabled; }
     /**

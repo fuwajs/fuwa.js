@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandParsing = exports.InvalidPrefix = exports.InvalidToken = void 0;
 /******************************************************************************
- * Error classes
- * @file Errors.ts
+ * @file src/lib/Errors.ts
+ * @fileoverview Error classes
  *****************************************************************************/
 class InvalidToken extends Error {
     constructor(msg) {

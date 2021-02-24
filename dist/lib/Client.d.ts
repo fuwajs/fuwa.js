@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file src/lib/Client.ts
- * @fileoverview The Client class - the main class in FuwaJS - alongside other
+ * @fileoverview Exports the Client class - the main class in Fuwa.JS - alongside other
  * helper functions, interfaces, types, etc.
  *****************************************************************************/
 /// <reference types="node" />
@@ -8,7 +8,7 @@ import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
 import { UserStatus, ActivityType } from './_DiscordAPI';
-import User from './User';
+import User from './discord/User';
 import Response from './Response';
 import Emitter from './Emitter';
 import { commandCallback, commandOptions } from './Command';

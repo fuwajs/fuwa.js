@@ -1,21 +1,27 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /******************************************************************************
- * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
+ * @fileoverview Exports the emitter class. It is the baseclass for the
+ * Client class.
  ******************************************************************************/
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
-let WebSocket;
-// @ts-ignore
-if (typeof window !== undefined) {
-    // @ts-ignore
-    WebSocket = window.WebSocket;
-}
-else {
-    WebSocket = require('ws');
-}
+// let WebSocket;
+// // @ts-ignore
+// if (typeof window !== undefined) {
+//     // @ts-ignore
+//     WebSocket = window.WebSocket;
+// } else {
+//     WebSocket = require('ws');
+// }
+const ws_1 = __importDefault(require("ws"));
+/**
+ * The baseclass for the Client class.
+ */
 class Emitter {
     constructor() {
         this.OPevents = {};
@@ -42,7 +48,7 @@ class Emitter {
         if (!_erlpack_1.erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(url + `?v=${(_a = query.v) !== null && _a !== void 0 ? _a : 8}&encoding=${encoding}`);
+        this.ws = new ws_1.default(url + `?v=${(_a = query.v) !== null && _a !== void 0 ? _a : 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
             var _a;
             (_a = this.WSEvents) === null || _a === void 0 ? void 0 : _a.open();

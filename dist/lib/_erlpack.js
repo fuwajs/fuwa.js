@@ -1,4 +1,8 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/_erlpack.ts
+ * @fileoverview Provides alternative functions if erlpack is not installed.
+ *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.unpack = exports.pack = exports.erlpack = void 0;
 try {

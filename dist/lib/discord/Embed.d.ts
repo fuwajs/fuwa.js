@@ -1,8 +1,9 @@
 /******************************************************************************
- * Class implementation of the Channel Interface (IChannel)
- * @file src/lib/discord/Channel.ts
+ * @file src/lib/discord/Embed.ts
+ * @fileoverview Exports a class implementation of the Embed Interface
+ * (IEmbed)
  *****************************************************************************/
-import { Embed as DiscordEmbed } from '../_DiscordAPI';
+import { Embed as IEmbed } from '../_DiscordAPI';
 declare type Media = {
     url: string;
     proxy_url: string;
@@ -40,7 +41,7 @@ declare class Embed {
         value: string;
         inline?: boolean;
     }[];
-    constructor(opts?: DiscordEmbed);
+    constructor(opts?: IEmbed);
     /**
      * @param description  Description For Embed
      */

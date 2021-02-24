@@ -1,4 +1,4 @@
-import User from './User';
+import User from './discord/User';
 import Guild from './discord/Guild';
 import { Message as IMessage, Reaction } from "./_DiscordAPI";
 import Cache from './_Cache';

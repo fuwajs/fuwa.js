@@ -1,6 +1,6 @@
 /******************************************************************************
- * Error classes
- * @file Errors.ts
+ * @file src/lib/Errors.ts
+ * @fileoverview Error classes
  *****************************************************************************/
 export declare class InvalidToken extends Error {
     name: string;

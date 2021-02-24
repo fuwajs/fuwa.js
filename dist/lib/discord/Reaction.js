@@ -1,4 +1,9 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/discord/Reaction.ts
+ * @fileoverview Exports a class implementation of the Reaction Interface
+ * (IReaction)
+ *****************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -13,7 +18,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Response_1 = __importDefault(require("../Response"));
-const _unicdi_1 = __importDefault(require("../_unicdi"));
+const _http_1 = __importDefault(require("../_http"));
 const Message_1 = __importDefault(require("./Message"));
 class Reaction {
     constructor(json, token, bot) {
@@ -26,14 +31,14 @@ class Reaction {
      */
     getMessage() {
         return __awaiter(this, void 0, void 0, function* () {
-            const json = yield _unicdi_1.default.GET(`/channels/${this.channel_id}
+            const json = yield _http_1.default.GET(`/channels/${this.channel_id}
             /messages/${this.message_id}`);
             return new Message_1.default(json, this.token, this.bot);
         });
     }
     getResponse() {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Response_1.default(yield _unicdi_1.default.GET(`/channels/${this.channel_id}
+            return new Response_1.default(yield _http_1.default.GET(`/channels/${this.channel_id}
                 /messages/${this.message_id}`), this.token, this.bot);
         });
     }

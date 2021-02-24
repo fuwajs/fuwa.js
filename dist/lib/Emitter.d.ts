@@ -1,6 +1,7 @@
 /******************************************************************************
- * The emitter class. It is a baseclass for the 'Client' class
  * @file src/lib/Emitter.ts
+ * @fileoverview Exports the emitter class. It is the baseclass for the
+ * Client class.
  ******************************************************************************/
 import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from './_DiscordAPI';
 export interface QueryOptions {
@@ -8,6 +9,9 @@ export interface QueryOptions {
     encoding?: 'json' | 'etf';
     compress?: boolean;
 }
+/**
+ * The baseclass for the Client class.
+ */
 declare class Emitter {
     protected ws?: any;
     private OPevents;
