@@ -8,18 +8,6 @@ exports.Response = exports.Request = exports.Embed = exports.Client = exports.Co
 const Client_1 = __importDefault(require("./lib/Client"));
 const Embed_1 = __importDefault(require("./lib/discord/Embed"));
 const Colors_1 = __importDefault(require("./lib/Colors"));
-// @ts-ignore
-// if (typeof window !== undefined) {
-//     // For browser support
-//     // @ts-ignore
-//     window.Colors = _Colors;
-//     // @ts-ignore
-//     window.Colours = _Colors;
-//     // @ts-ignore
-//     window.Client = _Client;
-//     // @ts-ignore
-//     window.Embed = _Embed;
-// }
 exports.Colors = Colors_1.default;
 exports.Colours = Colors_1.default;
 exports.Client = Client_1.default;

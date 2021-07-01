@@ -9,23 +9,10 @@ import _Request from './lib/Request';
 import _Response from './lib/Response';
 export { commandOptions, commandCallback } from './lib/Command';
 
-// @ts-ignore
-// if (typeof window !== undefined) {
-//     // For browser support
-//     // @ts-ignore
-//     window.Colors = _Colors;
-//     // @ts-ignore
-//     window.Colours = _Colors;
-//     // @ts-ignore
-//     window.Client = _Client;
-//     // @ts-ignore
-//     window.Embed = _Embed;
-// }
 export const Colors = _Colors;
-export const Colours = _Colors;
+export const Colours = _Colors; 
 export const Client = _Client;
 export const Embed = _Embed;
 
 // Export types
 export let Request: typeof _Request;
-export let Response: typeof _Response;

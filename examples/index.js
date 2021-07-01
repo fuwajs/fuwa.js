@@ -3,7 +3,7 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const { Embed, Client } = require('../dist/index'); // Import js here!
+const { Embed, Client, Colors } = require('../dist/index'); // Import js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
@@ -29,7 +29,7 @@ client.on('reaction', async (reaction) => {
     res.reply(`You reacted with ${reaction.emoji.name}`);
 });
 
-// This function will be ran before every other command
+// This function will be ran before every command
 client.use(function reactMiddleware(req, res, next) {
     // For example, you could notify the user you have recieved their command
     // by reacting with a green checkmark.

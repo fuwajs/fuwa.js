@@ -9,29 +9,6 @@
  *****************************************************************************/
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
-
-// let hasFetch = false;
-// let request;
-// // @ts-ignore
-// if (typeof window !== undefined) {
-//     hasFetch = true;
-//     // @ts-ignore
-//     request = window?.fetch;
-// }
-
-// let Client = {};
-
-// try {
-//     Client = require('undici').Client;
-// } catch { console.log('deno'); }
-// let http: any;
-// // @ts-ignore
-// if (!hasFetch && !window) {  }
-
-import { Client } from 'undici';
-
-const http = new Client(discordAPI.discord);
-
 export default {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
@@ -52,69 +29,6 @@ export default {
         version?: 6 | 8
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            const params: any = {
-                path: `/api/v${version || 8}` + path,
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                    authorization: token ? `Bot ${token}` : undefined,
-                },
-                body: data,
-            };
-            try {
-                http.request(params).then((res) => {
-                    const chunks: Uint8Array[] = [];
-                    res.body.on('data', (chunk: Uint8Array) =>
-                        chunks.push(chunk)
-                    );
-                    res.body.on('end', () => {
-                        const str = Buffer.concat(chunks).toString();
-                        let d: unknown;
-                        if (!str) resolve({});
-                        // Sucess 200<->299
-                        if (res.statusCode > 199 && res.statusCode < 300) {
-                            try {
-                                d = JSON.parse(str);
-                            } catch (e) {
-                                reject(e);
-                            }
-                        } else if (res.statusCode === 429) {
-                            // Handle Discord Rate Limits
-                            setTimeout(() => {
-                                this.REQUEST(
-                                    method,
-                                    path,
-                                    token,
-                                    data
-                                ).catch((e) => console.error(e));
-                            }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
-                        }
-                        resolve(d);
-                    });
-                });
-            } catch (e) {
-                reject(e);
-            }
-        }).catch((e) => {
-            new Debug(true).log(method, e);
-            console.trace();
-        });
-
-        // if (!hasFetch) {
-
-        // } else {
-        //     return new Promise(async resolve => {
-        //         const params: any = {
-        //             method: method,
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 authorization: token ? `Bot ${token}` : undefined
-        //             },
-        //             body: data,
-        //         };
-        //         resolve((await request(discordAPI.discord + '/api/v8' + path, params)).json());
-        //     });
-        // }
     },
 
     GET(path: string, token?: string): Promise<any> {

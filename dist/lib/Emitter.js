@@ -10,14 +10,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
  ******************************************************************************/
 const _DiscordAPI_1 = require("./_DiscordAPI");
 const _erlpack_1 = require("./_erlpack");
-// let WebSocket;
-// // @ts-ignore
-// if (typeof window !== undefined) {
-//     // @ts-ignore
-//     WebSocket = window.WebSocket;
-// } else {
-//     WebSocket = require('ws');
-// }
 const ws_1 = __importDefault(require("ws"));
 /**
  * The baseclass for the Client class.
