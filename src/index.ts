@@ -9,6 +9,7 @@ import _Request from './lib/Request';
 import _Response from './lib/Response';
 export { commandOptions, commandCallback } from './lib/Command';
 
+
 export const Colors = _Colors;
 export const Colours = _Colors; 
 export const Client = _Client;
@@ -16,3 +17,4 @@ export const Embed = _Embed;
 
 // Export types
 export let Request: typeof _Request;
+export let Response: typeof _Response;

@@ -1,3 +1,9 @@
+ 
+/******************************************************************************
+ * @file src/lib/_http.ts
+ * @fileoverview Provides http functions using undici or fetch() depending on
+ * the JavaScript/TypeScript environment.
+ *****************************************************************************/
 /// <reference types="node" />
 declare const _default: {
     /**
