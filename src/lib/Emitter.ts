@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 /******************************************************************************
  * @file src/lib/Emitter.ts
- * @fileoverview Exports the emitter class. It is the baseclass for the 
+ * @fileoverview Exports the emitter class. It is the baseclass for the
  * Client class.
  ******************************************************************************/
 import {
@@ -12,9 +11,9 @@ import {
 import { erlpack, pack, unpack } from './_erlpack';
 import WebSocket from 'ws';
 export interface QueryOptions {
-    v?: number,
-    encoding?: 'json' | 'etf',
-    compress?: boolean,
+    v?: number;
+    encoding?: 'json' | 'etf';
+    compress?: boolean;
 }
 
 /**
@@ -47,16 +46,21 @@ class Emitter {
         },
     };
     protected connect(url: string, query?: QueryOptions): void {
-
         const encoding = query?.encoding || (erlpack ? 'etf' : 'json');
         if (!erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(url + `?v=${query.v ?? 8}&encoding=${encoding}`);
+        this.ws = new WebSocket(
+            url + `?v=${query.v ?? 8}&encoding=${encoding}`
+        );
         this.ws.onopen = () => {
             this.WSEvents?.open();
             this.ws.onmessage = ({ data }) => {
-                const res: { op: OpCodes; t: string | null; d: unknown } = unpack(data, encoding);
+                const res: {
+                    op: OpCodes;
+                    t: string | null;
+                    d: unknown;
+                } = unpack(data, encoding);
                 this.WSEvents?.message();
                 if (res.op === OpCodes.dispatch) {
                     if (!res.t)

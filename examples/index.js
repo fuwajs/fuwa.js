@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
 
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
-    intents: 1 + (1 << 9) // + (1 << 10)
+    intents: 1 + (1 << 9), // + (1 << 10)
 });
 
 // Log the bot into discord
@@ -23,7 +23,7 @@ client.on('ready', function ready() {
     console.log(`Hello, my name is ${client.bot.username}!`);
 });
 
-client.on('reaction', async reaction => {
+client.on('reaction', async (reaction) => {
     const res = await reaction.getResponse();
 
     res.reply(`You reacted with ${reaction.emoji.name}`);
@@ -55,37 +55,46 @@ client.command(['ping', 'latency'], function ping(req, res) {
     );
 });
 // More complex example command using the GitHub API
-client.command(['github', 'gh'], async function github(req, res) {
-    const username = req.args[0] || 'octocat';
-    const user = await (
-        await fetch(`https://api.github.com/users/${username}`) // Fetch the github user's JSON code (as a string)
-    ).json(); // Turn this string into a object we can use
+client.command(
+    ['github', 'gh'],
+    async function github(req, res) {
+        const username = req.args[0] || 'octocat';
+        const user = await (
+            await fetch(`https://api.github.com/users/${username}`)
+        ) // Fetch the github user's JSON code (as a string)
+            .json(); // Turn this string into a object we can use
 
-    const date = new Date(user.created_at).toLocaleString();
-    // Send an embed!
-    res.reply(
-        new Embed()
-            .setTitle(`${user.name} @ GitHub`)
-            .setAuthor(req.author.username, { icon: req.author.avatar })
-            .setUrl(user.html_url)
-            .setDescription(user.bio)
-            .setThumbnail(user.avatar_url)
-            // Add the embed's sections
-            .addFields([
-                { name: 'Repositories', value: user.public_repos },
-                { name: 'Followers', value: user.followers, inline: true },
-                { name: 'Following', value: user.following, inline: true },
-            ])
-            // Set your favorite color!
-            .setColor(Colors.rgb(255, 145, 81))
-            // Add a footer!
-            .setFooter(`Joined github at ${date}`)
-            // Set the timestamp of the embed
-            .setTimestamp()
-    );
-}, { desc: 'Get GitHub user statistics.' }); // Set the help message
+        const date = new Date(user.created_at).toLocaleString();
+        // Send an embed!
+        res.reply(
+            new Embed()
+                .setTitle(`${user.name} @ GitHub`)
+                .setAuthor(req.author.username, { icon: req.author.avatar })
+                .setUrl(user.html_url)
+                .setDescription(user.bio)
+                .setThumbnail(user.avatar_url)
+                // Add the embed's sections
+                .addFields([
+                    { name: 'Repositories', value: user.public_repos },
+                    { name: 'Followers', value: user.followers, inline: true },
+                    { name: 'Following', value: user.following, inline: true },
+                ])
+                // Set your favorite color!
+                .setColor(Colors.rgb(255, 145, 81))
+                // Add a footer!
+                .setFooter(`Joined github at ${date}`)
+                // Set the timestamp of the embed
+                .setTimestamp()
+        );
+    },
+    { desc: 'Get GitHub user statistics.' }
+); // Set the help message
 
-client.command(['echo', 'say'], function (req, res) {
-    req.message.delete();
-    res.send(req.args.toString() || 'You didnt say anything!');
-}, { desc: 'Makes the bot repeat what you say!' });
+client.command(
+    ['echo', 'say'],
+    function (req, res) {
+        req.message.delete();
+        res.send(req.args.toString() || 'You didnt say anything!');
+    },
+    { desc: 'Makes the bot repeat what you say!' }
+);
