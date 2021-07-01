@@ -33,7 +33,7 @@ class Message {
         });
         if(data.message_reference) {
             http.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`)
-                .then(msg => new Message(msg, token, bot))
+                .then(msg => this.message_reference = new Message(msg, token, bot))
         } 
     }
 
