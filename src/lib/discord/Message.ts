@@ -27,8 +27,7 @@ class Message {
         Object.assign(this, {
             ...data,
             timestamp: new Date(data?.timestamp),
-            embeds: data?.embeds?.map(v => new Embed(v)),
-            message_reference: new Message(data, token, bot)
+            embeds: data?.embeds?.map(v => new Embed(v))
 
         });
         if(data.message_reference) {
