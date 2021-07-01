@@ -27,6 +27,10 @@ class Message {
         this.token = token;
         this.bot = bot;
         Object.assign(this, Object.assign(Object.assign({}, data), { timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map(v => new Embed_1.default(v)), message_reference: new Message(data, token, bot) }));
+        if (data.message_reference) {
+            _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`)
+                .then(msg => this.message_reference = new Message(msg, token, bot));
+        }
     }
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
