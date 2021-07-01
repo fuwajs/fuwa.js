@@ -1,7 +1,7 @@
 "use strict";
 /******************************************************************************
- * Color utilities.
  * @file src/lib/Colors.ts
+ * @fileoverview Provides the rgb function, and colors.
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {

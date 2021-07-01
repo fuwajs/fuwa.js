@@ -1,5 +1,10 @@
+/******************************************************************************
+ * @file src/lib/discord/Guild.ts
+ * @fileoverview Exports a class 'implementation' of the Guild Interface
+ * (IGuild)
+ *****************************************************************************/
 import { Guild as IGuild, GuildHashes, Channel as IChannel, Role as IRole } from '../_DiscordAPI';
-import Member from '../Member';
+import Member from './Member';
 declare class Guild {
     id: string;
     name: string;

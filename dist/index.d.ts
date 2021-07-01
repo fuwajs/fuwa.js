@@ -26,7 +26,7 @@ export declare const Colors: {
     red: number;
     yellow: number;
 };
-export declare const Colorus: {
+export declare const Colours: {
     rgb(r: number, g: number, b: number): number;
     mind: number;
     white: number;

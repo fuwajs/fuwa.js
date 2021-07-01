@@ -1,13 +1,13 @@
 "use strict";
 /******************************************************************************
- * Discord API interfaces
- * @see https://discord.com/developers/docs
  * @file src/lib/_DiscordAPI.ts
+ * @fileoverview Exports (most of) the Discord API interfaces.
+ * {@link https://discord.com/developers/docs}
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
 /**
- * @see https://discord.com/developers/docs/topics/gateway#list-of-intents
+ * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
  * Add these intents together to use multiple.
  */
 var GatewayIntents;
@@ -29,7 +29,7 @@ var GatewayIntents;
     GatewayIntents[GatewayIntents["directMessageTyping"] = 16384] = "directMessageTyping";
 })(GatewayIntents = exports.GatewayIntents || (exports.GatewayIntents = {}));
 /**
- * @see {@link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes}
+ * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
  */
 var OpCodes;
 (function (OpCodes) {

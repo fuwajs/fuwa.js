@@ -10,15 +10,7 @@ import {
     OpCodes,
 } from './_DiscordAPI';
 import { erlpack, pack, unpack } from './_erlpack';
-let WebSocket;
-// @ts-ignore
-if (typeof window !== undefined) {
-    // @ts-ignore
-    WebSocket = window.WebSocket;
-} else {
-    WebSocket = require('ws');
-}
-
+import WebSocket from 'ws';
 export interface QueryOptions {
     v?: number,
     encoding?: 'json' | 'etf',

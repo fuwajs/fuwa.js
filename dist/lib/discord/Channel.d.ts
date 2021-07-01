@@ -1,6 +1,7 @@
 /******************************************************************************
- * Class implementation of the Channel Interface (IChannel)
  * @file src/lib/discord/Channel.ts
+ * @fileoverview Exports a class implementation of the Channel Interface
+ * (IChannel)
  *****************************************************************************/
 import { Channel as IChannel, ChannelType, Overwrite as IOverwrite, User as IUser } from '../_DiscordAPI';
 export declare class Channel implements IChannel {

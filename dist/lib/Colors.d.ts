@@ -1,6 +1,6 @@
 /******************************************************************************
- * Color utilities.
  * @file src/lib/Colors.ts
+ * @fileoverview Provides the rgb function, and colors.
  *****************************************************************************/
 declare const _default: {
     /**

@@ -1,5 +1,10 @@
+/******************************************************************************
+ * @file src/lib/discord/Message.ts
+ * @fileoverview Exports a class 'implementation' of the Message Interface
+ * (IMessage)
+ *****************************************************************************/
 import Embed from './Embed';
-import User from '../User';
+import User from './User';
 import { Message as IMessage } from '../_DiscordAPI';
 declare class Message {
     protected token: string;

@@ -1,6 +1,11 @@
+/******************************************************************************
+ * @file src/lib/discord/Response.ts
+ * @fileoverview Exports the Response class which you can use to reply and
+ * react to messages.
+ *****************************************************************************/
 import Embed from './discord/Embed';
 import Message from './discord/Message';
-import User from './User';
+import User from './discord/User';
 import { Message as MessageOptions } from './_DiscordAPI';
 declare class Response {
     protected req: MessageOptions;

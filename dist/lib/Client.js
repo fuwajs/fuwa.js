@@ -1,7 +1,7 @@
 "use strict";
 /******************************************************************************
  * @file src/lib/Client.ts
- * @fileoverview The Client class - the main class in FuwaJS - alongside other
+ * @fileoverview Exports the Client class - the main class in Fuwa.JS - alongside other
  * helper functions, interfaces, types, etc.
  *****************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
@@ -22,8 +22,8 @@ const _Cache_1 = __importDefault(require("./_Cache"));
 const _Debug_1 = __importDefault(require("./_Debug"));
 const Errors_1 = require("./Errors");
 const _DiscordAPI_1 = require("./_DiscordAPI");
-const User_1 = __importDefault(require("./User"));
-const _unicdi_1 = __importDefault(require("./_unicdi"));
+const User_1 = __importDefault(require("./discord/User"));
+const _http_1 = __importDefault(require("./_http"));
 const Response_1 = __importDefault(require("./Response"));
 const Emitter_1 = __importDefault(require("./Emitter"));
 const Command_1 = require("./Command");
@@ -362,8 +362,8 @@ class Client extends Emitter_1.default {
     }
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msgs = yield _unicdi_1.default.GET(`/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
-            _unicdi_1.default.POST(`/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
+            const msgs = yield _http_1.default.GET(`/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
+            _http_1.default.POST(`/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
         });
     }
 }

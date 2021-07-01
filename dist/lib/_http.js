@@ -1,3 +1,4 @@
+"use strict";
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -7,16 +8,26 @@
  * @fileoverview Provides http functions using undici or fetch() depending on
  * the JavaScript/TypeScript environment.
  *****************************************************************************/
-
-import { Client } from 'undici';
-
-
-import Debug from './_Debug';
-import { discordAPI } from './_DiscordAPI';
-let http = new Client(discordAPI.discord);
-http.request
-export default {
-    /** 
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const undici_1 = require("undici");
+const _Debug_1 = __importDefault(require("./_Debug"));
+const _DiscordAPI_1 = require("./_DiscordAPI");
+let http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
+http.request;
+exports.default = {
+    /**
      * Use this if you want to handle Discord Rate limits automatically.
      * ! Be aware that this function is **recursive**
      * Note: this automatically 'catch'es on rejection
@@ -27,62 +38,62 @@ export default {
      * @param data The data (if any) to send
      * @param version Discord API version to use {@default v 8}
      */
-    REQUEST(
-        method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-        path: string, token?: string, data?: string | Buffer,
-        version?: 6 | 8
-    ): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            const params: Client.RequestOptions = {
+    REQUEST(method, path, token, data, version) {
+        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            const params = {
                 path: '/api/v8' + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: data
-            }
-            if (token) params.headers.authorization = `Bot ${token}`;
-            const res = await http.request(params);
-
+            };
+            if (token)
+                params.headers.authorization = `Bot ${token}`;
+            const res = yield http.request(params);
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
+                var _a;
                 const str = Buffer.concat(chunks).toString();
                 let d;
-                if (!str) resolve({});
+                if (!str)
+                    resolve({});
                 // Sucess 200->299
                 if (res.statusCode > 199 && res.statusCode < 300) {
                     try {
                         d = JSON.parse(str);
-                    } catch (e) { reject(e) }
-                } else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                    }
+                    catch (e) {
+                        reject(e);
+                    }
+                }
+                else if (res.statusCode === 429) { // Handle Discord Rate Limits
                     setTimeout(() => {
                         this.REQUEST(method, path, token, data)
                             .catch(e => console.error(e));
-                    }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                    }, ((_a = JSON.parse(str)) === null || _a === void 0 ? void 0 : _a.retry_after) * 1000); // seconds -> milliseconds
                 }
                 resolve(d);
             });
-
-        }).catch(e => {
-            new Debug(true).log(method, e);
+        })).catch(e => {
+            new _Debug_1.default(true).log(method, e);
             console.trace();
         });
     },
-
-    GET(path: string, token?: string): Promise<any> {
+    GET(path, token) {
         return this.REQUEST('GET', path, token);
     },
-    DELETE(path: string, token?: string): Promise<any> {
+    DELETE(path, token) {
         return this.REQUEST('DELETE', path, token);
     },
-    POST(path: string, token: string, data?: string | Buffer): Promise<any> {
+    POST(path, token, data) {
         return this.REQUEST('POST', path, token, data);
     },
-    PUT(path: string, token: string, data?: string | Buffer): Promise<any> {
+    PUT(path, token, data) {
         return this.REQUEST('PUT', path, token, data);
     },
-    PATCH(path: string, token: string, data?: string | Buffer): Promise<any> {
+    PATCH(path, token, data) {
         return this.REQUEST('PATCH', path, token, data);
     }
 };

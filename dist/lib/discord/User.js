@@ -1,4 +1,9 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/discord/User.ts
+ * @fileoverview Exports a class implementation of the User Interface
+ * (IUser)
+ *****************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -13,9 +18,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-const Embed_1 = __importDefault(require("./discord/Embed"));
-const _DiscordAPI_1 = require("./_DiscordAPI");
-const _unicdi_1 = __importDefault(require("./_unicdi"));
+const Embed_1 = __importDefault(require("./Embed"));
+const _DiscordAPI_1 = require("../_DiscordAPI");
+const _http_1 = __importDefault(require("../_http"));
 class User {
     constructor(data, token) {
         this.token = token;
@@ -48,8 +53,8 @@ class User {
             else {
                 throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            const dm = yield _unicdi_1.default.POST('/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })).catch(console.error);
-            return _unicdi_1.default.POST(`/channels/${dm.id}/messages`, this.token, JSON.stringify(data)).catch(console.error);
+            const dm = yield _http_1.default.POST('/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })).catch(console.error);
+            return _http_1.default.POST(`/channels/${dm.id}/messages`, this.token, JSON.stringify(data)).catch(console.error);
         });
     }
 }

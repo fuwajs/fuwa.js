@@ -1,4 +1,9 @@
 "use strict";
+/******************************************************************************
+ * @file src/lib/discord/Response.ts
+ * @fileoverview Exports the Response class which you can use to reply and
+ * react to messages.
+ *****************************************************************************/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -14,7 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Embed_1 = __importDefault(require("./discord/Embed"));
 const Message_1 = __importDefault(require("./discord/Message"));
-const _unicdi_1 = __importDefault(require("./_unicdi"));
+const _http_1 = __importDefault(require("./_http"));
 class Response {
     constructor(req, token, bot) {
         this.req = req;
@@ -38,7 +43,7 @@ class Response {
         else {
             throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
-        return _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(console.error);
+        return _http_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)).catch(console.error);
     }
     /**
      * @param content The content to send. The content can be a string or an
@@ -58,7 +63,7 @@ class Response {
                 // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
                 return;
             }
-            return new Message_1.default(yield _unicdi_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)), this.token, this.bot);
+            return new Message_1.default(yield _http_1.default.POST(`/channels/${this.req.channel_id}/messages`, this.token, JSON.stringify(this.data)), this.token, this.bot);
         });
     }
     /**
@@ -69,17 +74,17 @@ class Response {
     react(emojis, inOrder) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof emojis === 'string') {
-                return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                return _http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                     + `/reactions/${emojis}/@me`, this.token);
             }
             else if (inOrder) {
-                return _unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                return _http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                     + `/reactions/${encodeURI(emojis[0])}/@me`, this.token).then(_ => this.react(emojis.slice(1), true));
             }
             else {
                 const ret = [];
                 emojis.forEach(e => {
-                    ret.push(_unicdi_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
+                    ret.push(_http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}`
                         + `/reactions/${encodeURI(e)}/@me`, this.token));
                 });
                 return ret;

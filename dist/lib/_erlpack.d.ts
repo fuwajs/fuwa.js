@@ -1,3 +1,7 @@
+/******************************************************************************
+ * @file src/lib/_erlpack.ts
+ * @fileoverview Provides alternative functions if erlpack is not installed.
+ *****************************************************************************/
 /// <reference types="node" />
 export declare let erlpack: {
     pack(data: any): Buffer;

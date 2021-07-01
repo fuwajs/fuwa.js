@@ -21,7 +21,10 @@
         "type": "git",
         "url": "git+https://github.com/Fuwajs/Fuwa.js.git"
     },
-    "author": "Artrix",
+    "contributors": [
+        "Artrix",
+        "Phoenix"
+    ],
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Fuwajs/Fuwa.js/issues"
