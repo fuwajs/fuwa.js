@@ -44,7 +44,7 @@ class Response {
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
-            this.data.embed = content;
+            this.data.embeds = [content];
             this.data.tts = false;
         } else {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
@@ -91,4 +91,5 @@ class Response {
     }
 
 }
+
 export default Response;

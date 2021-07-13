@@ -17,7 +17,7 @@ import User from './discord/User';
 import http from './_http';
 import Response from './Response';
 import Emitter, { QueryOptions } from './Emitter';
-import { Argument, commandCallback, commandOptions } from './Command';
+import { Argument, CommandCallback, commandOptions } from './Command';
 import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
@@ -28,7 +28,7 @@ export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 /**
  * status options for bot
  */
-export interface statusOptions {
+export interface StatusOptions {
     /**
      * The status message to be displayed
      */
@@ -60,7 +60,7 @@ export interface statusOptions {
 export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: commandCallback): void | Promise<void>;
+    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
     reaction(reaction: Reaction)
     // ERR(err: Error): void | Promise<void>;
 }
@@ -151,9 +151,9 @@ class Client extends Emitter {
     protected loop?: NodeJS.Timeout;
     protected commands: Map<
         string,
-        { cb: commandCallback; options: commandOptions }[]
+        { cb: CommandCallback; options: commandOptions }[]
     > = new Map();
-    protected middleware: commandCallback[] = [];
+    protected middleware: CommandCallback[] = [];
     /**
      * The Bot Token
      */
@@ -258,7 +258,7 @@ class Client extends Emitter {
      * });
      * ```
      */
-    command(name: string | string[], cb: commandCallback, options?: commandOptions) {
+    command(name: string | string[], cb: CommandCallback, options?: commandOptions) {
         let defaultName = Array.isArray(name) ? name.shift() : name;
         const option: commandOptions = {
             desc: options?.desc || 'No description was provided',
@@ -312,7 +312,7 @@ class Client extends Emitter {
      * })
      * ```
      */
-    use(cb: commandCallback) {
+    use(cb: CommandCallback) {
         this.middleware.push(cb);
         return this;
     }
@@ -330,9 +330,9 @@ class Client extends Emitter {
         const next = (
             req: Request,
             res: Response,
-            arr: { cb: commandCallback }[],
+            arr: { cb: CommandCallback }[],
             i = 0,
-            secondArr?: { cb: commandCallback }[]
+            secondArr?: { cb: CommandCallback }[]
         ) => {
             return () => {
                 if (arr[i + 1]) {
@@ -471,7 +471,7 @@ class Client extends Emitter {
         this.options[key] = val;
         return this;
     }
-    setStatus(status: statusOptions) {
+    setStatus(status: StatusOptions) {
         let cred = {
             d: {
                 presence: {

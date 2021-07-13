@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file src/lib/discord/Message.ts
- * @fileoverview Exports a class 'implementation' of the Message Interface 
+ * @fileoverview Exports a class 'implementation' of the Message Interface
  * (IMessage)
  *****************************************************************************/
 
@@ -19,21 +19,19 @@ class Message {
     id: string;
     timestamp: Date;
     content: string;
-    constructor(
-        data: IMessage,
-        protected token: string,
-        protected bot: User
-    ) {
+    constructor(data: IMessage, protected token: string, protected bot: User) {
         Object.assign(this, {
             ...data,
             timestamp: new Date(data?.timestamp),
-            embeds: data?.embeds?.map(v => new Embed(v))
-
+            embeds: data?.embeds?.map((v) => new Embed(v)),
         });
-        if(data.message_reference) {
-            http.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`)
-                .then(msg => this.message_reference = new Message(msg, token, bot))
-        } 
+        if (data.message_reference) {
+            http.GET(
+                `/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`
+            ).then(
+                (msg) => (this.message_reference = new Message(msg, token, bot))
+            );
+        }
     }
 
     async edit(content: string | Embed): Promise<Message> {
@@ -41,7 +39,7 @@ class Message {
         if (this.author_id.toString() !== this.bot.id.toString())
             new Debug(true).error(
                 'message edit',
-                'Cannot edit a message you didn\'t send'
+                "Cannot edit a message you didn't send"
             );
         if (typeof content === 'string') {
             // Just a normal message
@@ -54,18 +52,24 @@ class Message {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        return new Message(await http.PATCH(
-            `/channels/${this.channel_id}/messages/${this.id}`,
+        return new Message(
+            await http.PATCH(
+                `/channels/${this.channel_id}/messages/${this.id}`,
+                this.token,
+                JSON.stringify(data)
+            ),
             this.token,
-            JSON.stringify(data)
-        ), this.token, this.bot);
+            this.bot
+        );
     }
 
     delete(): Promise<any> {
-        return http.DELETE(
-            `/channels/${this.channel_id}/messages/${this.id}`,
-            this.token
-        ).catch(console.error);
+        return http
+            .DELETE(
+                `/channels/${this.channel_id}/messages/${this.id}`,
+                this.token
+            )
+            .catch(console.error);
     }
     /**
      * @param inOrder Should the emojis be sent in order. Note that this function
@@ -75,25 +79,28 @@ class Message {
     react(emojis: string[] | string, inOrder?: boolean) {
         if (typeof emojis === 'string') {
             return http.PUT(
-                `/channels/${this.channel_id}/messages/${this.id}`
-                + `/reactions/${emojis}/@me`,
-                this.token,
+                `/channels/${this.channel_id}/messages/${this.id}` +
+                    `/reactions/${emojis}/@me`,
+                this.token
             );
-        }
-        else if (inOrder) {
-            return http.PUT(
-                `/channels/${this.channel_id}/messages/${this.id}`
-                + `/reactions/${encodeURI(emojis[0])}/@me`,
-                this.token,
-            ).then(() => this.react(emojis.slice(1), true));
+        } else if (inOrder) {
+            return http
+                .PUT(
+                    `/channels/${this.channel_id}/messages/${this.id}` +
+                        `/reactions/${encodeURI(emojis[0])}/@me`,
+                    this.token
+                )
+                .then(() => this.react(emojis.slice(1), true));
         } else {
             const ret: Promise<Message>[] = [];
-            emojis.forEach(async e => {
-                ret.push(http.PUT(
-                    `/channels/${this.channel_id}/messages/${this.id}`
-                    + `/reactions/${encodeURI(e)}/@me`,
-                    this.token,
-                ));
+            emojis.forEach(async (e) => {
+                ret.push(
+                    http.PUT(
+                        `/channels/${this.channel_id}/messages/${this.id}` +
+                            `/reactions/${encodeURI(e)}/@me`,
+                        this.token
+                    )
+                );
             });
             return ret;
         }

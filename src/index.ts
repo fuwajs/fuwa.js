@@ -7,7 +7,7 @@ import _Colors from './lib/Colors';
 // TODO: finish exporting types
 import _Request from './lib/Request';
 import _Response from './lib/Response';
-export { commandOptions, commandCallback } from './lib/Command';
+export { commandOptions, CommandCallback as commandCallback } from './lib/Command';
 
 
 export const Colors = _Colors;

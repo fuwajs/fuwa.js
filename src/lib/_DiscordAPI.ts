@@ -4,10 +4,10 @@
  * {@link https://discord.com/developers/docs}
  *****************************************************************************/
 
- /**
-  * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
-  * Add these intents together to use multiple.
-  */
+/**
+ * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
+ * Add these intents together to use multiple.
+ */
 export enum GatewayIntents {
     guilds = 1 << 0,
     guildMembers = 1 << 1,
@@ -20,11 +20,12 @@ export enum GatewayIntents {
     guildPresences = 1 << 8,
     guildMessages = 1 << 9,
     guildMessageReactions = 1 << 10,
-    guildMessageTyping  = 1 << 11,
+    guildMessageTyping = 1 << 11,
     directMessages = 1 << 12,
     directMessageReactions = 1 << 13,
-    directMessageTyping = 1 << 14
+    directMessageTyping = 1 << 14,
 }
+
 /**
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
  */
@@ -65,7 +66,7 @@ export interface GatewayEvents {
         op: 0;
         t: 'RESUMED';
         d: any; // eh
-    }
+    };
     READY: {
         op: 0;
         t: 'READY';
@@ -86,8 +87,8 @@ export interface GatewayEvents {
         t: 'MESSAGE_REACTION_ADD';
         d: Reaction;
     };
-
 }
+
 export interface Message {
     id: string;
     channel_id: string;
@@ -105,7 +106,7 @@ export interface Message {
     mention_channels?: ChannelMention[];
     attachments: Attachment[];
     embeds: Embed[];
-    reactions: Reaction[]
+    reactions: Reaction[];
     nonce: number | string;
     pinned: boolean;
     webhook_id?: string;
@@ -116,6 +117,40 @@ export interface Message {
     flags?: number;
     stickers: Sticker[];
     referenced_message?: Message | null;
+}
+
+/**
+ * @see {@link https://discord.com/developers/docs/resources/channel#create-message-jsonform-params}
+ */
+export interface MessageForm {
+    content: string;
+    tts?: boolean;
+    file: string;
+    embeds: Embed[];
+    payload_json?: string;
+    allowed_mentions?: AllowedMention[];
+    message_reference?: MessageReference;
+    components?: MessageComponent[];
+}
+
+type AllowedMentionType = 'roles' | 'users' | 'everyone';
+
+interface AllowedMention {
+    parse: AllowedMentionType[];
+    roles: string[];
+    users: string[];
+    replied_user: boolean;
+}
+
+interface MessageComponent {
+    type: ComponentType;
+    style?: number;
+}
+
+enum ComponentType {
+    ActionRow = 1,
+    Button = 2,
+    SelectMenu = 3,
 }
 
 interface Sticker {
@@ -179,6 +214,7 @@ interface MessageReference {
 export interface Attachment {
     id: string;
     filename: string;
+    content_type?: string;
     /** Size of the file **in bytes** */
     size: number;
     url: string;
@@ -215,12 +251,14 @@ interface EmbedVideo {
     height?: number;
     width?: number;
 }
+
 interface EmbedImage {
     url?: string;
     proxy_url?: string;
     height?: number;
     width?: number;
 }
+
 interface EmbedFooter {
     text: string;
     icon_url?: string;
@@ -368,7 +406,7 @@ export interface Emoji {
     require_colons?: boolean;
     managed?: boolean;
     animated?: boolean;
-    available?: boolean
+    available?: boolean;
 }
 
 export interface Ready {
@@ -404,12 +442,11 @@ export interface User extends Author {
     public_flags?: number;
 }
 
-
 /* eslint-disable */
-export interface UserSettings { }
+export interface UserSettings {}
 
-/** 
- * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure 
+/**
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */
 export interface Guild {
     id: string;
@@ -460,13 +497,23 @@ export interface Guild {
     aproximate_presence_count?: number;
 }
 
-/** 
- * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features 
+/**
+ * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
  */
 type GuildFeature =
-    | 'INVITE_SPLASH' | 'VIP_REGIONS' | 'VANITY_URL' | 'VERIFIED'
-    | 'PARTNERED' | 'COMMUNITY' | 'COMMERCE' | 'NEWS' | 'DISCOVERABLE'
-    | 'FEATURABLE' | 'ANIMATED_ICON' | 'BANNER' | 'WELCOME_SCREEN_ENABLED'
+    | 'INVITE_SPLASH'
+    | 'VIP_REGIONS'
+    | 'VANITY_URL'
+    | 'VERIFIED'
+    | 'PARTNERED'
+    | 'COMMUNITY'
+    | 'COMMERCE'
+    | 'NEWS'
+    | 'DISCOVERABLE'
+    | 'FEATURABLE'
+    | 'ANIMATED_ICON'
+    | 'BANNER'
+    | 'WELCOME_SCREEN_ENABLED';
 
 /**
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
@@ -521,7 +568,7 @@ export enum ActivityType {
     streaming,
     listening,
     custom,
-    competing
+    competing,
 }
 
 /**
@@ -592,12 +639,14 @@ interface ClientStatus {
     mobile?: string;
     web?: string;
 }
+
 export interface Overwrite {
     id: string;
     type: number;
     allow: string;
     deny: string;
 }
+
 export interface Channel {
     id: string;
     type: ChannelType;
@@ -626,7 +675,7 @@ export enum ChannelType {
     groupDM,
     catergory,
     news,
-    store
+    store,
 }
 
 export interface GuildHashes {
@@ -640,6 +689,7 @@ export interface Channels {
     omitted: boolean;
     hash: string;
 }
+
 export interface Role {
     position: number;
     permissions_new?: string;
@@ -651,6 +701,7 @@ export interface Role {
     hoist: boolean;
     color: number;
 }
+
 export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;

@@ -48,7 +48,7 @@ export interface commandOptions {
 /**
  * Callback for commands
  */
-export type commandCallback = (
+export type CommandCallback = (
     req: Request,
     res: Response,
     next: () => void,
