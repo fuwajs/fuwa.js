@@ -45,7 +45,6 @@
         "typedoc": "^0.20.13",
         "typescript": "^4.1.3"
     },
-    "optionalDependencies": {},
     "peerDependencies": {
         "chalk": "^2.4.2"
     },
