@@ -47,8 +47,7 @@
     },
     "optionalDependencies": {},
     "peerDependencies": {
-        "chalk": "^2.4.2",
-        "erlpack": "^0.1.3"
+        "chalk": "^2.4.2"
     },
     "husky": {
         "hooks": {
