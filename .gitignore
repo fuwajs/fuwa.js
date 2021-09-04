@@ -1,6 +1,6 @@
 # Secrets and logs
 *.secret
-*.log
+# *.log
 
 # Cache
 .eslintcache

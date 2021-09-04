@@ -41,18 +41,17 @@ client.use(function reactMiddleware(req, res, next) {
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
 client.command(['ping', 'latency'], function ping(req, res) {
-    const timestamp = Date.parse(new Date(req.message.timestamp));
-    res.send(
-        new Embed()
-            .setTitle('Pong')
-            .setAuthor(req.author.username, { icon: req.author.avatar })
-            .addField({
-                name: 'Latency',
-                value: `${Date.now() - timestamp}ms`,
-            })
-            .setDescription()
-            .setColor(Colors.rgb(13, 186, 120))
-    );
+    res.send('Loading...').then(msg => {
+        msg.edit(new Embed()
+        .setTitle('Pong')
+        .setAuthor(req.author.username, { icon: req.author.avatar })
+        .addField({
+            name: 'Latency',
+            value: `${Date.now() - msg.timestamp}ms`,
+        })
+        .setDescription()
+        .setColor(Colors.rgb(13, 186, 120)))
+    })
 });
 // More complex example command using the GitHub API
 client.command(['github', 'gh'], async function github(req, res) {

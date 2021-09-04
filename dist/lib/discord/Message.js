@@ -18,6 +18,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Embed_1 = __importDefault(require("./Embed"));
+const User_1 = __importDefault(require("./User"));
 const _Debug_1 = __importDefault(require("../_Debug"));
 const _http_1 = __importDefault(require("../_http"));
 // class Message implements IMessage {
@@ -26,7 +27,7 @@ class Message {
         var _a;
         this.token = token;
         this.bot = bot;
-        Object.assign(this, Object.assign(Object.assign({}, data), { timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
+        Object.assign(this, Object.assign(Object.assign({}, data), { author: new User_1.default(data.author, this.token), timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
         if (data.message_reference) {
             _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg, token, bot)));
         }
@@ -34,8 +35,10 @@ class Message {
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
-            if (this.author_id.toString() !== this.bot.id.toString())
+            if (this.author.id.toString() !== this.bot.id.toString()) {
                 new _Debug_1.default(true).error('message edit', "Cannot edit a message you didn't send");
+                return;
+            }
             if (typeof content === 'string') {
                 // Just a normal message
                 data.content = content;

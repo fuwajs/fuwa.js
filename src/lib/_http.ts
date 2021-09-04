@@ -33,7 +33,7 @@ export default {
         version?: 6 | 8
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
-            const params: Client.RequestOptions = {
+            const params: any = {
                 path: '/api/v8' + path,
                 method,
                 headers: {

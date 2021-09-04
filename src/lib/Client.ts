@@ -388,7 +388,6 @@ class Client extends Emitter {
             if (ready) ready();
         });
         this.event('MESSAGE_REACTION_ADD', (json) => {
-            console.log('json');
             if (this.events.has('reaction')) {
                 this.events.get('reaction')(
                     new Reaction(json, this.token, this.bot),

@@ -15,6 +15,7 @@
         "docs": "npx typedoc --options ./docs.js",
         "test": "npm run build && node examples/index",
         "browser": "tsc -p . && node browser",
+        "profile": "npm run build && node --prof examples/index",
         "build": "npx tsc -p ."
     },
     "repository": {
@@ -31,7 +32,7 @@
     },
     "homepage": "https://github.com/Fuwajs/Fuwa.js#readme",
     "dependencies": {
-        "undici": "^3.0.0",
+        "undici": "^4.5.1",
         "ws": "^7.4.6"
     },
     "devDependencies": {
@@ -45,8 +46,9 @@
         "typedoc": "^0.20.13",
         "typescript": "^4.1.3"
     },
-    "peerDependencies": {
-        "chalk": "^2.4.2"
+    "optionalDependencies": {
+        "chalk": "^2.4.2",
+        "erlpack": "*"
     },
     "husky": {
         "hooks": {

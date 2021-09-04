@@ -11,7 +11,7 @@ import { Message as IMessage } from '../_DiscordAPI';
 import http from '../_http';
 // class Message implements IMessage {
 class Message {
-    author_id: string;
+    author: User;
     guild_id: string;
     channel_id: string;
     embeds: Embed[];
@@ -22,6 +22,7 @@ class Message {
     constructor(data: IMessage, protected token: string, protected bot: User) {
         Object.assign(this, {
             ...data,
+            author: new User(data.author, this.token),
             timestamp: new Date(data?.timestamp),
             embeds: data?.embeds?.map((v) => new Embed(v)),
         });
@@ -36,11 +37,13 @@ class Message {
 
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
-        if (this.author_id.toString() !== this.bot.id.toString())
+        if (this.author.id.toString() !== this.bot.id.toString()) {
             new Debug(true).error(
                 'message edit',
                 "Cannot edit a message you didn't send"
             );
+            return
+        }
         if (typeof content === 'string') {
             // Just a normal message
             data.content = content;

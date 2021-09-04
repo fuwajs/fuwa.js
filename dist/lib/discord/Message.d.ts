@@ -9,7 +9,7 @@ import { Message as IMessage } from '../_DiscordAPI';
 declare class Message {
     protected token: string;
     protected bot: User;
-    author_id: string;
+    author: User;
     guild_id: string;
     channel_id: string;
     embeds: Embed[];
