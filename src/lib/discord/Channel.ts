@@ -15,7 +15,7 @@ import {
 import Message from './Message';
 import Embed from './Embed';
 
-export class Channel {
+export default class Channel {
     id: string;
     type: ChannelTypes;
     guild_id?: string;
