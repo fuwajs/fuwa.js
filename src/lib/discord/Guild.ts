@@ -18,7 +18,7 @@ import {
 import Member from './Member';
 import Role from './Role';
 import http from '../_http';
-import { Channel } from './Channel';
+import Channel from './Channel';
 // class Guild implements IGuild {
 class Guild {
     id: string;
@@ -128,11 +128,11 @@ class Guild {
     }
     async getEmojis(): Promise<Map<string, Emoji>> {
         return (this.emojis = new Map(
-            (await http.GET(`/guild/${this.id}/emojis`)).map((m) => [m.id, m])
+            (await http.GET(`/guilds/${this.id}/emojis`)).map((m) => [m.id, m])
         ));
     }
     getEmoji(id: string): Promise<Emoji> {
-        return http.GET(`/guild/${this.id}/emojis/${id}`);
+        return http.GET(`/guilds/${this.id}/emojis/${id}`);
     }
     async getBans(): Promise<Ban[]> {
         return (this.bans = await http.GET(`/guilds/${this.id}/bans`));
@@ -149,6 +149,10 @@ class Guild {
     deleteInvite(invite: Invite | string) {
         const code = typeof invite === 'string' ? invite : invite.code;
         return http.DELETE(`/invites/${code}`);
+    }
+    deleteChannel(channel: Channel | string) {
+        const id = typeof channel === 'string' ? channel : channel.id;
+        return http.DELETE(`/channels/${id}`);
     }
     deleteEmoji(emoji: Emoji | string) {
         const id = typeof emoji === 'string' ? emoji : emoji.id;
