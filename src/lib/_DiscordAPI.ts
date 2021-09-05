@@ -470,7 +470,7 @@ export interface Guild {
     roles: Role[];
     /** Custom guild emojis */
     emojis: Emoji[];
-    features: GuildFeature[];
+    features: GuildFeatures[];
     mfa_level: number;
     application_id: string | null;
     system_channel_id: string | null;
@@ -501,7 +501,7 @@ export interface Guild {
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
  */
-type GuildFeature =
+type GuildFeatures =
     | 'INVITE_SPLASH'
     | 'VIP_REGIONS'
     | 'VANITY_URL'
@@ -650,7 +650,7 @@ export interface Overwrite {
 
 export interface Channel {
     id: string;
-    type: ChannelType;
+    type: ChannelTypes;
     guild_id?: string;
     position?: number;
     permission_overwrites?: Overwrite[];
@@ -669,14 +669,14 @@ export interface Channel {
     last_pin_timestamp?: Date | null;
 }
 
-export enum ChannelType {
-    text,
-    dm,
-    voice,
-    groupDM,
-    catergory,
-    news,
-    store,
+export enum ChannelTypes {
+    text = 0,
+    dm = 1,
+    voice = 2,
+    groupDM = 3,
+    catergory = 4,
+    news = 5,
+    store = 6,
 }
 
 export interface GuildHashes {
@@ -713,12 +713,40 @@ export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     t: T;
     d: GatewayEvents[T];
 }
-export type createRoleProps = {
+export type RoleProps = {
     name: string;
     permissions: PermissionFlags;
     color: string | number;
     hoist: boolean;
     mentionable: boolean;
+};
+export type ChannelProps = {
+    name: string;
+    type: ChannelTypes;
+    position?: number;
+    topic?: string;
+    nsfw?: boolean;
+    rate_limit_per_user?: number;
+    /**
+     * Only works for voice channels
+     */
+    bitrate?: number;
+    /**
+     * Only works for voice channels
+     */
+    user_limit?: number;
+    permission_overwrites?: Overwrite[];
+    /**
+     * This is for channel categories
+     */
+    parent_id?: string;
+
+    rtc_region?: string;
+    /**
+     * Video quality of a voice channel
+     */
+    video_quality_mode?: number;
+    default_auto_archive_duration?: number;
 };
 
 export enum PermissionFlags {
@@ -758,4 +786,49 @@ export enum PermissionFlags {
     UsePublicThreads = 1 << 35,
     UsePrivateThreads = 1 << 36,
     UseExternalStickers = 1 << 37,
+}
+
+export interface Ban {
+    reason?: string;
+    user: User;
+}
+
+export interface Invite {
+    code: string;
+    guild?: {
+        id: string;
+        name: string;
+        splash?: string;
+        banner?: string;
+        description: string;
+        icon: string;
+        features: GuildFeatures[];
+        verification_level: number;
+        vanity_url_code?: number;
+    };
+    channel: {
+        id: string;
+        name: string;
+        type: ChannelTypes;
+    };
+    inviter?: User;
+    target_type?: InviteTargets;
+    target_user?: User;
+    target_application?: Application;
+    approximate_presence_count?: number;
+    approximate_member_count?: number;
+    expires_at?: number;
+    state_instance?: InviteStage;
+}
+
+export enum InviteTargets {
+    stream = 1,
+    embedded_application = 2,
+}
+
+export interface InviteStage {
+    members: Member[];
+    participant_count: number;
+    speaker_count: number;
+    topic: string;
 }

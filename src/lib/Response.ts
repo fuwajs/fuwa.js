@@ -7,11 +7,7 @@
 import Embed from './discord/Embed';
 import Message from './discord/Message';
 import User from './discord/User';
-import {
-    Message as IMessage,
-    Role as IRole,
-    createRoleProps,
-} from './_DiscordAPI';
+import { Message as IMessage, Role as IRole, RoleProps } from './_DiscordAPI';
 import http from './_http';
 import Role from './discord/Role';
 
@@ -102,7 +98,7 @@ class Response {
         }
     }
 
-    async createRole(data: createRoleProps) {
+    async createRole(data: RoleProps) {
         return new Role(
             await http.POST(
                 `/guilds/${this.req.guild_id}/roles`,
@@ -110,7 +106,8 @@ class Response {
                     ...data,
                     permissions: data.permissions.toString(),
                 })
-            )
+            ),
+            this.req.guild_id
         );
     }
 }

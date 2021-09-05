@@ -58,7 +58,9 @@ class Channel {
     }
     modify(data, reason) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Channel(yield _http_1.default.PATCH(`/channels/${this.id}/channels`, JSON.stringify(data)));
+            return new Channel(yield _http_1.default.PATCH(`/channels/${this.id}`, JSON.stringify(data), {
+                'X-Audit-Log-Reason': reason,
+            }));
         });
     }
 }

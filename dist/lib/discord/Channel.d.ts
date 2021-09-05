@@ -3,12 +3,12 @@
  * @fileoverview Exports a class implementation of the Channel Interface
  * (IChannel)
  *****************************************************************************/
-import { Channel as IChannel, ChannelType, Overwrite as IOverwrite, User as IUser } from '../_DiscordAPI';
+import { Channel as IChannel, ChannelProps, ChannelTypes, Overwrite as IOverwrite, User as IUser } from '../_DiscordAPI';
 import Message from './Message';
 import Embed from './Embed';
 export declare class Channel {
     id: string;
-    type: ChannelType;
+    type: ChannelTypes;
     guild_id?: string;
     position?: number;
     permission_overwrites?: IOverwrite[];
@@ -29,5 +29,5 @@ export declare class Channel {
     delete(reason?: string): Promise<any>;
     send(content: string | Embed): Promise<Message>;
     getMessage(id: string): Promise<Message>;
-    modify(data: IChannel, reason?: string): Promise<Channel>;
+    modify(data: ChannelProps, reason?: string): Promise<Channel>;
 }

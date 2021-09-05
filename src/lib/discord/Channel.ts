@@ -7,7 +7,8 @@
 import http from '../_http';
 import {
     Channel as IChannel,
-    ChannelType,
+    ChannelProps,
+    ChannelTypes,
     Overwrite as IOverwrite,
     User as IUser,
 } from '../_DiscordAPI';
@@ -16,7 +17,7 @@ import Embed from './Embed';
 
 export class Channel {
     id: string;
-    type: ChannelType;
+    type: ChannelTypes;
     guild_id?: string;
     position?: number;
     permission_overwrites?: IOverwrite[];
@@ -67,12 +68,11 @@ export class Channel {
             await http.GET(`/channels/${this.id}/messages/${id}`)
         );
     }
-    async modify(data: IChannel, reason?: string) {
+    async modify(data: ChannelProps, reason?: string) {
         return new Channel(
-            await http.PATCH(
-                `/channels/${this.id}/channels`,
-                JSON.stringify(data)
-            )
+            await http.PATCH(`/channels/${this.id}`, JSON.stringify(data), {
+                'X-Audit-Log-Reason': reason,
+            })
         );
     }
 }

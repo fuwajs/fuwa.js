@@ -125,6 +125,9 @@ client.command('guildinfo', async function (req, res) {
 });
 
 client.command('modify-this-channel', async function (req, res) {
-    req.getGuild();
-    req.guild.createChannel()
+    await req.getGuild();
+    req.guild.channels
+        .get(req.channel_id)
+        .modify({ nsfw: true })
+        .then(console.log);
 });

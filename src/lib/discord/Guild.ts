@@ -10,8 +10,10 @@ import {
     GuildHashes,
     Channel as IChannel,
     Role as IRole,
-    createRoleProps,
-    PermissionFlags,
+    RoleProps,
+    Ban,
+    Invite,
+    Emoji,
 } from '../_DiscordAPI';
 import Member from './Member';
 import Role from './Role';
@@ -43,18 +45,18 @@ class Guild {
     guild_hashes: GuildHashes;
     system_channel_flags: number;
     premium_tier: number;
-    emojis: any[];
     voice_states: any[];
     members: Map<string, Member>;
     presences: any[];
-    banner: null;
+    banner: string;
     channels: Map<string, IChannel>;
     max_video_channel_users: number;
     preferred_locale: string;
     rules_channel_id: null;
-
+    emojis?: Map<string, Emoji>;
     roles: Map<string, Role>;
     lazy: boolean;
+    bans: Ban[];
     application_id: string | null;
     mfa_level: number;
     explicit_content_filter: number;
@@ -68,7 +70,7 @@ class Guild {
         Object.assign(this, {
             ...data,
             icon: `${discordCDN}/icons/${data.id}/${data.icon}.png`,
-            roles: new Map(data.roles.map((r) => [r.id, new Role(r)])),
+            roles: new Map(data.roles.map((r) => [r.id, new Role(r, data.id)])),
             members: new Map(
                 data.members.map((m) => [m.user.id, new Member(m)])
             ),
@@ -76,28 +78,17 @@ class Guild {
             created_at: new Date(data.joined_at),
         });
     }
-
-    async createRole(data: createRoleProps) {
-        return new Role(
-            await http.POST(
-                `/guilds/${this.id}/roles`,
-                JSON.stringify({
-                    ...data,
-                    permissions: data.permissions.toString(),
-                })
-            )
-        );
-    }
-    async changeRolePosition(role: Role | string, position: number) {
+    async modifyRolePosition(role: Role | string, position: number) {
         const id = role instanceof Role ? role.id : role;
         return new Role(
             await http.POST(
                 `/guilds/${this.id}/roles/`,
                 JSON.stringify({ id, position })
-            )
+            ),
+            this.id
         );
     }
-    async modifyRole(role: Role | string, data: createRoleProps) {
+    async modifyRole(role: Role | string, data: RoleProps) {
         const id = role instanceof Role ? role.id : role;
         return new Role(
             await http.PATCH(
@@ -106,7 +97,23 @@ class Guild {
                     ...data,
                     permissions: data.permissions?.toString(),
                 })
-            )
+            ),
+            this.id
+        );
+    }
+    modifyEmoji(
+        emoji: Emoji | string,
+        data: { name: string; roles?: string[] | Role[] }
+    ): Promise<Emoji> {
+        let roles;
+        if (data.roles)
+            roles =
+                data.roles &&
+                data.roles.map((r) => (typeof r === 'string' ? r : r.id));
+        const id = typeof emoji === 'string' ? emoji : emoji.id;
+        return http.PATCH(
+            `/guilds/${this.id}/emojis/${id}`,
+            JSON.stringify({ name: data.name, roles })
         );
     }
     async getMember(uid: string) {
@@ -119,6 +126,34 @@ class Guild {
             )
         ).map((member) => new Member(member));
     }
+    async getEmojis(): Promise<Map<string, Emoji>> {
+        return (this.emojis = new Map(
+            (await http.GET(`/guild/${this.id}/emojis`)).map((m) => [m.id, m])
+        ));
+    }
+    getEmoji(id: string): Promise<Emoji> {
+        return http.GET(`/guild/${this.id}/emojis/${id}`);
+    }
+    async getBans(): Promise<Ban[]> {
+        return (this.bans = await http.GET(`/guilds/${this.id}/bans`));
+    }
+    getBan(uid: string): Promise<Ban> {
+        return http.GET(`/guilds/${this.id}/bans/${uid}`);
+    }
+    getinvites(): Promise<Invite[]> {
+        return http.GET(`/guilds/${this.id}/invites`);
+    }
+    getInvite(id: string): Promise<Invite> {
+        return http.GET(`/invites/${id}/`);
+    }
+    deleteInvite(invite: Invite | string) {
+        const code = typeof invite === 'string' ? invite : invite.code;
+        return http.DELETE(`/invites/${code}`);
+    }
+    deleteEmoji(emoji: Emoji | string) {
+        const id = typeof emoji === 'string' ? emoji : emoji.id;
+        return http.DELETE(`/guilds/${this.id}/emojis/${id}`);
+    }
     async createChannel(data: IChannel, reason?: string) {
         return new Channel(
             await http.POST(
@@ -127,6 +162,46 @@ class Guild {
                 { 'X-Audit-Log-Reason': reason }
             )
         );
+    }
+    async createRole(data: RoleProps) {
+        return new Role(
+            await http.POST(`/guilds/${this.id}/roles`, JSON.stringify(data)),
+            this.id
+        );
+    }
+    createEmoji(data: {
+        name: string;
+        image: { data: Buffer; mimetype: string } | string;
+        roles: Role[] | string[];
+    }): Promise<Emoji> {
+        const roles = data.roles.map((r) => (typeof r === 'string' ? r : r.id));
+        const imageURL =
+            typeof data.image === 'string'
+                ? data.image
+                : data.image.data.toString('base64');
+        return http.POST(
+            `/guilds/${this.id}/emojis`,
+            JSON.stringify({ name: data.name, roles, image: imageURL })
+        );
+    }
+    ban(
+        member: Member | string,
+        reason?: string,
+        delete_messages_since?: number
+    ) {
+        const id = member instanceof Member ? member.user.id : member;
+        return http.PUT(
+            `/guilds/${this.id}/bans/${id}`,
+            JSON.stringify({
+                reason,
+                delete_message_days: delete_messages_since,
+            }),
+            { 'X-Audit-Log-Reason': reason }
+        );
+    }
+    unban(member: Member | string) {
+        const id = member instanceof Member ? member.user.id : member;
+        return http.DELETE(`/guilds/${this.id}/bans/${id}`);
     }
 }
 

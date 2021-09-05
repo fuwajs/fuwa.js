@@ -5,7 +5,7 @@
  *****************************************************************************/
 import Embed from './discord/Embed';
 import Message from './discord/Message';
-import { Message as IMessage, createRoleProps } from './_DiscordAPI';
+import { Message as IMessage, RoleProps } from './_DiscordAPI';
 import Role from './discord/Role';
 declare class Response {
     protected req: IMessage;
@@ -25,6 +25,6 @@ declare class Response {
      * is recursive with this option set.
      */
     react(emojis: string[] | string, inOrder?: boolean): any;
-    createRole(data: createRoleProps): Promise<Role>;
+    createRole(data: RoleProps): Promise<Role>;
 }
 export default Response;

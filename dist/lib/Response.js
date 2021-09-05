@@ -98,7 +98,7 @@ class Response {
     }
     createRole(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Role_1.default(yield _http_1.default.POST(`/guilds/${this.req.guild_id}/roles`, JSON.stringify(Object.assign(Object.assign({}, data), { permissions: data.permissions.toString() }))));
+            return new Role_1.default(yield _http_1.default.POST(`/guilds/${this.req.guild_id}/roles`, JSON.stringify(Object.assign(Object.assign({}, data), { permissions: data.permissions.toString() }))), this.req.guild_id);
         });
     }
 }

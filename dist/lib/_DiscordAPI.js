@@ -6,7 +6,7 @@
  * {@link https://discord.com/developers/docs}
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PermissionFlags = exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
+exports.InviteTargets = exports.PermissionFlags = exports.ChannelTypes = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
 /**
  * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
  * Add these intents together to use multiple.
@@ -109,16 +109,16 @@ var ActivityFlags;
     ActivityFlags[ActivityFlags["sync"] = 16] = "sync";
     ActivityFlags[ActivityFlags["play"] = 32] = "play";
 })(ActivityFlags || (ActivityFlags = {}));
-var ChannelType;
-(function (ChannelType) {
-    ChannelType[ChannelType["text"] = 0] = "text";
-    ChannelType[ChannelType["dm"] = 1] = "dm";
-    ChannelType[ChannelType["voice"] = 2] = "voice";
-    ChannelType[ChannelType["groupDM"] = 3] = "groupDM";
-    ChannelType[ChannelType["catergory"] = 4] = "catergory";
-    ChannelType[ChannelType["news"] = 5] = "news";
-    ChannelType[ChannelType["store"] = 6] = "store";
-})(ChannelType = exports.ChannelType || (exports.ChannelType = {}));
+var ChannelTypes;
+(function (ChannelTypes) {
+    ChannelTypes[ChannelTypes["text"] = 0] = "text";
+    ChannelTypes[ChannelTypes["dm"] = 1] = "dm";
+    ChannelTypes[ChannelTypes["voice"] = 2] = "voice";
+    ChannelTypes[ChannelTypes["groupDM"] = 3] = "groupDM";
+    ChannelTypes[ChannelTypes["catergory"] = 4] = "catergory";
+    ChannelTypes[ChannelTypes["news"] = 5] = "news";
+    ChannelTypes[ChannelTypes["store"] = 6] = "store";
+})(ChannelTypes = exports.ChannelTypes || (exports.ChannelTypes = {}));
 var PermissionFlags;
 (function (PermissionFlags) {
     PermissionFlags[PermissionFlags["CreateInstantInvite"] = 1] = "CreateInstantInvite";
@@ -158,4 +158,9 @@ var PermissionFlags;
     PermissionFlags[PermissionFlags["UsePrivateThreads"] = 16] = "UsePrivateThreads";
     PermissionFlags[PermissionFlags["UseExternalStickers"] = 32] = "UseExternalStickers";
 })(PermissionFlags = exports.PermissionFlags || (exports.PermissionFlags = {}));
+var InviteTargets;
+(function (InviteTargets) {
+    InviteTargets[InviteTargets["stream"] = 1] = "stream";
+    InviteTargets[InviteTargets["embedded_application"] = 2] = "embedded_application";
+})(InviteTargets = exports.InviteTargets || (exports.InviteTargets = {}));
 //# sourceMappingURL=_DiscordAPI.js.map

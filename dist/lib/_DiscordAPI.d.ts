@@ -433,7 +433,7 @@ export interface Guild {
     roles: Role[];
     /** Custom guild emojis */
     emojis: Emoji[];
-    features: GuildFeature[];
+    features: GuildFeatures[];
     mfa_level: number;
     application_id: string | null;
     system_channel_id: string | null;
@@ -463,7 +463,7 @@ export interface Guild {
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
  */
-declare type GuildFeature = 'INVITE_SPLASH' | 'VIP_REGIONS' | 'VANITY_URL' | 'VERIFIED' | 'PARTNERED' | 'COMMUNITY' | 'COMMERCE' | 'NEWS' | 'DISCOVERABLE' | 'FEATURABLE' | 'ANIMATED_ICON' | 'BANNER' | 'WELCOME_SCREEN_ENABLED';
+declare type GuildFeatures = 'INVITE_SPLASH' | 'VIP_REGIONS' | 'VANITY_URL' | 'VERIFIED' | 'PARTNERED' | 'COMMUNITY' | 'COMMERCE' | 'NEWS' | 'DISCOVERABLE' | 'FEATURABLE' | 'ANIMATED_ICON' | 'BANNER' | 'WELCOME_SCREEN_ENABLED';
 /**
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
  */
@@ -585,7 +585,7 @@ export interface Overwrite {
 }
 export interface Channel {
     id: string;
-    type: ChannelType;
+    type: ChannelTypes;
     guild_id?: string;
     position?: number;
     permission_overwrites?: Overwrite[];
@@ -603,7 +603,7 @@ export interface Channel {
     parent_id?: string | null;
     last_pin_timestamp?: Date | null;
 }
-export declare enum ChannelType {
+export declare enum ChannelTypes {
     text = 0,
     dm = 1,
     voice = 2,
@@ -643,12 +643,39 @@ export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     t: T;
     d: GatewayEvents[T];
 }
-export declare type createRoleProps = {
+export declare type RoleProps = {
     name: string;
     permissions: PermissionFlags;
     color: string | number;
     hoist: boolean;
     mentionable: boolean;
+};
+export declare type ChannelProps = {
+    name: string;
+    type: ChannelTypes;
+    position?: number;
+    topic?: string;
+    nsfw?: boolean;
+    rate_limit_per_user?: number;
+    /**
+     * Only works for voice channels
+     */
+    bitrate?: number;
+    /**
+     * Only works for voice channels
+     */
+    user_limit?: number;
+    permission_overwrites?: Overwrite[];
+    /**
+     * This is for channel categories
+     */
+    parent_id?: string;
+    rtc_region?: string;
+    /**
+     * Video quality of a voice channel
+     */
+    video_quality_mode?: number;
+    default_auto_archive_duration?: number;
 };
 export declare enum PermissionFlags {
     CreateInstantInvite = 1,
@@ -687,5 +714,46 @@ export declare enum PermissionFlags {
     UsePublicThreads = 8,
     UsePrivateThreads = 16,
     UseExternalStickers = 32
+}
+export interface Ban {
+    reason?: string;
+    user: User;
+}
+export interface Invite {
+    code: string;
+    guild?: {
+        id: string;
+        name: string;
+        splash?: string;
+        banner?: string;
+        description: string;
+        icon: string;
+        features: GuildFeatures[];
+        verification_level: number;
+        vanity_url_code?: number;
+    };
+    channel: {
+        id: string;
+        name: string;
+        type: ChannelTypes;
+    };
+    inviter?: User;
+    target_type?: InviteTargets;
+    target_user?: User;
+    target_application?: Application;
+    approximate_presence_count?: number;
+    approximate_member_count?: number;
+    expires_at?: number;
+    state_instance?: InviteStage;
+}
+export declare enum InviteTargets {
+    stream = 1,
+    embedded_application = 2
+}
+export interface InviteStage {
+    members: Member[];
+    participant_count: number;
+    speaker_count: number;
+    topic: string;
 }
 export {};
