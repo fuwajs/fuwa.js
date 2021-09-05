@@ -7,7 +7,6 @@ import Embed from './Embed';
 import User from './User';
 import { Message as IMessage } from '../_DiscordAPI';
 declare class Message {
-    protected bot: User;
     author: User;
     guild_id: string;
     channel_id: string;
@@ -16,7 +15,7 @@ declare class Message {
     id: string;
     timestamp: Date;
     content: string;
-    constructor(data: IMessage, bot: User);
+    constructor(data: IMessage);
     edit(content: string | Embed): Promise<Message>;
     delete(): Promise<any>;
     /**

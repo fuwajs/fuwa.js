@@ -1,19 +1,16 @@
 /******************************************************************************
  * @file src/lib/discord/Embed.ts
- * @fileoverview Exports a class implementation of the Embed Interface 
+ * @fileoverview Exports a class implementation of the Embed Interface
  * (IEmbed)
  *****************************************************************************/
 
-import { 
-    Embed as IEmbed
-} from '../_DiscordAPI';
+import { Embed as IEmbed } from '../_DiscordAPI';
 type Media = {
     url: string;
     proxy_url: string;
     height: number;
     width: number;
-}
-
+};
 
 type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
@@ -48,10 +45,10 @@ class Embed {
 
         if (opts) {
             // Don't override the defualt unless specified
-            Object.assign(this, { 
-                type: 'rich', 
-                timestamp: new Date(opts.timestamp), 
-                ...opts 
+            Object.assign(this, {
+                type: 'rich',
+                timestamp: new Date(opts.timestamp),
+                ...opts,
             });
         }
     }
@@ -118,7 +115,10 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(footerText: string, opts?: { icon?: string, proxyIconUrl?: string } | undefined): this {
+    setFooter(
+        footerText: string,
+        opts?: { icon?: string; proxyIconUrl?: string } | undefined
+    ): this {
         this.footer = {
             text: footerText,
             icon_url: opts?.icon,
@@ -138,7 +138,10 @@ class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(name: string, opts?: { icon: string, url?: string; proxyIconUrl?: string }): this {
+    setAuthor(
+        name: string,
+        opts?: { icon: string; url?: string; proxyIconUrl?: string }
+    ): this {
         this.author = {
             name: name,
             url: opts.url,
@@ -187,7 +190,9 @@ class Embed {
         } else if (typeof color === 'number') {
             this.color = color;
         } else {
-            console.trace(`Expected a string or number instead found ${typeof color}`);
+            console.trace(
+                `Expected a string or number instead found ${typeof color}`
+            );
             // 'throw' would crash the bot for such a minor issue
         }
 
@@ -240,14 +245,16 @@ class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(fields: { name: string; value: string; inline?: boolean; }[]): this {
+    addFields(
+        fields: { name: string; value: string; inline?: boolean }[]
+    ): this {
         this.fields.push(...fields);
         return this;
     }
     /**
      * @param field A field for embed
      */
-    addField(field: { name: string; value: string; inline?: boolean; }): this {
+    addField(field: { name: string; value: string; inline?: boolean }): this {
         this.fields.push(field);
         return this;
     }
@@ -282,6 +289,9 @@ class Embed {
             width: opts.width,
             proxy_url: opts.proxyUrl,
         };
+        return this;
+    }
+    return() {
         return this;
     }
 }

@@ -16,3 +16,4 @@ class Member {
     }
 }
 exports.default = Member;
+//# sourceMappingURL=Member.js.map

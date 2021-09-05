@@ -4,9 +4,9 @@
  * (IChannel)
  *****************************************************************************/
 import { Channel as IChannel, ChannelType, Overwrite as IOverwrite, User as IUser } from '../_DiscordAPI';
-export declare class Channel implements IChannel {
-    private token;
-    private bot;
+import Message from './Message';
+import Embed from './Embed';
+export declare class Channel {
     id: string;
     type: ChannelType;
     guild_id?: string;
@@ -25,5 +25,9 @@ export declare class Channel implements IChannel {
     application_id?: string;
     parent_id?: string;
     last_pin_timestamp?: Date;
-    constructor(json: IChannel, token: string, bot: IUser);
+    constructor(data: IChannel);
+    delete(reason?: string): Promise<any>;
+    send(content: string | Embed): Promise<Message>;
+    getMessage(id: string): Promise<Message>;
+    modify(data: IChannel, reason?: string): Promise<Channel>;
 }

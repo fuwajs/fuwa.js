@@ -5,10 +5,10 @@
  *****************************************************************************/
 
 import Response from '../Response';
-import User from './User';
 import { Reaction as IReaction, Member, Emoji } from '../_DiscordAPI';
 import http from '../_http';
 import Message from './Message';
+import { bot } from '../_globals';
 export default class Reaction implements IReaction {
     user_id: string;
     channel_id: string;
@@ -17,7 +17,7 @@ export default class Reaction implements IReaction {
     member?: Member;
     emoji: Emoji;
 
-    constructor(json: IReaction, protected bot: User) {
+    constructor(json: IReaction) {
         Object.assign(this, json);
     }
 
@@ -30,7 +30,7 @@ export default class Reaction implements IReaction {
             /messages/${this.message_id}`
         );
 
-        return new Message(json, this.bot);
+        return new Message(json);
     }
 
     async getResponse(): Promise<Response> {
@@ -38,8 +38,7 @@ export default class Reaction implements IReaction {
             await http.GET(
                 `/channels/${this.channel_id}
                 /messages/${this.message_id}`
-            ),
-            this.bot
+            )
         );
     }
 }

@@ -224,5 +224,9 @@ class Embed {
         };
         return this;
     }
+    return() {
+        return this;
+    }
 }
 exports.default = Embed;
+//# sourceMappingURL=Embed.js.map

@@ -5,18 +5,15 @@
  *****************************************************************************/
 import Embed from './discord/Embed';
 import Message from './discord/Message';
-import User from './discord/User';
 import { Message as IMessage, createRoleProps } from './_DiscordAPI';
 import Role from './discord/Role';
 declare class Response {
     protected req: IMessage;
-    protected bot: User;
-    protected data: IMessage | any;
-    constructor(req: IMessage, bot: User);
+    constructor(req: IMessage);
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | Embed): Promise<IMessage>;
+    reply(content: string | Embed): Promise<Message>;
     /**
      * @param content The content to send. The content can be a string or an
      * Embed.

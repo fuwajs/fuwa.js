@@ -32,6 +32,7 @@ const Colors_1 = __importDefault(require("./Colors"));
 const _erlpack_1 = require("./_erlpack");
 const Reaction_1 = __importDefault(require("./discord/Reaction"));
 const _globals_1 = require("./_globals");
+const Guild_1 = __importDefault(require("./discord/Guild"));
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
@@ -58,7 +59,10 @@ class Client extends Emitter_1.default {
                 help: {
                     embedColor: Colors_1.default.blue,
                 },
-            }, intents: _DiscordAPI_1.GatewayIntents.guilds + _DiscordAPI_1.GatewayIntents.guildMessages }, options);
+            }, intents: _DiscordAPI_1.GatewayIntents.guilds |
+                _DiscordAPI_1.GatewayIntents.guildMessages |
+                _DiscordAPI_1.GatewayIntents.guildBans |
+                _DiscordAPI_1.GatewayIntents.directMessages }, options);
         this.debug = new _Debug_1.default((_a = this.options.debug) !== null && _a !== void 0 ? _a : false);
         this.prefix = prefix;
         const caching = {
@@ -258,29 +262,34 @@ class Client extends Emitter_1.default {
                 this.debug.success('bot online', 'Logged into discord, with everything intact');
                 this.sessionId = data.session_id;
                 this.bot = new User_1.default(data.user);
-                data.guilds.forEach((g) => g.unavailable ? '' : this.cache.cache('guilds', g));
+                _globals_1.setBot(this.bot);
+                data.guilds.forEach((g) => {
+                    console.log(g);
+                    this.debug.success('guild recieved', `${g.id} Received, `);
+                    g.unavailable ? '' : this.cache.cache('guilds', new Guild_1.default(g));
+                });
                 const ready = this.events.get('ready');
                 if (ready)
                     ready();
             });
             this.event('MESSAGE_REACTION_ADD', (json) => {
                 if (this.events.has('reaction')) {
-                    this.events.get('reaction')(new Reaction_1.default(json, this.bot));
+                    this.events.get('reaction')(new Reaction_1.default(json));
                 }
             });
             this.event('GUILD_CREATE', (guild) => this.cache.cache('guilds', guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 const e = this.events.get('message');
                 if (e)
-                    e(new Request_1.default(msg, this.cache, this.bot), new Response_1.default(msg, this.bot));
+                    e(new Request_1.default(msg, this.cache), new Response_1.default(msg));
                 // console.time('command run');
                 if (!msg.content)
                     return;
-                const res = new Response_1.default(msg, this.bot);
+                const res = new Response_1.default(msg);
                 let prefix = '';
                 // console.time('prefix parsing')
                 if (typeof this.prefix === 'function') {
-                    prefix = yield this.prefix(new Request_1.default(msg, this.cache, this.bot));
+                    prefix = yield this.prefix(new Request_1.default(msg, this.cache));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));
@@ -325,7 +334,7 @@ class Client extends Emitter_1.default {
                 // console.timeEnd('command parsing')
                 // console.time('middleware')
                 const middlewareCommand = this.middleware.map((cb) => ({ cb }));
-                const req = new Request_1.default(msg, this.cache, this.bot);
+                const req = new Request_1.default(msg, this.cache);
                 req.args = args;
                 // console.log (req)
                 if (this.middleware[0]) {
@@ -386,8 +395,9 @@ class Client extends Emitter_1.default {
     }
     getUser(uid) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new User_1.default(yield _http_1.default.GET(`/user/${uid}`));
+            return new User_1.default(yield _http_1.default.GET(`/users/${uid}`));
         });
     }
 }
 exports.default = Client;
+//# sourceMappingURL=Client.js.map

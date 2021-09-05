@@ -25,7 +25,8 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
-import { setToken } from './_globals';
+import { setBot, setToken } from './_globals';
+import Guild from './discord/Guild';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -177,7 +178,11 @@ class Client extends Emitter {
                     embedColor: Colors.blue,
                 },
             },
-            intents: GatewayIntents.guilds + GatewayIntents.guildMessages,
+            intents:
+                GatewayIntents.guilds |
+                GatewayIntents.guildMessages |
+                GatewayIntents.guildBans |
+                GatewayIntents.directMessages,
             ...options,
         };
         this.debug = new Debug(this.options.debug ?? false);
@@ -423,15 +428,18 @@ class Client extends Emitter {
             );
             this.sessionId = data.session_id;
             this.bot = new User(data.user);
-            data.guilds.forEach((g) =>
-                g.unavailable ? '' : this.cache.cache('guilds', g)
-            );
+            setBot(this.bot);
+            data.guilds.forEach((g) => {
+                console.log(g);
+                this.debug.success('guild recieved', `${g.id} Received, `);
+                g.unavailable ? '' : this.cache.cache('guilds', new Guild(g));
+            });
             const ready = this.events.get('ready');
             if (ready) ready();
         });
         this.event('MESSAGE_REACTION_ADD', (json) => {
             if (this.events.has('reaction')) {
-                this.events.get('reaction')(new Reaction(json, this.bot));
+                this.events.get('reaction')(new Reaction(json));
             }
         });
         this.event('GUILD_CREATE', (guild) =>
@@ -439,21 +447,15 @@ class Client extends Emitter {
         );
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
-            if (e)
-                e(
-                    new Request(msg, this.cache, this.bot),
-                    new Response(msg, this.bot)
-                );
+            if (e) e(new Request(msg, this.cache), new Response(msg));
 
             // console.time('command run');
             if (!msg.content) return;
-            const res = new Response(msg, this.bot);
+            const res = new Response(msg);
             let prefix = '';
             // console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
-                prefix = await this.prefix(
-                    new Request(msg, this.cache, this.bot)
-                );
+                prefix = await this.prefix(new Request(msg, this.cache));
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
@@ -494,7 +496,7 @@ class Client extends Emitter {
             // console.timeEnd('command parsing')
             // console.time('middleware')
             const middlewareCommand = this.middleware.map((cb) => ({ cb }));
-            const req = new Request(msg, this.cache, this.bot);
+            const req = new Request(msg, this.cache);
             req.args = args;
             // console.log (req)
 
@@ -561,7 +563,7 @@ class Client extends Emitter {
         });
     }
     async getUser(uid: string): Promise<User> {
-        return new User(await http.GET(`/user/${uid}`));
+        return new User(await http.GET(`/users/${uid}`));
     }
 }
 

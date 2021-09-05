@@ -21,20 +21,20 @@ const Embed_1 = __importDefault(require("./Embed"));
 const User_1 = __importDefault(require("./User"));
 const _Debug_1 = __importDefault(require("../_Debug"));
 const _http_1 = __importDefault(require("../_http"));
+const _globals_1 = require("../_globals");
 // class Message implements IMessage {
 class Message {
-    constructor(data, bot) {
+    constructor(data) {
         var _a;
-        this.bot = bot;
         Object.assign(this, Object.assign(Object.assign({}, data), { author: new User_1.default(data.author), timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
         if (data.message_reference) {
-            _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg, bot)));
+            _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg)));
         }
     }
     edit(content) {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
-            if (this.author.id.toString() !== this.bot.id.toString()) {
+            if (this.author.id.toString() !== _globals_1.bot.id.toString()) {
                 new _Debug_1.default(true).error('message edit', "Cannot edit a message you didn't send");
                 return;
             }
@@ -51,7 +51,7 @@ class Message {
                 // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
                 return;
             }
-            return new Message(yield _http_1.default.PATCH(`/channels/${this.channel_id}/messages/${this.id}`, JSON.stringify(data)), this.bot);
+            return new Message(yield _http_1.default.PATCH(`/channels/${this.channel_id}/messages/${this.id}`, JSON.stringify(data)));
         });
     }
     delete() {
@@ -86,3 +86,4 @@ class Message {
     }
 }
 exports.default = Message;
+//# sourceMappingURL=Message.js.map

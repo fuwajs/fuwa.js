@@ -68,3 +68,4 @@ class Emitter {
     }
 }
 exports.default = Emitter;
+//# sourceMappingURL=Emitter.js.map

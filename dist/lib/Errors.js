@@ -26,3 +26,4 @@ class CommandParsing extends Error {
     }
 }
 exports.CommandParsing = CommandParsing;
+//# sourceMappingURL=Errors.js.map

@@ -21,7 +21,7 @@ docs.js
 # Typescript features
 tsconfig.json
 src/
-
+*.map
 # Misc
 node_modules/
 docs.js

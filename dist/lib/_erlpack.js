@@ -34,3 +34,4 @@ function unpack(data, encoding) {
     }
 }
 exports.unpack = unpack;
+//# sourceMappingURL=_erlpack.js.map

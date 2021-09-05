@@ -3,21 +3,19 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const { Embed, Client, Colors, PermissionFlags } = require('../dist/index'); // Import js here!
+const { Embed, Client, Colors } = require('../dist/index'); // Import js here!
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
 
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
-    intents: 1 + (1 << 9), // + (1 << 10)
     builtinCommands: {
         help: {
             embedColor: Colors.rgb(13, 186, 120),
         },
     },
 });
-
 // Log the bot into discord
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
@@ -105,14 +103,28 @@ client.command(
     { desc: 'Makes the bot repeat what you say!' }
 );
 
-client.command(
-    'create-role',
-    async function createRole(req, res) {
-        req.getGuild().then((guild) => {
-            guild.modifyRole('883857820078989363', {
-                color: Colors.lightGreen,
-            });
+client.command('guildinfo', async function (req, res) {
+    await req.getGuild();
+
+    const owner = await client.getUser(req.guild.owner_id);
+    const embed = new Embed()
+        .setTitle(req.guild.name)
+        .setAuthor(owner.username, { icon: owner.avatar, url: '' })
+        .setDescription(
+            req.guild.description || "`This Guild doesn't have a description`"
+        )
+        .setImage(req.guild.icon)
+        .setTimestamp(req.guild.created_at);
+    req.guild.roles.forEach(([id, role]) => {
+        embed.addField({
+            name: role.name,
+            value: id,
         });
-    },
-    { desc: 'Create a role' }
-);
+    });
+    res.send(embed);
+});
+
+client.command('modify-this-channel', async function (req, res) {
+    req.getGuild();
+    req.guild.createChannel()
+});

@@ -158,3 +158,4 @@ var PermissionFlags;
     PermissionFlags[PermissionFlags["UsePrivateThreads"] = 16] = "UsePrivateThreads";
     PermissionFlags[PermissionFlags["UseExternalStickers"] = 32] = "UseExternalStickers";
 })(PermissionFlags = exports.PermissionFlags || (exports.PermissionFlags = {}));
+//# sourceMappingURL=_DiscordAPI.js.map

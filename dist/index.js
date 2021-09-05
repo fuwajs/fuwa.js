@@ -15,3 +15,4 @@ exports.Colors = Colors_1.default;
 exports.Colours = Colors_1.default;
 exports.Client = Client_1.default;
 exports.Embed = Embed_1.default;
+//# sourceMappingURL=index.js.map

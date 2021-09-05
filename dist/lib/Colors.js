@@ -35,3 +35,4 @@ exports.default = {
     red: 0xff5c57,
     yellow: 0xf3f99d
 };
+//# sourceMappingURL=Colors.js.map

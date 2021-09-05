@@ -6,6 +6,7 @@
 import { Guild as IGuild, GuildHashes, Channel as IChannel, createRoleProps } from '../_DiscordAPI';
 import Member from './Member';
 import Role from './Role';
+import { Channel } from './Channel';
 declare class Guild {
     id: string;
     name: string;
@@ -51,9 +52,12 @@ declare class Guild {
     default_message_notifications: number;
     premium_subscription_count: number;
     created_at: Date;
-    constructor(data: IGuild, token: string);
+    constructor(data: IGuild);
     createRole(data: createRoleProps): Promise<Role>;
     changeRolePosition(role: Role | string, position: number): Promise<Role>;
     modifyRole(role: Role | string, data: createRoleProps): Promise<Role>;
+    getMember(uid: string): Promise<Member>;
+    getMembersByNickname(nickname: string): Promise<any>;
+    createChannel(data: IChannel, reason?: string): Promise<Channel>;
 }
 export default Guild;

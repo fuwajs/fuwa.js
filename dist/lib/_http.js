@@ -96,3 +96,4 @@ exports.default = {
         return this.REQUEST('PATCH', path, data, headers);
     },
 };
+//# sourceMappingURL=_http.js.map

@@ -22,31 +22,30 @@ const Message_1 = __importDefault(require("./discord/Message"));
 const _http_1 = __importDefault(require("./_http"));
 const Role_1 = __importDefault(require("./discord/Role"));
 class Response {
-    constructor(req, bot) {
+    constructor(req) {
         this.req = req;
-        this.bot = bot;
-        this.data = {};
     }
     /**
      * @param content The message to send. Can be a message or an Embed
      */
     reply(content) {
-        if (typeof content === 'string') {
-            // Just a normal message
-            this.data.content = content;
-            this.data.tts = false;
-            this.data.message_reference = { message_id: this.req.id };
-        }
-        else if (content instanceof Embed_1.default) {
-            this.data.embed = content;
-            this.data.tts = false;
-        }
-        else {
-            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-        }
-        return _http_1.default
-            .POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(this.data))
-            .catch(console.error);
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = {};
+            if (typeof content === 'string') {
+                // Just a normal message
+                data.content = content;
+                data.tts = false;
+                data.message_reference = { message_id: this.req.id };
+            }
+            else if (content instanceof Embed_1.default) {
+                data.embed = content;
+                data.tts = false;
+            }
+            else {
+                throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+            }
+            return new Message_1.default(yield _http_1.default.POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(data)));
+        });
     }
     /**
      * @param content The content to send. The content can be a string or an
@@ -54,20 +53,20 @@ class Response {
      */
     send(content) {
         return __awaiter(this, void 0, void 0, function* () {
+            const data = {};
             if (typeof content === 'string') {
                 // Just a normal message
-                this.data.content = content;
-                this.data.tts = false;
+                data.content = content;
+                data.tts = false;
             }
             else if (content instanceof Embed_1.default) {
-                this.data.embeds = [content];
-                this.data.tts = false;
+                data.embeds = [content];
+                data.tts = false;
             }
             else {
-                // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-                return;
+                throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            return new Message_1.default(yield _http_1.default.POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(this.data)), this.bot);
+            return new Message_1.default(yield _http_1.default.POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(data)));
         });
     }
     /**
@@ -104,3 +103,4 @@ class Response {
     }
 }
 exports.default = Response;
+//# sourceMappingURL=Response.js.map

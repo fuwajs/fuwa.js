@@ -16,32 +16,32 @@ import http from './_http';
 import Role from './discord/Role';
 
 class Response {
-    protected data: IMessage | any = {};
-    constructor(protected req: IMessage, protected bot: User) {}
+    constructor(protected req: IMessage) {}
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | Embed): Promise<IMessage> {
+    async reply(content: string | Embed) {
+        const data: any = {};
         if (typeof content === 'string') {
             // Just a normal message
-            this.data.content = content;
-            this.data.tts = false;
-            this.data.message_reference = { message_id: this.req.id };
+            data.content = content;
+            data.tts = false;
+            data.message_reference = { message_id: this.req.id };
         } else if (content instanceof Embed) {
-            this.data.embed = content;
-            this.data.tts = false;
+            data.embed = content;
+            data.tts = false;
         } else {
             throw new TypeError(
                 `Expected type 'string | Embed' instead found ${typeof content}`
             );
         }
 
-        return http
-            .POST(
+        return new Message(
+            await http.POST(
                 `/channels/${this.req.channel_id}/messages`,
-                JSON.stringify(this.data)
+                JSON.stringify(data)
             )
-            .catch(console.error);
+        );
     }
 
     /**
@@ -49,23 +49,24 @@ class Response {
      * Embed.
      */
     async send(content: string | Embed): Promise<Message> {
+        const data: any = {};
         if (typeof content === 'string') {
             // Just a normal message
-            this.data.content = content;
-            this.data.tts = false;
+            data.content = content;
+            data.tts = false;
         } else if (content instanceof Embed) {
-            this.data.embeds = [content];
-            this.data.tts = false;
+            data.embeds = [content];
+            data.tts = false;
         } else {
-            // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-            return;
+            throw new TypeError(
+                `Expected type 'string | Embed' instead found ${typeof content}`
+            );
         }
         return new Message(
             await http.POST(
                 `/channels/${this.req.channel_id}/messages`,
-                JSON.stringify(this.data)
-            ),
-            this.bot
+                JSON.stringify(data)
+            )
         );
     }
 

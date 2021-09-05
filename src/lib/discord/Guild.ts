@@ -16,6 +16,7 @@ import {
 import Member from './Member';
 import Role from './Role';
 import http from '../_http';
+import { Channel } from './Channel';
 // class Guild implements IGuild {
 class Guild {
     id: string;
@@ -63,15 +64,15 @@ class Guild {
     default_message_notifications: number;
     premium_subscription_count: number;
     created_at: Date;
-    constructor(data: IGuild, token: string) {
+    constructor(data: IGuild) {
         Object.assign(this, {
             ...data,
-            icon: `${discordCDN}/icons/${this.id}/${data.icon}.png`,
-            roles: data.roles.map((r) => [r.id, new Role(r)]),
+            icon: `${discordCDN}/icons/${data.id}/${data.icon}.png`,
+            roles: new Map(data.roles.map((r) => [r.id, new Role(r)])),
             members: new Map(
                 data.members.map((m) => [m.user.id, new Member(m)])
             ),
-            channels: new Map(data.channels.map((m) => [m.id, m])),
+            channels: new Map(data.channels.map((m) => [m.id, new Channel(m)])),
             created_at: new Date(data.joined_at),
         });
     }
@@ -103,8 +104,27 @@ class Guild {
                 `/guilds/${this.id}/roles/${id}`,
                 JSON.stringify({
                     ...data,
-                    permissions: data.permissions.toString(),
+                    permissions: data.permissions?.toString(),
                 })
+            )
+        );
+    }
+    async getMember(uid: string) {
+        return new Member(await http.GET(`/guilds/${this.id}/members/${uid}`));
+    }
+    async getMembersByNickname(nickname: string) {
+        return (
+            await http.GET(
+                `/guilds/${this.id}/members/search?query=${nickname}`
+            )
+        ).map((member) => new Member(member));
+    }
+    async createChannel(data: IChannel, reason?: string) {
+        return new Channel(
+            await http.POST(
+                `/guilds/${this.id}/channels`,
+                JSON.stringify(data),
+                { 'X-Audit-Log-Reason': reason }
             )
         );
     }

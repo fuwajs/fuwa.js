@@ -13,3 +13,4 @@ class Argument {
     }
 }
 exports.Argument = Argument;
+//# sourceMappingURL=Command.js.map

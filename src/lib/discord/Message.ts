@@ -9,6 +9,7 @@ import User from './User';
 import Debug from '../_Debug';
 import { Message as IMessage } from '../_DiscordAPI';
 import http from '../_http';
+import { bot } from '../_globals';
 // class Message implements IMessage {
 class Message {
     author: User;
@@ -19,7 +20,7 @@ class Message {
     id: string;
     timestamp: Date;
     content: string;
-    constructor(data: IMessage, protected bot: User) {
+    constructor(data: IMessage) {
         Object.assign(this, {
             ...data,
             author: new User(data.author),
@@ -29,13 +30,13 @@ class Message {
         if (data.message_reference) {
             http.GET(
                 `/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`
-            ).then((msg) => (this.message_reference = new Message(msg, bot)));
+            ).then((msg) => (this.message_reference = new Message(msg)));
         }
     }
 
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
-        if (this.author.id.toString() !== this.bot.id.toString()) {
+        if (this.author.id.toString() !== bot.id.toString()) {
             new Debug(true).error(
                 'message edit',
                 "Cannot edit a message you didn't send"
@@ -58,7 +59,6 @@ class Message {
                 `/channels/${this.channel_id}/messages/${this.id}`,
                 JSON.stringify(data)
             ),
-            this.bot
         );
     }
 

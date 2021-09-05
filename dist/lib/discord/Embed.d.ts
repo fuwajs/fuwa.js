@@ -197,5 +197,6 @@ declare class Embed {
         width?: number;
         proxyUrl?: string;
     }): this;
+    return(): this;
 }
 export default Embed;

@@ -9,3 +9,4 @@ class Attachment {
         const f = fs_1.default.readFileSync(path, 'binary');
     }
 }
+//# sourceMappingURL=Attachment.js.map

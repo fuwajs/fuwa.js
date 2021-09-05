@@ -6,3 +6,4 @@ class Role {
     }
 }
 exports.default = Role;
+//# sourceMappingURL=Role.js.map
