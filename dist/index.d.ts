@@ -2,7 +2,8 @@ import _Client from './lib/Client';
 import _Embed from './lib/discord/Embed';
 import _Request from './lib/Request';
 import _Response from './lib/Response';
-export { commandOptions, CommandCallback as commandCallback } from './lib/Command';
+export { commandOptions, CommandCallback as commandCallback, } from './lib/Command';
+export { PermissionFlags, GatewayIntents } from './lib/_DiscordAPI';
 export declare const Colors: {
     rgb(r: number, g: number, b: number): number;
     mind: number;

@@ -3,8 +3,9 @@
  * @fileoverview Exports a class 'implementation' of the Guild Interface
  * (IGuild)
  *****************************************************************************/
-import { Guild as IGuild, GuildHashes, Channel as IChannel, Role as IRole } from '../_DiscordAPI';
+import { Guild as IGuild, GuildHashes, Channel as IChannel, createRoleProps } from '../_DiscordAPI';
 import Member from './Member';
+import Role from './Role';
 declare class Guild {
     id: string;
     name: string;
@@ -26,7 +27,6 @@ declare class Guild {
     large: boolean;
     features: any[];
     unavailable: boolean;
-    size: number;
     max_members: number;
     guild_hashes: GuildHashes;
     system_channel_flags: number;
@@ -40,7 +40,7 @@ declare class Guild {
     max_video_channel_users: number;
     preferred_locale: string;
     rules_channel_id: null;
-    roles: IRole[];
+    roles: Map<string, Role>;
     lazy: boolean;
     application_id: string | null;
     mfa_level: number;
@@ -52,5 +52,8 @@ declare class Guild {
     premium_subscription_count: number;
     created_at: Date;
     constructor(data: IGuild, token: string);
+    createRole(data: createRoleProps): Promise<Role>;
+    changeRolePosition(role: Role | string, position: number): Promise<Role>;
+    modifyRole(role: Role | string, data: createRoleProps): Promise<Role>;
 }
 export default Guild;

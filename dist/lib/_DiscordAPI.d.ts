@@ -1,4 +1,5 @@
 /******************************************************************************
+ * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts
  * @fileoverview Exports (most of) the Discord API interfaces.
  * {@link https://discord.com/developers/docs}
@@ -622,19 +623,69 @@ export interface Channels {
     hash: string;
 }
 export interface Role {
-    position: number;
-    permissions_new?: string;
-    permissions: string;
-    name: string;
-    mentionable: boolean;
-    managed: boolean;
     id: string;
-    hoist: boolean;
+    name: string;
     color: number;
+    hoist: boolean;
+    position: number;
+    permissions: string;
+    managed: boolean;
+    mentionable: boolean;
+    tags?: RoleTags;
+}
+export interface RoleTags {
+    bot_id?: string;
+    integration_id?: string;
+    premium_subscriber?: null;
 }
 export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;
     d: GatewayEvents[T];
+}
+export declare type createRoleProps = {
+    name: string;
+    permissions: PermissionFlags;
+    color: string | number;
+    hoist: boolean;
+    mentionable: boolean;
+};
+export declare enum PermissionFlags {
+    CreateInstantInvite = 1,
+    KickMembers = 2,
+    BanMembers = 4,
+    Administrator = 8,
+    ManageChannels = 16,
+    ManageGuild = 32,
+    AddReactions = 64,
+    ViewAuditLog = 128,
+    PrioritySpeaker = 256,
+    Stream = 512,
+    ViewChannel = 1024,
+    SendMessages = 2048,
+    SendTTSMessages = 4096,
+    ManageMessages = 8192,
+    EmbedLinks = 16,
+    AttachFiles = 32768,
+    ReadMessageHistory = 65536,
+    MentionEveryone = 131072,
+    ViewGuildInsights = 524288,
+    Connect = 1048576,
+    Speak = 2097152,
+    MuteMembers = 4194304,
+    DeafenMembers = 8388608,
+    MoveMembers = 16777216,
+    UseVAD = 33554432,
+    ChangeNickname = 67108864,
+    ManageNicknames = 134217728,
+    ManageRoles = 268435456,
+    ManageWebhooks = 536870912,
+    ManageEmojisAndStickers = 1073741824,
+    UseApplicationCommands = -2147483648,
+    RequestToSpeak = 1,
+    ManageThreads = 4,
+    UsePublicThreads = 8,
+    UsePrivateThreads = 16,
+    UseExternalStickers = 32
 }
 export {};

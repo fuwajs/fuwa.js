@@ -22,8 +22,7 @@ const Embed_1 = __importDefault(require("./Embed"));
 const _DiscordAPI_1 = require("../_DiscordAPI");
 const _http_1 = __importDefault(require("../_http"));
 class User {
-    constructor(data, token) {
-        this.token = token;
+    constructor(data) {
         this.id = data.id;
         this.username = data.username;
         this.discriminator = data.discriminator;
@@ -42,7 +41,8 @@ class User {
         return __awaiter(this, void 0, void 0, function* () {
             const data = {};
             data.recipient_id = this.id;
-            if (typeof content === 'string') { // Just a normal message
+            if (typeof content === 'string') {
+                // Just a normal message
                 data.content = content;
                 data.tts = false;
             }
@@ -53,8 +53,12 @@ class User {
             else {
                 throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             }
-            const dm = yield _http_1.default.POST('/users/@me/channels', this.token, JSON.stringify({ recipient_id: this.id })).catch(console.error);
-            return _http_1.default.POST(`/channels/${dm.id}/messages`, this.token, JSON.stringify(data)).catch(console.error);
+            const dm = yield _http_1.default
+                .POST('/users/@me/channels', JSON.stringify({ recipient_id: this.id }))
+                .catch(console.error);
+            return _http_1.default
+                .POST(`/channels/${dm.id}/messages`, JSON.stringify(data))
+                .catch(console.error);
         });
     }
 }

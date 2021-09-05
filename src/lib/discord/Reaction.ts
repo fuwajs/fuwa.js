@@ -1,19 +1,14 @@
 /******************************************************************************
  * @file src/lib/discord/Reaction.ts
- * @fileoverview Exports a class implementation of the Reaction Interface 
+ * @fileoverview Exports a class implementation of the Reaction Interface
  * (IReaction)
  *****************************************************************************/
 
 import Response from '../Response';
 import User from './User';
-import {
-    Reaction as IReaction,
-    Member,
-    Emoji
-} from '../_DiscordAPI';
+import { Reaction as IReaction, Member, Emoji } from '../_DiscordAPI';
 import http from '../_http';
 import Message from './Message';
-
 export default class Reaction implements IReaction {
     user_id: string;
     channel_id: string;
@@ -22,7 +17,7 @@ export default class Reaction implements IReaction {
     member?: Member;
     emoji: Emoji;
 
-    constructor(json: IReaction, protected token: string, protected bot: User) {
+    constructor(json: IReaction, protected bot: User) {
         Object.assign(this, json);
     }
 
@@ -35,7 +30,7 @@ export default class Reaction implements IReaction {
             /messages/${this.message_id}`
         );
 
-        return new Message(json, this.token, this.bot);
+        return new Message(json, this.bot);
     }
 
     async getResponse(): Promise<Response> {
@@ -44,9 +39,7 @@ export default class Reaction implements IReaction {
                 `/channels/${this.channel_id}
                 /messages/${this.message_id}`
             ),
-            this.token,
             this.bot
         );
     }
-
 }

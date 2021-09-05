@@ -21,8 +21,7 @@ const Response_1 = __importDefault(require("../Response"));
 const _http_1 = __importDefault(require("../_http"));
 const Message_1 = __importDefault(require("./Message"));
 class Reaction {
-    constructor(json, token, bot) {
-        this.token = token;
+    constructor(json, bot) {
         this.bot = bot;
         Object.assign(this, json);
     }
@@ -33,13 +32,13 @@ class Reaction {
         return __awaiter(this, void 0, void 0, function* () {
             const json = yield _http_1.default.GET(`/channels/${this.channel_id}
             /messages/${this.message_id}`);
-            return new Message_1.default(json, this.token, this.bot);
+            return new Message_1.default(json, this.bot);
         });
     }
     getResponse() {
         return __awaiter(this, void 0, void 0, function* () {
             return new Response_1.default(yield _http_1.default.GET(`/channels/${this.channel_id}
-                /messages/${this.message_id}`), this.token, this.bot);
+                /messages/${this.message_id}`), this.bot);
         });
     }
 }

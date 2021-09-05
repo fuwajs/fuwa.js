@@ -1,11 +1,12 @@
 "use strict";
 /******************************************************************************
+ * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts
  * @fileoverview Exports (most of) the Discord API interfaces.
  * {@link https://discord.com/developers/docs}
  *****************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
+exports.PermissionFlags = exports.ChannelType = exports.ActivityType = exports.discordCDN = exports.discordAPI = exports.OpCodes = exports.GatewayIntents = void 0;
 /**
  * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
  * Add these intents together to use multiple.
@@ -118,3 +119,42 @@ var ChannelType;
     ChannelType[ChannelType["news"] = 5] = "news";
     ChannelType[ChannelType["store"] = 6] = "store";
 })(ChannelType = exports.ChannelType || (exports.ChannelType = {}));
+var PermissionFlags;
+(function (PermissionFlags) {
+    PermissionFlags[PermissionFlags["CreateInstantInvite"] = 1] = "CreateInstantInvite";
+    PermissionFlags[PermissionFlags["KickMembers"] = 2] = "KickMembers";
+    PermissionFlags[PermissionFlags["BanMembers"] = 4] = "BanMembers";
+    PermissionFlags[PermissionFlags["Administrator"] = 8] = "Administrator";
+    PermissionFlags[PermissionFlags["ManageChannels"] = 16] = "ManageChannels";
+    PermissionFlags[PermissionFlags["ManageGuild"] = 32] = "ManageGuild";
+    PermissionFlags[PermissionFlags["AddReactions"] = 64] = "AddReactions";
+    PermissionFlags[PermissionFlags["ViewAuditLog"] = 128] = "ViewAuditLog";
+    PermissionFlags[PermissionFlags["PrioritySpeaker"] = 256] = "PrioritySpeaker";
+    PermissionFlags[PermissionFlags["Stream"] = 512] = "Stream";
+    PermissionFlags[PermissionFlags["ViewChannel"] = 1024] = "ViewChannel";
+    PermissionFlags[PermissionFlags["SendMessages"] = 2048] = "SendMessages";
+    PermissionFlags[PermissionFlags["SendTTSMessages"] = 4096] = "SendTTSMessages";
+    PermissionFlags[PermissionFlags["ManageMessages"] = 8192] = "ManageMessages";
+    PermissionFlags[PermissionFlags["EmbedLinks"] = 16] = "EmbedLinks";
+    PermissionFlags[PermissionFlags["AttachFiles"] = 32768] = "AttachFiles";
+    PermissionFlags[PermissionFlags["ReadMessageHistory"] = 65536] = "ReadMessageHistory";
+    PermissionFlags[PermissionFlags["MentionEveryone"] = 131072] = "MentionEveryone";
+    PermissionFlags[PermissionFlags["ViewGuildInsights"] = 524288] = "ViewGuildInsights";
+    PermissionFlags[PermissionFlags["Connect"] = 1048576] = "Connect";
+    PermissionFlags[PermissionFlags["Speak"] = 2097152] = "Speak";
+    PermissionFlags[PermissionFlags["MuteMembers"] = 4194304] = "MuteMembers";
+    PermissionFlags[PermissionFlags["DeafenMembers"] = 8388608] = "DeafenMembers";
+    PermissionFlags[PermissionFlags["MoveMembers"] = 16777216] = "MoveMembers";
+    PermissionFlags[PermissionFlags["UseVAD"] = 33554432] = "UseVAD";
+    PermissionFlags[PermissionFlags["ChangeNickname"] = 67108864] = "ChangeNickname";
+    PermissionFlags[PermissionFlags["ManageNicknames"] = 134217728] = "ManageNicknames";
+    PermissionFlags[PermissionFlags["ManageRoles"] = 268435456] = "ManageRoles";
+    PermissionFlags[PermissionFlags["ManageWebhooks"] = 536870912] = "ManageWebhooks";
+    PermissionFlags[PermissionFlags["ManageEmojisAndStickers"] = 1073741824] = "ManageEmojisAndStickers";
+    PermissionFlags[PermissionFlags["UseApplicationCommands"] = -2147483648] = "UseApplicationCommands";
+    PermissionFlags[PermissionFlags["RequestToSpeak"] = 1] = "RequestToSpeak";
+    PermissionFlags[PermissionFlags["ManageThreads"] = 4] = "ManageThreads";
+    PermissionFlags[PermissionFlags["UsePublicThreads"] = 8] = "UsePublicThreads";
+    PermissionFlags[PermissionFlags["UsePrivateThreads"] = 16] = "UsePrivateThreads";
+    PermissionFlags[PermissionFlags["UseExternalStickers"] = 32] = "UseExternalStickers";
+})(PermissionFlags = exports.PermissionFlags || (exports.PermissionFlags = {}));

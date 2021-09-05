@@ -10,27 +10,28 @@
 
 import { Client } from 'undici';
 
-
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
+import { token } from './_globals';
 let http = new Client(discordAPI.discord);
-http.request
+
 export default {
-    /** 
+    /**
      * Use this if you want to handle Discord Rate limits automatically.
      * ! Be aware that this function is **recursive**
      * Note: this automatically 'catch'es on rejection
      * @param method The HTTP method to execute
      * @param path The path from 'https://discord.com/api/v{version} to execute
      * the described {@see method} from
-     * @param token The bots token (for authorization)
      * @param data The data (if any) to send
      * @param version Discord API version to use {@default v 8}
      */
     REQUEST(
         method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-        path: string, token?: string, data?: string | Buffer,
-        version?: 6 | 8
+        path: string,
+        data?: string | Buffer,
+        // version?: 6 | 8 | 9,
+        headers?: any
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
             const params: any = {
@@ -38,9 +39,10 @@ export default {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
+                    ...headers,
                 },
-                body: data
-            }
+                body: data,
+            };
             if (token) params.headers.authorization = `Bot ${token}`;
             const res = await http.request(params);
 
@@ -54,35 +56,38 @@ export default {
                 if (res.statusCode > 199 && res.statusCode < 300) {
                     try {
                         d = JSON.parse(str);
-                    } catch (e) { reject(e) }
-                } else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                    } catch (e) {
+                        reject(e);
+                    }
+                } else if (res.statusCode === 429) {
+                    // Handle Discord Rate Limits
                     setTimeout(() => {
-                        this.REQUEST(method, path, token, data)
-                            .catch(e => console.error(e));
+                        this.REQUEST(method, path, data, headers).catch((e) =>
+                            console.error(e)
+                        );
                     }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
                 }
                 resolve(d);
             });
-
-        }).catch(e => {
+        }).catch((e) => {
             new Debug(true).log(method, e);
             console.trace();
         });
     },
 
-    GET(path: string, token?: string): Promise<any> {
-        return this.REQUEST('GET', path, token);
+    GET(path: string, headers?: any): Promise<any> {
+        return this.REQUEST('GET', path, undefined, headers);
     },
-    DELETE(path: string, token?: string): Promise<any> {
-        return this.REQUEST('DELETE', path, token);
+    DELETE(path: string, headers?: any): Promise<any> {
+        return this.REQUEST('DELETE', path, undefined, headers);
     },
-    POST(path: string, token: string, data?: string | Buffer): Promise<any> {
-        return this.REQUEST('POST', path, token, data);
+    POST(path: string, data?: string | Buffer, headers?: any): Promise<any> {
+        return this.REQUEST('POST', path, data, headers);
     },
-    PUT(path: string, token: string, data?: string | Buffer): Promise<any> {
-        return this.REQUEST('PUT', path, token, data);
+    PUT(path: string, data?: string | Buffer, headers?: any): Promise<any> {
+        return this.REQUEST('PUT', path, data, headers);
     },
-    PATCH(path: string, token: string, data?: string | Buffer): Promise<any> {
-        return this.REQUEST('PATCH', path, token, data);
-    }
+    PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any> {
+        return this.REQUEST('PATCH', path, data, headers);
+    },
 };

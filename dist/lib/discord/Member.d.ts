@@ -15,6 +15,6 @@ declare class Member implements IMember {
     premium_since?: Date;
     mute: boolean;
     pending?: boolean;
-    constructor(data: IMember, token: string);
+    constructor(data: IMember);
 }
 export default Member;

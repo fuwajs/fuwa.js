@@ -31,6 +31,7 @@ const Embed_1 = __importDefault(require("./discord/Embed"));
 const Colors_1 = __importDefault(require("./Colors"));
 const _erlpack_1 = require("./_erlpack");
 const Reaction_1 = __importDefault(require("./discord/Reaction"));
+const _globals_1 = require("./_globals");
 /**
  * The Client Class
  * @description The client class is the main starting point of your discord bot.
@@ -55,23 +56,25 @@ class Client extends Emitter_1.default {
         this.middleware = [];
         this.options = Object.assign({ cache: true, debug: false, useMentionPrefix: false, builtinCommands: {
                 help: {
-                    embedColor: Colors_1.default.blue
-                }
+                    embedColor: Colors_1.default.blue,
+                },
             }, intents: _DiscordAPI_1.GatewayIntents.guilds + _DiscordAPI_1.GatewayIntents.guildMessages }, options);
         this.debug = new _Debug_1.default((_a = this.options.debug) !== null && _a !== void 0 ? _a : false);
         this.prefix = prefix;
         const caching = {
-            clearAfter: (_c = (_b = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _b === void 0 ? void 0 : _b.clearAfter) !== null && _c !== void 0 ? _c : 1.08e+7,
+            clearAfter: (_c = (_b = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _b === void 0 ? void 0 : _b.clearAfter) !== null && _c !== void 0 ? _c : 1.08e7,
             cacheOptions: ((_d = options === null || options === void 0 ? void 0 : options.cachingSettings) === null || _d === void 0 ? void 0 : _d.cacheOptions) || {
                 channels: true,
                 guilds: true,
-                users: true
+                users: true,
             },
         };
         this.cache = new _Cache_1.default(caching);
         if ((_f = (_e = this.options) === null || _e === void 0 ? void 0 : _e.builtinCommands) === null || _f === void 0 ? void 0 : _f.help) {
             this.command(['help', 'commands', 'h'], (req, res) => {
-                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors_1.default.red;
+                const color = this.options.builtinCommands.help
+                    ? this.options.builtinCommands.help.embedColor
+                    : Colors_1.default.red;
                 let embed = new Embed_1.default()
                     .setColor(color)
                     .setThumbnail(this.bot.avatar);
@@ -79,7 +82,8 @@ class Client extends Emitter_1.default {
                     const cmdName = req.args[0];
                     const cmd = this.commands.get(cmdName.toLowerCase());
                     if (!cmd) {
-                        res.send(embed.setColor(Colors_1.default.red)
+                        res.send(embed
+                            .setColor(Colors_1.default.red)
                             .setTitle('Error')
                             .setDescription(`${cmdName} is not a valid command name.`));
                         return;
@@ -88,17 +92,22 @@ class Client extends Emitter_1.default {
                         const fields = [
                             {
                                 name: 'Example',
-                                value: 'Soon'
-                            }
+                                value: 'Soon',
+                            },
                         ];
                         if (cmd[0].options.args) {
-                            const argNames = [...cmd[0].options.args.keys()];
-                            fields.push({ name: 'Arguments', value: `\`${argNames.join(', ')}\`` });
+                            const argNames = [
+                                ...cmd[0].options.args.keys(),
+                            ];
+                            fields.push({
+                                name: 'Arguments',
+                                value: `\`${argNames.join(', ')}\``,
+                            });
                         }
                         if (cmd[0].options.aliases) {
                             fields.push({
                                 name: 'Aliases',
-                                value: `\`${cmd[0].options.aliases.join(', ')}\``
+                                value: `\`${cmd[0].options.aliases.join(', ')}\``,
                             });
                         }
                         embed
@@ -110,7 +119,10 @@ class Client extends Emitter_1.default {
                 else {
                     embed.setTitle('Help | All');
                     this.commands.forEach((cmd, name) => {
-                        embed.addField({ name, value: cmd[0].options.desc });
+                        embed.addField({
+                            name,
+                            value: cmd[0].options.desc,
+                        });
                     });
                 }
                 res.send(embed);
@@ -135,7 +147,7 @@ class Client extends Emitter_1.default {
         let defaultName = Array.isArray(name) ? name.shift() : name;
         const option = {
             desc: (options === null || options === void 0 ? void 0 : options.desc) || 'No description was provided',
-            aliases: Array.isArray(name) ? name : []
+            aliases: Array.isArray(name) ? name : [],
         };
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
@@ -213,13 +225,14 @@ class Client extends Emitter_1.default {
                     }
                 };
             };
-            this.token = token.toString();
+            // set the global token
+            _globals_1.setToken(token.toString());
             // console.log (`Your Bot Token: ${token.toString()}`);
             // this.connect(discordAPI.gateway);
             this.debug.log('connecting', 'Attempting to connect to discord');
             let options = {
                 v: 8,
-                encoding: _erlpack_1.erlpack ? 'etf' : 'json'
+                encoding: _erlpack_1.erlpack ? 'etf' : 'json',
             };
             this.connect(_DiscordAPI_1.discordAPI.gateway, options);
             this.debug.success('connected', `Connected to ${_DiscordAPI_1.discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`);
@@ -244,30 +257,30 @@ class Client extends Emitter_1.default {
             this.event('READY', (data) => {
                 this.debug.success('bot online', 'Logged into discord, with everything intact');
                 this.sessionId = data.session_id;
-                this.bot = new User_1.default(data.user, token.toString());
-                data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g));
+                this.bot = new User_1.default(data.user);
+                data.guilds.forEach((g) => g.unavailable ? '' : this.cache.cache('guilds', g));
                 const ready = this.events.get('ready');
                 if (ready)
                     ready();
             });
             this.event('MESSAGE_REACTION_ADD', (json) => {
                 if (this.events.has('reaction')) {
-                    this.events.get('reaction')(new Reaction_1.default(json, this.token, this.bot));
+                    this.events.get('reaction')(new Reaction_1.default(json, this.bot));
                 }
             });
-            this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
+            this.event('GUILD_CREATE', (guild) => this.cache.cache('guilds', guild));
             this.event('MESSAGE_CREATE', (msg) => __awaiter(this, void 0, void 0, function* () {
                 const e = this.events.get('message');
                 if (e)
-                    e(new Request_1.default(msg, this.token, this.cache, this.bot), new Response_1.default(msg, this.token, this.bot));
+                    e(new Request_1.default(msg, this.cache, this.bot), new Response_1.default(msg, this.bot));
                 // console.time('command run');
                 if (!msg.content)
                     return;
-                const res = new Response_1.default(msg, this.token, this.bot);
+                const res = new Response_1.default(msg, this.bot);
                 let prefix = '';
                 // console.time('prefix parsing')
                 if (typeof this.prefix === 'function') {
-                    prefix = yield this.prefix(new Request_1.default(msg, this.token, this.cache, this.bot));
+                    prefix = yield this.prefix(new Request_1.default(msg, this.cache, this.bot));
                 }
                 else if (Array.isArray(this.prefix)) {
                     prefix = this.prefix.find((p) => msg.content.startsWith(p));
@@ -285,7 +298,8 @@ class Client extends Emitter_1.default {
                 let commandName = '';
                 let args = [];
                 const str = msg.content.split(' ');
-                const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
+                const a = this.options.useMentionPrefix &&
+                    str[0] === `<@!${this.bot.id}>`;
                 if (str[0].slice(0, prefix.length) !== prefix && !a)
                     return;
                 if (this.options.debug)
@@ -294,12 +308,10 @@ class Client extends Emitter_1.default {
                 commandName = (a ? str[1] : str[0])
                     .replace(prefix, '')
                     .toLowerCase();
-                let c = [...this.commands.entries()].find(v => {
+                let c = [...this.commands.entries()].find((v) => {
                     var _a;
-                    if (v[0] === commandName
-                        || ((_a = v[1][0]
-                            .options
-                            .aliases) === null || _a === void 0 ? void 0 : _a.includes(commandName))) {
+                    if (v[0] === commandName ||
+                        ((_a = v[1][0].options.aliases) === null || _a === void 0 ? void 0 : _a.includes(commandName))) {
                         return true;
                     }
                     else
@@ -312,8 +324,8 @@ class Client extends Emitter_1.default {
                     return;
                 // console.timeEnd('command parsing')
                 // console.time('middleware')
-                const middlewareCommand = this.middleware.map(cb => ({ cb }));
-                const req = new Request_1.default(msg, token.toString(), this.cache, this.bot);
+                const middlewareCommand = this.middleware.map((cb) => ({ cb }));
+                const req = new Request_1.default(msg, this.cache, this.bot);
                 req.args = args;
                 // console.log (req)
                 if (this.middleware[0]) {
@@ -347,7 +359,7 @@ class Client extends Emitter_1.default {
                     status: 'online',
                     afk: false,
                 },
-            }
+            },
         };
         let activities = [
             {
@@ -362,8 +374,19 @@ class Client extends Emitter_1.default {
     }
     deleteMessages(amt, channelID) {
         return __awaiter(this, void 0, void 0, function* () {
-            const msgs = yield _http_1.default.GET(`/channels/${channelID}/messages?limit=${amt}`, this.token).catch(e => { console.error(e); });
-            _http_1.default.POST(`/channels/${channelID}/messages/bulk-delete`, this.token, JSON.stringify({ messages: msgs.map(m => m.id) })).catch(e => { console.error(e); });
+            const msgs = yield _http_1.default
+                .GET(`/channels/${channelID}/messages?limit=${amt}`)
+                .catch((e) => {
+                console.error(e);
+            });
+            _http_1.default.POST(`/channels/${channelID}/messages/bulk-delete`, JSON.stringify({ messages: msgs.map((m) => m.id) })).catch((e) => {
+                console.error(e);
+            });
+        });
+    }
+    getUser(uid) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new User_1.default(yield _http_1.default.GET(`/user/${uid}`));
         });
     }
 }

@@ -7,17 +7,23 @@
 import Embed from './discord/Embed';
 import Message from './discord/Message';
 import User from './discord/User';
-import { Message as MessageOptions } from './_DiscordAPI';
-import undici from './_http';
+import {
+    Message as IMessage,
+    Role as IRole,
+    createRoleProps,
+} from './_DiscordAPI';
+import http from './_http';
+import Role from './discord/Role';
 
 class Response {
-    protected data: MessageOptions | any = {};
-    constructor(protected req: MessageOptions, protected token: string, protected bot: User) { }
+    protected data: IMessage | any = {};
+    constructor(protected req: IMessage, protected bot: User) {}
     /**
      * @param content The message to send. Can be a message or an Embed
      */
-    reply(content: string | Embed): Promise<MessageOptions> {
-        if (typeof content === 'string') { // Just a normal message
+    reply(content: string | Embed): Promise<IMessage> {
+        if (typeof content === 'string') {
+            // Just a normal message
             this.data.content = content;
             this.data.tts = false;
             this.data.message_reference = { message_id: this.req.id };
@@ -25,22 +31,26 @@ class Response {
             this.data.embed = content;
             this.data.tts = false;
         } else {
-            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
+            throw new TypeError(
+                `Expected type 'string | Embed' instead found ${typeof content}`
+            );
         }
 
-        return undici.POST(
-            `/channels/${this.req.channel_id}/messages`,
-            this.token,
-            JSON.stringify(this.data)
-        ).catch(console.error);
+        return http
+            .POST(
+                `/channels/${this.req.channel_id}/messages`,
+                JSON.stringify(this.data)
+            )
+            .catch(console.error);
     }
 
     /**
-     * @param content The content to send. The content can be a string or an 
+     * @param content The content to send. The content can be a string or an
      * Embed.
      */
     async send(content: string | Embed): Promise<Message> {
-        if (typeof content === 'string') { // Just a normal message
+        if (typeof content === 'string') {
+            // Just a normal message
             this.data.content = content;
             this.data.tts = false;
         } else if (content instanceof Embed) {
@@ -50,12 +60,13 @@ class Response {
             // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
             return;
         }
-        return new Message(await undici.POST(
-            `/channels/${this.req.channel_id}/messages`,
-            this.token,
-            JSON.stringify(this.data)
-        ), this.token, this.bot);
-
+        return new Message(
+            await http.POST(
+                `/channels/${this.req.channel_id}/messages`,
+                JSON.stringify(this.data)
+            ),
+            this.bot
+        );
     }
 
     /**
@@ -65,31 +76,42 @@ class Response {
      */
     async react(emojis: string[] | string, inOrder?: boolean) {
         if (typeof emojis === 'string') {
-            return undici.PUT(
-                `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                + `/reactions/${emojis}/@me`,
-                this.token,
+            return http.PUT(
+                `/channels/${this.req.channel_id}/messages/${this.req.id}` +
+                    `/reactions/${emojis}/@me`
             );
-        }
-        else if (inOrder) {
-            return undici.PUT(
-                `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                + `/reactions/${encodeURI(emojis[0])}/@me`,
-                this.token,
-            ).then(_ => this.react(emojis.slice(1), true));
+        } else if (inOrder) {
+            return http
+                .PUT(
+                    `/channels/${this.req.channel_id}/messages/${this.req.id}` +
+                        `/reactions/${encodeURI(emojis[0])}/@me`
+                )
+                .then((_) => this.react(emojis.slice(1), true));
         } else {
             const ret = [];
-            emojis.forEach(e => {
-                ret.push(undici.PUT(
-                    `/channels/${this.req.channel_id}/messages/${this.req.id}`
-                    + `/reactions/${encodeURI(e)}/@me`,
-                    this.token,
-                ));
+            emojis.forEach((e) => {
+                ret.push(
+                    http.PUT(
+                        `/channels/${this.req.channel_id}/messages/${this.req.id}` +
+                            `/reactions/${encodeURI(e)}/@me`
+                    )
+                );
             });
             return ret;
         }
     }
 
+    async createRole(data: createRoleProps) {
+        return new Role(
+            await http.POST(
+                `/guilds/${this.req.guild_id}/roles`,
+                JSON.stringify({
+                    ...data,
+                    permissions: data.permissions.toString(),
+                })
+            )
+        );
+    }
 }
 
 export default Response;

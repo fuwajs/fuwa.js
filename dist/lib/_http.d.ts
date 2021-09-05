@@ -13,15 +13,14 @@ declare const _default: {
      * @param method The HTTP method to execute
      * @param path The path from 'https://discord.com/api/v{version} to execute
      * the described {@see method} from
-     * @param token The bots token (for authorization)
      * @param data The data (if any) to send
      * @param version Discord API version to use {@default v 8}
      */
-    REQUEST(method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH', path: string, token?: string, data?: string | Buffer, version?: 6 | 8): Promise<any>;
-    GET(path: string, token?: string): Promise<any>;
-    DELETE(path: string, token?: string): Promise<any>;
-    POST(path: string, token: string, data?: string | Buffer): Promise<any>;
-    PUT(path: string, token: string, data?: string | Buffer): Promise<any>;
-    PATCH(path: string, token: string, data?: string | Buffer): Promise<any>;
+    REQUEST(method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH', path: string, data?: string | Buffer, headers?: any): Promise<any>;
+    GET(path: string, headers?: any): Promise<any>;
+    DELETE(path: string, headers?: any): Promise<any>;
+    POST(path: string, data?: string | Buffer, headers?: any): Promise<any>;
+    PUT(path: string, data?: string | Buffer, headers?: any): Promise<any>;
+    PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any>;
 };
 export default _default;

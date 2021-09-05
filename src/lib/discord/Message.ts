@@ -19,19 +19,17 @@ class Message {
     id: string;
     timestamp: Date;
     content: string;
-    constructor(data: IMessage, protected token: string, protected bot: User) {
+    constructor(data: IMessage, protected bot: User) {
         Object.assign(this, {
             ...data,
-            author: new User(data.author, this.token),
+            author: new User(data.author),
             timestamp: new Date(data?.timestamp),
             embeds: data?.embeds?.map((v) => new Embed(v)),
         });
         if (data.message_reference) {
             http.GET(
                 `/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`
-            ).then(
-                (msg) => (this.message_reference = new Message(msg, token, bot))
-            );
+            ).then((msg) => (this.message_reference = new Message(msg, bot)));
         }
     }
 
@@ -42,7 +40,7 @@ class Message {
                 'message edit',
                 "Cannot edit a message you didn't send"
             );
-            return
+            return;
         }
         if (typeof content === 'string') {
             // Just a normal message
@@ -58,20 +56,15 @@ class Message {
         return new Message(
             await http.PATCH(
                 `/channels/${this.channel_id}/messages/${this.id}`,
-                this.token,
                 JSON.stringify(data)
             ),
-            this.token,
             this.bot
         );
     }
 
     delete(): Promise<any> {
         return http
-            .DELETE(
-                `/channels/${this.channel_id}/messages/${this.id}`,
-                this.token
-            )
+            .DELETE(`/channels/${this.channel_id}/messages/${this.id}`)
             .catch(console.error);
     }
     /**
@@ -83,15 +76,13 @@ class Message {
         if (typeof emojis === 'string') {
             return http.PUT(
                 `/channels/${this.channel_id}/messages/${this.id}` +
-                    `/reactions/${emojis}/@me`,
-                this.token
+                    `/reactions/${emojis}/@me`
             );
         } else if (inOrder) {
             return http
                 .PUT(
                     `/channels/${this.channel_id}/messages/${this.id}` +
-                        `/reactions/${encodeURI(emojis[0])}/@me`,
-                    this.token
+                        `/reactions/${encodeURI(emojis[0])}/@me`
                 )
                 .then(() => this.react(emojis.slice(1), true));
         } else {
@@ -100,8 +91,7 @@ class Message {
                 ret.push(
                     http.PUT(
                         `/channels/${this.channel_id}/messages/${this.id}` +
-                            `/reactions/${encodeURI(e)}/@me`,
-                        this.token
+                            `/reactions/${encodeURI(e)}/@me`
                     )
                 );
             });

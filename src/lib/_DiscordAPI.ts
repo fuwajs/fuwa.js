@@ -1,4 +1,5 @@
 /******************************************************************************
+ * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts
  * @fileoverview Exports (most of) the Discord API interfaces.
  * {@link https://discord.com/developers/docs}
@@ -691,19 +692,70 @@ export interface Channels {
 }
 
 export interface Role {
-    position: number;
-    permissions_new?: string;
-    permissions: string;
-    name: string;
-    mentionable: boolean;
-    managed: boolean;
     id: string;
-    hoist: boolean;
+    name: string;
     color: number;
+    hoist: boolean;
+    position: number;
+    permissions: string;
+    managed: boolean;
+    mentionable: boolean;
+    tags?: RoleTags;
 }
 
+export interface RoleTags {
+    bot_id?: string;
+    integration_id?: string;
+    premium_subscriber?: null;
+}
 export interface GatewayEventResponse<T extends keyof GatewayEvents> {
     op: 0;
     t: T;
     d: GatewayEvents[T];
+}
+export type createRoleProps = {
+    name: string;
+    permissions: PermissionFlags;
+    color: string | number;
+    hoist: boolean;
+    mentionable: boolean;
+};
+
+export enum PermissionFlags {
+    CreateInstantInvite = 1 << 0,
+    KickMembers = 1 << 1,
+    BanMembers = 1 << 2,
+    Administrator = 1 << 3,
+    ManageChannels = 1 << 4,
+    ManageGuild = 1 << 5,
+    AddReactions = 1 << 6,
+    ViewAuditLog = 1 << 7,
+    PrioritySpeaker = 1 << 8,
+    Stream = 1 << 9,
+    ViewChannel = 1 << 10,
+    SendMessages = 1 << 11,
+    SendTTSMessages = 1 << 12,
+    ManageMessages = 1 << 13,
+    EmbedLinks = 1 << 4,
+    AttachFiles = 1 << 15,
+    ReadMessageHistory = 1 << 16,
+    MentionEveryone = 1 << 17,
+    ViewGuildInsights = 1 << 19,
+    Connect = 1 << 20,
+    Speak = 1 << 21,
+    MuteMembers = 1 << 22,
+    DeafenMembers = 1 << 23,
+    MoveMembers = 1 << 24,
+    UseVAD = 1 << 25,
+    ChangeNickname = 1 << 26,
+    ManageNicknames = 1 << 27,
+    ManageRoles = 1 << 28,
+    ManageWebhooks = 1 << 29,
+    ManageEmojisAndStickers = 1 << 30,
+    UseApplicationCommands = 1 << 31,
+    RequestToSpeak = 1 << 32,
+    ManageThreads = 1 << 34,
+    UsePublicThreads = 1 << 35,
+    UsePrivateThreads = 1 << 36,
+    UseExternalStickers = 1 << 37,
 }

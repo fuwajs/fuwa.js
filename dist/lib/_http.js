@@ -24,8 +24,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const undici_1 = require("undici");
 const _Debug_1 = __importDefault(require("./_Debug"));
 const _DiscordAPI_1 = require("./_DiscordAPI");
+const _globals_1 = require("./_globals");
 let http = new undici_1.Client(_DiscordAPI_1.discordAPI.discord);
-http.request;
 exports.default = {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
@@ -34,22 +34,21 @@ exports.default = {
      * @param method The HTTP method to execute
      * @param path The path from 'https://discord.com/api/v{version} to execute
      * the described {@see method} from
-     * @param token The bots token (for authorization)
      * @param data The data (if any) to send
      * @param version Discord API version to use {@default v 8}
      */
-    REQUEST(method, path, token, data, version) {
+    REQUEST(method, path, data, 
+    // version?: 6 | 8 | 9,
+    headers) {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             const params = {
                 path: '/api/v8' + path,
                 method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: data
+                headers: Object.assign({ 'Content-Type': 'application/json' }, headers),
+                body: data,
             };
-            if (token)
-                params.headers.authorization = `Bot ${token}`;
+            if (_globals_1.token)
+                params.headers.authorization = `Bot ${_globals_1.token}`;
             const res = yield http.request(params);
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
@@ -68,32 +67,32 @@ exports.default = {
                         reject(e);
                     }
                 }
-                else if (res.statusCode === 429) { // Handle Discord Rate Limits
+                else if (res.statusCode === 429) {
+                    // Handle Discord Rate Limits
                     setTimeout(() => {
-                        this.REQUEST(method, path, token, data)
-                            .catch(e => console.error(e));
+                        this.REQUEST(method, path, data, headers).catch((e) => console.error(e));
                     }, ((_a = JSON.parse(str)) === null || _a === void 0 ? void 0 : _a.retry_after) * 1000); // seconds -> milliseconds
                 }
                 resolve(d);
             });
-        })).catch(e => {
+        })).catch((e) => {
             new _Debug_1.default(true).log(method, e);
             console.trace();
         });
     },
-    GET(path, token) {
-        return this.REQUEST('GET', path, token);
+    GET(path, headers) {
+        return this.REQUEST('GET', path, undefined, headers);
     },
-    DELETE(path, token) {
-        return this.REQUEST('DELETE', path, token);
+    DELETE(path, headers) {
+        return this.REQUEST('DELETE', path, undefined, headers);
     },
-    POST(path, token, data) {
-        return this.REQUEST('POST', path, token, data);
+    POST(path, data, headers) {
+        return this.REQUEST('POST', path, data, headers);
     },
-    PUT(path, token, data) {
-        return this.REQUEST('PUT', path, token, data);
+    PUT(path, data, headers) {
+        return this.REQUEST('PUT', path, data, headers);
     },
-    PATCH(path, token, data) {
-        return this.REQUEST('PATCH', path, token, data);
-    }
+    PATCH(path, data, headers) {
+        return this.REQUEST('PATCH', path, data, headers);
+    },
 };

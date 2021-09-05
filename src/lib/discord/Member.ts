@@ -1,11 +1,12 @@
 /******************************************************************************
  * @file src/lib/discord/Member.ts
- * @fileoverview Exports a class implementation of the Member Interface 
+ * @fileoverview Exports a class implementation of the Member Interface
  * (IMember)
  *****************************************************************************/
 
 import User from './User';
 import { Member as IMember } from '../_DiscordAPI';
+import { token } from '../_globals';
 
 class Member implements IMember {
     deaf: boolean;
@@ -17,13 +18,15 @@ class Member implements IMember {
     premium_since?: Date;
     mute: boolean;
     pending?: boolean;
-    
-    constructor(data: IMember, token: string) {
-        this.deaf = data.deaf;
-        this.roles = data.roles;
-        this.user = new User(data.user, token);
-    }
 
+    constructor(data: IMember) {
+        Object.assign(this, {
+            ...data,
+            user: new User(data.user),
+            joined_at: new Date(data.joined_at),
+        });
+        this.user = new User(data.user);
+    }
 }
 
 export default Member;

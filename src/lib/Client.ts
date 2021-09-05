@@ -9,7 +9,10 @@ import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
 import {
-    discordAPI, Message, OpCodes, UserStatus,
+    discordAPI,
+    Message,
+    OpCodes,
+    UserStatus,
     ActivityType,
     GatewayIntents,
 } from './_DiscordAPI';
@@ -22,6 +25,7 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
+import { setToken } from './_globals';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -35,7 +39,7 @@ export interface StatusOptions {
     name: string;
 
     /**
-     * The available status types are playing, listening, streaming, and 
+     * The available status types are playing, listening, streaming, and
      * competing.
      */
     type?: ActivityType;
@@ -55,13 +59,11 @@ export interface StatusOptions {
     afk?: boolean;
 }
 
-
-
 export interface Events {
     ready(): void | Promise<void>;
     message(req: Request, res: Response): void | Promise<void>;
     commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
-    reaction(reaction: Reaction)
+    reaction(reaction: Reaction);
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -80,28 +82,30 @@ export interface clientOptions {
      */
     useMentionPrefix?: boolean;
     /**
-     * 
+     *
      */
     builtinCommands?: {
-        help?: {
-            embedColor?: string | number
-        } | false;
-    },
+        help?:
+            | {
+                  embedColor?: string | number;
+              }
+            | false;
+    };
 
     /**
      * @see GatewayIntents
      */
-    intents: number
+    intents: number;
 
     /**
-     * If the bot should cache guilds/channels/users or not. 
+     * If the bot should cache guilds/channels/users or not.
      * It's suggested to keep this on for smaller bots
      * but for larger ones turn this off,
      * caching increases the speed of sending messages, but takes up memory.
      * meaning caching on = faster guild replies
      * caching off = more memory for other tasks
      */
-    cache?: true,
+    cache?: true;
     /**
      * Settings for caching
      */
@@ -110,21 +114,20 @@ export interface clientOptions {
          * Clear the cache after a certain amount of time (in ms)
          * If this is false then the cache will never be cleared
          */
-        clearAfter?: number | false,
+        clearAfter?: number | false;
         cacheOptions?: {
-            guilds: boolean
-            channels: boolean
-            users: boolean
-        }
+            guilds: boolean;
+            channels: boolean;
+            users: boolean;
+        };
 
         /**
          * Maximum amount of items to cache at once. Set this to 0 if you want
          * an unlimited cache size
          */
         maxSize?: number;
-    }
+    };
 }
-
 
 /**
  * The Client Class
@@ -138,13 +141,13 @@ class Client extends Emitter {
     public bot: User;
     protected debug: Debug;
     private sessionId = '';
-    public cache: Cache
+    public cache: Cache;
     protected status: any = [];
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
     protected events: Map<keyof Events, Function> = new Map();
     protected prefix:
-        string
+        | string
         | string[]
         | ((req: Request) => Promise<string> | string);
     protected options: clientOptions;
@@ -155,15 +158,11 @@ class Client extends Emitter {
     > = new Map();
     protected middleware: CommandCallback[] = [];
     /**
-     * The Bot Token
-     */
-    token: string;
-    /**
      * @param prefix The prefix for your bot
      */
     constructor(
         prefix:
-            string
+            | string
             | string[]
             | ((req: Request) => Promise<string> | string),
         options?: clientOptions
@@ -175,8 +174,8 @@ class Client extends Emitter {
             useMentionPrefix: false,
             builtinCommands: {
                 help: {
-                    embedColor: Colors.blue
-                }
+                    embedColor: Colors.blue,
+                },
             },
             intents: GatewayIntents.guilds + GatewayIntents.guildMessages,
             ...options,
@@ -184,63 +183,80 @@ class Client extends Emitter {
         this.debug = new Debug(this.options.debug ?? false);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
-            clearAfter: options
-                ?.cachingSettings
-                ?.clearAfter ?? 1.08e+7, // 30 minutes
+            clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
             cacheOptions: options?.cachingSettings?.cacheOptions || {
                 channels: true,
                 guilds: true,
-                users: true
+                users: true,
             },
-        }
+        };
         this.cache = new Cache(caching);
         if (this.options?.builtinCommands?.help) {
-            this.command(['help', 'commands', 'h'], (req, res) => {
-                const color = this.options.builtinCommands.help ? this.options.builtinCommands.help.embedColor : Colors.red
-                let embed = new Embed()
-                    .setColor(color)
-                    .setThumbnail(this.bot.avatar);
-                if (req.args.length > 0) {
-                    const cmdName = req.args[0];
-                    const cmd = this.commands.get(cmdName.toLowerCase())
-                    if (!cmd) {
-                        res.send(embed.setColor(Colors.red)
-                            .setTitle('Error')
-                            .setDescription(`${cmdName} is not a valid command name.`)
-                        );
-                        return;
-                    } else {
-                        const fields = [
-                            {
-                                name: 'Example',
-                                value: 'Soon'
+            this.command(
+                ['help', 'commands', 'h'],
+                (req, res) => {
+                    const color = this.options.builtinCommands.help
+                        ? this.options.builtinCommands.help.embedColor
+                        : Colors.red;
+                    let embed = new Embed()
+                        .setColor(color)
+                        .setThumbnail(this.bot.avatar);
+                    if (req.args.length > 0) {
+                        const cmdName = req.args[0];
+                        const cmd = this.commands.get(cmdName.toLowerCase());
+                        if (!cmd) {
+                            res.send(
+                                embed
+                                    .setColor(Colors.red)
+                                    .setTitle('Error')
+                                    .setDescription(
+                                        `${cmdName} is not a valid command name.`
+                                    )
+                            );
+                            return;
+                        } else {
+                            const fields = [
+                                {
+                                    name: 'Example',
+                                    value: 'Soon',
+                                },
+                            ];
+
+                            if (cmd[0].options.args) {
+                                const argNames = [
+                                    ...cmd[0].options.args.keys(),
+                                ];
+                                fields.push({
+                                    name: 'Arguments',
+                                    value: `\`${argNames.join(', ')}\``,
+                                });
                             }
-                        ];
-
-                        if (cmd[0].options.args) {
-                            const argNames = [...cmd[0].options.args.keys()];
-                            fields.push({ name: 'Arguments', value: `\`${argNames.join(', ')}\`` })
+                            if (cmd[0].options.aliases) {
+                                fields.push({
+                                    name: 'Aliases',
+                                    value: `\`${cmd[0].options.aliases.join(
+                                        ', '
+                                    )}\``,
+                                });
+                            }
+                            embed
+                                .setTitle(`Help | ${cmdName}`)
+                                .setDescription(cmd[0].options.desc)
+                                .addFields(fields);
                         }
-                        if (cmd[0].options.aliases) {
-                            fields.push({
-                                name: 'Aliases',
-                                value: `\`${cmd[0].options.aliases.join(', ')}\``
+                    } else {
+                        embed.setTitle('Help | All');
+                        this.commands.forEach((cmd, name) => {
+                            embed.addField({
+                                name,
+                                value: cmd[0].options.desc,
                             });
-                        }
-                        embed
-                            .setTitle(`Help | ${cmdName}`)
-                            .setDescription(cmd[0].options.desc)
-                            .addFields(fields)
+                        });
                     }
-
-                } else {
-                    embed.setTitle('Help | All')
-                    this.commands.forEach((cmd, name) => {
-                        embed.addField({ name, value: cmd[0].options.desc })
-                    });
-                }
-                res.send(embed);
-            }, { desc: 'Get help on the usage of a command.' });
+                    res.send(embed);
+                },
+                { desc: 'Get help on the usage of a command.' }
+            );
         }
     }
 
@@ -252,21 +268,29 @@ class Client extends Emitter {
      * @returns Command Options
      * @example
      * ```typescript
-     * cli.command(['ping', 'latency'], (req, res) => { 
+     * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!');
-     *      
+     *
      * });
      * ```
      */
-    command(name: string | string[], cb: CommandCallback, options?: commandOptions) {
+    command(
+        name: string | string[],
+        cb: CommandCallback,
+        options?: commandOptions
+    ) {
         let defaultName = Array.isArray(name) ? name.shift() : name;
         const option: commandOptions = {
             desc: options?.desc || 'No description was provided',
-            aliases: Array.isArray(name) ? name : []
+            aliases: Array.isArray(name) ? name : [],
         };
         let old = this.commands.get(defaultName);
-        let cmd = { cb, options: option }
-        if (old) { old.push(cmd) } else { old = [cmd] }
+        let cmd = { cb, options: option };
+        if (old) {
+            old.push(cmd);
+        } else {
+            old = [cmd];
+        }
         this.commands.set(defaultName, old);
 
         const ret = {
@@ -326,7 +350,10 @@ class Client extends Emitter {
      * @param status Your Bot Status Options
      */
     async login(token: string | Buffer) {
-        this.debug.log('login started', 'Login is function is attempting to run...');
+        this.debug.log(
+            'login started',
+            'Login is function is attempting to run...'
+        );
         const next = (
             req: Request,
             res: Response,
@@ -340,24 +367,31 @@ class Client extends Emitter {
                 } else if (secondArr) {
                     secondArr[0]?.cb(req, res, next(req, res, secondArr, i++));
                 }
-            }
-        }
-        this.token = token.toString();
+            };
+        };
+
+        // set the global token
+        setToken(token.toString());
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
         let options: QueryOptions = {
             v: 8,
-            encoding: erlpack ? 'etf' : 'json'
-        }
+            encoding: erlpack ? 'etf' : 'json',
+        };
         this.connect(discordAPI.gateway, options);
         this.debug.success(
             'connected',
-            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`);
+            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`
+        );
         this.op(OpCodes.hello, (data) => {
-            this.debug.log('hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
+            this.debug.log(
+                'hello',
+                `Recieved Hello event and recieved:\n${this.debug.object(
+                    data,
+                    1
+                )}`
             );
             this.loop = setInterval(
                 () => this.response.op.emit(OpCodes.heartbeat, 251),
@@ -375,37 +409,51 @@ class Client extends Emitter {
             });
         });
         this.op(OpCodes.invalidSession, () => {
-            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+            this.debug.error(
+                'invalid token',
+                'Invalid token was passed, throwing a error...'
+            );
             throw new InvalidToken('Invalid token');
         });
 
         this.event('READY', (data) => {
-            this.debug.success('bot online', 'Logged into discord, with everything intact');
+            this.debug.success(
+                'bot online',
+                'Logged into discord, with everything intact'
+            );
             this.sessionId = data.session_id;
-            this.bot = new User(data.user, token.toString());
-            data.guilds.forEach(g => g.unavailable ? '' : this.cache.cache('guilds', g))
+            this.bot = new User(data.user);
+            data.guilds.forEach((g) =>
+                g.unavailable ? '' : this.cache.cache('guilds', g)
+            );
             const ready = this.events.get('ready');
             if (ready) ready();
         });
         this.event('MESSAGE_REACTION_ADD', (json) => {
             if (this.events.has('reaction')) {
-                this.events.get('reaction')(
-                    new Reaction(json, this.token, this.bot),
-                )
+                this.events.get('reaction')(new Reaction(json, this.bot));
             }
         });
-        this.event('GUILD_CREATE', guild => this.cache.cache('guilds', guild));
+        this.event('GUILD_CREATE', (guild) =>
+            this.cache.cache('guilds', guild)
+        );
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
-            if (e) e(new Request(msg, this.token, this.cache, this.bot), new Response(msg, this.token, this.bot));
+            if (e)
+                e(
+                    new Request(msg, this.cache, this.bot),
+                    new Response(msg, this.bot)
+                );
 
             // console.time('command run');
             if (!msg.content) return;
-            const res = new Response(msg, this.token, this.bot);
+            const res = new Response(msg, this.bot);
             let prefix = '';
             // console.time('prefix parsing')
             if (typeof this.prefix === 'function') {
-                prefix = await this.prefix(new Request(msg, this.token, this.cache, this.bot))
+                prefix = await this.prefix(
+                    new Request(msg, this.cache, this.bot)
+                );
             } else if (Array.isArray(this.prefix)) {
                 prefix = this.prefix.find((p) => msg.content.startsWith(p));
             } else if (typeof this.prefix === 'string') {
@@ -420,7 +468,9 @@ class Client extends Emitter {
 
             let args: string[] = [];
             const str = msg.content.split(' ');
-            const a = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
+            const a =
+                this.options.useMentionPrefix &&
+                str[0] === `<@!${this.bot.id}>`;
 
             if (str[0].slice(0, prefix.length) !== prefix && !a) return;
 
@@ -430,13 +480,11 @@ class Client extends Emitter {
             commandName = (a ? str[1] : str[0])
                 .replace(prefix, '')
                 .toLowerCase();
-            let c = [...this.commands.entries()].find(v => {
+            let c = [...this.commands.entries()].find((v) => {
                 if (
-                    v[0] === commandName
-                    || v[1][0]
-                        .options
-                        .aliases
-                        ?.includes(commandName)) {
+                    v[0] === commandName ||
+                    v[1][0].options.aliases?.includes(commandName)
+                ) {
                     return true;
                 } else return false;
             });
@@ -445,17 +493,22 @@ class Client extends Emitter {
             if (!command) return;
             // console.timeEnd('command parsing')
             // console.time('middleware')
-            const middlewareCommand = this.middleware.map(cb => ({ cb }))
-            const req = new Request(msg, token.toString(), this.cache, this.bot);
+            const middlewareCommand = this.middleware.map((cb) => ({ cb }));
+            const req = new Request(msg, this.cache, this.bot);
             req.args = args;
             // console.log (req)
 
             if (this.middleware[0]) {
-                this.middleware[0](req, res, next(req, res, middlewareCommand, 0, command));
+                this.middleware[0](
+                    req,
+                    res,
+                    next(req, res, middlewareCommand, 0, command)
+                );
             }
             // console.timeEnd('middleware');
             // console.time('run command');
-            if (!this.middleware[0]) command[0].cb(req, res, next(req, res, command, 0));
+            if (!this.middleware[0])
+                command[0].cb(req, res, next(req, res, command, 0));
             // console.timeEnd('run command');
             // console.timeEnd('command run');
         });
@@ -478,7 +531,7 @@ class Client extends Emitter {
                     status: 'online',
                     afk: false,
                 },
-            }
+            },
         };
         let activities: any = [
             {
@@ -494,16 +547,21 @@ class Client extends Emitter {
         this.status = cred;
     }
     async deleteMessages(amt: number, channelID: string) {
-        const msgs: Message[] = await http.GET(
-            `/channels/${channelID}/messages?limit=${amt}`,
-            this.token
-        ).catch(e => { console.error(e) });
+        const msgs: Message[] = await http
+            .GET(`/channels/${channelID}/messages?limit=${amt}`)
+            .catch((e) => {
+                console.error(e);
+            });
 
         http.POST(
             `/channels/${channelID}/messages/bulk-delete`,
-            this.token,
-            JSON.stringify({ messages: msgs.map(m => m.id) })
-        ).catch(e => { console.error(e) });
+            JSON.stringify({ messages: msgs.map((m) => m.id) })
+        ).catch((e) => {
+            console.error(e);
+        });
+    }
+    async getUser(uid: string): Promise<User> {
+        return new User(await http.GET(`/user/${uid}`));
     }
 }
 

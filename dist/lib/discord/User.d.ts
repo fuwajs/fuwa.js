@@ -6,7 +6,6 @@
 import Embed from './Embed';
 import { Message as IMessage, User as IUser } from '../_DiscordAPI';
 export declare class User implements IUser {
-    protected token: string;
     id: string;
     username: string;
     discriminator: string;
@@ -20,7 +19,7 @@ export declare class User implements IUser {
     flags?: number;
     premium_type?: number;
     public_flags?: number;
-    constructor(data: IUser, token: string);
+    constructor(data: IUser);
     /**
      * Send a Direct Message to 'this' user.
      * @param content The contents of the message. Can be a string or an Embed.

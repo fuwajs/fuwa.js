@@ -127,10 +127,6 @@ declare class Client extends Emitter {
     }[]>;
     protected middleware: CommandCallback[];
     /**
-     * The Bot Token
-     */
-    token: string;
-    /**
      * @param prefix The prefix for your bot
      */
     constructor(prefix: string | string[] | ((req: Request) => Promise<string> | string), options?: clientOptions);
@@ -186,5 +182,6 @@ declare class Client extends Emitter {
     set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this;
     setStatus(status: StatusOptions): void;
     deleteMessages(amt: number, channelID: string): Promise<void>;
+    getUser(uid: string): Promise<User>;
 }
 export default Client;

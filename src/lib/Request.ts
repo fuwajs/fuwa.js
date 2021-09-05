@@ -1,39 +1,45 @@
 import User from './discord/User';
 import Guild from './discord/Guild';
-import { 
-    Message as IMessage, 
-    Reaction,
-} from "./_DiscordAPI";
+import http from './_http';
+import { Message as IMessage, Reaction } from './_DiscordAPI';
 import Cache from './_Cache';
 import Message from './discord/Message';
+import { token } from './_globals';
 
 class Request {
     readonly author: User;
-    readonly guild: Guild;
+    guild: Guild;
+    readonly guild_id;
+    /**
+     * @deprecated This will be removed soon, please add feature requests if you still require this in your applications.
+     */
     readonly rawData: IMessage;
-    readonly message: Message
-    /** 
+    readonly message: Message;
+    /**
      * An array of the arguments passed into your command
      */
     args: string[];
     readonly reactions: Reaction[];
 
-    constructor(msg: IMessage, token: string, cache: Cache, bot: User) {
-        this.author = new User(msg.author, token);
+    constructor(msg: IMessage, cache: Cache, bot: User) {
+        this.author = new User(msg.author);
         this.rawData = msg;
+        this.guild_id = msg.guild_id;
         this.reactions = msg.reactions;
-        this.message = new Message(msg, token, bot);
-        this.guild = new Guild(cache.data.guilds.get(msg.guild_id), token);
+        this.message = new Message(msg, bot);
     }
-    // private async getGuild(guildID: string, token: string) {
-    //     let guild = { 
-    //         ...await http.GET(`/api/v8/guilds/${guildID}`, token), 
-    //         members: await http.GET(`/api/v8/guilds/${guildID}/members?limit=1000`, token),
-    //         channels: await http.GET(`/api/v8/guilds/${guildID}/channels`, token),
-    //     };
-    //     console.log(guild)
-    //     this.guild = new Guild(guild);
-    // }
+
+    async getGuild(memberLimit = 100) {
+        let guild = {
+            ...(await http.GET(`/guilds/${this.guild_id}`, token)),
+            members: await http.GET(
+                `/guilds/${this.guild_id}/members?limit=${memberLimit}`
+            ),
+            channels: await http.GET(`/guilds/${this.guild_id}/channels`),
+        };
+        console.log(guild.members);
+        return (this.guild = new Guild(guild, token));
+    }
 }
 
 export default Request;

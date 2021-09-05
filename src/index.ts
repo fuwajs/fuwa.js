@@ -7,11 +7,15 @@ import _Colors from './lib/Colors';
 // TODO: finish exporting types
 import _Request from './lib/Request';
 import _Response from './lib/Response';
-export { commandOptions, CommandCallback as commandCallback } from './lib/Command';
+export {
+    commandOptions,
+    CommandCallback as commandCallback,
+} from './lib/Command';
 
+export { PermissionFlags, GatewayIntents } from './lib/_DiscordAPI';
 
 export const Colors = _Colors;
-export const Colours = _Colors; 
+export const Colours = _Colors;
 export const Client = _Client;
 export const Embed = _Embed;
 

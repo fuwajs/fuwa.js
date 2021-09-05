@@ -23,13 +23,12 @@ const _Debug_1 = __importDefault(require("../_Debug"));
 const _http_1 = __importDefault(require("../_http"));
 // class Message implements IMessage {
 class Message {
-    constructor(data, token, bot) {
+    constructor(data, bot) {
         var _a;
-        this.token = token;
         this.bot = bot;
-        Object.assign(this, Object.assign(Object.assign({}, data), { author: new User_1.default(data.author, this.token), timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
+        Object.assign(this, Object.assign(Object.assign({}, data), { author: new User_1.default(data.author), timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
         if (data.message_reference) {
-            _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg, token, bot)));
+            _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg, bot)));
         }
     }
     edit(content) {
@@ -52,12 +51,12 @@ class Message {
                 // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
                 return;
             }
-            return new Message(yield _http_1.default.PATCH(`/channels/${this.channel_id}/messages/${this.id}`, this.token, JSON.stringify(data)), this.token, this.bot);
+            return new Message(yield _http_1.default.PATCH(`/channels/${this.channel_id}/messages/${this.id}`, JSON.stringify(data)), this.bot);
         });
     }
     delete() {
         return _http_1.default
-            .DELETE(`/channels/${this.channel_id}/messages/${this.id}`, this.token)
+            .DELETE(`/channels/${this.channel_id}/messages/${this.id}`)
             .catch(console.error);
     }
     /**
@@ -68,19 +67,19 @@ class Message {
     react(emojis, inOrder) {
         if (typeof emojis === 'string') {
             return _http_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}` +
-                `/reactions/${emojis}/@me`, this.token);
+                `/reactions/${emojis}/@me`);
         }
         else if (inOrder) {
             return _http_1.default
                 .PUT(`/channels/${this.channel_id}/messages/${this.id}` +
-                `/reactions/${encodeURI(emojis[0])}/@me`, this.token)
+                `/reactions/${encodeURI(emojis[0])}/@me`)
                 .then(() => this.react(emojis.slice(1), true));
         }
         else {
             const ret = [];
             emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
                 ret.push(_http_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}` +
-                    `/reactions/${encodeURI(e)}/@me`, this.token));
+                    `/reactions/${encodeURI(e)}/@me`));
             }));
             return ret;
         }
