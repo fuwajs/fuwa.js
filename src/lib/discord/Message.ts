@@ -7,7 +7,7 @@
 import Embed from './Embed';
 import User from './User';
 import Debug from '../_Debug';
-import { Message as IMessage } from '../_DiscordAPI';
+import { Emoji, Message as IMessage } from '../_DiscordAPI';
 import http from '../_http';
 import { bot } from '../_globals';
 // class Message implements IMessage {
@@ -27,6 +27,7 @@ class Message {
             timestamp: new Date(data?.timestamp),
             embeds: data?.embeds?.map((v) => new Embed(v)),
         });
+        // ! This can get recursive
         if (data.message_reference) {
             http.GET(
                 `/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`
@@ -58,7 +59,7 @@ class Message {
             await http.PATCH(
                 `/channels/${this.channel_id}/messages/${this.id}`,
                 JSON.stringify(data)
-            ),
+            )
         );
     }
 
@@ -72,26 +73,34 @@ class Message {
      * is recursive with this option set.
      * @param emojis The emoji(s) to send
      */
-    react(emojis: string[] | string, inOrder?: boolean) {
+    react(emojis: string[] | string | Emoji | Emoji[], inOrder?: boolean) {
+        let isId = false;
+        // @ts-ignore
+        if (typeof emojis.id !== 'undefined') {
+            isId = true;
+            emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
+        }
         if (typeof emojis === 'string') {
             return http.PUT(
                 `/channels/${this.channel_id}/messages/${this.id}` +
                     `/reactions/${emojis}/@me`
             );
-        } else if (inOrder) {
+        } else if (inOrder && Array.isArray(emojis)) {
             return http
                 .PUT(
                     `/channels/${this.channel_id}/messages/${this.id}` +
-                        `/reactions/${encodeURI(emojis[0])}/@me`
+                        `/reactions/${
+                            isId ? emojis : encodeURI(emojis[0] as any)
+                        }/@me`
                 )
-                .then(() => this.react(emojis.slice(1), true));
+                .then(() => this.react((emojis as any).slice(1), true));
         } else {
             const ret: Promise<Message>[] = [];
-            emojis.forEach(async (e) => {
+            (emojis as any).forEach(async (e) => {
                 ret.push(
                     http.PUT(
                         `/channels/${this.channel_id}/messages/${this.id}` +
-                            `/reactions/${encodeURI(e)}/@me`
+                            `/reactions/${isId ? emojis : encodeURI(e)}/@me`
                     )
                 );
             });

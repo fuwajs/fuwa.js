@@ -3,7 +3,7 @@ import Guild from './discord/Guild';
 import { Message as IMessage, Reaction } from './_DiscordAPI';
 import Cache from './_Cache';
 import Message from './discord/Message';
-import { Channel } from './discord/Channel';
+import Channel from './discord/Channel';
 declare class Request {
     protected cache: Cache;
     readonly author: User;

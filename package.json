@@ -13,7 +13,7 @@
     ],
     "scripts": {
         "docs": "npx typedoc --options ./docs.js",
-        "test": "npm run build && node examples/index",
+        "test": "npm run build && npx nodemon examples/index",
         "browser": "tsc -p . && node browser",
         "profile": "npm run build && node --prof examples/index",
         "build": "npx tsc -p ."

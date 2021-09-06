@@ -17,7 +17,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Channel = void 0;
 const _http_1 = __importDefault(require("../_http"));
 const Message_1 = __importDefault(require("./Message"));
 const Embed_1 = __importDefault(require("./Embed"));
@@ -64,5 +63,5 @@ class Channel {
         });
     }
 }
-exports.Channel = Channel;
+exports.default = Channel;
 //# sourceMappingURL=Channel.js.map

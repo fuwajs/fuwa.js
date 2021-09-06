@@ -21,11 +21,11 @@ const _DiscordAPI_1 = require("../_DiscordAPI");
 const Member_1 = __importDefault(require("./Member"));
 const Role_1 = __importDefault(require("./Role"));
 const _http_1 = __importDefault(require("../_http"));
-const Channel_1 = require("./Channel");
+const Channel_1 = __importDefault(require("./Channel"));
 // class Guild implements IGuild {
 class Guild {
     constructor(data) {
-        Object.assign(this, Object.assign(Object.assign({}, data), { icon: `${_DiscordAPI_1.discordCDN}/icons/${data.id}/${data.icon}.png`, roles: new Map(data.roles.map((r) => [r.id, new Role_1.default(r, data.id)])), members: new Map(data.members.map((m) => [m.user.id, new Member_1.default(m)])), channels: new Map(data.channels.map((m) => [m.id, new Channel_1.Channel(m)])), created_at: new Date(data.joined_at) }));
+        Object.assign(this, Object.assign(Object.assign({}, data), { icon: `${_DiscordAPI_1.discordCDN}/icons/${data.id}/${data.icon}.png`, roles: new Map(data.roles.map((r) => [r.id, new Role_1.default(r, data.id)])), members: new Map(data.members.map((m) => [m.user.id, new Member_1.default(m)])), channels: new Map(data.channels.map((m) => [m.id, new Channel_1.default(m)])), created_at: new Date(data.joined_at) }));
     }
     modifyRolePosition(role, position) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,11 +61,11 @@ class Guild {
     }
     getEmojis() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (this.emojis = new Map((yield _http_1.default.GET(`/guild/${this.id}/emojis`)).map((m) => [m.id, m])));
+            return (this.emojis = new Map((yield _http_1.default.GET(`/guilds/${this.id}/emojis`)).map((m) => [m.id, m])));
         });
     }
     getEmoji(id) {
-        return _http_1.default.GET(`/guild/${this.id}/emojis/${id}`);
+        return _http_1.default.GET(`/guilds/${this.id}/emojis/${id}`);
     }
     getBans() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -85,13 +85,17 @@ class Guild {
         const code = typeof invite === 'string' ? invite : invite.code;
         return _http_1.default.DELETE(`/invites/${code}`);
     }
+    deleteChannel(channel) {
+        const id = typeof channel === 'string' ? channel : channel.id;
+        return _http_1.default.DELETE(`/channels/${id}`);
+    }
     deleteEmoji(emoji) {
         const id = typeof emoji === 'string' ? emoji : emoji.id;
         return _http_1.default.DELETE(`/guilds/${this.id}/emojis/${id}`);
     }
     createChannel(data, reason) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Channel_1.Channel(yield _http_1.default.POST(`/guilds/${this.id}/channels`, JSON.stringify(data), { 'X-Audit-Log-Reason': reason }));
+            return new Channel_1.default(yield _http_1.default.POST(`/guilds/${this.id}/channels`, JSON.stringify(data), { 'X-Audit-Log-Reason': reason }));
         });
     }
     createRole(data) {
@@ -103,7 +107,7 @@ class Guild {
         const roles = data.roles.map((r) => (typeof r === 'string' ? r : r.id));
         const imageURL = typeof data.image === 'string'
             ? data.image
-            : data.image.data.toString('base64');
+            : `data:image/${data.image.mimetype};${data.image.data.toString('base64')}`;
         return _http_1.default.POST(`/guilds/${this.id}/emojis`, JSON.stringify({ name: data.name, roles, image: imageURL }));
     }
     ban(member, reason, delete_messages_since) {

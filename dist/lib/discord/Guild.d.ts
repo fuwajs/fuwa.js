@@ -7,7 +7,7 @@
 import { Guild as IGuild, GuildHashes, Channel as IChannel, RoleProps, Ban, Invite, Emoji } from '../_DiscordAPI';
 import Member from './Member';
 import Role from './Role';
-import { Channel } from './Channel';
+import Channel from './Channel';
 declare class Guild {
     id: string;
     name: string;
@@ -70,6 +70,7 @@ declare class Guild {
     getinvites(): Promise<Invite[]>;
     getInvite(id: string): Promise<Invite>;
     deleteInvite(invite: Invite | string): Promise<any>;
+    deleteChannel(channel: Channel | string): Promise<any>;
     deleteEmoji(emoji: Emoji | string): Promise<any>;
     createChannel(data: IChannel, reason?: string): Promise<Channel>;
     createRole(data: RoleProps): Promise<Role>;
@@ -77,9 +78,9 @@ declare class Guild {
         name: string;
         image: {
             data: Buffer;
-            mimetype: string;
+            mimetype: 'png' | 'jpg' | 'gif';
         } | string;
-        roles: Role[] | string[];
+        roles?: Role[] | string[];
     }): Promise<Emoji>;
     ban(member: Member | string, reason?: string, delete_messages_since?: number): Promise<any>;
     unban(member: Member | string): Promise<any>;

@@ -20,7 +20,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Embed_1 = __importDefault(require("./discord/Embed"));
 const Message_1 = __importDefault(require("./discord/Message"));
 const _http_1 = __importDefault(require("./_http"));
-const Role_1 = __importDefault(require("./discord/Role"));
 class Response {
     constructor(req) {
         this.req = req;
@@ -60,7 +59,7 @@ class Response {
                 data.tts = false;
             }
             else if (content instanceof Embed_1.default) {
-                data.embeds = [content];
+                data.embed = content;
                 data.tts = false;
             }
             else {
@@ -76,29 +75,39 @@ class Response {
      */
     react(emojis, inOrder) {
         return __awaiter(this, void 0, void 0, function* () {
+            let isId = false;
+            if (
+            // prettier-ignore
+            (emojis &&
+                (Array.isArray(emojis) &&
+                    // @ts-ignore
+                    typeof emojis[0].id !== 'undefined')) ||
+                // @ts-ignore
+                typeof (emojis === null || emojis === void 0 ? void 0 : emojis.id) !== 'undefined') {
+                isId = true;
+                emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
+            }
+            console.log(emojis);
+            console.log(`\n\n/channels/${this.req.channel_id}/messages/${this.req.id}` +
+                `/reactions/${emojis}/@me`);
             if (typeof emojis === 'string') {
                 return _http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
                     `/reactions/${emojis}/@me`);
             }
-            else if (inOrder) {
+            else if (inOrder && Array.isArray(emojis)) {
                 return _http_1.default
                     .PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                    `/reactions/${encodeURI(emojis[0])}/@me`)
-                    .then((_) => this.react(emojis.slice(1), true));
+                    `/reactions/${isId ? emojis : encodeURI(emojis[0])}/@me`)
+                    .then(() => this.react(emojis.slice(1), true));
             }
-            else {
+            else if (Array.isArray(emojis)) {
                 const ret = [];
-                emojis.forEach((e) => {
+                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
                     ret.push(_http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                        `/reactions/${encodeURI(e)}/@me`));
-                });
+                        `/reactions/${isId ? emojis : encodeURI(e)}/@me`));
+                }));
                 return ret;
             }
-        });
-    }
-    createRole(data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return new Role_1.default(yield _http_1.default.POST(`/guilds/${this.req.guild_id}/roles`, JSON.stringify(Object.assign(Object.assign({}, data), { permissions: data.permissions.toString() }))), this.req.guild_id);
         });
     }
 }

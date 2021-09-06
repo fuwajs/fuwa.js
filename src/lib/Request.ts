@@ -4,8 +4,7 @@ import http from './_http';
 import { Message as IMessage, Reaction } from './_DiscordAPI';
 import Cache from './_Cache';
 import Message from './discord/Message';
-import { token } from './_globals';
-import { Channel } from './discord/Channel';
+import Channel from './discord/Channel';
 
 class Request {
     readonly author: User;

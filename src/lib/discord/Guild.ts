@@ -175,14 +175,16 @@ class Guild {
     }
     createEmoji(data: {
         name: string;
-        image: { data: Buffer; mimetype: string } | string;
-        roles: Role[] | string[];
+        image: { data: Buffer; mimetype: 'png' | 'jpg' | 'gif' } | string;
+        roles?: Role[] | string[];
     }): Promise<Emoji> {
         const roles = data.roles.map((r) => (typeof r === 'string' ? r : r.id));
         const imageURL =
             typeof data.image === 'string'
                 ? data.image
-                : data.image.data.toString('base64');
+                : `data:image/${data.image.mimetype};${data.image.data.toString(
+                      'base64'
+                  )}`;
         return http.POST(
             `/guilds/${this.id}/emojis`,
             JSON.stringify({ name: data.name, roles, image: imageURL })

@@ -6,7 +6,7 @@
 import { Channel as IChannel, ChannelProps, ChannelTypes, Overwrite as IOverwrite, User as IUser } from '../_DiscordAPI';
 import Message from './Message';
 import Embed from './Embed';
-export declare class Channel {
+export default class Channel {
     id: string;
     type: ChannelTypes;
     guild_id?: string;

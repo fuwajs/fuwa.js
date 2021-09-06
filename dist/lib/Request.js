@@ -16,7 +16,7 @@ const User_1 = __importDefault(require("./discord/User"));
 const Guild_1 = __importDefault(require("./discord/Guild"));
 const _http_1 = __importDefault(require("./_http"));
 const Message_1 = __importDefault(require("./discord/Message"));
-const Channel_1 = require("./discord/Channel");
+const Channel_1 = __importDefault(require("./discord/Channel"));
 class Request {
     constructor(msg, cache) {
         this.cache = cache;
@@ -44,7 +44,7 @@ class Request {
     }
     getChannel() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (this.channel = new Channel_1.Channel(yield _http_1.default.GET(`/channel/${this.channel_id}`)));
+            return (this.channel = new Channel_1.default(yield _http_1.default.GET(`/channel/${this.channel_id}`)));
         });
     }
 }

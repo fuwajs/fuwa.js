@@ -27,6 +27,7 @@ class Message {
     constructor(data) {
         var _a;
         Object.assign(this, Object.assign(Object.assign({}, data), { author: new User_1.default(data.author), timestamp: new Date(data === null || data === void 0 ? void 0 : data.timestamp), embeds: (_a = data === null || data === void 0 ? void 0 : data.embeds) === null || _a === void 0 ? void 0 : _a.map((v) => new Embed_1.default(v)) }));
+        // ! This can get recursive
         if (data.message_reference) {
             _http_1.default.GET(`/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`).then((msg) => (this.message_reference = new Message(msg)));
         }
@@ -65,21 +66,27 @@ class Message {
      * @param emojis The emoji(s) to send
      */
     react(emojis, inOrder) {
+        let isId = false;
+        // @ts-ignore
+        if (typeof emojis.id !== 'undefined') {
+            isId = true;
+            emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
+        }
         if (typeof emojis === 'string') {
             return _http_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}` +
                 `/reactions/${emojis}/@me`);
         }
-        else if (inOrder) {
+        else if (inOrder && Array.isArray(emojis)) {
             return _http_1.default
                 .PUT(`/channels/${this.channel_id}/messages/${this.id}` +
-                `/reactions/${encodeURI(emojis[0])}/@me`)
+                `/reactions/${isId ? emojis : encodeURI(emojis[0])}/@me`)
                 .then(() => this.react(emojis.slice(1), true));
         }
         else {
             const ret = [];
             emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
                 ret.push(_http_1.default.PUT(`/channels/${this.channel_id}/messages/${this.id}` +
-                    `/reactions/${encodeURI(e)}/@me`));
+                    `/reactions/${isId ? emojis : encodeURI(e)}/@me`));
             }));
             return ret;
         }

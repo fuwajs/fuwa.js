@@ -5,7 +5,7 @@
  *****************************************************************************/
 import Embed from './Embed';
 import User from './User';
-import { Message as IMessage } from '../_DiscordAPI';
+import { Emoji, Message as IMessage } from '../_DiscordAPI';
 declare class Message {
     author: User;
     guild_id: string;
@@ -23,6 +23,6 @@ declare class Message {
      * is recursive with this option set.
      * @param emojis The emoji(s) to send
      */
-    react(emojis: string[] | string, inOrder?: boolean): any;
+    react(emojis: string[] | string | Emoji | Emoji[], inOrder?: boolean): any;
 }
 export default Message;

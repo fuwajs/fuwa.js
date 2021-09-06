@@ -58,6 +58,31 @@ client.command(['ping', 'latency'], function ping(req, res) {
         );
     });
 });
+
+client.command('react', async (req, res) => {
+    await req.getGuild();
+    // prettier-ignore
+    const emojis = Array
+        .from((await req.guild.getEmojis())
+        .entries())
+        .map(([, e]) => e);
+    let emoji;
+
+    if (emojis === []) {
+        const emojiIMG = readFileSync(
+            join(__dirname, 'images/sweat-emoji.png')
+        );
+        emoji = await req.guild.createEmoji({
+            image: { data: emojiIMG, mimetype: 'png' },
+            name: 'Sweat emoji',
+            roles: [req.guild.roles.get('883857820078989363')],
+        });
+    } else {
+        emoji = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    res.react(emoji).then(() => res.send('reacted'));
+});
 // More complex example command using the GitHub API
 client.command(
     ['github', 'gh'],
