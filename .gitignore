@@ -11,3 +11,6 @@ node_modules/
 .typedoc.json
 browser/bundle.js
 docs.js
+
+#
+/dist
