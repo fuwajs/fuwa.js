@@ -67,7 +67,7 @@ declare class Guild {
     getEmoji(id: string): Promise<Emoji>;
     getBans(): Promise<Ban[]>;
     getBan(uid: string): Promise<Ban>;
-    getinvites(): Promise<Invite[]>;
+    getInvites(): Promise<Invite[]>;
     getInvite(id: string): Promise<Invite>;
     deleteInvite(invite: Invite | string): Promise<any>;
     deleteChannel(channel: Channel | string): Promise<any>;
@@ -84,5 +84,8 @@ declare class Guild {
     }): Promise<Emoji>;
     ban(member: Member | string, reason?: string, delete_messages_since?: number): Promise<any>;
     unban(member: Member | string): Promise<any>;
+    prune(days: number, reason?: string): Promise<{
+        pruned: number;
+    }>;
 }
 export default Guild;

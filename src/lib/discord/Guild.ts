@@ -140,7 +140,7 @@ class Guild {
     getBan(uid: string): Promise<Ban> {
         return http.GET(`/guilds/${this.id}/bans/${uid}`);
     }
-    getinvites(): Promise<Invite[]> {
+    getInvites(): Promise<Invite[]> {
         return http.GET(`/guilds/${this.id}/invites`);
     }
     getInvite(id: string): Promise<Invite> {
@@ -208,6 +208,12 @@ class Guild {
     unban(member: Member | string) {
         const id = member instanceof Member ? member.user.id : member;
         return http.DELETE(`/guilds/${this.id}/bans/${id}`);
+    }
+
+    prune(days: number, reason?: string): Promise<{ pruned: number }> {
+        return http.POST(`/guilds/${this.id}/prune`, JSON.stringify({ days }), {
+            'X-Audit-Log-Reason': reason,
+        }) as Promise<any>;
     }
 }
 

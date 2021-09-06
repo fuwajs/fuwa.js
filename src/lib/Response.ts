@@ -72,56 +72,25 @@ class Response {
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
      */
+    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) { 
+        const react = async (emoji: string | Emoji) => {
+            const string =
+                typeof emoji === 'string'
+                    ? encodeURI(emoji)
+                    : `${emoji.name}:${emoji.id}`;
 
-    async react(
-        emojis: string[] | string | Emoji | Emoji[],
-        inOrder?: boolean
-    ): Promise<any> {
-        let isId = false;
-        if (
-            // prettier-ignore
-            (emojis &&
-                (Array.isArray(emojis) &&
-                // @ts-ignore
-                typeof emojis[0].id !== 'undefined')) ||
-            // @ts-ignore
-            typeof emojis?.id !== 'undefined'
-        ) {
-            isId = true;
-            emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
-        }
-        console.log(emojis);
-        console.log(
-            `\n\n/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                `/reactions/${emojis}/@me`
-        );
-        if (typeof emojis === 'string') {
-            return http.PUT(
-                `/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                    `/reactions/${emojis}/@me`
+            await http.PUT(
+                `/channels/${this.req.channel_id}/messages/${this.req.id}/reactions/${string}/@me`
             );
-        } else if (inOrder && Array.isArray(emojis)) {
-            return http
-                .PUT(
-                    `/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                        `/reactions/${
-                            isId ? emojis : encodeURI(emojis[0] as any)
-                        }/@me`
-                )
-                .then(() => this.react((emojis as any).slice(1), true));
-        } else if (Array.isArray(emojis)) {
-            const ret: Promise<Message>[] = [];
-            emojis.forEach(async (e) => {
-                ret.push(
-                    http.PUT(
-                        `/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                            `/reactions/${isId ? emojis : encodeURI(e)}/@me`
-                    )
-                );
+        };
+
+        if (Array.isArray(emojis)) {
+            emojis.forEach((emoji) => {
+                react(emoji);
             });
-            return ret;
+        } else {
+            react(emojis);
         }
     }
 }
-
 export default Response;

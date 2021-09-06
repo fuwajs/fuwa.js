@@ -75,7 +75,7 @@ class Guild {
     getBan(uid) {
         return _http_1.default.GET(`/guilds/${this.id}/bans/${uid}`);
     }
-    getinvites() {
+    getInvites() {
         return _http_1.default.GET(`/guilds/${this.id}/invites`);
     }
     getInvite(id) {
@@ -120,6 +120,11 @@ class Guild {
     unban(member) {
         const id = member instanceof Member_1.default ? member.user.id : member;
         return _http_1.default.DELETE(`/guilds/${this.id}/bans/${id}`);
+    }
+    prune(days, reason) {
+        return _http_1.default.POST(`/guilds/${this.id}/prune`, JSON.stringify({ days }), {
+            'X-Audit-Log-Reason': reason,
+        });
     }
 }
 exports.default = Guild;

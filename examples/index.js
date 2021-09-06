@@ -81,7 +81,7 @@ client.command('react', async (req, res) => {
         emoji = emojis[Math.floor(Math.random() * emojis.length)];
     }
 
-    res.react(emoji).then(() => res.send('reacted'));
+    res.react(emoji);
 });
 // More complex example command using the GitHub API
 client.command(

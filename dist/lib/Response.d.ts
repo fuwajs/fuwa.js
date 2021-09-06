@@ -24,6 +24,6 @@ declare class Response {
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
      */
-    react(emojis: string[] | string | Emoji | Emoji[], inOrder?: boolean): Promise<any>;
+    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean): void;
 }
 export default Response;

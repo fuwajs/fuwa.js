@@ -74,41 +74,20 @@ class Response {
      * is recursive with this option set.
      */
     react(emojis, inOrder) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let isId = false;
-            if (
-            // prettier-ignore
-            (emojis &&
-                (Array.isArray(emojis) &&
-                    // @ts-ignore
-                    typeof emojis[0].id !== 'undefined')) ||
-                // @ts-ignore
-                typeof (emojis === null || emojis === void 0 ? void 0 : emojis.id) !== 'undefined') {
-                isId = true;
-                emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
-            }
-            console.log(emojis);
-            console.log(`\n\n/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                `/reactions/${emojis}/@me`);
-            if (typeof emojis === 'string') {
-                return _http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                    `/reactions/${emojis}/@me`);
-            }
-            else if (inOrder && Array.isArray(emojis)) {
-                return _http_1.default
-                    .PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                    `/reactions/${isId ? emojis : encodeURI(emojis[0])}/@me`)
-                    .then(() => this.react(emojis.slice(1), true));
-            }
-            else if (Array.isArray(emojis)) {
-                const ret = [];
-                emojis.forEach((e) => __awaiter(this, void 0, void 0, function* () {
-                    ret.push(_http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}` +
-                        `/reactions/${isId ? emojis : encodeURI(e)}/@me`));
-                }));
-                return ret;
-            }
+        const react = (emoji) => __awaiter(this, void 0, void 0, function* () {
+            const string = typeof emoji === 'string'
+                ? encodeURI(emoji)
+                : `${emoji.name}:${emoji.id}`;
+            yield _http_1.default.PUT(`/channels/${this.req.channel_id}/messages/${this.req.id}/reactions/${string}/@me`);
         });
+        if (Array.isArray(emojis)) {
+            emojis.forEach((emoji) => {
+                react(emoji);
+            });
+        }
+        else {
+            react(emojis);
+        }
     }
 }
 exports.default = Response;
