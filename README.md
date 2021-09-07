@@ -10,7 +10,6 @@
         </a>
         <img src="https://github.com/Fuwajs/Fuwa.js/workflows/CI/badge.svg" />
         <img src="https://img.shields.io/github/license/Fuwajs/Fuwa.js" />
-        <img src="https://img.shields.io/github/package-json/v/Fuwajs/Fuwa.js" />
     </p>
 </div>
 
