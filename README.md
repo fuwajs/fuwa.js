@@ -5,9 +5,12 @@
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
         </a>
+        <a href="https://www.npmjs.com/package/fuwa.js">
+            <img src="https://img.shields.io/npm/v/fuwa.js.svg" />
+        </a>
         <img src="https://github.com/Fuwajs/Fuwa.js/workflows/CI/badge.svg" />
-        <img src="https://img.shields.io/github/license/FuwaJS/Fuwa.JS" />
-        <img src="https://img.shields.io/github/package-json/v/FuwaJS/Fuwa.JS" />
+        <img src="https://img.shields.io/github/license/Fuwajs/Fuwa.js" />
+        <img src="https://img.shields.io/github/package-json/v/Fuwajs/Fuwa.js" />
     </p>
 </div>
 
@@ -29,7 +32,7 @@
 -   🔨 | Built-In Command Handler & Parser
 -   🌎 | Safe (complete runtime safety for your bot.)
 -   ⚡️ | Blazing Fast
--   🗂 | Customizable Cache
+-   📂 | Customizable Cache
 
 <sup>\* Excluding Peer (and of course) development dependencies</sup>
 
@@ -40,7 +43,7 @@ This assumes you have already setup a discord bot application in Discord. See
 -   [Creating a Bot Application](https://discordjs.guide/preparations/setting-up-a-bot-application.html)
 -   [Adding your bot to a server](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links)
 
-## 📁 - Create a new NodeJS project
+## 📁 - Create a new Nodejs project
 
 Run this in your Powershell, command prompt, terminal, console or whatever you
 call it:
@@ -49,19 +52,18 @@ call it:
 $ npm init -y
 ```
 
-## 📦 - Install FuwaJS
-
-The _Lightweight_ version
+## 📦 - Installing Fuwa.js
 
 ```bash
-$ npm install Fuwajs/Fuwa.js --no-optional
+$ npm i fuwa.js
 ```
 
 The **Full** version for increased speed (better for production)
 
 ```bash
-$ npm install Fuwajs/Fuwa.js
+$ npm i fuwa.js erlpack
 ```
+<sup>/* Note: you need python installed on your computer, server, or VM before you can use erlpack. To learn more, please visit (Erlpack's github)[https://github.com/discord/github]</sup>
 
 ## Create a file called `index.js`
 
@@ -72,9 +74,9 @@ $ echo > index.js
 Open index.js in your IDE of choice and copypaste this code
 
 ```js
-const fuwa = require('fuwa.js');
+const { Client } = require('fuwa.js');
 
-const client = new fuwa.Client('?'); // Your bot prefix here
+const client = new Client('?'); // Your bot prefix here
 
 client.on('ready', () => console.log('I am alive!'));
 

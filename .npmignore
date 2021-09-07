@@ -10,7 +10,6 @@
 examples/
 misc/
 *.md
-LICENSE
 .travis.yml
 .typedoc.json
 docs.js
