@@ -75,4 +75,18 @@ export default class Channel {
             })
         );
     }
+    async prune(amt: number) {
+        const msgs: Message[] = await http
+            .GET(`/channels/${this.id}/messages?limit=${amt}`)
+            .catch((e) => {
+                console.error(e);
+            });
+
+        http.POST(
+            `/channels/${this.id}/messages/bulk-delete`,
+            JSON.stringify({ messages: msgs.map((m) => m.id) })
+        ).catch((e) => {
+            console.error(e);
+        });
+    }
 }
