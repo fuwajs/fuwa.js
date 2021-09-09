@@ -30,7 +30,7 @@
     "bugs": {
         "url": "https://github.com/Fuwajs/Fuwa.js/issues"
     },
-    "homepage": "https://github.com/Fuwajs/Fuwa.js#readme",
+    "homepage": "https://fuwajs.github.io",
     "dependencies": {
         "chalk": "^2.4.2",
         "erlpack": "*",
