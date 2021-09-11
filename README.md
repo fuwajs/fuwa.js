@@ -60,7 +60,7 @@ $ npm i fuwa.js
 The **Full** version for increased speed (better for production)
 
 ```bash
-$ npm i fuwa.js erlpack
+$ npm i fuwa.js erlpack utf-8-validate bufferutil
 ```
 <sup>\*</sup>
 Note: you need python installed on your computer, server, or VM before you can use 
