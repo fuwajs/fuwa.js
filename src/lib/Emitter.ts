@@ -7,7 +7,7 @@
 import {
     DiscordAPIOP as DiscordAPIOPResponse,
     GatewayEvents,
-    OpCodes,
+    GatewayCodes,
 } from './_DiscordAPI';
 import { erlpack, pack, unpack } from './_erlpack';
 import WebSocket from 'ws';
@@ -42,7 +42,7 @@ class Emitter {
                 d: GatewayEvents[T]
             ): void => {
                 // this.ws.send(JSON.stringify({ t, d, op: 0 }));
-                this.ws.send(pack({ t, d, op: OpCodes.dispatch }));
+                this.ws.send(pack({ t, d, op: GatewayCodes.Dispatch }));
             },
         },
     };
@@ -56,9 +56,9 @@ class Emitter {
         this.ws.onopen = () => {
             this.WSEvents?.open();
             this.ws.onmessage = ({ data }) => {
-                const res: { op: OpCodes; t: string | null; d: unknown } = unpack(data, encoding);
+                const res: { op: GatewayCodes; t: string | null; d: unknown, s: number } = unpack(data, encoding);
                 this.WSEvents?.message();
-                if (res.op === OpCodes.dispatch) {
+                if (res.op === GatewayCodes.Dispatch) {
                     if (!res.t)
                         throw new Error(
                             `The event is undefined while the OP Code is 0\n ${res}`

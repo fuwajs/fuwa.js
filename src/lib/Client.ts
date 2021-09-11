@@ -9,10 +9,7 @@ import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
 import {
-    discordAPI,
-    Message,
-    OpCodes,
-    UserStatus,
+    discordAPI, Message, GatewayCodes, UserStatus,
     ActivityType,
     GatewayIntents,
 } from './_DiscordAPI';
@@ -179,10 +176,10 @@ class Client extends Emitter {
                 },
             },
             intents:
-                GatewayIntents.guilds |
-                GatewayIntents.guildMessages |
-                GatewayIntents.guildBans |
-                GatewayIntents.directMessages,
+                GatewayIntents.Guilds |
+                GatewayIntents.GuildMessages |
+                GatewayIntents.GuildBans |
+                GatewayIntents.DirectMessages,
             ...options,
         };
         this.debug = new Debug(this.options.debug ?? false);
@@ -386,24 +383,16 @@ class Client extends Emitter {
             encoding: erlpack ? 'etf' : 'json',
         };
         this.connect(discordAPI.gateway, options);
-        this.debug.success(
-            'connected',
-            `Connected to ${discordAPI.gateway} version ${options.v}, with ${options.encoding} encoding.`
-        );
-        this.op(OpCodes.hello, (data) => {
-            this.debug.log(
-                'hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(
-                    data,
-                    1
-                )}`
+        this.op(GatewayCodes.Hello, (data) => {
+            this.debug.log('hello',
+                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
             );
             this.loop = setInterval(
-                () => this.response.op.emit(OpCodes.heartbeat, 251),
+                () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
                 data.heartbeat_interval
             );
             this.debug.log('discord login', 'Attempting to connect to discord');
-            this.response.op.emit(OpCodes.indentify, {
+            this.response.op.emit(GatewayCodes.Identify, {
                 token: token.toString(),
                 intents: this.options.intents,
                 properties: {
@@ -413,11 +402,8 @@ class Client extends Emitter {
                 },
             });
         });
-        this.op(OpCodes.invalidSession, () => {
-            this.debug.error(
-                'invalid token',
-                'Invalid token was passed, throwing a error...'
-            );
+        this.op(GatewayCodes.InvalidSession, () => {
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
 

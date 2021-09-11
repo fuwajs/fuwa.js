@@ -10,39 +10,39 @@
  * Add these intents together to use multiple.
  */
 export enum GatewayIntents {
-    guilds = 1 << 0,
-    guildMembers = 1 << 1,
-    guildBans = 1 << 2,
-    guildEmojis = 1 << 3,
-    guildIntegration = 1 << 4,
-    guildWebhooks = 1 << 5,
+    Guilds = 1 << 0,
+    GuildMembers = 1 << 1,
+    GuildBans = 1 << 2,
+    GuildEmojis = 1 << 3,
+    GuildIntegration = 1 << 4,
+    GuildWebhooks = 1 << 5,
     guildInvites = 1 << 6,
-    guildVoiceStates = 1 << 7,
-    guildPresences = 1 << 8,
-    guildMessages = 1 << 9,
-    guildMessageReactions = 1 << 10,
-    guildMessageTyping = 1 << 11,
-    directMessages = 1 << 12,
-    directMessageReactions = 1 << 13,
-    directMessageTyping = 1 << 14,
+    GuildVoiceStates = 1 << 7,
+    GuildPresences = 1 << 8,
+    GuildMessages = 1 << 9,
+    GuildMessageReactions = 1 << 10,
+    GuildMessageTyping = 1 << 11,
+    DirectMessages = 1 << 12,
+    DirectMessageReactions = 1 << 13,
+    DirectMessageTyping = 1 << 14,
 }
 
 /**
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
  */
-export enum OpCodes {
-    dispatch,
-    heartbeat,
-    indentify,
-    statusUpdate,
-    voiceStateUpdate,
-    voiceGuildPing,
-    resume,
-    reconnect,
-    requestGuildMembers,
-    invalidSession,
-    hello,
-    heartbeatAck,
+export enum GatewayCodes {
+    Dispatch,
+    Heartbeat,
+    Identify,
+    StatusUpdate,
+    VoiceStateUpdate,
+    VoiceGuildPing,
+    Resume,
+    Reconnect,
+    RequestGuildMembers,
+    InvalidSession,
+    Hello,
+    HeartbeatAck,
 }
 
 export const discordAPI = {
@@ -166,30 +166,30 @@ interface Sticker {
 }
 
 enum StickerFormat {
-    png = 1,
-    apng,
-    lottie,
+    Png = 1,
+    Apng,
+    Lottie,
 }
 
 enum MessageType {
-    default,
-    recipientAdd,
-    recipientRemove,
-    call,
-    channelNameChange,
-    channelIconChange,
-    channelPinnedMessage,
-    guildMemberJoin,
-    userPremiumGuildSubscription,
-    userPremiumGuildSubscriptionTier1,
-    userPremiumGuildSubscriptionTier2,
-    userPremiumGuildSubscriptionTier3,
-    channelFollowAdd,
-    guildFollowAdd,
-    guildDiscorveryDisqualified,
-    guildDiscoveryRequalified,
-    reply,
-    applicationCommand,
+    Default,
+    RecipientAdd,
+    RecipientRemove,
+    Call,
+    ChannelNameChange,
+    ChannelIconChange,
+    ChannelPinnedMessage,
+    GuildMemberJoin,
+    UserPremiumGuildSubscription,
+    UserPremiumGuildSubscriptionTier1,
+    UserPremiumGuildSubscriptionTier2,
+    UserPremiumGuildSubscriptionTier3,
+    ChannelFollowAdd,
+    GuildFollowAdd,
+    GuildDiscorveryDisqualified,
+    GuildDiscoveryRequalified,
+    Reply,
+    ApplicationCommand,
 }
 
 interface MessageActivity {
@@ -318,6 +318,7 @@ export interface DiscordAPIOP {
         op?: 1;
         t?: null;
         d: number | null;
+        s: number;
     };
     2: {
         op?: 2;
@@ -331,6 +332,7 @@ export interface DiscordAPIOP {
                 $device: string;
             };
         };
+        s: number;
     };
     3: {
         op?: 3;
@@ -425,16 +427,16 @@ export interface Ready {
 }
 
 export enum SlashCommandTypes {
-    subCommand = 1,
-    subCommandGroup = 2,
-    string = 3,
-    integer = 4,
-    boolean = 5,
-    user = 6,
-    channel = 7,
-    role = 8,
-    mentionable = 9,
-    number = 10,
+    SubCommand = 1,
+    SubCommandGroup = 2,
+    String = 3,
+    Integer = 4,
+    Boolean = 5,
+    User = 6,
+    Channel = 7,
+    Role = 8,
+    Mentionable = 9,
+    Number = 10,
 }
 
 export interface Application {
@@ -578,11 +580,11 @@ interface Activity {
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
  */
 export enum ActivityType {
-    game,
-    streaming,
-    listening,
-    custom,
-    competing,
+    Game,
+    Streaming,
+    Listening,
+    Custom,
+    Competing,
 }
 
 /**
@@ -637,12 +639,12 @@ interface ActivitySecrets {
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-flags
  */
 enum ActivityFlags {
-    instance = 1 << 0,
-    join = 1 << 1,
-    spectate = 1 << 2,
-    joinRequest = 1 << 3,
-    sync = 1 << 4,
-    play = 1 << 5,
+    Instance = 1 << 0,
+    Join = 1 << 1,
+    Spectate = 1 << 2,
+    JoinRequest = 1 << 3,
+    Sync = 1 << 4,
+    Play = 1 << 5,
 }
 
 /**
@@ -683,13 +685,13 @@ export interface Channel {
 }
 
 export enum ChannelTypes {
-    text = 0,
-    dm = 1,
-    voice = 2,
-    groupDM = 3,
-    catergory = 4,
-    news = 5,
-    store = 6,
+    Text = 0,
+    Dm = 1,
+    Voice = 2,
+    GroupDM = 3,
+    Catergory = 4,
+    News = 5,
+    Store = 6,
 }
 
 export interface GuildHashes {
@@ -835,8 +837,8 @@ export interface Invite {
 }
 
 export enum InviteTargets {
-    stream = 1,
-    embedded_application = 2,
+    Stream = 1,
+    EmbeddedApplication = 2,
 }
 
 export interface InviteStage {
