@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/Fuwajs/Fuwa.js/raw/main/misc/Logo.svg" width="512" height="512">
+    <img src="misc/Logo.svg" width="256" height="256">
     <p>The <b>new</b>, simple, and easy way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
@@ -62,8 +62,9 @@ The **Full** version for increased speed (better for production)
 ```bash
 $ npm i fuwa.js erlpack utf-8-validate bufferutil
 ```
+
 <sup>\*</sup>
-Note: you need python installed on your computer, server, or VM before you can use 
+Note: you need python installed on your computer, server, or VM before you can use
 erlpack. To learn more, please visit [erlpack's github](https://github.com/discord/github)
 
 ## Coding your bot
@@ -84,7 +85,6 @@ const client = new Client('?'); // Your bot prefix here
 // Runs when the bot turns on
 client.on('ready', () => console.log('I am alive!'));
 
-
 client.command(['hi', 'hello'], (req, res) => {
     res.reply(`Hello there, my name is ${client.bot.username}!`);
 });
@@ -97,11 +97,12 @@ client.login('<your bot token>');
 
 ## 🧪 - Test it out
 
-
 Run your bot using
+
 ```bash
 $ node index.js
 ```
+
 and add your bot to a discord server and type `?hi` or `?hello` in any visible
 channel. It should respond with `Hello there, my name is <bot name>!`
 
