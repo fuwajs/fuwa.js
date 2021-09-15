@@ -68,6 +68,10 @@ export interface GatewayEvents {
         t: 'RESUMED';
         d: any; // eh
     };
+    INVALID_SESSION: {
+        op: 9;
+        d: false;
+    };
     READY: {
         op: 0;
         t: 'READY';

@@ -9,7 +9,10 @@ import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken } from './Errors';
 import {
-    discordAPI, Message, GatewayCodes, UserStatus,
+    discordAPI,
+    Message,
+    GatewayCodes,
+    UserStatus,
     ActivityType,
     GatewayIntents,
 } from './_DiscordAPI';
@@ -384,8 +387,12 @@ class Client extends Emitter {
         };
         this.connect(discordAPI.gateway, options);
         this.op(GatewayCodes.Hello, (data) => {
-            this.debug.log('hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
+            this.debug.log(
+                'hello',
+                `Recieved Hello event and recieved:\n${this.debug.object(
+                    data,
+                    1
+                )}`
             );
             this.loop = setInterval(
                 () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
@@ -403,7 +410,10 @@ class Client extends Emitter {
             });
         });
         this.op(GatewayCodes.InvalidSession, () => {
-            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+            this.debug.error(
+                'invalid token',
+                'Invalid token was passed, throwing a error...'
+            );
             throw new InvalidToken('Invalid token');
         });
 
@@ -431,6 +441,13 @@ class Client extends Emitter {
         this.event('GUILD_CREATE', (guild) =>
             this.cache.cache('guilds', guild)
         );
+        this.event('INVALID_SESSION', () => {
+            this.debug.error(
+                'invalid token',
+                'Invalid token was passed, throwing a error...'
+            );
+            throw new InvalidToken('Invalid token');
+        });
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
             if (e) e(new Request(msg, this.cache), new Response(msg));
