@@ -3,7 +3,7 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const { Embed, Client, Colors } = require('../dist/index'); // Import js here!
+const { Embed, Client, Colors } = require('../dist/index' /* import 'fuwa.js' here */);
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
