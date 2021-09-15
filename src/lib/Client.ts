@@ -7,7 +7,7 @@
 import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
-import { InvalidToken } from './Errors';
+import { InvalidToken, InvalidPrefix } from './Errors';
 import {
     discordAPI,
     Message,
@@ -382,7 +382,7 @@ class Client extends Emitter {
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
         let options: QueryOptions = {
-            v: 8,
+            v: 9,
             encoding: erlpack ? 'etf' : 'json',
         };
         this.connect(discordAPI.gateway, options);
@@ -464,7 +464,7 @@ class Client extends Emitter {
             } else if (typeof this.prefix === 'string') {
                 prefix = this.prefix;
             } else {
-                throw new TypeError('Invalid prefix type');
+                throw new InvalidPrefix(`${prefix} is not a valid prefix`);
             }
             // console.timeEnd('prefix parsing');
             if (!prefix) return;
