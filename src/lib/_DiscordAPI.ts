@@ -447,6 +447,27 @@ export interface Application {
     id: string;
     flags: number;
 }
+export enum PremiumTypes {
+    None,
+    NitroClassic,
+    Nitro,
+}
+export enum UserFlags {
+    None = 0,
+    DiscordEmployee = 1 << 0,
+    PartneredServerOwner = 1 << 1,
+    HypesquadEvents = 1 << 2,
+    BugHunterLevelOne = 1 << 3,
+    HouseBravery = 1 << 6,
+    HouseBrilliance = 1 << 7,
+    HouseBalance = 1 << 8,
+    EarlySupporter = 1 << 9,
+    TeamUser = 1 << 10,
+    BugHunterLevelTwo = 1 << 14,
+    VerifiedBot = 1 << 16,
+    EarlyVerifiedBotDev = 1 << 17,
+    DiscordMod = 1 << 18,
+}
 
 export interface User extends Author {
     bot?: boolean;
@@ -457,9 +478,10 @@ export interface User extends Author {
     /** Is the user's email verfied? */
     verified?: boolean;
     email?: string;
+    banner?: string;
     flags?: number;
-    premium_type?: number;
-    public_flags?: number;
+    premium_type?: PremiumTypes;
+    public_flags?: UserFlags;
 }
 
 /* eslint-disable */

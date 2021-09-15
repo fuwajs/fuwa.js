@@ -19,6 +19,7 @@ export class User implements IUser {
     discriminator: string;
     avatar: string;
     bot?: boolean;
+    banner?: string;
     system?: boolean;
     mfa_enabled?: boolean; // does the user have 2FA Enabled?
     locale?: string;
@@ -38,6 +39,9 @@ export class User implements IUser {
         this.mfa_enabled = data.mfa_enabled;
         this.flags = data.flags;
         this.email = data.email;
+        data.banner
+            ? (this.banner = `${discordCDN}/banners/${data.banner}`)
+            : '';
     }
 
     /**
