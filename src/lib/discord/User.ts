@@ -40,7 +40,7 @@ export class User implements IUser {
         this.flags = data.flags;
         this.email = data.email;
         data.banner
-            ? (this.banner = `${discordCDN}/banners/${data.banner}`)
+            ? (this.banner = `${discordCDN}/banners/${data.banner}.png`)
             : '';
     }
 
