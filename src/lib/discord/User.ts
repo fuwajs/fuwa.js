@@ -9,10 +9,28 @@ import {
     Channel,
     discordCDN,
     Message as IMessage,
+    PremiumTypes,
     User as IUser,
+    UserFlags,
 } from '../_DiscordAPI';
 import http from '../_http';
 
+export function getAvatarUrl(props: {
+    uid: string;
+    avatar: string;
+    isBanner?: boolean;
+}): string {
+    let url = `${discordCDN}/${
+        props.isBanner ?? false ? 'banners' : 'avatars'
+    }/${props.uid}/`;
+    // means its a gif
+    if (props.avatar.startsWith('a_')) {
+        url += `${props.avatar}.gif`;
+    } else {
+        url += `${props.avatar}.png`;
+    }
+    return url;
+}
 export class User implements IUser {
     id: string;
     username: string;
@@ -25,23 +43,25 @@ export class User implements IUser {
     locale?: string;
     verified?: boolean; // Is the user's email verfied?
     email?: string;
-    flags?: number;
-    premium_type?: number;
-    public_flags?: number;
+    accent_color?: number;
+    flags?: UserFlags;
+    premium_type?: PremiumTypes;
+    public_flags?: UserFlags;
 
     constructor(data: IUser) {
-        this.id = data.id;
-        this.username = data.username;
-        this.discriminator = data.discriminator;
-        this.bot = data.bot;
-        this.avatar = `${discordCDN}/avatars/${this.id}/${data.avatar}.png`;
-        this.verified = data.verified;
-        this.mfa_enabled = data.mfa_enabled;
-        this.flags = data.flags;
-        this.email = data.email;
-        data.banner
-            ? (this.banner = `${discordCDN}/banners/${data.banner}.png`)
-            : '';
+        Object.assign(this, {
+            ...data,
+            avatar: data.avatar
+                ? getAvatarUrl({ uid: data.id, avatar: data.avatar })
+                : null,
+            banner: data.banner
+                ? getAvatarUrl({
+                      uid: data.id,
+                      avatar: data.banner,
+                      isBanner: true,
+                  })
+                : null,
+        });
     }
 
     /**
