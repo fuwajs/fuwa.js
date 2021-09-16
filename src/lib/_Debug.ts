@@ -74,10 +74,12 @@ class Debug {
         const tab = ''.padStart(tabWidth * 4);
 
         let i = 0;
-
+        if (obj === undefined) {
+            return chalk.red('undefined');
+        }
         for (const k in obj) {
             let val = obj[k];
-            if (val === null) val = chalk.red('null');
+            if (val === null || val === undefined) val = chalk.red('null');
             if (typeof val === 'object' && !Array.isArray(val))
                 val = '\n' + this.object(val, tabWidth + 1);
             if (Array.isArray(val))
@@ -105,4 +107,3 @@ class Debug {
 }
 
 export default Debug;
-

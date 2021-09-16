@@ -12,7 +12,7 @@ import { Client } from 'undici';
 
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
-import { token } from './_globals';
+import { token, debug } from './_globals';
 let http = new Client(discordAPI.discord);
 
 export default {
@@ -33,6 +33,10 @@ export default {
         headers?: any,
         version?: 6 | 8 | 9
     ): Promise<any> {
+        debug.log(
+            'new request',
+            `Making a request to /api/v${version || 8}${path}`
+        );
         return new Promise(async (resolve, reject) => {
             const params: any = {
                 path: `/api/v${version || 8}` + path,
@@ -44,31 +48,30 @@ export default {
                 body: data,
             };
             if (token) params.headers.authorization = `Bot ${token}`;
+            debug.log('request paramters', debug.object(params, 1));
             const res = await http.request(params);
+            debug.log('request', 'request has been made');
+            let d;
+            // Sucess 200->299
+            if (res.statusCode > 199 && res.statusCode < 300) {
+                try {
+                    d = await res.body.json();
+                } catch (e) {
+                    debug.error('parse json', 'Parsing json failed');
+                    console.error(e);
 
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                const str = Buffer.concat(chunks).toString();
-                let d;
-                if (!str) resolve({});
-                // Sucess 200->299
-                if (res.statusCode > 199 && res.statusCode < 300) {
-                    try {
-                        d = JSON.parse(str);
-                    } catch (e) {
-                        reject(e);
-                    }
-                } else if (res.statusCode === 429) {
-                    // Handle Discord Rate Limits
-                    setTimeout(() => {
-                        this.REQUEST(method, path, data, headers).catch((e) =>
-                            console.error(e)
-                        );
-                    }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                    reject(e);
                 }
-                resolve(d);
-            });
+            } else if (res.statusCode === 429) {
+                // Handle Discord Rate Limits
+                debug.log('rate limits', 'Hit a discord rate limit');
+                setTimeout(() => {
+                    this.REQUEST(method, path, data, headers).catch((e) =>
+                        console.error(e)
+                    );
+                }, (await res.body.json())?.retry_after * 1000); // seconds -> milliseconds
+            }
+            resolve(d);
         }).catch((e) => {
             new Debug(true).log(method, e);
             console.trace();

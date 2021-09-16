@@ -25,7 +25,7 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
-import { setBot, setToken } from './_globals';
+import { setBot, setToken, setDebug } from './_globals';
 import Guild from './discord/Guild';
 import Channel from './discord/Channel';
 
@@ -190,6 +190,7 @@ class Client extends Emitter {
             ...options,
         };
         this.debug = new Debug(this.options.debug ?? false);
+        setDebug(this.debug);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
@@ -429,7 +430,6 @@ class Client extends Emitter {
             this.bot = new User(data.user);
             setBot(this.bot);
             data.guilds.forEach((g) => {
-                console.log(g);
                 this.debug.success('guild recieved', `${g.id} Received, `);
                 g.unavailable ? '' : this.cache.cache('guilds', new Guild(g));
             });
