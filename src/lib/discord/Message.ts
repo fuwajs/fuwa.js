@@ -6,7 +6,7 @@
 
 import Embed from './Embed';
 import User from './User';
-import Debug from '../_Debug';
+import { log } from '../_logger';
 import { Emoji, Message as IMessage } from '../_DiscordAPI';
 import http from '../_http';
 import { bot } from '../_globals';
@@ -38,7 +38,7 @@ class Message {
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
         if (this.author.id.toString() !== bot.id.toString()) {
-            new Debug(true).error(
+            log.error(
                 'message edit',
                 "Cannot edit a message you didn't send"
             );

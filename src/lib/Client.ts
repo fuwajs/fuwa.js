@@ -6,7 +6,7 @@
 
 import Request from './Request';
 import Cache from './_Cache';
-import Debug from './_Debug';
+import { Level, log, Logger } from './_logger';
 import { InvalidToken, InvalidPrefix } from './Errors';
 import {
     discordAPI,
@@ -25,7 +25,7 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
-import { setBot, setToken } from './_globals';
+import { setBot, setLogger, setToken } from './_globals';
 import Guild from './discord/Guild';
 import Channel from './discord/Channel';
 
@@ -77,10 +77,9 @@ export interface clientOptions {
      */
     owners?: string[] | string;
     /**
-     * To turn on the debug mode, not recommed to turn this on unless your debugging
-     * the library.
+     * Set the log level. This increases or decreases the verbosity of debug logs. This is set to 'Error' by default
      */
-    debug?: boolean;
+    logLevel: Level;
     /**
      * If this is turned on (true) When someone mentions your bot it will behave
      * as a prefix.
@@ -144,7 +143,6 @@ export interface clientOptions {
  */
 class Client extends Emitter {
     public bot: User;
-    protected debug: Debug;
     private sessionId = '';
     public cache: Cache;
     protected status: any = [];
@@ -175,7 +173,7 @@ class Client extends Emitter {
         super();
         this.options = {
             cache: true,
-            debug: false,
+            logLevel: Level.Error,
             useMentionPrefix: false,
             builtinCommands: {
                 help: {
@@ -189,7 +187,7 @@ class Client extends Emitter {
                 GatewayIntents.DirectMessages,
             ...options,
         };
-        this.debug = new Debug(this.options.debug ?? false);
+        setLogger(new Logger(this.options.logLevel));
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
@@ -358,9 +356,9 @@ class Client extends Emitter {
      * @param status Your Bot Status Options
      */
     async login(token?: string | Buffer) {
-        this.debug.log(
+        log.trace(
             'login started',
-            'Login is function is attempting to run...'
+            'Login function is attempting to run...'
         );
         const next = (
             req: Request,
@@ -383,16 +381,16 @@ class Client extends Emitter {
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
-        this.debug.log('connecting', 'Attempting to connect to discord');
+        log.info('connecting', 'Attempting to connect to discord');
         let options: QueryOptions = {
             v: 9,
             encoding: erlpack ? 'etf' : 'json',
         };
         this.connect(discordAPI.gateway, options);
         this.op(GatewayCodes.Hello, (data) => {
-            this.debug.log(
+            log.debug(
                 'hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(
+                `Recieved Hello event and recieved:\n${log.object(
                     data,
                     1
                 )}`
@@ -401,7 +399,7 @@ class Client extends Emitter {
                 () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
                 data.heartbeat_interval
             );
-            this.debug.log('discord login', 'Attempting to connect to discord');
+            log.info('discord login', 'Attempting to login to discord');
             this.response.op.emit(GatewayCodes.Identify, {
                 token: token.toString(),
                 intents: this.options.intents,
@@ -413,7 +411,7 @@ class Client extends Emitter {
             });
         });
         this.op(GatewayCodes.InvalidSession, () => {
-            this.debug.error(
+            log.error(
                 'invalid token',
                 'Invalid token was passed, throwing a error...'
             );
@@ -421,7 +419,7 @@ class Client extends Emitter {
         });
 
         this.event('READY', (data) => {
-            this.debug.success(
+            log.info(
                 'bot online',
                 'Logged into discord, with everything intact'
             );
@@ -430,7 +428,7 @@ class Client extends Emitter {
             setBot(this.bot);
             data.guilds.forEach((g) => {
                 console.log(g);
-                this.debug.success('guild recieved', `${g.id} Received, `);
+                log.debug('guild recieved', `${g.id} Received, `);
                 g.unavailable ? '' : this.cache.cache('guilds', new Guild(g));
             });
             const ready = this.events.get('ready');
@@ -450,7 +448,7 @@ class Client extends Emitter {
         });
 
         this.event('INVALID_SESSION', () => {
-            this.debug.error(
+            log.error(
                 'invalid token',
                 'Invalid token was passed, throwing a error...'
             );
@@ -487,7 +485,7 @@ class Client extends Emitter {
 
             if (str[0].slice(0, prefix.length) !== prefix && !a) return;
 
-            if (this.options.debug) console.log(str);
+            log.trace('message create', str);
 
             args = str.slice(a ? 2 : 1);
             commandName = (a ? str[1] : str[0])

@@ -10,7 +10,7 @@
 
 import { Client } from 'undici';
 
-import Debug from './_Debug';
+import { log } from './_logger';
 import { discordAPI } from './_DiscordAPI';
 import { token } from './_globals';
 let http = new Client(discordAPI.discord);
@@ -70,7 +70,7 @@ export default {
                 resolve(d);
             });
         }).catch((e) => {
-            new Debug(true).log(method, e);
+            log.error(method, e);
             console.trace();
         });
     },
