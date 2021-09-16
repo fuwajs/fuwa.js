@@ -78,6 +78,9 @@ class Guild {
             created_at: new Date(data.joined_at),
         });
     }
+    leave() {
+        return http.DELETE(`/users/@me/guilds/${this.id}`);
+    }
     async modifyRolePosition(role: Role | string, position: number) {
         const id = role instanceof Role ? role.id : role;
         return new Role(
