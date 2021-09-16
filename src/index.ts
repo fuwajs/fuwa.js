@@ -4,7 +4,6 @@ import _Embed from './lib/discord/Embed';
 import _Colors from './lib/Colors';
 
 // Types
-// TODO: finish exporting types
 import _Request from './lib/Request';
 import _Response from './lib/Response';
 export {
@@ -12,7 +11,29 @@ export {
     CommandCallback as commandCallback,
 } from './lib/Command';
 
-export { PermissionFlags, GatewayIntents } from './lib/_DiscordAPI';
+import {
+    PermissionFlags,
+    GatewayIntents,
+    MessageType,
+    ActivityType,
+    ChannelTypes,
+    PremiumTypes,
+    InviteTargets,
+    SlashCommandTypes,
+    UserFlags,
+} from './lib/_DiscordAPI';
+
+export const Enums = {
+    PermissionFlags,
+    GatewayIntents,
+    MessageType,
+    ActivityType,
+    ChannelTypes,
+    PremiumTypes,
+    InviteTargets,
+    SlashCommandTypes,
+    UserFlags,
+};
 
 export const Colors = _Colors;
 export const Colours = _Colors;
