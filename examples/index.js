@@ -3,7 +3,11 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const { Embed, Client, Colors } = require('../dist/index' /* import 'fuwa.js' here */);
+const {
+    Embed,
+    Client,
+    Colors,
+} = require('../dist/index' /* import 'fuwa.js' here */);
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
@@ -155,4 +159,14 @@ client.command('modify-this-channel', async function (req, res) {
         .get(req.channel_id)
         .modify({ nsfw: true })
         .then(console.log);
+});
+
+client.command('test', (req, res) => {
+    let content = '';
+    if (req.mentions) {
+        req.mentions.forEach((user) => (content += `<@${user.id}>\n`));
+    } else {
+        content = `<@${req.author.id}>`;
+    }
+    res.send(content);
 });
