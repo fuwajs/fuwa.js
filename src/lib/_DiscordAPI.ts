@@ -6,8 +6,8 @@
  *****************************************************************************/
 
 /**
+ * @description Add these intents together to use multiple.
  * @link https://discord.com/developers/docs/topics/gateway#list-of-intents
- * Add these intents together to use multiple.
  */
 export enum GatewayIntents {
     Guilds = 1 << 0,
