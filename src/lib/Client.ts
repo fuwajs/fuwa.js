@@ -27,6 +27,7 @@ import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
 import { setBot, setToken } from './_globals';
 import Guild from './discord/Guild';
+import Channel from './discord/Channel';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -61,10 +62,13 @@ export interface StatusOptions {
 }
 
 export interface Events {
-    ready(): void | Promise<void>;
-    message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
+    ready();
+    message(req: Request, res: Response);
+    commandNotFound(req: Request, cmd: CommandCallback);
     reaction(reaction: Reaction);
+    'new guild': (guild: Guild) => any;
+    'new channel': (guild: Guild) => any;
+
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -272,10 +276,9 @@ class Client extends Emitter {
      * @param options Options for your command.
      * @returns Command Options
      * @example
-     * ```typescript
+     * ```ts
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!');
-     *
      * });
      * ```
      */
@@ -354,7 +357,7 @@ class Client extends Emitter {
      * @param token Your bot token
      * @param status Your Bot Status Options
      */
-    async login(token: string | Buffer) {
+    async login(token?: string | Buffer) {
         this.debug.log(
             'login started',
             'Login is function is attempting to run...'
@@ -376,7 +379,7 @@ class Client extends Emitter {
         };
 
         // set the global token
-        setToken(token.toString());
+        setToken(process.env.TOKEN || token.toString());
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
@@ -438,9 +441,14 @@ class Client extends Emitter {
                 this.events.get('reaction')(new Reaction(json));
             }
         });
-        this.event('GUILD_CREATE', (guild) =>
-            this.cache.cache('guilds', guild)
-        );
+        this.event('GUILD_CREATE', (g) => {
+            const guild = new Guild(g);
+            this.cache.cache('guilds', guild);
+            if (this.events.has('new guild')) {
+                this.events.get('new guild')(guild);
+            }
+        });
+
         this.event('INVALID_SESSION', () => {
             this.debug.error(
                 'invalid token',
@@ -523,6 +531,27 @@ class Client extends Emitter {
             clearInterval(this.loop);
             if (end) process.exit();
         }
+    }
+    /**
+     *
+     * @returns List of guilds
+     */
+    async getGuilds(): Promise<string[]> {
+        return (await http.GET('/users/@me/guilds')).map((g) => g.id);
+    }
+    async getGuild(gid: string) {
+        return new Guild(await http.GET(`/guilds/${gid}`));
+    }
+    async createDM(uid: string) {
+        return new Channel(
+            await http.POST(
+                '/users/@me/channels',
+                JSON.stringify({ recipient_id: uid })
+            )
+        );
+    }
+    modifyBot(username: string) {
+        return http.PATCH('/users/@me', JSON.stringify({ username }));
     }
     set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this {
         this.options[key] = val;
