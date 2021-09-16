@@ -51,7 +51,7 @@ export const discordAPI = {
     discord: 'https://discord.com',
 };
 
-export const discordCDN = 'https://cdn.discordapp.com';
+export const discordCDN = 'https://cdn.discord.com';
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
