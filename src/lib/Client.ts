@@ -427,7 +427,6 @@ class Client extends Emitter {
             this.bot = new User(data.user);
             setBot(this.bot);
             data.guilds.forEach((g) => {
-                console.log(g);
                 log.debug('guild recieved', `${g.id} Received, `);
                 g.unavailable ? '' : this.cache.cache('guilds', new Guild(g));
             });

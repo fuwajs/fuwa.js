@@ -14,23 +14,9 @@ import {
     UserFlags,
 } from '../_DiscordAPI';
 import http from '../_http';
+import { getAvatarUrl, sendMSG } from '../_util';
+import Message from './Message';
 
-export function getAvatarUrl(props: {
-    uid: string;
-    avatar: string;
-    isBanner?: boolean;
-}): string {
-    let url = `${discordCDN}/${
-        props.isBanner ?? false ? 'banners' : 'avatars'
-    }/${props.uid}/`;
-    // means its a gif
-    if (props.avatar.startsWith('a_')) {
-        url += `${props.avatar}.gif`;
-    } else {
-        url += `${props.avatar}.png`;
-    }
-    return url;
-}
 export class User implements IUser {
     id: string;
     username: string;
@@ -68,31 +54,18 @@ export class User implements IUser {
      * Send a Direct Message to 'this' user.
      * @param content The contents of the message. Can be a string or an Embed.
      */
-    async dm(content: string | Embed): Promise<IMessage> {
-        const data: any = {};
-        data.recipient_id = this.id;
-        if (typeof content === 'string') {
-            // Just a normal message
-            data.content = content;
-            data.tts = false;
-        } else if (content instanceof Embed) {
-            data.embed = content;
-            data.tts = false;
-        } else {
-            throw new TypeError(
-                `Expected type 'string | Embed' instead found ${typeof content}`
-            );
-        }
+    async dm(content: string | Embed): Promise<[Channel, Message]> {
         const dm: Channel = await http
             .POST(
                 '/users/@me/channels',
                 JSON.stringify({ recipient_id: this.id })
             )
             .catch(console.error);
+        const msg = new Message(
+            await sendMSG(content, dm.id, false, { recipient_id: this.id })
+        );
 
-        return http
-            .POST(`/channels/${dm.id}/messages`, JSON.stringify(data))
-            .catch(console.error);
+        return [dm, msg];
     }
 }
 
