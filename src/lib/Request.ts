@@ -12,6 +12,7 @@ class Request {
     channel: Channel;
     readonly channel_id;
     readonly guild_id;
+    readonly mentions: User[];
     /**
      * @deprecated This will be removed soon, please add feature requests if you still require this in your applications.
      */
@@ -30,6 +31,7 @@ class Request {
         this.channel_id = msg.channel_id;
         this.reactions = msg.reactions;
         this.message = new Message(msg);
+        this.mentions = msg.mentions.map((u) => new User(u));
     }
     /**
      * To use this function you must have the server list intent enabled, otherwise you will get an error
