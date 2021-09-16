@@ -30,12 +30,12 @@ export default {
         method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         path: string,
         data?: string | Buffer,
-        // version?: 6 | 8 | 9,
-        headers?: any
+        headers?: any,
+        version?: 6 | 8 | 9
     ): Promise<any> {
         return new Promise(async (resolve, reject) => {
             const params: any = {
-                path: '/api/v8' + path,
+                path: `/api/v${version || 8}` + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,18 +76,18 @@ export default {
     },
 
     GET(path: string, headers?: any): Promise<any> {
-        return this.REQUEST('GET', path, undefined, headers);
+        return this.REQUEST('GET', path, undefined, headers, 9);
     },
     DELETE(path: string, headers?: any): Promise<any> {
-        return this.REQUEST('DELETE', path, undefined, headers);
+        return this.REQUEST('DELETE', path, undefined, headers, 9);
     },
     POST(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('POST', path, data, headers);
+        return this.REQUEST('POST', path, data, headers, 9);
     },
     PUT(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('PUT', path, data, headers);
+        return this.REQUEST('PUT', path, data, headers, 9);
     },
     PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('PATCH', path, data, headers);
+        return this.REQUEST('PATCH', path, data, headers, 9);
     },
 };

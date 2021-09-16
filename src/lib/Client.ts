@@ -7,9 +7,12 @@
 import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
-import { InvalidToken } from './Errors';
+import { InvalidToken, InvalidPrefix } from './Errors';
 import {
-    discordAPI, Message, GatewayCodes, UserStatus,
+    discordAPI,
+    Message,
+    GatewayCodes,
+    UserStatus,
     ActivityType,
     GatewayIntents,
 } from './_DiscordAPI';
@@ -24,6 +27,7 @@ import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
 import { setBot, setToken } from './_globals';
 import Guild from './discord/Guild';
+import Channel from './discord/Channel';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -58,10 +62,13 @@ export interface StatusOptions {
 }
 
 export interface Events {
-    ready(): void | Promise<void>;
-    message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
+    ready();
+    message(req: Request, res: Response);
+    commandNotFound(req: Request, cmd: CommandCallback);
     reaction(reaction: Reaction);
+    'new guild': (guild: Guild) => any;
+    'new channel': (guild: Guild) => any;
+
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -269,10 +276,9 @@ class Client extends Emitter {
      * @param options Options for your command.
      * @returns Command Options
      * @example
-     * ```typescript
+     * ```ts
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!');
-     *
      * });
      * ```
      */
@@ -351,7 +357,7 @@ class Client extends Emitter {
      * @param token Your bot token
      * @param status Your Bot Status Options
      */
-    async login(token: string | Buffer) {
+    async login(token?: string | Buffer) {
         this.debug.log(
             'login started',
             'Login is function is attempting to run...'
@@ -373,19 +379,23 @@ class Client extends Emitter {
         };
 
         // set the global token
-        setToken(token.toString());
+        setToken(process.env.TOKEN || token.toString());
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
         let options: QueryOptions = {
-            v: 8,
+            v: 9,
             encoding: erlpack ? 'etf' : 'json',
         };
         this.connect(discordAPI.gateway, options);
         this.op(GatewayCodes.Hello, (data) => {
-            this.debug.log('hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
+            this.debug.log(
+                'hello',
+                `Recieved Hello event and recieved:\n${this.debug.object(
+                    data,
+                    1
+                )}`
             );
             this.loop = setInterval(
                 () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
@@ -403,7 +413,10 @@ class Client extends Emitter {
             });
         });
         this.op(GatewayCodes.InvalidSession, () => {
-            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+            this.debug.error(
+                'invalid token',
+                'Invalid token was passed, throwing a error...'
+            );
             throw new InvalidToken('Invalid token');
         });
 
@@ -428,9 +441,21 @@ class Client extends Emitter {
                 this.events.get('reaction')(new Reaction(json));
             }
         });
-        this.event('GUILD_CREATE', (guild) =>
-            this.cache.cache('guilds', guild)
-        );
+        this.event('GUILD_CREATE', (g) => {
+            const guild = new Guild(g);
+            this.cache.cache('guilds', guild);
+            if (this.events.has('new guild')) {
+                this.events.get('new guild')(guild);
+            }
+        });
+
+        this.event('INVALID_SESSION', () => {
+            this.debug.error(
+                'invalid token',
+                'Invalid token was passed, throwing a error...'
+            );
+            throw new InvalidToken('Invalid token');
+        });
         this.event('MESSAGE_CREATE', async (msg) => {
             const e = this.events.get('message');
             if (e) e(new Request(msg, this.cache), new Response(msg));
@@ -447,7 +472,7 @@ class Client extends Emitter {
             } else if (typeof this.prefix === 'string') {
                 prefix = this.prefix;
             } else {
-                throw new TypeError('Invalid prefix type');
+                throw new InvalidPrefix(`${prefix} is not a valid prefix`);
             }
             // console.timeEnd('prefix parsing');
             if (!prefix) return;
@@ -506,6 +531,27 @@ class Client extends Emitter {
             clearInterval(this.loop);
             if (end) process.exit();
         }
+    }
+    /**
+     *
+     * @returns List of guilds
+     */
+    async getGuilds(): Promise<string[]> {
+        return (await http.GET('/users/@me/guilds')).map((g) => g.id);
+    }
+    async getGuild(gid: string) {
+        return new Guild(await http.GET(`/guilds/${gid}`));
+    }
+    async createDM(uid: string) {
+        return new Channel(
+            await http.POST(
+                '/users/@me/channels',
+                JSON.stringify({ recipient_id: uid })
+            )
+        );
+    }
+    modifyBot(username: string) {
+        return http.PATCH('/users/@me', JSON.stringify({ username }));
     }
     set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this {
         this.options[key] = val;
