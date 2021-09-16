@@ -51,7 +51,7 @@ export const discordAPI = {
     discord: 'https://discord.com',
 };
 
-export const discordCDN = 'https://cdn.discord.com';
+export const discordCDN = 'https://cdn.discordapp.com';
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
@@ -170,12 +170,12 @@ interface Sticker {
 }
 
 enum StickerFormat {
-    Png = 1,
+    Png,
     Apng,
     Lottie,
 }
 
-enum MessageType {
+export enum MessageType {
     Default,
     RecipientAdd,
     RecipientRemove,
@@ -478,6 +478,7 @@ export interface User extends Author {
     /** Is the user's email verfied? */
     verified?: boolean;
     email?: string;
+    accent_color?: number;
     banner?: string;
     flags?: number;
     premium_type?: PremiumTypes;
@@ -864,7 +865,7 @@ export interface Invite {
 
 export enum InviteTargets {
     Stream = 1,
-    EmbeddedApplication = 2,
+    EmbeddedApplication,
 }
 
 export interface InviteStage {
