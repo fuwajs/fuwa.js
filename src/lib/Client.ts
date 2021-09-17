@@ -101,6 +101,14 @@ export interface clientOptions {
      * @see GatewayIntents
      */
     intents: number;
+    /**
+     * The
+     */
+    parser: (
+        prefix: string | string[],
+        msg: Message,
+        options: clientOptions
+    ) => [string, string[]] | false;
 
     /**
      * If the bot should cache guilds/channels/users or not.
@@ -148,16 +156,21 @@ class Client extends Emitter {
     private sessionId = '';
     public cache: Cache;
     protected status: any = [];
+    protected parser: (
+        prefix: string | string[],
+        msg: Message
+    ) => [string, string[]] | false;
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
-    protected events: Map<keyof Events, Function> = new Map();
+    public events: Map<keyof Events, Function> = new Map();
     protected prefix:
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
     protected options: clientOptions;
+
     protected loop?: NodeJS.Timeout;
-    protected commands: Map<
+    public commands: Map<
         string,
         { cb: CommandCallback; options: commandOptions }[]
     > = new Map();
@@ -173,6 +186,17 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
+        this.parser =
+            options.parser ||
+            function (prefix, msg, options) {
+                const str = msg.content.split(' ');
+                const a =
+                    this.options.useMentionPrefix &&
+                    str[0] === `<@!${this.bot.id}>`;
+                const commandName = (a ? str[1] : str[0])
+                    .replace(prefix, '')
+                    .toLowerCase();
+            };
         this.options = {
             cache: true,
             debug: false,
@@ -449,7 +473,6 @@ class Client extends Emitter {
                 this.events.get('new guild')(guild);
             }
         });
-
         this.event('INVALID_SESSION', () => {
             this.debug.error(
                 'invalid token',
@@ -526,6 +549,7 @@ class Client extends Emitter {
             // console.timeEnd('run command');
             // console.timeEnd('command run');
         });
+        return this;
     }
     logout(end = true) {
         if (this?.ws && this.loop) {
