@@ -32,7 +32,11 @@
     },
     "homepage": "https://fuwajs.github.io",
     "dependencies": {
+        "bufferutil": "^4.0.3",
+        "chalk": "^4.1.2",
+        "erlpack": "^0.1.3",
         "undici": "^4.5.1",
+        "utf-8-validate": "^5.0.5",
         "ws": "^8.2.2"
     },
     "devDependencies": {
