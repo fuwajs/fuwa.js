@@ -12,7 +12,7 @@ import { Client } from 'undici';
 
 import { log } from './_logger';
 import { discordAPI } from './_DiscordAPI';
-import { token } from './_globals';
+import { token, debug } from './_globals';
 let http = new Client(discordAPI.discord);
 
 export default {
@@ -33,7 +33,7 @@ export default {
         headers?: any,
         version?: 6 | 8 | 9
     ): Promise<any> {
-        log.debug(
+        debug.log(
             'new request',
             `Making a request to /api/v${version || 8}${path}`
         );
@@ -48,23 +48,23 @@ export default {
                 body: data,
             };
             if (token) params.headers.authorization = `Bot ${token}`;
-            log.trace('request paramters', log.object(params, 1));
+            debug.log('request paramters', debug.object(params, 1));
             const res = await http.request(params);
-            log.trace('request', 'request has been made');
+            debug.log('request', 'request has been made');
             let d;
             // Sucess 200->299
             if (res.statusCode > 199 && res.statusCode < 300) {
                 try {
                     d = await res.body.json();
                 } catch (e) {
-                    log.error('parse json', 'Parsing json failed');
+                    debug.error('parse json', 'Parsing json failed');
                     console.error(e);
 
                     reject(e);
                 }
             } else if (res.statusCode === 429) {
                 // Handle Discord Rate Limits
-                log.info('rate limits', 'Hit a discord rate limit');
+                debug.log('rate limits', 'Hit a discord rate limit');
                 setTimeout(() => {
                     this.REQUEST(method, path, data, headers).catch((e) =>
                         console.error(e)
