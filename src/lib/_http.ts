@@ -45,33 +45,26 @@ export default {
             };
             if (token) params.headers.authorization = `Bot ${token}`;
             const res = await http.request(params);
+            debug.log('request', 'request has been made');
 
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                const str = Buffer.concat(chunks).toString();
-                let d;
-                if (!str) resolve({});
-                // Sucess 200->299
+                try {
+                    d = JSON.parse(str);
+                } catch (e) {
+                    reject(e);
+                }
                 if (res.statusCode > 199 && res.statusCode < 300) {
-                    try {
-                        d = JSON.parse(str);
-                    } catch (e) {
-                        reject(e);
-                    }
+                    resolve(d);
                 } else if (res.statusCode === 429) {
                     // Handle Discord Rate Limits
+                    debug.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
                         this.REQUEST(method, path, data, headers).catch((e) =>
                             console.error(e)
                         );
-                    }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                    }, d?.retry_after * 1000); // seconds -> milliseconds
                 }
                 resolve(d);
             });
-        }).catch((e) => {
-            new Debug(true).log(method, e);
-            console.trace();
         });
     },
 
