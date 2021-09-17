@@ -17,14 +17,12 @@ const { UserFlags } = Enums;
 
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
-    // debug: true,
     builtinCommands: {
         help: {
             embedColor: Colors.rgb(13, 186, 120),
         },
     },
 });
-
 // Log the bot into discord
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
@@ -42,17 +40,10 @@ client.on('reaction', async (reaction) => {
 });
 
 // This function will be ran before every command
-client.use(async function reactMiddleware(req, res, next) {
-    const guild = await req.getGuild();
-    let emoji;
-    try {
-        emoji = await guild.getEmoji('884220664913989663');
-    } catch {
-        emoji = '😎';
-    }
+client.use(function reactMiddleware(req, res, next) {
     // For example, you could notify the user you have recieved their command
     // by reacting with a green checkmark.
-    res.react(emoji);
+    res.react('✅');
     next(); // When calling the 'next' function, your calling the command that the message
     // was meant for, dont forget to put this at the end of your function!
 });
@@ -75,15 +66,39 @@ client.command(['ping', 'latency'], function ping(req, res) {
     });
 });
 
+client.command('react', async (req, res) => {
+    await req.getGuild();
+    // prettier-ignore
+    const emojis = Array
+        .from((await req.guild.getEmojis())
+        .entries())
+        .map(([, e]) => e);
+    let emoji;
+
+    if (emojis === []) {
+        const emojiIMG = readFileSync(
+            join(__dirname, 'images/sweat-emoji.png')
+        );
+        emoji = await req.guild.createEmoji({
+            image: { data: emojiIMG, mimetype: 'png' },
+            name: 'Sweat emoji',
+            roles: [req.guild.roles.get('883857820078989363')],
+        });
+    } else {
+        emoji = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    res.react(emoji);
+});
 // More complex example command using the GitHub API
 client.command(
     ['github', 'gh'],
     async function github(req, res) {
         const username = req.args[0] || 'octocat';
-        // Fetch the github user's JSON
-        // prettier-ignore
-        const user = await fetch(`https://api.github.com/users/${username}`)
-            .then(res => res.json())
+        const user = await (
+            await fetch(`https://api.github.com/users/${username}`)
+        ) // Fetch the github user's JSON code (as a string)
+            .json(); // Turn this string into a object we can use
 
         const date = new Date(user.created_at).toLocaleString();
         // Send an embed!
@@ -113,14 +128,14 @@ client.command(
 
 client.command(
     ['echo', 'say'],
-    function echo(req, res) {
+    function (req, res) {
         req.message.delete();
         res.send(req.args.toString() || 'You didnt say anything!');
     },
     { desc: 'Makes the bot repeat what you say!' }
 );
 
-client.command('userinfo', async function userInfo(req, res) {
+client.command('userinfo', async (req, res) => {
     let user;
     if (parseInt(req.args[0])) {
         try {
@@ -132,6 +147,8 @@ client.command('userinfo', async function userInfo(req, res) {
     } else {
         user = req.mentions[0] ? req.mentions[0] : req.author;
     }
+
+    console.log(user);
     res.send(
         new Embed()
             .setAuthor(req.author.username, { icon: req.author.avatar })
@@ -164,31 +181,10 @@ client.command('guildinfo', async function (req, res) {
     res.send(embed);
 });
 
-client.command('create-channel', async function createChannel(req, res) {
-    const guild = await req.getGuild();
-    const name = req.args[0] || 'Channel';
-
-    guild
-        .createChannel({
-            name,
-            type: Enums.ChannelTypes.Text,
-            parent_id: '788135963528134657',
-            nsfw: req.args[1] === 'true',
-        })
-        .catch((err) =>
-            res.reply(
-                `Error, could complete that: \n \`\`\`${
-                    err.message || err.reason
-                }\`\`\``
-            )
-        )
-        .then((channel) => channel.send('Created!'))
-        .catch((err) =>
-            res.reply(
-                `Error, could complete that: \n \`\`\`${
-                    err.message || err.reason
-                }\`\`\``
-            )
-        )
-        .then((msg) => res.reply(`Channel created at <#${msg.channel_id}>`));
+client.command('modify-this-channel', async function (req, res) {
+    await req.getGuild();
+    req.guild.channels
+        .get(req.channel_id)
+        .modify({ nsfw: true })
+        .then(console.log);
 });
