@@ -17,7 +17,7 @@ const { UserFlags } = Enums;
 
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
-    // debug: true,
+    debug: true,
     builtinCommands: {
         help: {
             embedColor: Colors.rgb(13, 186, 120),
