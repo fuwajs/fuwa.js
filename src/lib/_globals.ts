@@ -1,15 +1,9 @@
 import User from './discord/User';
-import { Logger } from './_logger';
 
-export let token: string;
+export let token: string | null;
 
-export let bot: User;
+export let bot: User | null;
 
-export let logger: Logger;
-
-export function setLogger(newLogger: Logger) {
-    return (logger = newLogger)
-}
 export function setToken(newToken: string) {
     return (token = newToken);
 }
