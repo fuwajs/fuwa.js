@@ -1,8 +1,8 @@
 import User from './discord/User';
 
-export let token: string | null;
+export let token: string | null = null;
 
-export let bot: User | null;
+export let bot: User | null = null;
 
 export function setToken(newToken: string) {
     return (token = newToken);
