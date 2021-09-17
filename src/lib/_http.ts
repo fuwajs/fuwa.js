@@ -12,7 +12,7 @@ import { Client } from 'undici';
 
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
-import { token, debug } from './_globals';
+import { token } from './_globals';
 let http = new Client(discordAPI.discord);
 
 export default {
@@ -33,10 +33,6 @@ export default {
         headers?: any,
         version?: 6 | 8 | 9
     ): Promise<any> {
-        debug.log(
-            'new request',
-            `Making a request to /api/v${version || 8}${path}`
-        );
         return new Promise(async (resolve, reject) => {
             const params: any = {
                 path: `/api/v${version || 8}` + path,
@@ -48,16 +44,9 @@ export default {
                 body: data,
             };
             if (token) params.headers.authorization = `Bot ${token}`;
-            debug.log('request paramters', debug.object(params, 1));
             const res = await http.request(params);
             debug.log('request', 'request has been made');
-            const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
-            res.body.on('end', () => {
-                const str = Buffer.concat(chunks).toString();
-                let d;
-                if (!str) resolve({});
-                // Sucess 200->299
+
                 try {
                     d = JSON.parse(str);
                 } catch (e) {

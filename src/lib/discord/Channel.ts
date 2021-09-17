@@ -15,7 +15,6 @@ import {
 import Message from './Message';
 import Embed from './Embed';
 import { InvalidMessageContent } from '../Errors';
-import { sendMSG } from '../_util';
 
 export default class Channel {
     id: string;
@@ -46,7 +45,25 @@ export default class Channel {
         });
     }
     async send(content: string | Embed) {
-        return new Message(await sendMSG(content, this.id, false));
+        const data: any = {};
+        if (typeof content === 'string') {
+            // Just a normal message
+            data.content = content;
+            data.tts = false;
+        } else if ((content as any) instanceof Embed) {
+            data.embeds = [content];
+            data.tts = false;
+        } else {
+            throw new InvalidMessageContent(
+                `type ${typeof content} is not a valid content type`
+            );
+        }
+        return new Message(
+            await http.POST(
+                `/channels/${this.id}/messages`,
+                JSON.stringify(data)
+            )
+        );
     }
     async getMessage(id: string) {
         return new Message(

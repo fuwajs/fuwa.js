@@ -10,7 +10,6 @@ import Debug from '../_Debug';
 import { Emoji, Message as IMessage } from '../_DiscordAPI';
 import http from '../_http';
 import { bot } from '../_globals';
-import { sendMSG, reactMSG } from '../_util';
 // class Message implements IMessage {
 class Message {
     author: User;
@@ -35,9 +34,7 @@ class Message {
             ).then((msg) => (this.message_reference = new Message(msg)));
         }
     }
-    async reply(content: string | Embed) {
-        return new Message(await sendMSG(content, this.channel_id, this.id));
-    }
+
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
         if (this.author.id.toString() !== bot.id.toString()) {
@@ -76,8 +73,39 @@ class Message {
      * is recursive with this option set.
      * @param emojis The emoji(s) to send
      */
-    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) {
-        reactMSG(emojis, this.channel_id, this.id, inOrder);
+    react(emojis: string[] | string | Emoji | Emoji[], inOrder?: boolean) {
+        let isId = false;
+        // @ts-ignore
+        if (typeof emojis.id !== 'undefined') {
+            isId = true;
+            emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
+        }
+        if (typeof emojis === 'string') {
+            return http.PUT(
+                `/channels/${this.channel_id}/messages/${this.id}` +
+                    `/reactions/${emojis}/@me`
+            );
+        } else if (inOrder && Array.isArray(emojis)) {
+            return http
+                .PUT(
+                    `/channels/${this.channel_id}/messages/${this.id}` +
+                        `/reactions/${
+                            isId ? emojis : encodeURI(emojis[0] as any)
+                        }/@me`
+                )
+                .then(() => this.react((emojis as any).slice(1), true));
+        } else {
+            const ret: Promise<Message>[] = [];
+            (emojis as any).forEach(async (e) => {
+                ret.push(
+                    http.PUT(
+                        `/channels/${this.channel_id}/messages/${this.id}` +
+                            `/reactions/${isId ? emojis : encodeURI(e)}/@me`
+                    )
+                );
+            });
+            return ret;
+        }
     }
 }
 
