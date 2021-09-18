@@ -7,7 +7,7 @@
 import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
-import { InvalidToken } from './Errors';
+import { InvalidToken, InvalidPrefix } from './Errors';
 import {
     discordAPI,
     Message,
@@ -25,8 +25,9 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
-import { setBot, setToken } from './_globals';
+import { debug, setBot, setDebug, setToken } from './_globals';
 import Guild from './discord/Guild';
+import Channel from './discord/Channel';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
 
@@ -61,10 +62,13 @@ export interface StatusOptions {
 }
 
 export interface Events {
-    ready(): void | Promise<void>;
-    message(req: Request, res: Response): void | Promise<void>;
-    commandNotFound(req: Request, cmd: CommandCallback): void | Promise<void>;
+    ready();
+    message(req: Request, res: Response);
+    commandNotFound(req: Request, cmd: CommandCallback);
     reaction(reaction: Reaction);
+    'new guild': (guild: Guild) => any;
+    'new channel': (guild: Guild) => any;
+
     // ERR(err: Error): void | Promise<void>;
 }
 export interface clientOptions {
@@ -97,6 +101,14 @@ export interface clientOptions {
      * @see GatewayIntents
      */
     intents: number;
+    /**
+     * The
+     */
+    parser: (
+        prefix: string | string[],
+        msg: Message,
+        options: clientOptions
+    ) => [string, string[]] | false;
 
     /**
      * If the bot should cache guilds/channels/users or not.
@@ -144,16 +156,21 @@ class Client extends Emitter {
     private sessionId = '';
     public cache: Cache;
     protected status: any = [];
+    protected parser: (
+        prefix: string | string[],
+        msg: Message
+    ) => [string, string[]] | false;
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
-    protected events: Map<keyof Events, Function> = new Map();
+    public events: Map<keyof Events, Function> = new Map();
     protected prefix:
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
     protected options: clientOptions;
+
     protected loop?: NodeJS.Timeout;
-    protected commands: Map<
+    public commands: Map<
         string,
         { cb: CommandCallback; options: commandOptions }[]
     > = new Map();
@@ -169,6 +186,17 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
+        this.parser =
+            options.parser ||
+            function (prefix, msg, options) {
+                const str = msg.content.split(' ');
+                const a =
+                    this.options.useMentionPrefix &&
+                    str[0] === `<@!${this.bot.id}>`;
+                const commandName = (a ? str[1] : str[0])
+                    .replace(prefix, '')
+                    .toLowerCase();
+            };
         this.options = {
             cache: true,
             debug: false,
@@ -186,6 +214,7 @@ class Client extends Emitter {
             ...options,
         };
         this.debug = new Debug(this.options.debug ?? false);
+        setDebug(this.debug);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
             clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
@@ -272,10 +301,9 @@ class Client extends Emitter {
      * @param options Options for your command.
      * @returns Command Options
      * @example
-     * ```typescript
+     * ```ts
      * cli.command(['ping', 'latency'], (req, res) => {
      *      res.send('Pong!');
-     *
      * });
      * ```
      */
@@ -354,7 +382,7 @@ class Client extends Emitter {
      * @param token Your bot token
      * @param status Your Bot Status Options
      */
-    async login(token: string | Buffer) {
+    async login(token?: string | Buffer) {
         this.debug.log(
             'login started',
             'Login is function is attempting to run...'
@@ -376,13 +404,13 @@ class Client extends Emitter {
         };
 
         // set the global token
-        setToken(token.toString());
+        setToken(process.env.TOKEN || token.toString());
         // console.log (`Your Bot Token: ${token.toString()}`);
 
         // this.connect(discordAPI.gateway);
         this.debug.log('connecting', 'Attempting to connect to discord');
         let options: QueryOptions = {
-            v: 8,
+            v: 9,
             encoding: erlpack ? 'etf' : 'json',
         };
         this.connect(discordAPI.gateway, options);
@@ -438,9 +466,13 @@ class Client extends Emitter {
                 this.events.get('reaction')(new Reaction(json));
             }
         });
-        this.event('GUILD_CREATE', (guild) =>
-            this.cache.cache('guilds', guild)
-        );
+        this.event('GUILD_CREATE', (g) => {
+            const guild = new Guild(g);
+            this.cache.cache('guilds', guild);
+            if (this.events.has('new guild')) {
+                this.events.get('new guild')(guild);
+            }
+        });
         this.event('INVALID_SESSION', () => {
             this.debug.error(
                 'invalid token',
@@ -464,7 +496,7 @@ class Client extends Emitter {
             } else if (typeof this.prefix === 'string') {
                 prefix = this.prefix;
             } else {
-                throw new TypeError('Invalid prefix type');
+                throw new InvalidPrefix(`${prefix} is not a valid prefix`);
             }
             // console.timeEnd('prefix parsing');
             if (!prefix) return;
@@ -517,12 +549,34 @@ class Client extends Emitter {
             // console.timeEnd('run command');
             // console.timeEnd('command run');
         });
+        return this;
     }
     logout(end = true) {
         if (this?.ws && this.loop) {
             clearInterval(this.loop);
             if (end) process.exit();
         }
+    }
+    /**
+     *
+     * @returns List of guilds
+     */
+    async getGuilds(): Promise<string[]> {
+        return (await http.GET('/users/@me/guilds')).map((g) => g.id);
+    }
+    async getGuild(gid: string) {
+        return new Guild(await http.GET(`/guilds/${gid}`));
+    }
+    async createDM(uid: string) {
+        return new Channel(
+            await http.POST(
+                '/users/@me/channels',
+                JSON.stringify({ recipient_id: uid })
+            )
+        );
+    }
+    modifyBot(username: string) {
+        return http.PATCH('/users/@me', JSON.stringify({ username }));
     }
     set<T extends keyof clientOptions>(key: T, val: clientOptions[T]): this {
         this.options[key] = val;

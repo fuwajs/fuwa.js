@@ -12,7 +12,7 @@ import { Client } from 'undici';
 
 import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
-import { token } from './_globals';
+import { token, debug } from './_globals';
 let http = new Client(discordAPI.discord);
 
 export default {
@@ -30,12 +30,16 @@ export default {
         method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
         path: string,
         data?: string | Buffer,
-        // version?: 6 | 8 | 9,
-        headers?: any
+        headers?: any,
+        version?: 6 | 8 | 9
     ): Promise<any> {
+        debug.log(
+            'new request',
+            `Making a request to /api/v${version || 8}${path}`
+        );
         return new Promise(async (resolve, reject) => {
             const params: any = {
-                path: '/api/v8' + path,
+                path: `/api/v${version || 8}` + path,
                 method,
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,50 +48,50 @@ export default {
                 body: data,
             };
             if (token) params.headers.authorization = `Bot ${token}`;
+            debug.log('request paramters', debug.object(params, 1));
             const res = await http.request(params);
-
+            debug.log('request', 'request has been made');
             const chunks = [];
             res.body.on('data', (chunk) => chunks.push(chunk));
             res.body.on('end', () => {
                 const str = Buffer.concat(chunks).toString();
                 let d;
                 if (!str) resolve({});
+                try {
+                    d = JSON.parse(str);
+                } catch (e) {
+                    reject(e);
+                }
                 // Sucess 200->299
                 if (res.statusCode > 199 && res.statusCode < 300) {
-                    try {
-                        d = JSON.parse(str);
-                    } catch (e) {
-                        reject(e);
-                    }
-                } else if (res.statusCode === 429) {
+                    resolve(d);
+                } // Sucess 200->299
+                else if (res.statusCode === 429) {
                     // Handle Discord Rate Limits
+                    debug.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
                         this.REQUEST(method, path, data, headers).catch((e) =>
                             console.error(e)
                         );
-                    }, JSON.parse(str)?.retry_after * 1000); // seconds -> milliseconds
+                    }, d?.retry_after * 1000); // seconds -> milliseconds
                 }
-                resolve(d);
             });
-        }).catch((e) => {
-            new Debug(true).log(method, e);
-            console.trace();
         });
     },
 
     GET(path: string, headers?: any): Promise<any> {
-        return this.REQUEST('GET', path, undefined, headers);
+        return this.REQUEST('GET', path, undefined, headers, 9);
     },
     DELETE(path: string, headers?: any): Promise<any> {
-        return this.REQUEST('DELETE', path, undefined, headers);
+        return this.REQUEST('DELETE', path, undefined, headers, 9);
     },
     POST(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('POST', path, data, headers);
+        return this.REQUEST('POST', path, data, headers, 9);
     },
     PUT(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('PUT', path, data, headers);
+        return this.REQUEST('PUT', path, data, headers, 9);
     },
     PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any> {
-        return this.REQUEST('PATCH', path, data, headers);
+        return this.REQUEST('PATCH', path, data, headers, 9);
     },
 };

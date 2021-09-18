@@ -3,10 +3,17 @@
  * @file examples/index.js
  *****************************************************************************/
 
-const { Embed, Client, Colors } = require('../dist/index' /* import 'fuwa.js' here */);
+const {
+    Embed,
+    Client,
+    Colors,
+    Enums,
+} = require('../dist/index' /* import 'fuwa.js' here */);
 const { join } = require('path');
 const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
+
+const { UserFlags } = Enums;
 
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
@@ -127,6 +134,31 @@ client.command(
     },
     { desc: 'Makes the bot repeat what you say!' }
 );
+
+client.command('userinfo', async (req, res) => {
+    let user;
+    if (parseInt(req.args[0])) {
+        try {
+            user = await client.getUser(req.args[0]);
+        } catch {
+            res.reply('Not a valid user id');
+            return;
+        }
+    } else {
+        user = req.mentions[0] ? req.mentions[0] : req.author;
+    }
+
+    console.log(user);
+    res.send(
+        new Embed()
+            .setAuthor(req.author.username, { icon: req.author.avatar })
+            .setTitle(`${user.username}#${user.discriminator}`)
+            .setColor(user.accent_color || Colors.azure)
+            .setImage(user.banner)
+            .setThumbnail(user.avatar)
+            .setTimestamp()
+    );
+});
 
 client.command('guildinfo', async function (req, res) {
     await req.getGuild();

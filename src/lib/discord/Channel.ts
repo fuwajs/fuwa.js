@@ -14,6 +14,7 @@ import {
 } from '../_DiscordAPI';
 import Message from './Message';
 import Embed from './Embed';
+import { InvalidMessageContent } from '../Errors';
 
 export default class Channel {
     id: string;
@@ -43,18 +44,19 @@ export default class Channel {
             'X-Audit-Log-Reason': reason,
         });
     }
-    async send(content: string | Embed): Promise<Message> {
+    async send(content: string | Embed) {
         const data: any = {};
         if (typeof content === 'string') {
             // Just a normal message
             data.content = content;
             data.tts = false;
-        } else if (content instanceof Embed) {
+        } else if ((content as any) instanceof Embed) {
             data.embeds = [content];
             data.tts = false;
         } else {
-            // throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
-            return;
+            throw new InvalidMessageContent(
+                `type ${typeof content} is not a valid content type`
+            );
         }
         return new Message(
             await http.POST(
