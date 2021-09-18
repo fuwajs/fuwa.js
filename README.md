@@ -8,8 +8,8 @@
         <a href="https://www.npmjs.com/package/fuwa.js">
             <img src="https://img.shields.io/npm/v/fuwa.js.svg" />
         </a>
-        <img src="https://github.com/Fuwajs/Fuwa.js/workflows/CI/badge.svg" />
-        <img src="https://img.shields.io/github/license/Fuwajs/Fuwa.js" />
+        <img src="https://github.com/fuwajs/fuwa.js/workflows/CI/badge.svg" />
+        <img src="https://img.shields.io/github/license/fuwajs/fuwa.js" />
     </p>
 </div>
 
