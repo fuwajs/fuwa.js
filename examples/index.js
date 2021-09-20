@@ -57,8 +57,6 @@ client.use(function reactMiddleware(req, res, next) {
 // milliseconds) within an embed.
 client
     .command(['ping', 'latency'], async function ping(req, res) {
-        const g = await client.getGuildSlashCommand('788135963528134656');
-        console.log(g);
         res.send('Loading...').then((msg) => {
             msg.edit(
                 new Embed()
@@ -82,7 +80,6 @@ client.command('react', async (req, res) => {
         .entries())
         .map(([, e]) => e);
     let emoji;
-
     if (emojis === []) {
         const emojiIMG = readFileSync(
             join(__dirname, 'images/sweat-emoji.png')
@@ -103,10 +100,10 @@ client.command(
     ['github', 'gh'],
     async function github(req, res) {
         const username = req.args[0] || 'octocat';
-        const user = await (
-            await fetch(`https://api.github.com/users/${username}`)
-        ) // Fetch the github user's JSON code (as a string)
-            .json(); // Turn this string into a object we can use
+        // prettier-ignore
+        const user = await fetch(`https://api.github.com/users/${username}`)
+            .then(res => res.json())
+        // Fetch the github user's JSON code (as a string)
 
         const date = new Date(user.created_at).toLocaleString();
         // Send an embed!
