@@ -24,7 +24,6 @@ export class Argument<T extends number | string | unknown> {
     }
 }
 
-
 /**
  * Options for your command
  * @interface
@@ -38,11 +37,17 @@ export interface commandOptions {
      * Aliases for your command
      * @private
      */
-    aliases?: string[]
+    aliases?: string[];
     /**
      * Command Arguments
      */
-    args?: Map<string, Argument<unknown>>;
+    args?: {
+        parser: (val: string) => any;
+        default: any;
+        desc: string;
+        name: string;
+        required: boolean;
+    }[];
 }
 
 /**
@@ -52,4 +57,5 @@ export type CommandCallback = (
     req: Request,
     res: Response,
     next: () => void,
+    prefix: string
 ) => any;

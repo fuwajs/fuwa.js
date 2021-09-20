@@ -14,7 +14,9 @@ const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
 
 const { UserFlags } = Enums;
-
+const TOKEN =
+    process.env.TOKEN || readFileSync(join(__dirname, 'token.secret'));
+const APP_ID = process.env.APP_ID || '883909870418534410';
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
     builtinCommands: {
@@ -22,9 +24,11 @@ const client = new Client(['!', 'a!'], {
             embedColor: Colors.rgb(13, 186, 120),
         },
     },
+    applicationId: APP_ID,
 });
+
 // Log the bot into discord
-client.login(readFileSync(join(__dirname, 'token.secret')));
+client.login(TOKEN);
 
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
@@ -38,7 +42,7 @@ client.on('reaction', async (reaction) => {
 
     res.reply(`You reacted with ${reaction.emoji.name}`);
 });
-
+client.getGuildSlashCommand('788135963528134656').then(console.log);
 // This function will be ran before every command
 client.use(function reactMiddleware(req, res, next) {
     // For example, you could notify the user you have recieved their command
@@ -46,26 +50,30 @@ client.use(function reactMiddleware(req, res, next) {
     res.react('✅');
     next(); // When calling the 'next' function, your calling the command that the message
     // was meant for, dont forget to put this at the end of your function!
+    client.getGuildSlashCommand('788135963528134656').then(console.log);
 });
 
 // A basic 'ping' command. Responds with 'pong' along with the latency (in
 // milliseconds) within an embed.
-client.command(['ping', 'latency'], function ping(req, res) {
-    res.send('Loading...').then((msg) => {
-        msg.edit(
-            new Embed()
-                .setTitle('Pong')
-                .setAuthor(req.author.username, { icon: req.author.avatar })
-                .addField({
-                    name: 'Latency',
-                    value: `${Date.now() - msg.timestamp}ms`,
-                })
-                .setDescription()
-                .setColor(Colors.rgb(13, 186, 120))
-        );
-    });
-});
-
+client
+    .command(['ping', 'latency'], async function ping(req, res) {
+        const g = await client.getGuildSlashCommand('788135963528134656');
+        console.log(g);
+        res.send('Loading...').then((msg) => {
+            msg.edit(
+                new Embed()
+                    .setTitle('Pong')
+                    .setAuthor(req.author.username, { icon: req.author.avatar })
+                    .addField({
+                        name: 'Latency',
+                        value: `${Date.now() - msg.timestamp}ms`,
+                    })
+                    .setDescription()
+                    .setColor(Colors.rgb(13, 186, 120))
+            );
+        });
+    })
+    .createSlashCommand('788135963528134656');
 client.command('react', async (req, res) => {
     await req.getGuild();
     // prettier-ignore

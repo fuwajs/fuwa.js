@@ -11,6 +11,7 @@ import {
 } from './_DiscordAPI';
 import { erlpack, pack, unpack } from './_erlpack';
 import WebSocket from 'ws';
+import { debug } from './_globals';
 export interface QueryOptions {
     v?: 6 | 8 | 9;
     encoding?: 'json' | 'etf';
@@ -63,6 +64,9 @@ class Emitter {
                     d: unknown;
                     s: number;
                 } = unpack(data, encoding);
+                debug.log('websocket message', res.op);
+                debug.log('websocket message event', res.t);
+                debug.log('websocket message data', debug.object(res.d));
                 this.WSEvents?.message();
                 if (res.op === GatewayCodes.Dispatch) {
                     if (!res.t)

@@ -77,13 +77,17 @@ class Debug {
 
         for (const k in obj) {
             let val = obj[k];
-            if (val === null || val === undefined) val = chalk.red('null');
+            if (val === null || val === undefined) {
+                val = chalk.red('null');
+                continue;
+            }
             if (typeof val === 'object' && !Array.isArray(val))
                 val = '\n' + this.object(val, tabWidth + 1);
             if (Array.isArray(val))
                 val = '\n' + this.object({ ...val }, tabWidth + 1);
             // extra syntax highlighting
             if (typeof val === 'number') val = chalk.yellow(val);
+            if (typeof val === 'boolean') val = chalk.bold.blue(`__${val}__`);
             let isObj = false;
             try {
                 JSON.parse(val);

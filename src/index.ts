@@ -19,8 +19,9 @@ import {
     ChannelTypes,
     PremiumTypes,
     InviteTargets,
-    SlashCommandTypes,
+    SlashCommandOptions,
     UserFlags,
+    SlashCommandTypes,
 } from './lib/_DiscordAPI';
 
 export const Enums = {
@@ -31,6 +32,7 @@ export const Enums = {
     ChannelTypes,
     PremiumTypes,
     InviteTargets,
+    SlashCommandOptions,
     SlashCommandTypes,
     UserFlags,
 };

@@ -81,6 +81,7 @@ export interface clientOptions {
      * the library.
      */
     debug?: boolean;
+    applicationId?: string;
     /**
      * If this is turned on (true) When someone mentions your bot it will behave
      * as a prefix.
@@ -153,15 +154,21 @@ export interface clientOptions {
 const next = (
     req: Request,
     res: Response,
+    prefix: string,
     arr: { cb: CommandCallback }[],
     i = 0,
     secondArr?: { cb: CommandCallback }[]
 ) => {
     return () => {
         if (arr[i + 1]) {
-            arr[i + 1]?.cb(req, res, next(req, res, arr, i++));
+            arr[i + 1]?.cb(req, res, next(req, res, prefix, arr, i++), prefix);
         } else if (secondArr) {
-            secondArr[0]?.cb(req, res, next(req, res, secondArr, i++));
+            secondArr[0]?.cb(
+                req,
+                res,
+                next(req, res, prefix, secondArr, i++),
+                prefix
+            );
         }
     };
 };
@@ -172,6 +179,7 @@ class Client extends Emitter {
     private sessionId = '';
     public cache: Cache;
     protected status: any = [];
+    protected applicationId = '';
     protected parser: clientOptions['parser'];
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
@@ -216,6 +224,7 @@ class Client extends Emitter {
                 GatewayIntents.DirectMessages,
             ...options,
         };
+        this.applicationId = options.applicationId;
         this.debug = new Debug(this.options.debug ?? false);
         setDebug(this.debug);
         this.prefix = prefix;
@@ -358,10 +367,13 @@ class Client extends Emitter {
             this.middleware[0](
                 req,
                 res,
-                next(req, res, middlewareCommand, 0, c)
+
+                next(req, res, prefix, middlewareCommand, 0, c),
+                prefix
             );
         }
-        if (!this.middleware[0]) command.cb(req, res, next(req, res, c, 0));
+        if (!this.middleware[0])
+            command.cb(req, res, next(req, res, prefix, c, 0), prefix);
     }
     /**
      * Command function
@@ -388,27 +400,54 @@ class Client extends Emitter {
         };
         let old = this.commands.get(defaultName);
         let cmd = { cb, options: option };
-        if (old) {
-            old.push(cmd);
-        } else {
-            old = [cmd];
-        }
-        this.commands.set(defaultName, old);
+        old ? old.push(cmd) : (old = [cmd]);
 
+        this.commands.set(defaultName, old);
+        const main = old[0];
         const ret = {
             addAlias: (...aliases: string[]) => {
-                old[0].options.aliases.push(...aliases);
+                main.options.aliases.push(...aliases);
                 this.commands.set(defaultName, old);
                 return ret;
             },
 
-            addArgument: <T>(name: string, desc: string, defaultVal?: T) => {
-                let args = old[0].options.args;
-                if (!args) args = new Map<string, Argument<unknown>>();
-
-                args.set(name, new Argument<T>(desc, defaultVal));
+            addArgument: <T>(props: {
+                name: string;
+                desc?: string;
+                parser?: (val: string) => T;
+                default?: T;
+                required?: boolean;
+            }) => {
+                if (!main.options.args) {
+                    main.options.args = [];
+                }
+                main.options.args.push({
+                    parser: props.parser || ((v) => String(v)),
+                    default: props.default,
+                    name: props.name,
+                    required: props.required ?? false,
+                    desc: props.desc || 'No description provided',
+                });
                 this.commands.set(defaultName, old);
-                return ret;
+            },
+            createSlashCommand: (gid?: string) => {
+                if (!this.applicationId)
+                    throw new Error(
+                        'Application Id is required to do this action'
+                    );
+                let path = `/applications/${this.applicationId}/commands`;
+                if (gid) {
+                    path += `/guilds/${gid}/commands`;
+                } else {
+                    path += '/commands';
+                }
+                return http.POST(
+                    path,
+                    JSON.stringify({
+                        name: defaultName,
+                        description: main.options.desc,
+                    })
+                );
             },
 
             // exit: () => this
@@ -512,6 +551,16 @@ class Client extends Emitter {
             throw new InvalidToken('Invalid token');
         });
         this.event('MESSAGE_CREATE', this.runCommand.bind(this));
+    }
+    getGlobalSlashCommands() {
+        if (!this.applicationId)
+            throw new Error('Application Id is required to do this action');
+        return http.GET(`/applications/${this.applicationId}/commands`);
+    }
+    getGuildSlashCommand(gid: string) {
+        return http.GET(
+            `/applications/${this.applicationId}/guilds/${gid}/command`
+        );
     }
 
     /**
