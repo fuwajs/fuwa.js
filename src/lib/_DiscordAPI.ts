@@ -429,7 +429,11 @@ export interface Ready {
     geo_ordered_rtc_regions: string[];
     application: Application;
 }
-export enum SlashCommandTypes {
+
+/**
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ */
+export enum ApplicationCommandType {
     ChatInput = 1,
     User,
     Message,
@@ -441,7 +445,10 @@ export enum InteractionType {
     MessageComponent,
 }
 
-export enum SlashCommandOptions {
+/**
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
+ */
+export enum ApplicationCommandOptionType {
     SubCommand = 1,
     SubCommandGroup,
     String,
@@ -455,19 +462,67 @@ export enum SlashCommandOptions {
 }
 
 interface Interaction {
-    version: 1;
-    token: string;
-    type: InteractionType;
-    member: Member;
+    /** 
+     * @description id of the interaction 
+     */
     id: string;
-    guild_id: string;
-    data: {};
+    /**
+     * @description id of the application this interaction is for
+     */
+    application_id: string;
+    /**
+     * @description the type of interaction
+     */
+    type: InteractionType;
+    data: InteractionData;
+    guild_id?: string;
+    channel_id?: string;
+    member?: Member;
+    user?: User;
+    token: string;
+    version: 1;
+    message?: Message;
+}
+
+export interface InteractionData {
+    id: string;
+    name: string;
+    type: ApplicationCommandType;
+    resolved?: ResolvedData;
+    options?: ApplicationCommandInteractionDataOption[];
+    custom_id?: string;
+    component_type?: ComponentType; 
+    values?: SelectOption[];
+    target_id?: string;
+}
+
+export interface ResolvedData {
+    users?: Map<string, User>;
+    members?: Map<string, Member>;
+    roles?: Map<string, Role>;
+    channels?: Map<string, Channel>;
+    messages?: Map<string, Message>;
+}
+
+export interface ApplicationCommandInteractionDataOption {
+    name: string;
+    type: ApplicationCommandOptionType;
+    value?: ApplicationCommandOptionType;
+}
+
+export interface SelectOption {
+    label: string;
+    value: string;
+    description?: string;
+    emoji?: Emoji;
+    default?: boolean;
 }
 
 export interface Application {
     id: string;
     flags: number;
 }
+
 export enum PremiumTypes {
     None,
     NitroClassic,
