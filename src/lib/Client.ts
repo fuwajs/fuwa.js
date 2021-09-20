@@ -220,12 +220,13 @@ class Client extends Emitter {
         setDebug(this.debug);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
-            clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
-            cacheOptions: options?.cachingSettings?.cacheOptions || {
+            clearAfter: 1.08e7, // 30 min
+            cacheOptions: {
                 channels: true,
                 guilds: true,
                 users: true,
             },
+            ...options.cachingSettings,
         };
         this.cache = new Cache(caching);
         if (this.options?.builtinCommands?.help) {
@@ -252,12 +253,7 @@ class Client extends Emitter {
                             );
                             return;
                         } else {
-                            const fields = [
-                                {
-                                    name: 'Example',
-                                    value: 'Soon',
-                                },
-                            ];
+                            const fields = [];
 
                             if (cmd[0].options.args) {
                                 const argNames = [
