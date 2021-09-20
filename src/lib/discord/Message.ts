@@ -68,6 +68,12 @@ class Message {
             .DELETE(`/channels/${this.channel_id}/messages/${this.id}`)
             .catch(console.error);
     }
+    pin() {
+        return http.PUT(`/channels/${this.channel_id}/pins/${this.id}`);
+    }
+    unpin() {
+        return http.DELETE(`/channels/${this.channel_id}/pins/${this.id}`);
+    }
     /**
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
