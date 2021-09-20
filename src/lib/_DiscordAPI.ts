@@ -435,6 +435,12 @@ export enum SlashCommandTypes {
     Message,
 }
 
+export enum InteractionType {
+    Ping = 1,
+    ApplicationCommand,
+    MessageComponent,
+}
+
 export enum SlashCommandOptions {
     SubCommand = 1,
     SubCommandGroup,
@@ -446,6 +452,16 @@ export enum SlashCommandOptions {
     Role,
     Mentionable,
     Number,
+}
+
+interface Interaction {
+    version: 1;
+    token: string;
+    type: InteractionType;
+    member: Member;
+    id: string;
+    guild_id: string;
+    data: {};
 }
 
 export interface Application {
