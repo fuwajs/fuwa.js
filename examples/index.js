@@ -50,7 +50,6 @@ client.use(function reactMiddleware(req, res, next) {
     res.react('✅');
     next(); // When calling the 'next' function, your calling the command that the message
     // was meant for, dont forget to put this at the end of your function!
-    client.getGuildSlashCommand('788135963528134656').then(console.log);
 });
 
 // A basic 'ping' command. Responds with 'pong' along with the latency (in

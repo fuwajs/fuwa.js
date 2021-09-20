@@ -72,7 +72,7 @@ class Response {
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
      */
-    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) { 
+    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) {
         const react = async (emoji: string | Emoji) => {
             const string =
                 typeof emoji === 'string'
@@ -85,9 +85,7 @@ class Response {
         };
 
         if (Array.isArray(emojis)) {
-            emojis.forEach((emoji) => {
-                react(emoji);
-            });
+            emojis.forEach((emoji) => react(emoji));
         } else {
             react(emojis);
         }
