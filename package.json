@@ -14,6 +14,7 @@
     "scripts": {
         "docs": "npx typedoc --options ./docs.js",
         "test": "npm run build && npx nodemon examples/index",
+        "watch": "tsc  -w -p  .",
         "browser": "tsc -p . && node browser",
         "profile": "npm run build && node --prof examples/index",
         "build": "npx tsc -p ."

@@ -9,6 +9,7 @@ import {
     Channel as IChannel,
     ChannelProps,
     ChannelTypes,
+    Message as IMessage,
     Overwrite as IOverwrite,
     User as IUser,
 } from '../_DiscordAPI';
@@ -90,5 +91,16 @@ export default class Channel {
         ).catch((e) => {
             console.error(e);
         });
+    }
+    async getPins(): Promise<Message[]> {
+        return (
+            (await http.GET(`/channels/${this.id}/pins`)) as IMessage[]
+        ).map((m) => new Message(m));
+    }
+    pinMessage(mid: string) {
+        return http.PUT(`/channels/${this.id}/pins/${mid}`);
+    }
+    unpinMessage(mid: string) {
+        return http.DELETE(`/channels/${this.id}/pins/${mid}`);
     }
 }

@@ -25,7 +25,7 @@ import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
 import Reaction from './discord/Reaction';
-import { debug, setBot, setDebug, setToken } from './_globals';
+import { debug, setBot, setDebug, setToken, token } from './_globals';
 import Guild from './discord/Guild';
 import Channel from './discord/Channel';
 
@@ -64,8 +64,8 @@ export interface StatusOptions {
 export interface Events {
     ready();
     message(req: Request, res: Response);
-    commandNotFound(req: Request, cmd: CommandCallback);
     reaction(reaction: Reaction);
+    'invalid command': (req: Request, res: Response) => any;
     'new guild': (guild: Guild) => any;
     'new channel': (guild: Guild) => any;
 
@@ -105,10 +105,10 @@ export interface clientOptions {
      * The
      */
     parser: (
-        prefix: string | string[],
+        prefix: string,
         msg: Message,
         options: clientOptions
-    ) => [string, string[]] | false;
+    ) => [{ cb: CommandCallback; options: commandOptions }[], string[]] | false;
 
     /**
      * If the bot should cache guilds/channels/users or not.
@@ -150,30 +150,43 @@ export interface clientOptions {
  * const client = new fuwa.Client('?'); // Create and initialize a Client
  * ```
  */
+const next = (
+    req: Request,
+    res: Response,
+    arr: { cb: CommandCallback }[],
+    i = 0,
+    secondArr?: { cb: CommandCallback }[]
+) => {
+    return () => {
+        if (arr[i + 1]) {
+            arr[i + 1]?.cb(req, res, next(req, res, arr, i++));
+        } else if (secondArr) {
+            secondArr[0]?.cb(req, res, next(req, res, secondArr, i++));
+        }
+    };
+};
+
 class Client extends Emitter {
     public bot: User;
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache;
     protected status: any = [];
-    protected parser: (
-        prefix: string | string[],
-        msg: Message
-    ) => [string, string[]] | false;
+    protected parser: clientOptions['parser'];
     // protected events: Map<keyof Events, eventCallback> = new Map();
     /* eslint-disable */
-    public events: Map<keyof Events, Function> = new Map();
-    protected prefix:
+    public events = new Map<keyof Events, Function>();
+    public prefix:
         | string
         | string[]
         | ((req: Request) => Promise<string> | string);
     protected options: clientOptions;
 
     protected loop?: NodeJS.Timeout;
-    public commands: Map<
+    public commands = new Map<
         string,
         { cb: CommandCallback; options: commandOptions }[]
-    > = new Map();
+    >();
     protected middleware: CommandCallback[] = [];
     /**
      * @param prefix The prefix for your bot
@@ -186,17 +199,7 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.parser =
-            options.parser ||
-            function (prefix, msg, options) {
-                const str = msg.content.split(' ');
-                const a =
-                    this.options.useMentionPrefix &&
-                    str[0] === `<@!${this.bot.id}>`;
-                const commandName = (a ? str[1] : str[0])
-                    .replace(prefix, '')
-                    .toLowerCase();
-            };
+
         this.options = {
             cache: true,
             debug: false,
@@ -217,12 +220,13 @@ class Client extends Emitter {
         setDebug(this.debug);
         this.prefix = prefix;
         const caching: typeof options.cachingSettings = {
-            clearAfter: options?.cachingSettings?.clearAfter ?? 1.08e7, // 30 minutes
-            cacheOptions: options?.cachingSettings?.cacheOptions || {
+            clearAfter: 1.08e7, // 30 min
+            cacheOptions: {
                 channels: true,
                 guilds: true,
                 users: true,
             },
+            ...options.cachingSettings,
         };
         this.cache = new Cache(caching);
         if (this.options?.builtinCommands?.help) {
@@ -249,12 +253,7 @@ class Client extends Emitter {
                             );
                             return;
                         } else {
-                            const fields = [
-                                {
-                                    name: 'Example',
-                                    value: 'Soon',
-                                },
-                            ];
+                            const fields = [];
 
                             if (cmd[0].options.args) {
                                 const argNames = [
@@ -292,8 +291,78 @@ class Client extends Emitter {
                 { desc: 'Get help on the usage of a command.' }
             );
         }
-    }
+        this.parser =
+            options.parser ||
+            ((prefix, msg, options) => {
+                const str = msg.content.split(' ');
+                const mentionPrefix =
+                    this.options.useMentionPrefix &&
+                    str[0] === `<@!${this.bot.id}>`;
+                if (str[0].slice(0, prefix.length) !== prefix && !mentionPrefix)
+                    return false;
+                const commandName = (mentionPrefix ? str[1] : str[0])
+                    .substr(prefix.length)
+                    .toLowerCase();
+                const [, commands] = [...this.commands.entries()].find((v) => {
+                    if (
+                        v[0] === commandName ||
+                        v[1][0].options.aliases?.includes(commandName)
+                    ) {
+                        return true;
+                    } else return false;
+                });
 
+                if (!commands) return false;
+                return [commands, str.slice(mentionPrefix ? 2 : 1)];
+            });
+    }
+    protected async runCommand(msg: Message) {
+        const req = new Request(msg, this.cache);
+        const res = new Response(msg);
+        const e = this.events.get('message');
+        if (e) e(req, res);
+
+        // console.time('command run');
+        if (!msg.content) return;
+        let prefix = '';
+        // console.time('prefix parsing')
+        if (typeof this.prefix === 'function') {
+            prefix = await this.prefix(req);
+        } else if (Array.isArray(this.prefix)) {
+            prefix = this.prefix.find((p) => msg.content.startsWith(p));
+        } else if (typeof this.prefix === 'string') {
+            prefix = this.prefix;
+        } else {
+            throw new InvalidPrefix(`${prefix} is not a valid prefix`);
+        }
+        // console.timeEnd('prefix parsing');
+        if (!prefix) return;
+        // console.time('command parsing')
+        const parserRes = this.parser(prefix, msg, this.options);
+        if (!parserRes) {
+            this.events.has('invalid command')
+                ? this.events.get('invalid command')(req, res)
+                : '';
+            return;
+        }
+        const [c, args] = parserRes;
+        const command = c[0];
+        if (!command) return;
+        // console.timeEnd('command parsing')
+        // console.time('middleware')
+        const middlewareCommand = this.middleware.map((cb) => ({ cb }));
+        req.args = args;
+        // console.log (req)
+
+        if (this.middleware[0]) {
+            this.middleware[0](
+                req,
+                res,
+                next(req, res, middlewareCommand, 0, c)
+            );
+        }
+        if (!this.middleware[0]) command.cb(req, res, next(req, res, c, 0));
+    }
     /**
      * Command function
      * @param name Command name(s).
@@ -346,6 +415,7 @@ class Client extends Emitter {
         };
         return ret;
     }
+
     /**
      * @typeParam T The event name
      * @param cb The callback function
@@ -373,47 +443,7 @@ class Client extends Emitter {
         this.middleware.push(cb);
         return this;
     }
-    /**
-     * options for bot status
-     */
-
-    /**
-     * @description Log your bot into discord
-     * @param token Your bot token
-     * @param status Your Bot Status Options
-     */
-    async login(token?: string | Buffer) {
-        this.debug.log(
-            'login started',
-            'Login is function is attempting to run...'
-        );
-        const next = (
-            req: Request,
-            res: Response,
-            arr: { cb: CommandCallback }[],
-            i = 0,
-            secondArr?: { cb: CommandCallback }[]
-        ) => {
-            return () => {
-                if (arr[i + 1]) {
-                    arr[i + 1]?.cb(req, res, next(req, res, arr, i++));
-                } else if (secondArr) {
-                    secondArr[0]?.cb(req, res, next(req, res, secondArr, i++));
-                }
-            };
-        };
-
-        // set the global token
-        setToken(process.env.TOKEN || token.toString());
-        // console.log (`Your Bot Token: ${token.toString()}`);
-
-        // this.connect(discordAPI.gateway);
-        this.debug.log('connecting', 'Attempting to connect to discord');
-        let options: QueryOptions = {
-            v: 9,
-            encoding: erlpack ? 'etf' : 'json',
-        };
-        this.connect(discordAPI.gateway, options);
+    protected initOp() {
         this.op(GatewayCodes.Hello, (data) => {
             this.debug.log(
                 'hello',
@@ -444,7 +474,8 @@ class Client extends Emitter {
             );
             throw new InvalidToken('Invalid token');
         });
-
+    }
+    protected initEvents() {
         this.event('READY', (data) => {
             this.debug.success(
                 'bot online',
@@ -480,75 +511,31 @@ class Client extends Emitter {
             );
             throw new InvalidToken('Invalid token');
         });
-        this.event('MESSAGE_CREATE', async (msg) => {
-            const e = this.events.get('message');
-            if (e) e(new Request(msg, this.cache), new Response(msg));
+        this.event('MESSAGE_CREATE', this.runCommand.bind(this));
+    }
 
-            // console.time('command run');
-            if (!msg.content) return;
-            const res = new Response(msg);
-            let prefix = '';
-            // console.time('prefix parsing')
-            if (typeof this.prefix === 'function') {
-                prefix = await this.prefix(new Request(msg, this.cache));
-            } else if (Array.isArray(this.prefix)) {
-                prefix = this.prefix.find((p) => msg.content.startsWith(p));
-            } else if (typeof this.prefix === 'string') {
-                prefix = this.prefix;
-            } else {
-                throw new InvalidPrefix(`${prefix} is not a valid prefix`);
-            }
-            // console.timeEnd('prefix parsing');
-            if (!prefix) return;
-            // console.time('command parsing')
-            let commandName: string = '';
+    /**
+     * options for bot status
+     */
 
-            let args: string[] = [];
-            const str = msg.content.split(' ');
-            const a =
-                this.options.useMentionPrefix &&
-                str[0] === `<@!${this.bot.id}>`;
-
-            if (str[0].slice(0, prefix.length) !== prefix && !a) return;
-
-            if (this.options.debug) console.log(str);
-
-            args = str.slice(a ? 2 : 1);
-            commandName = (a ? str[1] : str[0])
-                .replace(prefix, '')
-                .toLowerCase();
-            let c = [...this.commands.entries()].find((v) => {
-                if (
-                    v[0] === commandName ||
-                    v[1][0].options.aliases?.includes(commandName)
-                ) {
-                    return true;
-                } else return false;
-            });
-            if (!c) return;
-            const command = c[1];
-            if (!command) return;
-            // console.timeEnd('command parsing')
-            // console.time('middleware')
-            const middlewareCommand = this.middleware.map((cb) => ({ cb }));
-            const req = new Request(msg, this.cache);
-            req.args = args;
-            // console.log (req)
-
-            if (this.middleware[0]) {
-                this.middleware[0](
-                    req,
-                    res,
-                    next(req, res, middlewareCommand, 0, command)
-                );
-            }
-            // console.timeEnd('middleware');
-            // console.time('run command');
-            if (!this.middleware[0])
-                command[0].cb(req, res, next(req, res, command, 0));
-            // console.timeEnd('run command');
-            // console.timeEnd('command run');
+    /**
+     * @description Log your bot into discord
+     * @param token Your bot token
+     * @param status Your Bot Status Options
+     */
+    async login(token?: string | Buffer) {
+        this.debug.log(
+            'login started',
+            'Login is function is attempting to run...'
+        );
+        setToken(process.env.TOKEN || token.toString());
+        this.debug.log('connecting', 'Attempting to connect to discord');
+        this.connect(discordAPI.gateway, {
+            v: 9,
+            encoding: erlpack ? 'etf' : 'json',
         });
+        this.initOp();
+        this.initEvents();
         return this;
     }
     logout(end = true) {
@@ -561,7 +548,7 @@ class Client extends Emitter {
      *
      * @returns List of guilds
      */
-    async getGuilds(): Promise<string[]> {
+    async getGuildIds(): Promise<string[]> {
         return (await http.GET('/users/@me/guilds')).map((g) => g.id);
     }
     async getGuild(gid: string) {
@@ -604,6 +591,7 @@ class Client extends Emitter {
         cred.d.presence.afk = status.afk || false;
 
         this.status = cred;
+        return this;
     }
     async deleteMessages(amt: number, channelID: string) {
         const msgs: Message[] = await http
@@ -612,12 +600,14 @@ class Client extends Emitter {
                 console.error(e);
             });
 
-        http.POST(
-            `/channels/${channelID}/messages/bulk-delete`,
-            JSON.stringify({ messages: msgs.map((m) => m.id) })
-        ).catch((e) => {
-            console.error(e);
-        });
+        return http
+            .POST(
+                `/channels/${channelID}/messages/bulk-delete`,
+                JSON.stringify({ messages: msgs.map((m) => m.id) })
+            )
+            .catch((e) => {
+                console.error(e);
+            });
     }
     async getUser(uid: string): Promise<User> {
         return new User(await http.GET(`/users/${uid}`));
