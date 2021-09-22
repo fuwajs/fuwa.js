@@ -36,7 +36,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L26)
+[src/lib/_DiscordAPI.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L26)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L27)
+[src/lib/_DiscordAPI.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L27)
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L25)
+[src/lib/_DiscordAPI.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L25)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L15)
+[src/lib/_DiscordAPI.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L15)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L16)
+[src/lib/_DiscordAPI.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L16)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L17)
+[src/lib/_DiscordAPI.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L17)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L14)
+[src/lib/_DiscordAPI.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L14)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L23)
+[src/lib/_DiscordAPI.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L23)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L24)
+[src/lib/_DiscordAPI.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L24)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L22)
+[src/lib/_DiscordAPI.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L22)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L21)
+[src/lib/_DiscordAPI.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L21)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L20)
+[src/lib/_DiscordAPI.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L20)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L18)
+[src/lib/_DiscordAPI.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L18)
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L13)
+[src/lib/_DiscordAPI.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L13)
 
 ___
 
@@ -176,4 +176,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L19)
+[src/lib/_DiscordAPI.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L19)

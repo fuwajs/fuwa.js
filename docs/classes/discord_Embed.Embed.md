@@ -58,7 +58,7 @@
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L43)
+[src/lib/discord/Embed.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L43)
 
 ## Properties
 
@@ -77,7 +77,7 @@
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L36)
+[src/lib/discord/Embed.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L36)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L23)
+[src/lib/discord/Embed.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L23)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L20)
+[src/lib/discord/Embed.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L20)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L42)
+[src/lib/discord/Embed.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L42)
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L24)
+[src/lib/discord/Embed.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L24)
 
 ___
 
@@ -135,7 +135,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L29)
+[src/lib/discord/Embed.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L29)
 
 ___
 
@@ -152,7 +152,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L32)
+[src/lib/discord/Embed.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L32)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L30)
+[src/lib/discord/Embed.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L30)
 
 ___
 
@@ -172,7 +172,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L22)
+[src/lib/discord/Embed.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L22)
 
 ___
 
@@ -182,7 +182,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L19)
+[src/lib/discord/Embed.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L19)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L18)
+[src/lib/discord/Embed.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L18)
 
 ___
 
@@ -202,7 +202,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L21)
+[src/lib/discord/Embed.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L21)
 
 ___
 
@@ -212,7 +212,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L31)
+[src/lib/discord/Embed.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L31)
 
 ## Methods
 
@@ -235,7 +235,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:257](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L257)
+[src/lib/discord/Embed.ts:257](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L257)
 
 ___
 
@@ -255,7 +255,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:248](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L248)
+[src/lib/discord/Embed.ts:248](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L248)
 
 ___
 
@@ -269,7 +269,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:294](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L294)
+[src/lib/discord/Embed.ts:294](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L294)
 
 ___
 
@@ -293,7 +293,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:141](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L141)
+[src/lib/discord/Embed.ts:141](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L141)
 
 ___
 
@@ -313,7 +313,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:185](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L185)
+[src/lib/discord/Embed.ts:185](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L185)
 
 ___
 
@@ -333,7 +333,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:59](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L59)
+[src/lib/discord/Embed.ts:59](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L59)
 
 ___
 
@@ -356,7 +356,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:118](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L118)
+[src/lib/discord/Embed.ts:118](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L118)
 
 ___
 
@@ -380,7 +380,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:77](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L77)
+[src/lib/discord/Embed.ts:77](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L77)
 
 ___
 
@@ -402,7 +402,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:269](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L269)
+[src/lib/discord/Embed.ts:269](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L269)
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:165](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L165)
+[src/lib/discord/Embed.ts:165](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L165)
 
 ___
 
@@ -446,7 +446,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:208](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L208)
+[src/lib/discord/Embed.ts:208](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L208)
 
 ___
 
@@ -466,7 +466,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:102](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L102)
+[src/lib/discord/Embed.ts:102](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L102)
 
 ___
 
@@ -486,7 +486,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:237](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L237)
+[src/lib/discord/Embed.ts:237](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L237)
 
 ___
 
@@ -506,7 +506,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:220](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L220)
+[src/lib/discord/Embed.ts:220](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L220)
 
 ___
 
@@ -530,4 +530,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Embed.ts:282](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Embed.ts#L282)
+[src/lib/discord/Embed.ts:282](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Embed.ts#L282)

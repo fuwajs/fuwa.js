@@ -77,7 +77,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:202](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L202)
+[src/lib/Client.ts:202](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L202)
 
 ## Properties
 
@@ -87,7 +87,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L182)
+[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L182)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L177)
+[src/lib/Client.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L177)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L180)
+[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L180)
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L194)
+[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L194)
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:178](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L178)
+[src/lib/Client.ts:178](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L178)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L186)
+[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L186)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:193](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L193)
+[src/lib/Client.ts:193](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L193)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:198](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L198)
+[src/lib/Client.ts:198](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L198)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L191)
+[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L191)
 
 ___
 
@@ -195,7 +195,7 @@ The
 
 #### Defined in
 
-[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L183)
+[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L183)
 
 ___
 
@@ -205,7 +205,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L187)
+[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L187)
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L30)
+[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L30)
 
 ___
 
@@ -238,7 +238,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L179)
+[src/lib/Client.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L179)
 
 ___
 
@@ -248,7 +248,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L181)
+[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L181)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L25)
+[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L25)
 
 ## Methods
 
@@ -301,7 +301,7 @@ Command Options
 
 #### Defined in
 
-[src/lib/Client.ts:391](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L391)
+[src/lib/Client.ts:391](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L391)
 
 ___
 
@@ -326,7 +326,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L50)
+[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L50)
 
 ___
 
@@ -346,7 +346,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:606](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L606)
+[src/lib/Client.ts:606](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L606)
 
 ___
 
@@ -367,7 +367,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:645](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L645)
+[src/lib/Client.ts:645](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L645)
 
 ___
 
@@ -398,7 +398,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L87)
+[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L87)
 
 ___
 
@@ -412,7 +412,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:555](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L555)
+[src/lib/Client.ts:555](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L555)
 
 ___
 
@@ -432,7 +432,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:603](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L603)
+[src/lib/Client.ts:603](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L603)
 
 ___
 
@@ -448,7 +448,7 @@ List of guilds
 
 #### Defined in
 
-[src/lib/Client.ts:600](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L600)
+[src/lib/Client.ts:600](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L600)
 
 ___
 
@@ -468,7 +468,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:560](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L560)
+[src/lib/Client.ts:560](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L560)
 
 ___
 
@@ -488,7 +488,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:661](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L661)
+[src/lib/Client.ts:661](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L661)
 
 ___
 
@@ -502,7 +502,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:517](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L517)
+[src/lib/Client.ts:517](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L517)
 
 ___
 
@@ -516,7 +516,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:485](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L485)
+[src/lib/Client.ts:485](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L485)
 
 ___
 
@@ -538,7 +538,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:575](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L575)
+[src/lib/Client.ts:575](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L575)
 
 ___
 
@@ -558,7 +558,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L590)
+[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L590)
 
 ___
 
@@ -578,7 +578,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L614)
+[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L614)
 
 ___
 
@@ -605,7 +605,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:465](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L465)
+[src/lib/Client.ts:465](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L465)
 
 ___
 
@@ -636,7 +636,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L81)
+[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L81)
 
 ___
 
@@ -656,7 +656,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:328](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L328)
+[src/lib/Client.ts:328](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L328)
 
 ___
 
@@ -683,7 +683,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:617](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L617)
+[src/lib/Client.ts:617](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L617)
 
 ___
 
@@ -703,7 +703,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:621](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L621)
+[src/lib/Client.ts:621](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L621)
 
 ___
 
@@ -735,4 +735,4 @@ A **client** so you can *chain* methods.
 
 #### Defined in
 
-[src/lib/Client.ts:481](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L481)
+[src/lib/Client.ts:481](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L481)

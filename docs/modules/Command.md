@@ -43,4 +43,4 @@ Callback for commands
 
 #### Defined in
 
-[src/lib/Command.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L56)
+[src/lib/Command.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L56)

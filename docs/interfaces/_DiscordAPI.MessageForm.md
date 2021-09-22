@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:136](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L136)
+[src/lib/_DiscordAPI.ts:136](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L136)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:138](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L138)
+[src/lib/_DiscordAPI.ts:138](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L138)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:131](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L131)
+[src/lib/_DiscordAPI.ts:131](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L131)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:134](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L134)
+[src/lib/_DiscordAPI.ts:134](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L134)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:133](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L133)
+[src/lib/_DiscordAPI.ts:133](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L133)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:137](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L137)
+[src/lib/_DiscordAPI.ts:137](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L137)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:135](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L135)
+[src/lib/_DiscordAPI.ts:135](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L135)
 
 ___
 
@@ -97,4 +97,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:132](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_DiscordAPI.ts#L132)
+[src/lib/_DiscordAPI.ts:132](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L132)

@@ -39,7 +39,7 @@
 
 #### Defined in
 
-[src/lib/_Cache.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L15)
+[src/lib/_Cache.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Cache.ts#L15)
 
 ## Properties
 
@@ -55,7 +55,7 @@
 
 #### Defined in
 
-[src/lib/_Cache.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L12)
+[src/lib/_Cache.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Cache.ts#L12)
 
 ___
 
@@ -99,4 +99,4 @@ ___
 
 #### Defined in
 
-[src/lib/_Cache.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L26)
+[src/lib/_Cache.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Cache.ts#L26)

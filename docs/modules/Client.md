@@ -26,4 +26,4 @@
 
 #### Defined in
 
-[src/lib/Client.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L32)
+[src/lib/Client.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L32)

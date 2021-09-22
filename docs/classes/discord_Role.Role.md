@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[src/lib/discord/Role.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L14)
+[src/lib/discord/Role.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L14)
 
 ## Properties
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/lib/discord/Role.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L12)
+[src/lib/discord/Role.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L12)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L11)
+[src/lib/discord/Role.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L11)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L10)
+[src/lib/discord/Role.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L10)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:9](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L9)
+[src/lib/discord/Role.ts:9](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L9)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L8)
+[src/lib/discord/Role.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L8)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L7)
+[src/lib/discord/Role.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L7)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L6)
+[src/lib/discord/Role.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L6)
 
 ___
 
@@ -130,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:5](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L5)
+[src/lib/discord/Role.ts:5](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L5)
 
 ___
 
@@ -140,7 +140,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:4](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L4)
+[src/lib/discord/Role.ts:4](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L4)
 
 ## Methods
 
@@ -154,7 +154,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L44)
+[src/lib/discord/Role.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L44)
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L26)
+[src/lib/discord/Role.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L26)
 
 ___
 
@@ -194,4 +194,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Role.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Role.ts#L38)
+[src/lib/discord/Role.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Role.ts#L38)

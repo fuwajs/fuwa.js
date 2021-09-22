@@ -56,7 +56,7 @@
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L40)
+[src/lib/discord/Channel.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L40)
 
 ## Properties
 
@@ -66,7 +66,7 @@
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L36)
+[src/lib/discord/Channel.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L36)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L30)
+[src/lib/discord/Channel.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L30)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L23)
+[src/lib/discord/Channel.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L23)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L34)
+[src/lib/discord/Channel.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L34)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L21)
+[src/lib/discord/Channel.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L21)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L29)
+[src/lib/discord/Channel.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L29)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L38)
+[src/lib/discord/Channel.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L38)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L26)
+[src/lib/discord/Channel.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L26)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L28)
+[src/lib/discord/Channel.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L28)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L35)
+[src/lib/discord/Channel.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L35)
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L37)
+[src/lib/discord/Channel.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L37)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L25)
+[src/lib/discord/Channel.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L25)
 
 ___
 
@@ -186,7 +186,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L24)
+[src/lib/discord/Channel.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L24)
 
 ___
 
@@ -196,7 +196,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L32)
+[src/lib/discord/Channel.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L32)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L33)
+[src/lib/discord/Channel.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L33)
 
 ___
 
@@ -216,7 +216,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L27)
+[src/lib/discord/Channel.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L27)
 
 ___
 
@@ -226,7 +226,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L22)
+[src/lib/discord/Channel.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L22)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L31)
+[src/lib/discord/Channel.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L31)
 
 ## Methods
 
@@ -256,7 +256,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L43)
+[src/lib/discord/Channel.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L43)
 
 ___
 
@@ -276,7 +276,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L69)
+[src/lib/discord/Channel.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L69)
 
 ___
 
@@ -290,7 +290,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:95](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L95)
+[src/lib/discord/Channel.ts:95](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L95)
 
 ___
 
@@ -311,7 +311,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L74)
+[src/lib/discord/Channel.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L74)
 
 ___
 
@@ -331,7 +331,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:100](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L100)
+[src/lib/discord/Channel.ts:100](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L100)
 
 ___
 
@@ -351,7 +351,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L81)
+[src/lib/discord/Channel.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L81)
 
 ___
 
@@ -371,7 +371,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L48)
+[src/lib/discord/Channel.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L48)
 
 ___
 
@@ -391,4 +391,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Channel.ts:103](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Channel.ts#L103)
+[src/lib/discord/Channel.ts:103](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Channel.ts#L103)

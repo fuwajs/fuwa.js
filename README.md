@@ -64,8 +64,8 @@ $ npm i fuwa.js erlpack utf-8-validate bufferutil
 ```
 
 <sup>\*</sup>
-Note: you need python installed on your computer, server, or VM before you can use
-erlpack. To learn more, please visit [erlpack's github](https://github.com/discord/github)
+Note: you need python installed & a C++ compiler on your computer, server, or VM before you can use
+erlpack. To learn more, please visit [node-gyp](https://github.com/nodejs/node-gyp)
 
 ## Coding your bot
 

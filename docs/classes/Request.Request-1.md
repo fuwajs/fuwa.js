@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[src/lib/Request.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L27)
+[src/lib/Request.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L27)
 
 ## Properties
 
@@ -56,7 +56,7 @@ An array of the arguments passed into your command
 
 #### Defined in
 
-[src/lib/Request.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L24)
+[src/lib/Request.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L24)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L10)
+[src/lib/Request.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L10)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L12)
+[src/lib/Request.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L12)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L13)
+[src/lib/Request.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L13)
 
 ___
 
@@ -102,7 +102,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L11)
+[src/lib/Request.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L11)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L14)
+[src/lib/Request.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L14)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L15)
+[src/lib/Request.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L15)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L20)
+[src/lib/Request.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L20)
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L19)
+[src/lib/Request.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L19)
 
 ___
 
@@ -154,7 +154,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L25)
+[src/lib/Request.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L25)
 
 ## Methods
 
@@ -168,7 +168,7 @@ ___
 
 #### Defined in
 
-[src/lib/Request.ts:55](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L55)
+[src/lib/Request.ts:55](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L55)
 
 ___
 
@@ -192,4 +192,4 @@ server members intents to use.
 
 #### Defined in
 
-[src/lib/Request.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Request.ts#L43)
+[src/lib/Request.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Request.ts#L43)

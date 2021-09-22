@@ -26,7 +26,6 @@
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
-							"comment": {},
 							"sources": [
 								{
 									"fileName": "src/lib/Client.ts",
@@ -1055,7 +1054,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "Command name(s)."
+												"shortText": "Command name(s)."
 											},
 											"type": {
 												"type": "union",
@@ -1081,7 +1080,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The function that is called when the command is ran."
+												"shortText": "The function that is called when the command is ran."
 											},
 											"type": {
 												"type": "reference",
@@ -1098,7 +1097,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Options for your command."
+												"shortText": "Options for your command."
 											},
 											"type": {
 												"type": "reference",
@@ -2044,7 +2043,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Your bot token"
+												"shortText": "Your bot token"
 											},
 											"type": {
 												"type": "union",
@@ -2191,7 +2190,7 @@
 											"kindString": "Type parameter",
 											"flags": {},
 											"comment": {
-												"text": "The event name"
+												"shortText": "The event name"
 											},
 											"type": {
 												"type": "typeOperator",
@@ -2224,7 +2223,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The callback function\n```typescript\ncli.on('ready', () => console.log ('Up and ready to go!'));\n```\n"
+												"shortText": "The callback function\n```typescript\ncli.on('ready', () => console.log ('Up and ready to go!'));\n```\n"
 											},
 											"type": {
 												"type": "indexedAccess",
@@ -2591,7 +2590,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "Your middleware function"
+												"shortText": "Your middleware function"
 											},
 											"type": {
 												"type": "reference",
@@ -4118,7 +4117,7 @@
 													"kindString": "Parameter",
 													"flags": {},
 													"comment": {
-														"text": "\n"
+														"shortText": "\n"
 													},
 													"type": {
 														"type": "intrinsic",
@@ -4648,9 +4647,6 @@
 							"kind": 65536,
 							"kindString": "Type literal",
 							"flags": {},
-							"comment": {
-								"shortText": "Callback for commands"
-							},
 							"sources": [
 								{
 									"fileName": "src/lib/Command.ts",
@@ -7773,7 +7769,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The emoji(s) to send"
+												"shortText": "The emoji(s) to send"
 											},
 											"type": {
 												"type": "union",
@@ -7814,7 +7810,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Should the emojis be sent in order. Note that this function\nis recursive with this option set.\n"
+												"shortText": "Should the emojis be sent in order. Note that this function\nis recursive with this option set.\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -7858,7 +7854,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The message to send. Can be a message or an Embed\n"
+												"shortText": "The message to send. Can be a message or an Embed\n"
 											},
 											"type": {
 												"type": "union",
@@ -7919,7 +7915,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The content to send. The content can be a string or an\nEmbed.\n"
+												"shortText": "The content to send. The content can be a string or an\nEmbed.\n"
 											},
 											"type": {
 												"type": "union",
@@ -8753,7 +8749,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The event to log"
+												"shortText": "The event to log"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -8767,7 +8763,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The message to log (must be a string)\n"
+												"shortText": "The message to log (must be a string)\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -8813,7 +8809,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The object or primitive to print out."
+												"shortText": "The object or primitive to print out."
 											},
 											"type": {
 												"type": "intrinsic",
@@ -8827,7 +8823,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The indentation size in tabs (4 spaces)\n"
+												"shortText": "The indentation size in tabs (4 spaces)\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -22040,7 +22036,7 @@
 													"kindString": "Parameter",
 													"flags": {},
 													"comment": {
-														"text": "The HTTP method to execute"
+														"shortText": "The HTTP method to execute"
 													},
 													"type": {
 														"type": "union",
@@ -22075,7 +22071,7 @@
 													"kindString": "Parameter",
 													"flags": {},
 													"comment": {
-														"text": "The path from 'https://discord.com/api/v{version} to execute\nthe described {@see method} from"
+														"shortText": "The path from 'https://discord.com/api/v{version} to execute\nthe described {@see method} from"
 													},
 													"type": {
 														"type": "intrinsic",
@@ -22091,7 +22087,7 @@
 														"isOptional": true
 													},
 													"comment": {
-														"text": "The data (if any) to send"
+														"shortText": "The data (if any) to send"
 													},
 													"type": {
 														"type": "union",
@@ -22129,7 +22125,7 @@
 														"isOptional": true
 													},
 													"comment": {
-														"text": "Discord API version to use {@default v 8}\n"
+														"shortText": "Discord API version to use {@default v 8}\n"
 													},
 													"type": {
 														"type": "union",
@@ -23741,7 +23737,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "A field for embed\n"
+												"shortText": "A field for embed\n"
 											},
 											"type": {
 												"type": "reflection",
@@ -23861,7 +23857,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "fields For embed\n```ts\nembed.addFields([{ name: 'some name', value: 'some value' }])\n```\n"
+												"shortText": "fields For embed\n```ts\nembed.addFields([{ name: 'some name', value: 'some value' }])\n```\n"
 											},
 											"type": {
 												"type": "array",
@@ -24012,7 +24008,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "author name that should be displayed in embed"
+												"shortText": "author name that should be displayed in embed"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24028,7 +24024,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Extra options for author\n```js\n// without options\nembed.setAuthor('Some Name')\n\n// with options\nembed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })\n```\n"
+												"shortText": "Extra options for author\n```js\n// without options\nembed.setAuthor('Some Name')\n\n// with options\nembed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })\n```\n"
 											},
 											"type": {
 												"type": "reflection",
@@ -24150,7 +24146,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The hex color code for the embed\n```ts\nembed.setColor('#6f00ff')\nembed.setColor(0x6f00f)\n```\n"
+												"shortText": "The hex color code for the embed\n```ts\nembed.setColor('#6f00ff')\nembed.setColor(0x6f00f)\n```\n"
 											},
 											"type": {
 												"type": "union",
@@ -24204,7 +24200,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "Description For Embed\n"
+												"shortText": "Description For Embed\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24362,7 +24358,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "Url of the image, this can also be a file name"
+												"shortText": "Url of the image, this can also be a file name"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24499,7 +24495,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "name of provider if exists"
+												"shortText": "name of provider if exists"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24594,7 +24590,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "Url for thumbnail in embed"
+												"shortText": "Url for thumbnail in embed"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24610,7 +24606,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Extra options for thumbnail.\n```js\n//without options\nembed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')\n\n//with options\nembed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })\n```\n"
+												"shortText": "Extra options for thumbnail.\n```js\n//without options\nembed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg')\n\n//with options\nembed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })\n```\n"
 											},
 											"type": {
 												"type": "reflection",
@@ -24736,7 +24732,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "The timestamp of the embed.\n```js\nembed.setTimestamp()\n```\n"
+												"shortText": "The timestamp of the embed.\n```js\nembed.setTimestamp()\n```\n"
 											},
 											"type": {
 												"type": "union",
@@ -24794,7 +24790,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "title for image embed\n```js\nembed.setTitle('some title');\n```\n"
+												"shortText": "title for image embed\n```js\nembed.setTitle('some title');\n```\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24839,7 +24835,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The type of embed:\n- rich: The default\n- image\n- video\n- gif\n- article\n- link\n```ts\nembed.setType('rich')\n```\n"
+												"shortText": "The type of embed:\n- rich: The default\n- image\n- video\n- gif\n- article\n- link\n```ts\nembed.setType('rich')\n```\n"
 											},
 											"type": {
 												"type": "reference",
@@ -24884,7 +24880,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "url of embed\n```ts\n\nembed.setUrl('https://discord.com')\n````\n"
+												"shortText": "url of embed\n```ts\n\nembed.setUrl('https://discord.com')\n````\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24929,7 +24925,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "url for video in embed"
+												"shortText": "url for video in embed"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -24945,7 +24941,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "extra options\n```js\n\nembed.setVideo('https://tinyurl.com/icehacks')\n```\n"
+												"shortText": "extra options\n```js\n\nembed.setVideo('https://tinyurl.com/icehacks')\n```\n"
 											},
 											"type": {
 												"type": "reflection",
@@ -28239,7 +28235,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The emoji(s) to send\n"
+												"shortText": "The emoji(s) to send\n"
 											},
 											"type": {
 												"type": "union",
@@ -28280,7 +28276,7 @@
 												"isOptional": true
 											},
 											"comment": {
-												"text": "Should the emojis be sent in order. Note that this function\nis recursive with this option set."
+												"shortText": "Should the emojis be sent in order. Note that this function\nis recursive with this option set."
 											},
 											"type": {
 												"type": "intrinsic",
@@ -29632,7 +29628,7 @@
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "The contents of the message. Can be a string or an Embed.\n"
+												"shortText": "The contents of the message. Can be a string or an Embed.\n"
 											},
 											"type": {
 												"type": "union",

@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[src/lib/_globals.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L6)
+[src/lib/_globals.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L6)
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-[src/lib/_globals.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L8)
+[src/lib/_globals.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L8)
 
 ___
 
@@ -44,7 +44,7 @@ ___
 
 #### Defined in
 
-[src/lib/_globals.ts:4](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L4)
+[src/lib/_globals.ts:4](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L4)
 
 ## Functions
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[src/lib/_globals.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L12)
+[src/lib/_globals.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L12)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[src/lib/_globals.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L16)
+[src/lib/_globals.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L16)
 
 ___
 
@@ -104,4 +104,4 @@ ___
 
 #### Defined in
 
-[src/lib/_globals.ts:9](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_globals.ts#L9)
+[src/lib/_globals.ts:9](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_globals.ts#L9)

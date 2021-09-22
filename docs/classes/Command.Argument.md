@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[src/lib/Command.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L21)
+[src/lib/Command.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L21)
 
 ## Properties
 
@@ -54,7 +54,7 @@ Default value of the argument
 
 #### Defined in
 
-[src/lib/Command.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L14)
+[src/lib/Command.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L14)
 
 ___
 
@@ -66,4 +66,4 @@ A description of the argument
 
 #### Defined in
 
-[src/lib/Command.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L19)
+[src/lib/Command.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L19)
