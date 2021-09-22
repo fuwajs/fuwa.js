@@ -1,6 +1,6 @@
 {
     "name": "fuwa.js",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "A new and powerful discord bot library; inspired by express",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
         "discordbot"
     ],
     "scripts": {
-        "docs": "npx typedoc --options ./docs.js",
+        "docs": "npx typedoc --out docs src/index.ts --json docs/v1.json",
         "test": "npm run build && npx nodemon examples/index",
         "watch": "tsc  -w -p  .",
         "browser": "tsc -p . && node browser",
@@ -49,6 +49,7 @@
         "lint-staged": "^11.1.2",
         "prettier": "^2.4.0",
         "typedoc": "^0.22.1",
+        "typedoc-plugin-markdown": "^3.11.0",
         "typescript": "^4.4.3"
     },
     "optionalDependencies": {

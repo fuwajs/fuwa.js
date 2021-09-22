@@ -108,7 +108,7 @@ channel. It should respond with `Hello there, my name is <bot name>!`
 
 # Useful links
 
-Check the [docs](https://Fuwajs.github.io/index.html) for reference.
+Check the [docs](docs/modules.md) for reference. For more in depth docs go to our [website](https://fuwajs.github.io)!
 
 Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
 

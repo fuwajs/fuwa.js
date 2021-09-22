@@ -1,0 +1,1436 @@
+{
+	"id": 0,
+	"name": "fuwa.js",
+	"kind": 1,
+	"kindString": "Project",
+	"flags": {},
+	"originalName": "",
+	"children": [
+		{
+			"id": 71,
+			"name": "commandOptions",
+			"kind": 256,
+			"kindString": "Interface",
+			"flags": {},
+			"comment": {
+				"shortText": "Options for your command",
+				"tags": [
+					{
+						"tag": "interface",
+						"text": "\n"
+					}
+				]
+			},
+			"children": [
+				{
+					"id": 73,
+					"name": "aliases",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isPrivate": true,
+						"isOptional": true
+					},
+					"comment": {
+						"shortText": "Aliases for your command"
+					},
+					"sources": [
+						{
+							"fileName": "lib/Command.ts",
+							"line": 40,
+							"character": 4
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "intrinsic",
+							"name": "string"
+						}
+					}
+				},
+				{
+					"id": 74,
+					"name": "args",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"shortText": "Command Arguments"
+					},
+					"sources": [
+						{
+							"fileName": "lib/Command.ts",
+							"line": 44,
+							"character": 4
+						}
+					],
+					"type": {
+						"type": "array",
+						"elementType": {
+							"type": "reflection",
+							"declaration": {
+								"id": 75,
+								"name": "__type",
+								"kind": 65536,
+								"kindString": "Type literal",
+								"flags": {},
+								"children": [
+									{
+										"id": 79,
+										"name": "default",
+										"kind": 1024,
+										"kindString": "Property",
+										"flags": {},
+										"sources": [
+											{
+												"fileName": "lib/Command.ts",
+												"line": 46,
+												"character": 8
+											}
+										],
+										"type": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									},
+									{
+										"id": 80,
+										"name": "desc",
+										"kind": 1024,
+										"kindString": "Property",
+										"flags": {},
+										"sources": [
+											{
+												"fileName": "lib/Command.ts",
+												"line": 47,
+												"character": 8
+											}
+										],
+										"type": {
+											"type": "intrinsic",
+											"name": "string"
+										}
+									},
+									{
+										"id": 81,
+										"name": "name",
+										"kind": 1024,
+										"kindString": "Property",
+										"flags": {},
+										"sources": [
+											{
+												"fileName": "lib/Command.ts",
+												"line": 48,
+												"character": 8
+											}
+										],
+										"type": {
+											"type": "intrinsic",
+											"name": "string"
+										}
+									},
+									{
+										"id": 82,
+										"name": "required",
+										"kind": 1024,
+										"kindString": "Property",
+										"flags": {},
+										"sources": [
+											{
+												"fileName": "lib/Command.ts",
+												"line": 49,
+												"character": 8
+											}
+										],
+										"type": {
+											"type": "intrinsic",
+											"name": "boolean"
+										}
+									},
+									{
+										"id": 76,
+										"name": "parser",
+										"kind": 2048,
+										"kindString": "Method",
+										"flags": {},
+										"sources": [
+											{
+												"fileName": "lib/Command.ts",
+												"line": 45,
+												"character": 8
+											}
+										],
+										"signatures": [
+											{
+												"id": 77,
+												"name": "parser",
+												"kind": 4096,
+												"kindString": "Call signature",
+												"flags": {},
+												"parameters": [
+													{
+														"id": 78,
+														"name": "val",
+														"kind": 32768,
+														"kindString": "Parameter",
+														"flags": {},
+														"type": {
+															"type": "intrinsic",
+															"name": "string"
+														}
+													}
+												],
+												"type": {
+													"type": "intrinsic",
+													"name": "any"
+												}
+											}
+										]
+									}
+								],
+								"groups": [
+									{
+										"title": "Properties",
+										"kind": 1024,
+										"children": [
+											79,
+											80,
+											81,
+											82
+										]
+									},
+									{
+										"title": "Methods",
+										"kind": 2048,
+										"children": [
+											76
+										]
+									}
+								]
+							}
+						}
+					}
+				},
+				{
+					"id": 72,
+					"name": "desc",
+					"kind": 1024,
+					"kindString": "Property",
+					"flags": {
+						"isOptional": true
+					},
+					"comment": {
+						"shortText": "Description for your command."
+					},
+					"sources": [
+						{
+							"fileName": "lib/Command.ts",
+							"line": 35,
+							"character": 4
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				}
+			],
+			"groups": [
+				{
+					"title": "Properties",
+					"kind": 1024,
+					"children": [
+						73,
+						74,
+						72
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "lib/Command.ts",
+					"line": 31,
+					"character": 17
+				}
+			]
+		},
+		{
+			"id": 83,
+			"name": "commandCallback",
+			"kind": 4194304,
+			"kindString": "Type alias",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "lib/Command.ts",
+					"line": 56,
+					"character": 12
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 84,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"comment": {
+						"shortText": "Callback for commands"
+					},
+					"sources": [
+						{
+							"fileName": "lib/Command.ts",
+							"line": 56,
+							"character": 30
+						}
+					],
+					"signatures": [
+						{
+							"id": 85,
+							"name": "__type",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"comment": {
+								"shortText": "Callback for commands"
+							},
+							"parameters": [
+								{
+									"id": 86,
+									"name": "req",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Request"
+									}
+								},
+								{
+									"id": 87,
+									"name": "res",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"name": "Response"
+									}
+								},
+								{
+									"id": 88,
+									"name": "next",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "reflection",
+										"declaration": {
+											"id": 89,
+											"name": "__type",
+											"kind": 65536,
+											"kindString": "Type literal",
+											"flags": {},
+											"sources": [
+												{
+													"fileName": "lib/Command.ts",
+													"line": 59,
+													"character": 10
+												}
+											],
+											"signatures": [
+												{
+													"id": 90,
+													"name": "__type",
+													"kind": 4096,
+													"kindString": "Call signature",
+													"flags": {},
+													"type": {
+														"type": "intrinsic",
+														"name": "void"
+													}
+												}
+											]
+										}
+									}
+								},
+								{
+									"id": 91,
+									"name": "prefix",
+									"kind": 32768,
+									"kindString": "Parameter",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "string"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						}
+					]
+				}
+			}
+		},
+		{
+			"id": 67,
+			"name": "Client",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 42,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "query",
+				"queryType": {
+					"type": "reference",
+					"name": "Client"
+				}
+			},
+			"defaultValue": "..."
+		},
+		{
+			"id": 13,
+			"name": "Colors",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 40,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 14,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"children": [
+						{
+							"id": 23,
+							"name": "aliceBlue",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf0f8ff"
+						},
+						{
+							"id": 24,
+							"name": "antiqueWhite",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfaebd7"
+						},
+						{
+							"id": 25,
+							"name": "aqua",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x00ffff"
+						},
+						{
+							"id": 26,
+							"name": "aquaMarine",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x7fffd4"
+						},
+						{
+							"id": 27,
+							"name": "azure",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf0ffff"
+						},
+						{
+							"id": 28,
+							"name": "beige",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf5f5dc"
+						},
+						{
+							"id": 29,
+							"name": "bisque",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xffe4c4"
+						},
+						{
+							"id": 30,
+							"name": "black",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x000000"
+						},
+						{
+							"id": 31,
+							"name": "blanchedAlmond",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xffebcd"
+						},
+						{
+							"id": 32,
+							"name": "blue",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x57c7ff"
+						},
+						{
+							"id": 33,
+							"name": "blueViolet",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x8a2be2"
+						},
+						{
+							"id": 34,
+							"name": "brown",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xa52a2a"
+						},
+						{
+							"id": 35,
+							"name": "lightGreen",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x5af78e"
+						},
+						{
+							"id": 20,
+							"name": "mind",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x3eb489"
+						},
+						{
+							"id": 36,
+							"name": "orange",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff3403"
+						},
+						{
+							"id": 37,
+							"name": "pink",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff6ac1"
+						},
+						{
+							"id": 38,
+							"name": "red",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff5c57"
+						},
+						{
+							"id": 22,
+							"name": "snow",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfffafa"
+						},
+						{
+							"id": 21,
+							"name": "white",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfffff"
+						},
+						{
+							"id": 39,
+							"name": "yellow",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf3f99d"
+						},
+						{
+							"id": 15,
+							"name": "rgb",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "lib/Colors.ts",
+									"line": 13,
+									"character": 4
+								}
+							],
+							"signatures": [
+								{
+									"id": 16,
+									"name": "rgb",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Generate a hex color number from rgb properties"
+									},
+									"parameters": [
+										{
+											"id": 17,
+											"name": "r",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 18,
+											"name": "g",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 19,
+											"name": "b",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "\n"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								23,
+								24,
+								25,
+								26,
+								27,
+								28,
+								29,
+								30,
+								31,
+								32,
+								33,
+								34,
+								35,
+								20,
+								36,
+								37,
+								38,
+								22,
+								21,
+								39
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								15
+							]
+						}
+					]
+				}
+			},
+			"defaultValue": "..."
+		},
+		{
+			"id": 40,
+			"name": "Colours",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 41,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 41,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"children": [
+						{
+							"id": 50,
+							"name": "aliceBlue",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf0f8ff"
+						},
+						{
+							"id": 51,
+							"name": "antiqueWhite",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfaebd7"
+						},
+						{
+							"id": 52,
+							"name": "aqua",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x00ffff"
+						},
+						{
+							"id": 53,
+							"name": "aquaMarine",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x7fffd4"
+						},
+						{
+							"id": 54,
+							"name": "azure",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf0ffff"
+						},
+						{
+							"id": 55,
+							"name": "beige",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf5f5dc"
+						},
+						{
+							"id": 56,
+							"name": "bisque",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xffe4c4"
+						},
+						{
+							"id": 57,
+							"name": "black",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x000000"
+						},
+						{
+							"id": 58,
+							"name": "blanchedAlmond",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xffebcd"
+						},
+						{
+							"id": 59,
+							"name": "blue",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x57c7ff"
+						},
+						{
+							"id": 60,
+							"name": "blueViolet",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x8a2be2"
+						},
+						{
+							"id": 61,
+							"name": "brown",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xa52a2a"
+						},
+						{
+							"id": 62,
+							"name": "lightGreen",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x5af78e"
+						},
+						{
+							"id": 47,
+							"name": "mind",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0x3eb489"
+						},
+						{
+							"id": 63,
+							"name": "orange",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff3403"
+						},
+						{
+							"id": 64,
+							"name": "pink",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff6ac1"
+						},
+						{
+							"id": 65,
+							"name": "red",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xff5c57"
+						},
+						{
+							"id": 49,
+							"name": "snow",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfffafa"
+						},
+						{
+							"id": 48,
+							"name": "white",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xfffff"
+						},
+						{
+							"id": 66,
+							"name": "yellow",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"defaultValue": "0xf3f99d"
+						},
+						{
+							"id": 42,
+							"name": "rgb",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "lib/Colors.ts",
+									"line": 13,
+									"character": 4
+								}
+							],
+							"signatures": [
+								{
+									"id": 43,
+									"name": "rgb",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Generate a hex color number from rgb properties"
+									},
+									"parameters": [
+										{
+											"id": 44,
+											"name": "r",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 45,
+											"name": "g",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										},
+										{
+											"id": 46,
+											"name": "b",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "\n"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								50,
+								51,
+								52,
+								53,
+								54,
+								55,
+								56,
+								57,
+								58,
+								59,
+								60,
+								61,
+								62,
+								47,
+								63,
+								64,
+								65,
+								49,
+								48,
+								66
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								42
+							]
+						}
+					]
+				}
+			},
+			"defaultValue": "..."
+		},
+		{
+			"id": 68,
+			"name": "Embed",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 43,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "query",
+				"queryType": {
+					"type": "reference",
+					"name": "Embed"
+				}
+			},
+			"defaultValue": "..."
+		},
+		{
+			"id": 1,
+			"name": "Enums",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 27,
+					"character": 13
+				}
+			],
+			"type": {
+				"type": "reflection",
+				"declaration": {
+					"id": 2,
+					"name": "__type",
+					"kind": 65536,
+					"kindString": "Type literal",
+					"flags": {},
+					"children": [
+						{
+							"id": 6,
+							"name": "ActivityType",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "ActivityType"
+								}
+							}
+						},
+						{
+							"id": 7,
+							"name": "ChannelTypes",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "ChannelTypes"
+								}
+							}
+						},
+						{
+							"id": 4,
+							"name": "GatewayIntents",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "GatewayIntents"
+								}
+							}
+						},
+						{
+							"id": 9,
+							"name": "InviteTargets",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "InviteTargets"
+								}
+							}
+						},
+						{
+							"id": 5,
+							"name": "MessageType",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "MessageType"
+								}
+							}
+						},
+						{
+							"id": 3,
+							"name": "PermissionFlags",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "PermissionFlags"
+								}
+							}
+						},
+						{
+							"id": 8,
+							"name": "PremiumTypes",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "PremiumTypes"
+								}
+							}
+						},
+						{
+							"id": 10,
+							"name": "SlashCommandOptions",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "ApplicationCommandOptionType"
+								}
+							},
+							"defaultValue": "..."
+						},
+						{
+							"id": 11,
+							"name": "SlashCommandTypes",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "ApplicationCommandType"
+								}
+							},
+							"defaultValue": "..."
+						},
+						{
+							"id": 12,
+							"name": "UserFlags",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "UserFlags"
+								}
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								6,
+								7,
+								4,
+								9,
+								5,
+								3,
+								8,
+								10,
+								11,
+								12
+							]
+						}
+					]
+				}
+			},
+			"defaultValue": "..."
+		},
+		{
+			"id": 69,
+			"name": "Request",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 46,
+					"character": 11
+				}
+			],
+			"type": {
+				"type": "query",
+				"queryType": {
+					"type": "reference",
+					"name": "_Request"
+				}
+			}
+		},
+		{
+			"id": 70,
+			"name": "Response",
+			"kind": 32,
+			"kindString": "Variable",
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "index.ts",
+					"line": 47,
+					"character": 11
+				}
+			],
+			"type": {
+				"type": "query",
+				"queryType": {
+					"type": "reference",
+					"name": "_Response"
+				}
+			}
+		}
+	],
+	"groups": [
+		{
+			"title": "Interfaces",
+			"kind": 256,
+			"children": [
+				71
+			]
+		},
+		{
+			"title": "Type aliases",
+			"kind": 4194304,
+			"children": [
+				83
+			]
+		},
+		{
+			"title": "Variables",
+			"kind": 32,
+			"children": [
+				67,
+				13,
+				40,
+				68,
+				1,
+				69,
+				70
+			]
+		}
+	],
+	"sources": [
+		{
+			"fileName": "index.ts",
+			"line": 2,
+			"character": 0
+		}
+	]
+}

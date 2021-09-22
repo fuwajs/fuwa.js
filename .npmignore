@@ -13,8 +13,8 @@ examples/
 misc/
 *.md
 .travis.yml
-.typedoc.json
-docs.js
+typedoc.json
+docs
 
 # Secrets
 *.secret
