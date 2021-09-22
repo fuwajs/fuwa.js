@@ -16,6 +16,8 @@
 
 # Table of Contents
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d82ce269059b4016bcb99b4b843ff76e)](https://app.codacy.com/gh/fuwajs/fuwa.js?utm_source=github.com&utm_medium=referral&utm_content=fuwajs/fuwa.js&utm_campaign=Badge_Grade_Settings)
+
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
 - [Quickstart](#quickstart)
