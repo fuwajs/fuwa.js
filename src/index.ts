@@ -6,10 +6,7 @@ import _Colors from './lib/Colors';
 // Types
 import _Request from './lib/Request';
 import _Response from './lib/Response';
-export {
-    commandOptions,
-    CommandCallback as commandCallback,
-} from './lib/Command';
+export { commandOptions, CommandCallback as commandCallback } from './lib/Command';
 
 import {
     PermissionFlags,

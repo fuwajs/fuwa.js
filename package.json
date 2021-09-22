@@ -1,6 +1,6 @@
 {
     "name": "fuwa.js",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "A new and powerful discord bot library; inspired by express",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -12,12 +12,13 @@
         "discordbot"
     ],
     "scripts": {
-        "docs": "npx typedoc --options ./docs.js",
-        "test": "npm run build && npx nodemon examples/index",
-        "watch": "tsc  -w -p  .",
+        "docs": "npx typedoc --out docs --entryPointStrategy expand ./src/lib --json docs/v1.json",
+        "test": "yarn build && npx nodemon examples/index",
+        "watch": "tsc -w -p  .",
         "browser": "tsc -p . && node browser",
-        "profile": "npm run build && node --prof examples/index",
-        "build": "npx tsc -p ."
+        "profile": "yarn build && node --prof examples/index",
+        "build": "npx tsc -p .",
+        "lint": "npx eslint ./src/**/*.ts --fix"
     },
     "repository": {
         "type": "git",
@@ -33,11 +34,7 @@
     },
     "homepage": "https://fuwajs.github.io",
     "dependencies": {
-        "bufferutil": "^4.0.3",
-        "chalk": "^4.1.2",
-        "erlpack": "^0.1.3",
         "undici": "^4.5.1",
-        "utf-8-validate": "^5.0.5",
         "ws": "^8.2.2"
     },
     "devDependencies": {
@@ -45,10 +42,14 @@
         "@types/ws": "^7.4.7",
         "@typescript-eslint/eslint-plugin": "^4.31.0",
         "@typescript-eslint/parser": "^4.31.0",
+        "eslint": "^7.32.0",
+        "eslint-plugin-prettier": "^4.0.0",
         "husky": "^7.0.2",
         "lint-staged": "^11.1.2",
         "prettier": "^2.4.0",
-        "typedoc": "^0.22.1",
+        "typedoc": "^0.22.4",
+        "typedoc-plugin-markdown": "^3.11.0",
+        "typedoc-plugin-rename-defaults": "^0.4.0",
         "typescript": "^4.4.3"
     },
     "optionalDependencies": {
@@ -59,5 +60,25 @@
     },
     "lint-staged": {
         "*.--write": "prettier --write"
+    },
+    "eslintConfig": {
+        "plugins": [
+            "prettier"
+        ],
+        "extends": [
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+            "project": "./tsconfig.json",
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        },
+        "rules": {
+            "prettier/prettier": "error",
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/ban-ts-comment": "off",
+            "@typescript-eslint/explicit-module-boundary-types": "off"
+        }
     }
 }

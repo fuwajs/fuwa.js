@@ -10,10 +10,12 @@
         </a>
         <img src="https://github.com/fuwajs/fuwa.js/workflows/CI/badge.svg" />
         <img src="https://img.shields.io/github/license/fuwajs/fuwa.js" />
+        <a href="https://www.codacy.com/gh/fuwajs/fuwa.js/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fuwajs/fuwa.js&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/f0bce02a48ad4ae4b3d5daa4a9156646"/></a>
     </p>
 </div>
 
 # Table of Contents
+
 
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
@@ -64,8 +66,8 @@ $ npm i fuwa.js erlpack utf-8-validate bufferutil
 ```
 
 <sup>\*</sup>
-Note: you need python installed on your computer, server, or VM before you can use
-erlpack. To learn more, please visit [erlpack's github](https://github.com/discord/github)
+Note: you need python installed & a C++ compiler on your computer, server, or VM before you can use
+erlpack. To learn more, please visit [node-gyp](https://github.com/nodejs/node-gyp)
 
 ## Coding your bot
 
@@ -108,7 +110,7 @@ channel. It should respond with `Hello there, my name is <bot name>!`
 
 # Useful links
 
-Check the [docs](https://Fuwajs.github.io/index.html) for reference.
+Check the [docs](docs/modules.md) for reference. For more in depth docs go to our [website](https://fuwajs.github.io)!
 
 Follow the [tutorial](https://github.com/fuwajs/fuwa.js/wiki) for a ground up approach.
 

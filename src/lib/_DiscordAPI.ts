@@ -461,6 +461,7 @@ export enum ApplicationCommandOptionType {
     Number,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Interaction {
     /**
      * @description id of the interaction

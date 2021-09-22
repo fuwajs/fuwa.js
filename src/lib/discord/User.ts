@@ -20,9 +20,9 @@ export function getAvatarUrl(props: {
     avatar: string;
     isBanner?: boolean;
 }): string {
-    let url = `${discordCDN}/${
-        props.isBanner ?? false ? 'banners' : 'avatars'
-    }/${props.uid}/`;
+    let url = `${discordCDN}/${props.isBanner ?? false ? 'banners' : 'avatars'}/${
+        props.uid
+    }/`;
     // means its a gif
     if (props.avatar.startsWith('a_')) {
         url += `${props.avatar}.gif`;
@@ -84,10 +84,7 @@ export class User implements IUser {
             );
         }
         const dm: Channel = await http
-            .POST(
-                '/users/@me/channels',
-                JSON.stringify({ recipient_id: this.id })
-            )
+            .POST('/users/@me/channels', JSON.stringify({ recipient_id: this.id }))
             .catch(console.error);
 
         return http

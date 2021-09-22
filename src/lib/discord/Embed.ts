@@ -190,9 +190,7 @@ class Embed {
         } else if (typeof color === 'number') {
             this.color = color;
         } else {
-            console.trace(
-                `Expected a string or number instead found ${typeof color}`
-            );
+            console.trace(`Expected a string or number instead found ${typeof color}`);
             // 'throw' would crash the bot for such a minor issue
         }
 
@@ -245,9 +243,7 @@ class Embed {
      * embed.addFields([{ name: 'some name', value: 'some value' }])
      * ```
      */
-    addFields(
-        fields: { name: string; value: string; inline?: boolean }[]
-    ): this {
+    addFields(fields: { name: string; value: string; inline?: boolean }[]): this {
         this.fields.push(...fields);
         return this;
     }

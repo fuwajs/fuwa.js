@@ -12,5 +12,5 @@ node_modules/
 browser/bundle.js
 docs.js
 .env
-#
 /dist
+docs/README.md

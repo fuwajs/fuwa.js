@@ -6,7 +6,6 @@
 
 import User from './User';
 import { Member as IMember } from '../_DiscordAPI';
-import { token } from '../_globals';
 
 class Member implements IMember {
     deaf: boolean;

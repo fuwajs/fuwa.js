@@ -6,11 +6,11 @@
 
 import Embed from './discord/Embed';
 import Message from './discord/Message';
-import User from './discord/User';
+// import User from './discord/User';
 import { Emoji } from './_DiscordAPI';
-import { Message as IMessage, Role as IRole, RoleProps } from './_DiscordAPI';
+import { Message as IMessage } from './_DiscordAPI';
 import http from './_http';
-import Role from './discord/Role';
+// import Role from './discord/Role';
 
 class Response {
     constructor(protected req: IMessage) {}
@@ -72,7 +72,8 @@ class Response {
      * @param inOrder Should the emojis be sent in order. Note that this function
      * is recursive with this option set.
      */
-    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) { 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) {
         const react = async (emoji: string | Emoji) => {
             const string =
                 typeof emoji === 'string'
@@ -85,9 +86,7 @@ class Response {
         };
 
         if (Array.isArray(emojis)) {
-            emojis.forEach((emoji) => {
-                react(emoji);
-            });
+            emojis.forEach(emoji => react(emoji));
         } else {
             react(emojis);
         }

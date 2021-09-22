@@ -1,5 +1,5 @@
 import { Attachment as IAttachment } from '../_DiscordAPI';
-import fs from 'fs';
+// import fs from 'fs';
 
 class Attachment implements IAttachment {
     id: string;
@@ -10,7 +10,11 @@ class Attachment implements IAttachment {
     height: number | null;
     width: number | null;
 
-    constructor(path: string) {
-        const f = fs.readFileSync(path, 'binary');
+    constructor(/* path: string*/) {
+        // const f = fs.readFileSync(path, 'binary');
+        // // just o
+        // this.id = f.toString();
     }
 }
+
+export default Attachment;

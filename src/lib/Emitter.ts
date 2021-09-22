@@ -38,10 +38,7 @@ class Emitter {
             },
         },
         events: {
-            emit: <T extends keyof GatewayEvents>(
-                t: T,
-                d: GatewayEvents[T]
-            ): void => {
+            emit: <T extends keyof GatewayEvents>(t: T, d: GatewayEvents[T]): void => {
                 // this.ws.send(JSON.stringify({ t, d, op: 0 }));
                 this.ws.send(pack({ t, d, op: GatewayCodes.Dispatch }));
             },
@@ -52,9 +49,7 @@ class Emitter {
         if (!erlpack && encoding === 'etf') {
             throw new Error('ETF encoding selected but erlpack not found');
         }
-        this.ws = new WebSocket(
-            url + `?v=${query.v ?? 8}&encoding=${encoding}`
-        );
+        this.ws = new WebSocket(url + `?v=${query.v ?? 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
             this.WSEvents?.open();
             this.ws.onmessage = ({ data }) => {
