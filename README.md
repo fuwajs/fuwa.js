@@ -10,6 +10,7 @@
         </a>
         <img src="https://github.com/fuwajs/fuwa.js/workflows/CI/badge.svg" />
         <img src="https://img.shields.io/github/license/fuwajs/fuwa.js" />
+        <a href="https://www.codacy.com/gh/fuwajs/fuwa.js/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fuwajs/fuwa.js&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/f0bce02a48ad4ae4b3d5daa4a9156646"/></a>
     </p>
 </div>
 
