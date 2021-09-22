@@ -10,10 +10,9 @@
 
 import { Client } from 'undici';
 
-import Debug from './_Debug';
 import { discordAPI } from './_DiscordAPI';
 import { token, debug } from './_globals';
-let http = new Client(discordAPI.discord);
+const http = new Client(discordAPI.discord);
 
 export default {
     /**
@@ -33,10 +32,7 @@ export default {
         headers?: any,
         version?: 6 | 8 | 9
     ): Promise<any> {
-        debug.log(
-            'new request',
-            `Making a request to /api/v${version || 8}${path}`
-        );
+        debug.log('new request', `Making a request to /api/v${version || 8}${path}`);
         return new Promise(async (resolve, reject) => {
             const params: any = {
                 path: `/api/v${version || 8}` + path,
@@ -52,7 +48,7 @@ export default {
             const res = await http.request(params);
             debug.log('request', 'request has been made');
             const chunks = [];
-            res.body.on('data', (chunk) => chunks.push(chunk));
+            res.body.on('data', chunk => chunks.push(chunk));
             res.body.on('end', () => {
                 const str = Buffer.concat(chunks).toString();
                 let d;
@@ -70,7 +66,7 @@ export default {
                     // Handle Discord Rate Limits
                     debug.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
-                        this.REQUEST(method, path, data, headers).catch((e) =>
+                        this.REQUEST(method, path, data, headers).catch(e =>
                             console.error(e)
                         );
                     }, d?.retry_after * 1000); // seconds -> milliseconds

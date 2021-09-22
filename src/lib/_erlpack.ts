@@ -33,4 +33,4 @@ export function unpack(data: string | Buffer, encoding: 'etf' | 'json'): any {
             return JSON.parse(data.toString());
         }
     }
-} 
+}

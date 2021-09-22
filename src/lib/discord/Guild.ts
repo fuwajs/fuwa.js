@@ -9,7 +9,6 @@ import {
     discordCDN,
     GuildHashes,
     Channel as IChannel,
-    Role as IRole,
     RoleProps,
     Ban,
     Invite,
@@ -70,11 +69,9 @@ class Guild {
         Object.assign(this, {
             ...data,
             icon: `${discordCDN}/icons/${data.id}/${data.icon}.png`,
-            roles: new Map(data.roles.map((r) => [r.id, new Role(r, data.id)])),
-            members: new Map(
-                data.members.map((m) => [m.user.id, new Member(m)])
-            ),
-            channels: new Map(data.channels.map((m) => [m.id, new Channel(m)])),
+            roles: new Map(data.roles.map(r => [r.id, new Role(r, data.id)])),
+            members: new Map(data.members.map(m => [m.user.id, new Member(m)])),
+            channels: new Map(data.channels.map(m => [m.id, new Channel(m)])),
             created_at: new Date(data.joined_at),
         });
     }
@@ -110,9 +107,7 @@ class Guild {
     ): Promise<Emoji> {
         let roles;
         if (data.roles)
-            roles =
-                data.roles &&
-                data.roles.map((r) => (typeof r === 'string' ? r : r.id));
+            roles = data.roles && data.roles.map(r => (typeof r === 'string' ? r : r.id));
         const id = typeof emoji === 'string' ? emoji : emoji.id;
         return http.PATCH(
             `/guilds/${this.id}/emojis/${id}`,
@@ -124,14 +119,12 @@ class Guild {
     }
     async getMembersByNickname(nickname: string) {
         return (
-            await http.GET(
-                `/guilds/${this.id}/members/search?query=${nickname}`
-            )
-        ).map((member) => new Member(member));
+            await http.GET(`/guilds/${this.id}/members/search?query=${nickname}`)
+        ).map(member => new Member(member));
     }
     async getEmojis(): Promise<Map<string, Emoji>> {
         return (this.emojis = new Map(
-            (await http.GET(`/guilds/${this.id}/emojis`)).map((m) => [m.id, m])
+            (await http.GET(`/guilds/${this.id}/emojis`)).map(m => [m.id, m])
         ));
     }
     getEmoji(id: string): Promise<Emoji> {
@@ -163,11 +156,9 @@ class Guild {
     }
     async createChannel(data: IChannel, reason?: string) {
         return new Channel(
-            await http.POST(
-                `/guilds/${this.id}/channels`,
-                JSON.stringify(data),
-                { 'X-Audit-Log-Reason': reason }
-            )
+            await http.POST(`/guilds/${this.id}/channels`, JSON.stringify(data), {
+                'X-Audit-Log-Reason': reason,
+            })
         );
     }
     async createRole(data: RoleProps) {
@@ -181,7 +172,7 @@ class Guild {
         image: { data: Buffer; mimetype: 'png' | 'jpg' | 'gif' } | string;
         roles?: Role[] | string[];
     }): Promise<Emoji> {
-        const roles = data.roles.map((r) => (typeof r === 'string' ? r : r.id));
+        const roles = data.roles.map(r => (typeof r === 'string' ? r : r.id));
         const imageURL =
             typeof data.image === 'string'
                 ? data.image
@@ -193,11 +184,7 @@ class Guild {
             JSON.stringify({ name: data.name, roles, image: imageURL })
         );
     }
-    ban(
-        member: Member | string,
-        reason?: string,
-        delete_messages_since?: number
-    ) {
+    ban(member: Member | string, reason?: string, delete_messages_since?: number) {
         const id = member instanceof Member ? member.user.id : member;
         return http.PUT(
             `/guilds/${this.id}/bans/${id}`,

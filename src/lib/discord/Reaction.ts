@@ -8,7 +8,6 @@ import Response from '../Response';
 import { Reaction as IReaction, Member, Emoji } from '../_DiscordAPI';
 import http from '../_http';
 import Message from './Message';
-import { bot } from '../_globals';
 export default class Reaction implements IReaction {
     user_id: string;
     channel_id: string;

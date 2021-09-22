@@ -25,13 +25,13 @@ class Message {
             ...data,
             author: new User(data.author),
             timestamp: new Date(data?.timestamp),
-            embeds: data?.embeds?.map((v) => new Embed(v)),
+            embeds: data?.embeds?.map(v => new Embed(v)),
         });
         // ! This can get recursive
         if (data.message_reference) {
             http.GET(
                 `/channels/${data.message_reference.channel_id}/messages/${data.message_reference.message_id}`
-            ).then((msg) => (this.message_reference = new Message(msg)));
+            ).then(msg => (this.message_reference = new Message(msg)));
         }
     }
 
@@ -84,7 +84,7 @@ class Message {
         // @ts-ignore
         if (typeof emojis.id !== 'undefined') {
             isId = true;
-            emojis = Array.isArray(emojis) ? emojis.map((e) => e.id) : emojis;
+            emojis = Array.isArray(emojis) ? emojis.map(e => e.id) : emojis;
         }
         if (typeof emojis === 'string') {
             return http.PUT(
@@ -95,14 +95,12 @@ class Message {
             return http
                 .PUT(
                     `/channels/${this.channel_id}/messages/${this.id}` +
-                        `/reactions/${
-                            isId ? emojis : encodeURI(emojis[0] as any)
-                        }/@me`
+                        `/reactions/${isId ? emojis : encodeURI(emojis[0] as any)}/@me`
                 )
                 .then(() => this.react((emojis as any).slice(1), true));
         } else {
             const ret: Promise<Message>[] = [];
-            (emojis as any).forEach(async (e) => {
+            (emojis as any).forEach(async e => {
                 ret.push(
                     http.PUT(
                         `/channels/${this.channel_id}/messages/${this.id}` +

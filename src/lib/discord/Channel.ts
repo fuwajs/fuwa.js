@@ -60,16 +60,11 @@ export default class Channel {
             );
         }
         return new Message(
-            await http.POST(
-                `/channels/${this.id}/messages`,
-                JSON.stringify(data)
-            )
+            await http.POST(`/channels/${this.id}/messages`, JSON.stringify(data))
         );
     }
     async getMessage(id: string) {
-        return new Message(
-            await http.GET(`/channels/${this.id}/messages/${id}`)
-        );
+        return new Message(await http.GET(`/channels/${this.id}/messages/${id}`));
     }
     async modify(data: ChannelProps, reason?: string) {
         return new Channel(
@@ -81,21 +76,21 @@ export default class Channel {
     async prune(amt: number) {
         const msgs: Message[] = await http
             .GET(`/channels/${this.id}/messages?limit=${amt}`)
-            .catch((e) => {
+            .catch(e => {
                 console.error(e);
             });
 
         http.POST(
             `/channels/${this.id}/messages/bulk-delete`,
-            JSON.stringify({ messages: msgs.map((m) => m.id) })
-        ).catch((e) => {
+            JSON.stringify({ messages: msgs.map(m => m.id) })
+        ).catch(e => {
             console.error(e);
         });
     }
     async getPins(): Promise<Message[]> {
-        return (
-            (await http.GET(`/channels/${this.id}/pins`)) as IMessage[]
-        ).map((m) => new Message(m));
+        return ((await http.GET(`/channels/${this.id}/pins`)) as IMessage[]).map(
+            m => new Message(m)
+        );
     }
     pinMessage(mid: string) {
         return http.PUT(`/channels/${this.id}/pins/${mid}`);

@@ -32,5 +32,5 @@ export default {
     orange: 0xff3403,
     pink: 0xff6ac1,
     red: 0xff5c57,
-    yellow: 0xf3f99d
+    yellow: 0xf3f99d,
 };

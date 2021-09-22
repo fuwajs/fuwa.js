@@ -17,7 +17,8 @@
         "watch": "tsc -w -p  .",
         "browser": "tsc -p . && node browser",
         "profile": "yarn build && node --prof examples/index",
-        "build": "npx tsc -p ."
+        "build": "npx tsc -p .",
+        "lint": "npx eslint ./src/**/*.ts --fix"
     },
     "repository": {
         "type": "git",
@@ -74,9 +75,10 @@
             "sourceType": "module"
         },
         "rules": {
-            "tsdoc/syntax": "warn",
             "prettier/prettier": "error",
-            "@typescript-eslint/no-explicit-any": "off"
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/ban-ts-comment": "off",
+            "@typescript-eslint/explicit-module-boundary-types": "off"
         }
     }
 }

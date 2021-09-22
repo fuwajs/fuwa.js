@@ -1,6 +1,6 @@
 /******************************************************************************
  * @file src/lib/_Cache.ts
- * @fileoverview Customizable cache implementation. This isReccomended for bots 
+ * @fileoverview Customizable cache implementation. This isReccomended for bots
  * on a high amount of servers
  *****************************************************************************/
 
@@ -23,10 +23,7 @@ class Cache {
             }, options.clearAfter);
         }
     }
-    cache<T extends keyof typeof Cache.prototype.data>(
-        type: T,
-        data: any
-    ): void {
+    cache<T extends keyof typeof Cache.prototype.data>(type: T, data: any): void {
         if (
             this.options?.cacheOptions[type] === undefined
                 ? true

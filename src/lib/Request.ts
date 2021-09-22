@@ -31,7 +31,7 @@ class Request {
         this.channel_id = msg.channel_id;
         this.reactions = msg.reactions;
         this.message = new Message(msg);
-        this.mentions = msg.mentions.map((u) => new User(u));
+        this.mentions = msg.mentions.map(u => new User(u));
     }
     /**
      * To use this function you must have the server list intent enabled, otherwise you will get an error
@@ -41,7 +41,7 @@ class Request {
      * @returns {Guild}
      */
     async getGuild(memberLimit = 100) {
-        let guild = {
+        const guild = {
             ...(await http.GET(`/guilds/${this.guild_id}`)),
             members: await http.GET(
                 `/guilds/${this.guild_id}/members?limit=${memberLimit}`
