@@ -8,7 +8,7 @@ import http from '../_http';
 import {
     Channel as IChannel,
     ChannelProps,
-    ChannelTypes,
+    ChannelType,
     Message as IMessage,
     Overwrite as IOverwrite,
     User as IUser,
@@ -19,7 +19,7 @@ import { InvalidMessageContent } from '../Errors';
 
 export default class Channel {
     id: string;
-    type: ChannelTypes;
+    type: ChannelType;
     guild_id?: string;
     position?: number;
     permission_overwrites?: IOverwrite[];

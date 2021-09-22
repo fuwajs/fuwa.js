@@ -462,8 +462,8 @@ export enum ApplicationCommandOptionType {
 }
 
 interface Interaction {
-    /** 
-     * @description id of the interaction 
+    /**
+     * @description id of the interaction
      */
     id: string;
     /**
@@ -491,7 +491,7 @@ export interface InteractionData {
     resolved?: ResolvedData;
     options?: ApplicationCommandInteractionDataOption[];
     custom_id?: string;
-    component_type?: ComponentType; 
+    component_type?: ComponentType;
     values?: SelectOption[];
     target_id?: string;
 }
@@ -766,16 +766,20 @@ export interface Overwrite {
     deny: string;
 }
 
+/**
+ * @description Represents a guild or DM channel within Discord.
+ * @see https://discord.com/developers/docs/resources/channel#channel-object-channel-structure
+ */
 export interface Channel {
     id: string;
-    type: ChannelTypes;
+    type: ChannelType;
     guild_id?: string;
     position?: number;
     permission_overwrites?: Overwrite[];
     name?: string;
     topic?: string | null;
     nsfw?: boolean;
-    last_message_id?: string;
+    last_message_id?: string | null;
     bitrate?: number;
     user_limit?: number;
     rate_limit_per_user?: number;
@@ -785,16 +789,100 @@ export interface Channel {
     application_id?: string;
     parent_id?: string | null;
     last_pin_timestamp?: Date | null;
+    rtc_region?: string | null;
+    video_quality_mode?: number;
+    message_count?: number;
+    member_count?: number;
+    thread_metadata?: ThreadMetadata;
+    member?: ThreadMember;
+    default_auto_archive_duration?: number;
+    permissions?: string;
 }
 
-export enum ChannelTypes {
-    Text = 0,
-    Dm = 1,
-    Voice = 2,
-    GroupDM = 3,
-    Catergory = 4,
-    News = 5,
-    Store = 6,
+/**
+ * @see https://discord.com/developers/docs/resources/channel#channel-object-channel-types
+ */
+export enum ChannelType {
+    /**
+     * @description a text channel within a server
+     */
+    Text,
+    /**
+     * @description a direct message between user
+     */
+    Dm,
+    /**
+     * @description a voice channel within a server
+     */
+    Voice,
+    /**
+     * @description a direct message between multiple users
+     */
+    GroupDM,
+    /**
+     * @description an organization category that contains up to 50 channels
+     */
+    Category,
+    /**
+     * @description a channel that users can follow and crosspost into their own server
+     */
+    News,
+    /**
+     * @description a channel in which game developers can sell their game on Discord
+     */
+    Store,
+    /**
+     * @description a temporary sub-channel within a news channel
+     */
+    NewsThread,
+    /**
+     * @description a temporary sub-channel within a text channel
+     */
+    PublicThread,
+    /**
+     * @description a temporary sub-channel within a text channel that is only viewable by those invited and those with the ManageThreads permission
+     */
+    PrivateThread,
+    /**
+     * @description a voice channel for hosting events with an audience
+     */
+    StageVoice,
+}
+
+/**
+ * @description The thread metadata object contains a number of thread-specific channel that are not needed by other channel types.
+ */
+export interface ThreadMetadata {
+    /**
+     * @description whether the thread is archived
+     */
+    archived: boolean;
+    /**
+     * @description duration in minutes to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080
+     */
+    auto_archive_duration: number;
+    /**
+     * @description timestamp when the thread's archive status was last changed, used for calculating recent activity
+     */
+    archive_timestamp: Date;
+    /**
+     * @description wheter the thread is locked; when a thread is locked, only users with the manage threads permissions can unarchive it
+     */
+    locked: boolean;
+    /**
+     * @description whether non-moderators can add other non-moderators to a thread; only available on private threads
+     */
+    invitable?: boolean;
+}
+
+/**
+ * @description A thread member is used to indicate whether a user has joined a thread or not.
+ */
+export interface ThreadMember {
+    id?: string;
+    user_id?: string;
+    join_timestamp: Date;
+    flags?: number;
 }
 
 export interface GuildHashes {
@@ -840,7 +928,7 @@ export type RoleProps = {
 };
 export type ChannelProps = {
     name: string;
-    type: ChannelTypes;
+    type: ChannelType;
     position?: number;
     topic?: string;
     nsfw?: boolean;
@@ -927,7 +1015,7 @@ export interface Invite {
     channel: {
         id: string;
         name: string;
-        type: ChannelTypes;
+        type: ChannelType;
     };
     inviter?: User;
     target_type?: InviteTargets;

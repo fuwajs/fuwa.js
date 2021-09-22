@@ -16,7 +16,7 @@ import {
     GatewayIntents,
     MessageType,
     ActivityType,
-    ChannelTypes,
+    ChannelType,
     PremiumTypes,
     InviteTargets,
     ApplicationCommandOptionType,
@@ -29,11 +29,11 @@ export const Enums = {
     GatewayIntents,
     MessageType,
     ActivityType,
-    ChannelTypes,
+    ChannelType,
     PremiumTypes,
     InviteTargets,
-    SlashCommandOptions: ApplicationCommandOptionType,
-    SlashCommandTypes: ApplicationCommandType,
+    ApplicationCommandOptionType,
+    ApplicationCommandType,
     UserFlags,
 };
 
