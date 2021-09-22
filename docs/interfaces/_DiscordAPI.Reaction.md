@@ -1,0 +1,80 @@
+[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / Reaction
+
+# Interface: Reaction
+
+[_DiscordAPI](../modules/_DiscordAPI.md).Reaction
+
+## Implemented by
+
+- [`default`](../classes/discord_Reaction.default.md)
+
+## Table of contents
+
+### Properties
+
+- [channel_id](_DiscordAPI.Reaction.md#channel_id)
+- [emoji](_DiscordAPI.Reaction.md#emoji)
+- [guild_id](_DiscordAPI.Reaction.md#guild_id)
+- [member](_DiscordAPI.Reaction.md#member)
+- [message_id](_DiscordAPI.Reaction.md#message_id)
+- [user_id](_DiscordAPI.Reaction.md#user_id)
+
+## Properties
+
+### channel\_id
+
+• **channel\_id**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:398](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L398)
+
+___
+
+### emoji
+
+• **emoji**: [`Emoji`](_DiscordAPI.Emoji.md)
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:402](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L402)
+
+___
+
+### guild\_id
+
+• `Optional` **guild\_id**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:400](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L400)
+
+___
+
+### member
+
+• `Optional` **member**: [`Member`](_DiscordAPI.Member.md)
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:401](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L401)
+
+___
+
+### message\_id
+
+• **message\_id**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:399](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L399)
+
+___
+
+### user\_id
+
+• **user\_id**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:397](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_DiscordAPI.ts#L397)

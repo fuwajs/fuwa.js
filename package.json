@@ -12,7 +12,7 @@
         "discordbot"
     ],
     "scripts": {
-        "docs": "npx typedoc --out docs src/index.ts --json docs/v1.json",
+        "docs": "npx typedoc --out docs --entryPointStrategy expand ./src/lib --json docs/v1.json",
         "test": "npm run build && npx nodemon examples/index",
         "watch": "tsc  -w -p  .",
         "browser": "tsc -p . && node browser",
