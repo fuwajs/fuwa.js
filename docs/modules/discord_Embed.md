@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Embed.default.md)
+- [Embed](../classes/discord_Embed.Embed.md)

@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Role.default.md)
+- [Role](../classes/discord_Role.Role.md)

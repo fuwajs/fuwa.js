@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/Request.default.md)
+- [Request](../classes/Request.Request-1.md)

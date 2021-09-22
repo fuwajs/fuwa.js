@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/_Cache.default.md)
+- [Cache](../classes/_Cache.Cache.md)

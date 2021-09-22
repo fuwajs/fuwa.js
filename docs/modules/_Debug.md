@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/_Debug.default.md)
+- [Debug](../classes/_Debug.Debug.md)

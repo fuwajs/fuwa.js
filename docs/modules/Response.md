@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/Response.default.md)
+- [Response](../classes/Response.Response-1.md)

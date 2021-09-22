@@ -20,7 +20,7 @@
 
 ### CommandCallback
 
-Ƭ **CommandCallback**: (`req`: [`default`](../classes/Request.default.md), `res`: [`default`](../classes/Response.default.md), `next`: () => `void`, `prefix`: `string`) => `any`
+Ƭ **CommandCallback**: (`req`: [`Request`](../classes/Request.Request-1.md), `res`: [`Response`](../classes/Response.Response-1.md), `next`: () => `void`, `prefix`: `string`) => `any`
 
 #### Type declaration
 
@@ -32,8 +32,8 @@ Callback for commands
 
 | Name | Type |
 | :------ | :------ |
-| `req` | [`default`](../classes/Request.default.md) |
-| `res` | [`default`](../classes/Response.default.md) |
+| `req` | [`Request`](../classes/Request.Request-1.md) |
+| `res` | [`Response`](../classes/Response.Response-1.md) |
 | `next` | () => `void` |
 | `prefix` | `string` |
 
@@ -43,4 +43,4 @@ Callback for commands
 
 #### Defined in
 
-[src/lib/Command.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Command.ts#L56)
+[src/lib/Command.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L56)

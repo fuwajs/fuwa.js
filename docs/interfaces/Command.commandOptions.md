@@ -26,7 +26,7 @@ Aliases for your command
 
 #### Defined in
 
-[src/lib/Command.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Command.ts#L40)
+[src/lib/Command.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L40)
 
 ___
 
@@ -38,7 +38,7 @@ Command Arguments
 
 #### Defined in
 
-[src/lib/Command.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Command.ts#L44)
+[src/lib/Command.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L44)
 
 ___
 
@@ -50,4 +50,4 @@ Description for your command.
 
 #### Defined in
 
-[src/lib/Command.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Command.ts#L35)
+[src/lib/Command.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Command.ts#L35)

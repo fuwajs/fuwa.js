@@ -50,7 +50,7 @@ Error.constructor
 
 #### Defined in
 
-[src/lib/Errors.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Errors.ts#L7)
+[src/lib/Errors.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Errors.ts#L7)
 
 ## Properties
 
@@ -78,7 +78,7 @@ Error.name
 
 #### Defined in
 
-[src/lib/Errors.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Errors.ts#L6)
+[src/lib/Errors.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Errors.ts#L6)
 
 ___
 

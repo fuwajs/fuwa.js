@@ -6,7 +6,7 @@
 
 ### Classes
 
-- [default](../classes/Emitter.default.md)
+- [Emitter](../classes/Emitter.Emitter-1.md)
 
 ### Interfaces
 

@@ -1,8 +1,8 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [discord/Member](../modules/discord_Member.md) / default
+[fuwa.js](../README.md) / [Exports](../modules.md) / [discord/Member](../modules/discord_Member.md) / Member
 
-# Class: default
+# Class: Member
 
-[discord/Member](../modules/discord_Member.md).default
+[discord/Member](../modules/discord_Member.md).Member
 
 ## Implements
 
@@ -12,25 +12,25 @@
 
 ### Constructors
 
-- [constructor](discord_Member.default.md#constructor)
+- [constructor](discord_Member.Member.md#constructor)
 
 ### Properties
 
-- [deaf](discord_Member.default.md#deaf)
-- [hoisted_role](discord_Member.default.md#hoisted_role)
-- [joined_at](discord_Member.default.md#joined_at)
-- [mute](discord_Member.default.md#mute)
-- [nick](discord_Member.default.md#nick)
-- [pending](discord_Member.default.md#pending)
-- [premium_since](discord_Member.default.md#premium_since)
-- [roles](discord_Member.default.md#roles)
-- [user](discord_Member.default.md#user)
+- [deaf](discord_Member.Member.md#deaf)
+- [hoisted_role](discord_Member.Member.md#hoisted_role)
+- [joined_at](discord_Member.Member.md#joined_at)
+- [mute](discord_Member.Member.md#mute)
+- [nick](discord_Member.Member.md#nick)
+- [pending](discord_Member.Member.md#pending)
+- [premium_since](discord_Member.Member.md#premium_since)
+- [roles](discord_Member.Member.md#roles)
+- [user](discord_Member.Member.md#user)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`data`)
+• **new Member**(`data`)
 
 #### Parameters
 
@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[src/lib/discord/Member.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L22)
+[src/lib/discord/Member.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L22)
 
 ## Properties
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/lib/discord/Member.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L12)
+[src/lib/discord/Member.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L12)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L13)
+[src/lib/discord/Member.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L13)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L14)
+[src/lib/discord/Member.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L14)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L19)
+[src/lib/discord/Member.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L19)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L17)
+[src/lib/discord/Member.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L17)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L20)
+[src/lib/discord/Member.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L20)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L18)
+[src/lib/discord/Member.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L18)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L15)
+[src/lib/discord/Member.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L15)
 
 ___
 
@@ -162,4 +162,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Member.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/Member.ts#L16)
+[src/lib/discord/Member.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/Member.ts#L16)

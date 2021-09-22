@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Channel.default.md)
+- [Channel](../classes/discord_Channel.Channel.md)

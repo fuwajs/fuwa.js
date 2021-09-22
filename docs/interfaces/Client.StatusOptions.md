@@ -26,7 +26,7 @@ Whether or not the bot is afk.
 
 #### Defined in
 
-[src/lib/Client.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L61)
+[src/lib/Client.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L61)
 
 ___
 
@@ -38,7 +38,7 @@ The status message to be displayed
 
 #### Defined in
 
-[src/lib/Client.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L41)
+[src/lib/Client.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L41)
 
 ___
 
@@ -50,7 +50,7 @@ The status of your bot. Online by default
 
 #### Defined in
 
-[src/lib/Client.ts:57](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L57)
+[src/lib/Client.ts:57](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L57)
 
 ___
 
@@ -63,7 +63,7 @@ competing.
 
 #### Defined in
 
-[src/lib/Client.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L47)
+[src/lib/Client.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L47)
 
 ___
 
@@ -75,4 +75,4 @@ The URL of a stream
 
 #### Defined in
 
-[src/lib/Client.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L52)
+[src/lib/Client.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L52)

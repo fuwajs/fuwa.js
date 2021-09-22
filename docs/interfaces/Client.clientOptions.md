@@ -29,7 +29,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:84](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L84)
+[src/lib/Client.ts:84](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L84)
 
 ___
 
@@ -45,7 +45,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:93](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L93)
+[src/lib/Client.ts:93](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L93)
 
 ___
 
@@ -62,7 +62,7 @@ caching off = more memory for other tasks
 
 #### Defined in
 
-[src/lib/Client.ts:122](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L122)
+[src/lib/Client.ts:122](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L122)
 
 ___
 
@@ -85,7 +85,7 @@ Settings for caching
 
 #### Defined in
 
-[src/lib/Client.ts:126](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L126)
+[src/lib/Client.ts:126](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L126)
 
 ___
 
@@ -98,7 +98,7 @@ the library.
 
 #### Defined in
 
-[src/lib/Client.ts:83](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L83)
+[src/lib/Client.ts:83](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L83)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:104](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L104)
+[src/lib/Client.ts:104](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L104)
 
 ___
 
@@ -122,7 +122,7 @@ The owners' discord ID
 
 #### Defined in
 
-[src/lib/Client.ts:78](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L78)
+[src/lib/Client.ts:78](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L78)
 
 ___
 
@@ -135,7 +135,7 @@ as a prefix.
 
 #### Defined in
 
-[src/lib/Client.ts:89](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L89)
+[src/lib/Client.ts:89](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L89)
 
 ## Methods
 
@@ -159,4 +159,4 @@ The
 
 #### Defined in
 
-[src/lib/Client.ts:108](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L108)
+[src/lib/Client.ts:108](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L108)

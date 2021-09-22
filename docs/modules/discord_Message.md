@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Message.default.md)
+- [Message](../classes/discord_Message.Message.md)

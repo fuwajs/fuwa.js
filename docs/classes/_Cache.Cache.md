@@ -1,29 +1,29 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_Cache](../modules/_Cache.md) / default
+[fuwa.js](../README.md) / [Exports](../modules.md) / [_Cache](../modules/_Cache.md) / Cache
 
-# Class: default
+# Class: Cache
 
-[_Cache](../modules/_Cache.md).default
+[_Cache](../modules/_Cache.md).Cache
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](_Cache.default.md#constructor)
+- [constructor](_Cache.Cache.md#constructor)
 
 ### Properties
 
-- [data](_Cache.default.md#data)
-- [options](_Cache.default.md#options)
+- [data](_Cache.Cache.md#data)
+- [options](_Cache.Cache.md#options)
 
 ### Methods
 
-- [cache](_Cache.default.md#cache)
+- [cache](_Cache.Cache.md#cache)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`options`)
+• **new Cache**(`options`)
 
 #### Parameters
 
@@ -39,7 +39,7 @@
 
 #### Defined in
 
-[src/lib/_Cache.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_Cache.ts#L15)
+[src/lib/_Cache.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L15)
 
 ## Properties
 
@@ -55,7 +55,7 @@
 
 #### Defined in
 
-[src/lib/_Cache.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_Cache.ts#L12)
+[src/lib/_Cache.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L12)
 
 ___
 
@@ -99,4 +99,4 @@ ___
 
 #### Defined in
 
-[src/lib/_Cache.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/_Cache.ts#L26)
+[src/lib/_Cache.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/_Cache.ts#L26)

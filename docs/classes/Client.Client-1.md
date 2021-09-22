@@ -1,83 +1,83 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [Client](../modules/Client.md) / default
+[fuwa.js](../README.md) / [Exports](../modules.md) / [Client](../modules/Client.md) / Client
 
-# Class: default
+# Class: Client
 
-[Client](../modules/Client.md).default
+[Client](../modules/Client.md).Client
 
 ## Hierarchy
 
-- [`default`](Emitter.default.md)
+- [`Emitter`](Emitter.Emitter-1.md)
 
-  ↳ **`default`**
+  ↳ **`Client`**
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Client.default.md#constructor)
+- [constructor](Client.Client-1.md#constructor)
 
 ### Properties
 
-- [applicationId](Client.default.md#applicationid)
-- [bot](Client.default.md#bot)
-- [cache](Client.default.md#cache)
-- [commands](Client.default.md#commands)
-- [debug](Client.default.md#debug)
-- [events](Client.default.md#events)
-- [loop](Client.default.md#loop)
-- [middleware](Client.default.md#middleware)
-- [options](Client.default.md#options)
-- [parser](Client.default.md#parser)
-- [prefix](Client.default.md#prefix)
-- [response](Client.default.md#response)
-- [sessionId](Client.default.md#sessionid)
-- [status](Client.default.md#status)
-- [ws](Client.default.md#ws)
+- [applicationId](Client.Client-1.md#applicationid)
+- [bot](Client.Client-1.md#bot)
+- [cache](Client.Client-1.md#cache)
+- [commands](Client.Client-1.md#commands)
+- [debug](Client.Client-1.md#debug)
+- [events](Client.Client-1.md#events)
+- [loop](Client.Client-1.md#loop)
+- [middleware](Client.Client-1.md#middleware)
+- [options](Client.Client-1.md#options)
+- [parser](Client.Client-1.md#parser)
+- [prefix](Client.Client-1.md#prefix)
+- [response](Client.Client-1.md#response)
+- [sessionId](Client.Client-1.md#sessionid)
+- [status](Client.Client-1.md#status)
+- [ws](Client.Client-1.md#ws)
 
 ### Methods
 
-- [command](Client.default.md#command)
-- [connect](Client.default.md#connect)
-- [createDM](Client.default.md#createdm)
-- [deleteMessages](Client.default.md#deletemessages)
-- [event](Client.default.md#event)
-- [getGlobalSlashCommands](Client.default.md#getglobalslashcommands)
-- [getGuild](Client.default.md#getguild)
-- [getGuildIds](Client.default.md#getguildids)
-- [getGuildSlashCommand](Client.default.md#getguildslashcommand)
-- [getUser](Client.default.md#getuser)
-- [initEvents](Client.default.md#initevents)
-- [initOp](Client.default.md#initop)
-- [login](Client.default.md#login)
-- [logout](Client.default.md#logout)
-- [modifyBot](Client.default.md#modifybot)
-- [on](Client.default.md#on)
-- [op](Client.default.md#op)
-- [runCommand](Client.default.md#runcommand)
-- [set](Client.default.md#set)
-- [setStatus](Client.default.md#setstatus)
-- [use](Client.default.md#use)
+- [command](Client.Client-1.md#command)
+- [connect](Client.Client-1.md#connect)
+- [createDM](Client.Client-1.md#createdm)
+- [deleteMessages](Client.Client-1.md#deletemessages)
+- [event](Client.Client-1.md#event)
+- [getGlobalSlashCommands](Client.Client-1.md#getglobalslashcommands)
+- [getGuild](Client.Client-1.md#getguild)
+- [getGuildIds](Client.Client-1.md#getguildids)
+- [getGuildSlashCommand](Client.Client-1.md#getguildslashcommand)
+- [getUser](Client.Client-1.md#getuser)
+- [initEvents](Client.Client-1.md#initevents)
+- [initOp](Client.Client-1.md#initop)
+- [login](Client.Client-1.md#login)
+- [logout](Client.Client-1.md#logout)
+- [modifyBot](Client.Client-1.md#modifybot)
+- [on](Client.Client-1.md#on)
+- [op](Client.Client-1.md#op)
+- [runCommand](Client.Client-1.md#runcommand)
+- [set](Client.Client-1.md#set)
+- [setStatus](Client.Client-1.md#setstatus)
+- [use](Client.Client-1.md#use)
 
 ## Constructors
 
 ### constructor
 
-• **new default**(`prefix`, `options?`)
+• **new Client**(`prefix`, `options?`)
 
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `prefix` | `string` \| `string`[] \| (`req`: [`default`](Request.default.md)) => `string` \| `Promise`<`string`\> | The prefix for your bot |
+| `prefix` | `string` \| `string`[] \| (`req`: [`Request`](Request.Request-1.md)) => `string` \| `Promise`<`string`\> | The prefix for your bot |
 | `options?` | [`clientOptions`](../interfaces/Client.clientOptions.md) | - |
 
 #### Overrides
 
-[default](Emitter.default.md).[constructor](Emitter.default.md#constructor)
+[Emitter](Emitter.Emitter-1.md).[constructor](Emitter.Emitter-1.md#constructor)
 
 #### Defined in
 
-[src/lib/Client.ts:202](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L202)
+[src/lib/Client.ts:202](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L202)
 
 ## Properties
 
@@ -87,7 +87,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L182)
+[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L182)
 
 ___
 
@@ -97,17 +97,17 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L177)
+[src/lib/Client.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L177)
 
 ___
 
 ### cache
 
-• **cache**: [`default`](_Cache.default.md)
+• **cache**: [`Cache`](_Cache.Cache.md)
 
 #### Defined in
 
-[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L180)
+[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L180)
 
 ___
 
@@ -117,17 +117,17 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L194)
+[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L194)
 
 ___
 
 ### debug
 
-• `Protected` **debug**: [`default`](_Debug.default.md)
+• `Protected` **debug**: [`Debug`](_Debug.Debug.md)
 
 #### Defined in
 
-[src/lib/Client.ts:178](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L178)
+[src/lib/Client.ts:178](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L178)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L186)
+[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L186)
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:193](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L193)
+[src/lib/Client.ts:193](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L193)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:198](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L198)
+[src/lib/Client.ts:198](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L198)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L191)
+[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L191)
 
 ___
 
@@ -195,17 +195,17 @@ The
 
 #### Defined in
 
-[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L183)
+[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L183)
 
 ___
 
 ### prefix
 
-• **prefix**: `string` \| `string`[] \| (`req`: [`default`](Request.default.md)) => `string` \| `Promise`<`string`\>
+• **prefix**: `string` \| `string`[] \| (`req`: [`Request`](Request.Request-1.md)) => `string` \| `Promise`<`string`\>
 
 #### Defined in
 
-[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L187)
+[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L187)
 
 ___
 
@@ -224,11 +224,11 @@ ___
 
 #### Inherited from
 
-[default](Emitter.default.md).[response](Emitter.default.md#response)
+[Emitter](Emitter.Emitter-1.md).[response](Emitter.Emitter-1.md#response)
 
 #### Defined in
 
-[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L30)
+[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L30)
 
 ___
 
@@ -238,7 +238,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L179)
+[src/lib/Client.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L179)
 
 ___
 
@@ -248,7 +248,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L181)
+[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L181)
 
 ___
 
@@ -258,11 +258,11 @@ ___
 
 #### Inherited from
 
-[default](Emitter.default.md).[ws](Emitter.default.md#ws)
+[Emitter](Emitter.Emitter-1.md).[ws](Emitter.Emitter-1.md#ws)
 
 #### Defined in
 
-[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L25)
+[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L25)
 
 ## Methods
 
@@ -301,7 +301,7 @@ Command Options
 
 #### Defined in
 
-[src/lib/Client.ts:391](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L391)
+[src/lib/Client.ts:391](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L391)
 
 ___
 
@@ -322,17 +322,17 @@ ___
 
 #### Inherited from
 
-[default](Emitter.default.md).[connect](Emitter.default.md#connect)
+[Emitter](Emitter.Emitter-1.md).[connect](Emitter.Emitter-1.md#connect)
 
 #### Defined in
 
-[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L50)
+[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L50)
 
 ___
 
 ### createDM
 
-▸ **createDM**(`uid`): `Promise`<[`default`](discord_Channel.default.md)\>
+▸ **createDM**(`uid`): `Promise`<[`Channel`](discord_Channel.Channel.md)\>
 
 #### Parameters
 
@@ -342,11 +342,11 @@ ___
 
 #### Returns
 
-`Promise`<[`default`](discord_Channel.default.md)\>
+`Promise`<[`Channel`](discord_Channel.Channel.md)\>
 
 #### Defined in
 
-[src/lib/Client.ts:606](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L606)
+[src/lib/Client.ts:606](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L606)
 
 ___
 
@@ -367,7 +367,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:645](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L645)
+[src/lib/Client.ts:645](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L645)
 
 ___
 
@@ -394,11 +394,11 @@ ___
 
 #### Inherited from
 
-[default](Emitter.default.md).[event](Emitter.default.md#event)
+[Emitter](Emitter.Emitter-1.md).[event](Emitter.Emitter-1.md#event)
 
 #### Defined in
 
-[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L87)
+[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L87)
 
 ___
 
@@ -412,13 +412,13 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:555](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L555)
+[src/lib/Client.ts:555](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L555)
 
 ___
 
 ### getGuild
 
-▸ **getGuild**(`gid`): `Promise`<[`default`](discord_Guild.default.md)\>
+▸ **getGuild**(`gid`): `Promise`<[`Guild`](discord_Guild.Guild.md)\>
 
 #### Parameters
 
@@ -428,11 +428,11 @@ ___
 
 #### Returns
 
-`Promise`<[`default`](discord_Guild.default.md)\>
+`Promise`<[`Guild`](discord_Guild.Guild.md)\>
 
 #### Defined in
 
-[src/lib/Client.ts:603](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L603)
+[src/lib/Client.ts:603](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L603)
 
 ___
 
@@ -448,7 +448,7 @@ List of guilds
 
 #### Defined in
 
-[src/lib/Client.ts:600](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L600)
+[src/lib/Client.ts:600](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L600)
 
 ___
 
@@ -468,7 +468,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:560](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L560)
+[src/lib/Client.ts:560](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L560)
 
 ___
 
@@ -488,7 +488,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:661](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L661)
+[src/lib/Client.ts:661](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L661)
 
 ___
 
@@ -502,7 +502,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:517](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L517)
+[src/lib/Client.ts:517](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L517)
 
 ___
 
@@ -516,13 +516,13 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:485](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L485)
+[src/lib/Client.ts:485](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L485)
 
 ___
 
 ### login
 
-▸ **login**(`token?`): `Promise`<[`default`](Client.default.md)\>
+▸ **login**(`token?`): `Promise`<[`Client`](Client.Client-1.md)\>
 
 **`description`** Log your bot into discord
 
@@ -534,11 +534,11 @@ ___
 
 #### Returns
 
-`Promise`<[`default`](Client.default.md)\>
+`Promise`<[`Client`](Client.Client-1.md)\>
 
 #### Defined in
 
-[src/lib/Client.ts:575](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L575)
+[src/lib/Client.ts:575](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L575)
 
 ___
 
@@ -558,7 +558,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L590)
+[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L590)
 
 ___
 
@@ -578,13 +578,13 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L614)
+[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L614)
 
 ___
 
 ### on
 
-▸ **on**<`T`\>(`event`, `cb`): [`default`](Client.default.md)
+▸ **on**<`T`\>(`event`, `cb`): [`Client`](Client.Client-1.md)
 
 #### Type parameters
 
@@ -601,11 +601,11 @@ ___
 
 #### Returns
 
-[`default`](Client.default.md)
+[`Client`](Client.Client-1.md)
 
 #### Defined in
 
-[src/lib/Client.ts:465](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L465)
+[src/lib/Client.ts:465](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L465)
 
 ___
 
@@ -632,11 +632,11 @@ ___
 
 #### Inherited from
 
-[default](Emitter.default.md).[op](Emitter.default.md#op)
+[Emitter](Emitter.Emitter-1.md).[op](Emitter.Emitter-1.md#op)
 
 #### Defined in
 
-[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L81)
+[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L81)
 
 ___
 
@@ -656,13 +656,13 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:328](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L328)
+[src/lib/Client.ts:328](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L328)
 
 ___
 
 ### set
 
-▸ **set**<`T`\>(`key`, `val`): [`default`](Client.default.md)
+▸ **set**<`T`\>(`key`, `val`): [`Client`](Client.Client-1.md)
 
 #### Type parameters
 
@@ -679,17 +679,17 @@ ___
 
 #### Returns
 
-[`default`](Client.default.md)
+[`Client`](Client.Client-1.md)
 
 #### Defined in
 
-[src/lib/Client.ts:617](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L617)
+[src/lib/Client.ts:617](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L617)
 
 ___
 
 ### setStatus
 
-▸ **setStatus**(`status`): [`default`](Client.default.md)
+▸ **setStatus**(`status`): [`Client`](Client.Client-1.md)
 
 #### Parameters
 
@@ -699,17 +699,17 @@ ___
 
 #### Returns
 
-[`default`](Client.default.md)
+[`Client`](Client.Client-1.md)
 
 #### Defined in
 
-[src/lib/Client.ts:621](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L621)
+[src/lib/Client.ts:621](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L621)
 
 ___
 
 ### use
 
-▸ **use**(`cb`): [`default`](Client.default.md)
+▸ **use**(`cb`): [`Client`](Client.Client-1.md)
 
 **`description`** A function that is ran before every command
 
@@ -729,10 +729,10 @@ cli.use((req, res, next) => {
 
 #### Returns
 
-[`default`](Client.default.md)
+[`Client`](Client.Client-1.md)
 
 A **client** so you can *chain* methods.
 
 #### Defined in
 
-[src/lib/Client.ts:481](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L481)
+[src/lib/Client.ts:481](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L481)

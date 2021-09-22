@@ -43,4 +43,4 @@
 
 #### Defined in
 
-[src/lib/discord/User.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/discord/User.ts#L18)
+[src/lib/discord/User.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/discord/User.ts#L18)

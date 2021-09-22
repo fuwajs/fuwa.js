@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Reaction.default.md)
+- [Reaction](../classes/discord_Reaction.Reaction.md)

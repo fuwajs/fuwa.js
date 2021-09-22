@@ -20,7 +20,7 @@
 
 #### Defined in
 
-[src/lib/Emitter.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L18)
+[src/lib/Emitter.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L18)
 
 ___
 
@@ -30,7 +30,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L17)
+[src/lib/Emitter.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L17)
 
 ___
 
@@ -40,4 +40,4 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L16)
+[src/lib/Emitter.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L16)

@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Member.default.md)
+- [Member](../classes/discord_Member.Member.md)

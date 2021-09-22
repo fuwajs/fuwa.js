@@ -6,4 +6,4 @@
 
 ### Classes
 
-- [default](../classes/discord_Guild.default.md)
+- [Guild](../classes/discord_Guild.Guild.md)

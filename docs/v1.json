@@ -14,10 +14,11 @@
 			"children": [
 				{
 					"id": 58,
-					"name": "default",
+					"name": "Client",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 59,
@@ -36,7 +37,7 @@
 							"signatures": [
 								{
 									"id": 60,
-									"name": "new default",
+									"name": "new Client",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -4791,13 +4792,14 @@
 			"children": [
 				{
 					"id": 673,
-					"name": "default",
+					"name": "Emitter",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"comment": {
 						"shortText": "The baseclass for the Client class."
 					},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 674,
@@ -4808,7 +4810,7 @@
 							"signatures": [
 								{
 									"id": 675,
-									"name": "new default",
+									"name": "new Emitter",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -5701,7 +5703,7 @@
 						{
 							"type": "reference",
 							"id": 58,
-							"name": "default"
+							"name": "Client"
 						}
 					]
 				},
@@ -7228,10 +7230,11 @@
 			"children": [
 				{
 					"id": 805,
-					"name": "default",
+					"name": "Request",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 806,
@@ -7249,7 +7252,7 @@
 							"signatures": [
 								{
 									"id": 807,
-									"name": "new default",
+									"name": "new Request",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -7679,10 +7682,11 @@
 			"children": [
 				{
 					"id": 827,
-					"name": "default",
+					"name": "Response",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 828,
@@ -7700,7 +7704,7 @@
 							"signatures": [
 								{
 									"id": 829,
-									"name": "new default",
+									"name": "new Response",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -8008,10 +8012,11 @@
 			"children": [
 				{
 					"id": 843,
-					"name": "default",
+					"name": "Cache",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 844,
@@ -8029,7 +8034,7 @@
 							"signatures": [
 								{
 									"id": 845,
-									"name": "new default",
+									"name": "new Cache",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -8590,7 +8595,7 @@
 			"children": [
 				{
 					"id": 873,
-					"name": "default",
+					"name": "Debug",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
@@ -8602,6 +8607,7 @@
 							}
 						]
 					},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 874,
@@ -8619,7 +8625,7 @@
 							"signatures": [
 								{
 									"id": 875,
-									"name": "new default",
+									"name": "new Debug",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -17931,7 +17937,7 @@
 						{
 							"type": "reference",
 							"id": 559,
-							"name": "default"
+							"name": "Member"
 						}
 					]
 				},
@@ -18964,7 +18970,7 @@
 						{
 							"type": "reference",
 							"id": 599,
-							"name": "default"
+							"name": "Reaction"
 						}
 					]
 				},
@@ -22202,10 +22208,11 @@
 			"children": [
 				{
 					"id": 271,
-					"name": "default",
+					"name": "Channel",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 272,
@@ -22223,7 +22230,7 @@
 							"signatures": [
 								{
 									"id": 273,
-									"name": "new default",
+									"name": "new Channel",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -23085,10 +23092,11 @@
 			"children": [
 				{
 					"id": 318,
-					"name": "default",
+					"name": "Embed",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 319,
@@ -23106,7 +23114,7 @@
 							"signatures": [
 								{
 									"id": 320,
-									"name": "new default",
+									"name": "new Embed",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -25117,10 +25125,11 @@
 			"children": [
 				{
 					"id": 431,
-					"name": "default",
+					"name": "Guild",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 432,
@@ -25138,7 +25147,7 @@
 							"signatures": [
 								{
 									"id": 433,
-									"name": "new default",
+									"name": "new Guild",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -27555,10 +27564,11 @@
 			"children": [
 				{
 					"id": 559,
-					"name": "default",
+					"name": "Member",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 560,
@@ -27576,7 +27586,7 @@
 							"signatures": [
 								{
 									"id": 561,
-									"name": "new default",
+									"name": "new Member",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -27879,10 +27889,11 @@
 			"children": [
 				{
 					"id": 573,
-					"name": "default",
+					"name": "Message",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 574,
@@ -27900,7 +27911,7 @@
 							"signatures": [
 								{
 									"id": 575,
-									"name": "new default",
+									"name": "new Message",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -28387,10 +28398,11 @@
 			"children": [
 				{
 					"id": 599,
-					"name": "default",
+					"name": "Reaction",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 600,
@@ -28408,7 +28420,7 @@
 							"signatures": [
 								{
 									"id": 601,
-									"name": "new default",
+									"name": "new Reaction",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -28721,10 +28733,11 @@
 			"children": [
 				{
 					"id": 614,
-					"name": "default",
+					"name": "Role",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"originalName": "default",
 					"children": [
 						{
 							"id": 615,
@@ -28742,7 +28755,7 @@
 							"signatures": [
 								{
 									"id": 616,
-									"name": "new default",
+									"name": "new Role",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},

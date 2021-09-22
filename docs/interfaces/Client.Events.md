@@ -25,8 +25,8 @@
 
 | Name | Type |
 | :------ | :------ |
-| `req` | [`default`](../classes/Request.default.md) |
-| `res` | [`default`](../classes/Response.default.md) |
+| `req` | [`Request`](../classes/Request.Request-1.md) |
+| `res` | [`Response`](../classes/Response.Response-1.md) |
 
 #### Returns
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L68)
+[src/lib/Client.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L68)
 
 ___
 
@@ -46,8 +46,8 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `req` | [`default`](../classes/Request.default.md) |
-| `res` | [`default`](../classes/Response.default.md) |
+| `req` | [`Request`](../classes/Request.Request-1.md) |
+| `res` | [`Response`](../classes/Response.Response-1.md) |
 
 #### Returns
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L66)
+[src/lib/Client.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L66)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `guild` | [`default`](../classes/discord_Guild.default.md) |
+| `guild` | [`Guild`](../classes/discord_Guild.Guild.md) |
 
 #### Returns
 
@@ -75,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:70](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L70)
+[src/lib/Client.ts:70](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L70)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `guild` | [`default`](../classes/discord_Guild.default.md) |
+| `guild` | [`Guild`](../classes/discord_Guild.Guild.md) |
 
 #### Returns
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L69)
+[src/lib/Client.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L69)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `reaction` | [`default`](../classes/discord_Reaction.default.md) |
+| `reaction` | [`Reaction`](../classes/discord_Reaction.Reaction.md) |
 
 #### Returns
 
@@ -115,7 +115,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:67](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L67)
+[src/lib/Client.ts:67](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L67)
 
 ___
 
@@ -129,4 +129,4 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Client.ts#L65)
+[src/lib/Client.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Client.ts#L65)

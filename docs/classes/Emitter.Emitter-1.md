@@ -1,42 +1,42 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [Emitter](../modules/Emitter.md) / default
+[fuwa.js](../README.md) / [Exports](../modules.md) / [Emitter](../modules/Emitter.md) / Emitter
 
-# Class: default
+# Class: Emitter
 
-[Emitter](../modules/Emitter.md).default
+[Emitter](../modules/Emitter.md).Emitter
 
 The baseclass for the Client class.
 
 ## Hierarchy
 
-- **`default`**
+- **`Emitter`**
 
-  ↳ [`default`](Client.default.md)
+  ↳ [`Client`](Client.Client-1.md)
 
 ## Table of contents
 
 ### Constructors
 
-- [constructor](Emitter.default.md#constructor)
+- [constructor](Emitter.Emitter-1.md#constructor)
 
 ### Properties
 
-- [APIEvents](Emitter.default.md#apievents)
-- [OPevents](Emitter.default.md#opevents)
-- [WSEvents](Emitter.default.md#wsevents)
-- [response](Emitter.default.md#response)
-- [ws](Emitter.default.md#ws)
+- [APIEvents](Emitter.Emitter-1.md#apievents)
+- [OPevents](Emitter.Emitter-1.md#opevents)
+- [WSEvents](Emitter.Emitter-1.md#wsevents)
+- [response](Emitter.Emitter-1.md#response)
+- [ws](Emitter.Emitter-1.md#ws)
 
 ### Methods
 
-- [connect](Emitter.default.md#connect)
-- [event](Emitter.default.md#event)
-- [op](Emitter.default.md#op)
+- [connect](Emitter.Emitter-1.md#connect)
+- [event](Emitter.Emitter-1.md#event)
+- [op](Emitter.Emitter-1.md#op)
 
 ## Constructors
 
 ### constructor
 
-• **new default**()
+• **new Emitter**()
 
 ## Properties
 
@@ -50,7 +50,7 @@ The baseclass for the Client class.
 
 #### Defined in
 
-[src/lib/Emitter.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L28)
+[src/lib/Emitter.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L28)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L26)
+[src/lib/Emitter.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L26)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L29)
+[src/lib/Emitter.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L29)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L30)
+[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L30)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L25)
+[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L25)
 
 ## Methods
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L50)
+[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L50)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L87)
+[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L87)
 
 ___
 
@@ -182,4 +182,4 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/60995b2/src/lib/Emitter.ts#L81)
+[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/6865cb6/src/lib/Emitter.ts#L81)
