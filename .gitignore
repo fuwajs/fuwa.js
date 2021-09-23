@@ -9,6 +9,7 @@
 node_modules/
 .vscode/
 .typedoc.json
+*.swp
 browser/bundle.js
 docs.js
 .env
