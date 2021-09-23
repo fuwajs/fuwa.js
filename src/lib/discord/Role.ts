@@ -36,10 +36,7 @@ export default class Role {
         );
     }
     setPosition(position: number) {
-        return http.PATCH(
-            `/guilds/${this.gid}/roles`,
-            JSON.stringify({ position, id: this.id })
-        );
+        return http.PATCH(`/guilds/${this.gid}/roles`, JSON.stringify({ position, id: this.id }));
     }
     delete() {
         return http.DELETE(`/guilds/${this.gid}/roles/${this.id}`);

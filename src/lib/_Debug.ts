@@ -34,25 +34,25 @@ class Debug {
     log(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue(
-                '[' + event.toUpperCase() + ']'
-            )}: ${str} - ${chalk?.grey(new Date().toLocaleString())}`
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk?.grey(
+                new Date().toLocaleString()
+            )}`
         );
     }
     error(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.red(
-                str
-            )} - ${chalk?.grey(new Date().toLocaleString())}`
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.red(str)} - ${chalk?.grey(
+                new Date().toLocaleString()
+            )}`
         );
     }
     success(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
-            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.green(
-                str
-            )} - ${chalk?.grey(new Date().toLocaleString())}`
+            `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.green(str)} - ${chalk?.grey(
+                new Date().toLocaleString()
+            )}`
         );
     }
 
@@ -77,8 +77,7 @@ class Debug {
                 val = chalk.red('null');
                 continue;
             }
-            if (typeof val === 'object' && !Array.isArray(val))
-                val = '\n' + this.object(val, tabWidth + 1);
+            if (typeof val === 'object' && !Array.isArray(val)) val = '\n' + this.object(val, tabWidth + 1);
             if (Array.isArray(val)) val = '\n' + this.object({ ...val }, tabWidth + 1);
             // extra syntax highlighting
             if (typeof val === 'number') val = chalk.yellow(val);
@@ -90,8 +89,7 @@ class Debug {
             } catch {
                 void 0;
             }
-            if (typeof val === 'string' && isObj && val !== 'null')
-                val = chalk.green(`"${val}"`);
+            if (typeof val === 'string' && isObj && val !== 'null') val = chalk.green(`"${val}"`);
             str += `${tab}${chalk.bold.blue(`[${k}]`)}: ${val}${
                 Object.keys(obj).length !== i && !val.startsWith('\n') ? ',\n' : ''
             }`;

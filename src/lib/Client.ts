@@ -166,11 +166,12 @@ export const next = (
     i = 0,
     secondArr?: { cb: CommandCallback }[]
 ) => {
+    console.log(arr, i, secondArr);
     return () => {
         if (arr[i + 1]) {
-            arr[i + 1]?.cb(req, res, next(req, res, prefix, arr, i++), prefix);
+            arr[i + 1]?.cb(req, res, next(req, res, prefix, arr.slice(i), ++i), prefix);
         } else if (secondArr) {
-            secondArr[0]?.cb(req, res, next(req, res, prefix, secondArr, i++), prefix);
+            secondArr[0]?.cb(req, res, next(req, res, prefix, secondArr.slice(i), ++i), prefix);
         }
     };
 };
@@ -191,10 +192,7 @@ class Client extends Emitter {
     protected options: clientOptions;
 
     protected loop?: NodeJS.Timeout;
-    public commands = new Map<
-        string,
-        { cb: CommandCallback; options: commandOptions }[]
-    >();
+    public commands = new Map<string, { cb: CommandCallback; options: commandOptions }[]>();
     protected middleware: CommandCallback[] = [];
     /**
      * @param prefix The prefix for your bot
@@ -204,7 +202,11 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-        this.shardCount = options.shards ?? 0;
+        if (options) {
+            this.applicationId = options.applicationId;
+            this.shardCount = options.shards ?? 0;
+        }
+        this.shardCount = 0;
         this.options = {
             cache: true,
             debug: false,
@@ -221,7 +223,6 @@ class Client extends Emitter {
                 GatewayIntents.DirectMessages,
             ...options,
         };
-        this.applicationId = options.applicationId;
         this.debug = new Debug(this.options.debug ?? false);
         setDebug(this.debug);
         this.prefix = prefix;
@@ -232,7 +233,7 @@ class Client extends Emitter {
                 guilds: true,
                 users: true,
             },
-            ...options.cachingSettings,
+            ...(options?.cachingSettings || {}),
         };
         this.cache = new Cache(caching);
         if (this.options?.builtinCommands?.help) {
@@ -251,9 +252,7 @@ class Client extends Emitter {
                                 embed
                                     .setColor(Colors.red)
                                     .setTitle('Error')
-                                    .setDescription(
-                                        `${cmdName} is not a valid command name.`
-                                    )
+                                    .setDescription(`${cmdName} is not a valid command name.`)
                             );
                             return;
                         } else {
@@ -292,24 +291,19 @@ class Client extends Emitter {
             );
         }
         this.parser =
-            options.parser ||
-            ((prefix, msg, options) => {
+            options?.parser ||
+            ((prefix, msg) => {
                 const str = msg.content.split(' ');
-                const mentionPrefix =
-                    this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
-                if (str[0].slice(0, prefix.length) !== prefix && !mentionPrefix)
-                    return false;
-                const commandName = (mentionPrefix ? str[1] : str[0])
-                    .substr(prefix.length)
-                    .toLowerCase();
-                const [, commands] = [...this.commands.entries()].find(v => {
-                    if (
-                        v[0] === commandName ||
-                        v[1][0].options.aliases?.includes(commandName)
-                    ) {
+                const mentionPrefix = this.options.useMentionPrefix && str[0] === `<@!${this.bot.id}>`;
+                if (str[0].slice(0, prefix.length) !== prefix && !mentionPrefix) return false;
+                const commandName = (mentionPrefix ? str[1] : str[0]).substr(prefix.length).toLowerCase();
+                const cmd = [...this.commands.entries()].find(v => {
+                    if (v[0] === commandName || v[1][0].options.aliases?.includes(commandName)) {
                         return true;
                     } else return false;
                 });
+                if (!cmd) return false;
+                const [, commands] = cmd;
 
                 if (!commands) return false;
                 return [commands, str.slice(mentionPrefix ? 2 : 1)];
@@ -340,9 +334,7 @@ class Client extends Emitter {
         // console.time('command parsing')
         const parserRes = this.parser(prefix, msg, this.options);
         if (!parserRes) {
-            this.events.has('invalid command')
-                ? this.events.get('invalid command')(req, res)
-                : '';
+            this.events.has('invalid command') ? this.events.get('invalid command')(req, res) : '';
             return;
         }
         const [c, args] = parserRes;
@@ -363,8 +355,7 @@ class Client extends Emitter {
                 prefix
             );
         }
-        if (!this.middleware[0])
-            command.cb(req, res, next(req, res, prefix, c, 0), prefix);
+        if (!this.middleware[0]) command.cb(req, res, next(req, res, prefix, c, 0), prefix);
     }
     /**
      * Command function
@@ -472,10 +463,7 @@ class Client extends Emitter {
         this.middleware.push(cb);
         return this;
     }
-    protected async spawnShard(
-        shardId: number,
-        data: DiscordAPIOP[GatewayCodes.Identify]['d']
-    ) {
+    protected async spawnShard(shardId: number, data: DiscordAPIOP[GatewayCodes.Identify]['d']) {
         this.response.op.emit(GatewayCodes.Identify, {
             ...data,
             shard: [shardId, this.shardCount],
@@ -484,10 +472,7 @@ class Client extends Emitter {
     }
     protected initOp() {
         this.op(GatewayCodes.Hello, data => {
-            this.debug.log(
-                'hello',
-                `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`
-            );
+            this.debug.log('hello', `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`);
             this.loop = setInterval(
                 () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
                 data.heartbeat_interval
@@ -511,19 +496,13 @@ class Client extends Emitter {
             this.response.op.emit(GatewayCodes.Identify, identify);
         });
         this.op(GatewayCodes.InvalidSession, () => {
-            this.debug.error(
-                'invalid token',
-                'Invalid token was passed, throwing a error...'
-            );
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
     }
     protected initEvents() {
         this.event('READY', data => {
-            this.debug.success(
-                'bot online',
-                'Logged into discord, with everything intact'
-            );
+            this.debug.success('bot online', 'Logged into discord, with everything intact');
             this.sessionId = data.session_id;
             this.bot = new User(data.user);
             this.applicationId = data.application.id;
@@ -548,17 +527,13 @@ class Client extends Emitter {
             }
         });
         this.event('INVALID_SESSION', () => {
-            this.debug.error(
-                'invalid token',
-                'Invalid token was passed, throwing a error...'
-            );
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
         this.event('MESSAGE_CREATE', this.runCommand.bind(this));
     }
     getGlobalSlashCommands() {
-        if (!this.applicationId)
-            throw new Error('Application Id is required to do this action');
+        if (!this.applicationId) throw new Error('Application Id is required to do this action');
         return http.GET(`/applications/${this.applicationId}/commands`);
     }
     getGuildSlashCommand(gid: string) {
@@ -603,9 +578,7 @@ class Client extends Emitter {
         return new Guild(await http.GET(`/guilds/${gid}`));
     }
     async createDM(uid: string) {
-        return new Channel(
-            await http.POST('/users/@me/channels', JSON.stringify({ recipient_id: uid }))
-        );
+        return new Channel(await http.POST('/users/@me/channels', JSON.stringify({ recipient_id: uid })));
     }
     modifyBot(username: string) {
         return http.PATCH('/users/@me', JSON.stringify({ username }));
@@ -639,11 +612,9 @@ class Client extends Emitter {
         return this;
     }
     async deleteMessages(amt: number, channelID: string) {
-        const msgs: Message[] = await http
-            .GET(`/channels/${channelID}/messages?limit=${amt}`)
-            .catch(e => {
-                console.error(e);
-            });
+        const msgs: Message[] = await http.GET(`/channels/${channelID}/messages?limit=${amt}`).catch(e => {
+            console.error(e);
+        });
 
         return http
             .POST(

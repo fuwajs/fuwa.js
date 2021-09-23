@@ -38,10 +38,7 @@ class Message {
     async edit(content: string | Embed): Promise<Message> {
         const data: any = {};
         if (this.author.id.toString() !== bot.id.toString()) {
-            new Debug(true).error(
-                'message edit',
-                "Cannot edit a message you didn't send"
-            );
+            new Debug(true).error('message edit', "Cannot edit a message you didn't send");
             return;
         }
         if (typeof content === 'string') {
@@ -56,17 +53,12 @@ class Message {
             return;
         }
         return new Message(
-            await http.PATCH(
-                `/channels/${this.channel_id}/messages/${this.id}`,
-                JSON.stringify(data)
-            )
+            await http.PATCH(`/channels/${this.channel_id}/messages/${this.id}`, JSON.stringify(data))
         );
     }
 
     delete(): Promise<any> {
-        return http
-            .DELETE(`/channels/${this.channel_id}/messages/${this.id}`)
-            .catch(console.error);
+        return http.DELETE(`/channels/${this.channel_id}/messages/${this.id}`).catch(console.error);
     }
     pin() {
         return http.PUT(`/channels/${this.channel_id}/pins/${this.id}`);
@@ -87,10 +79,7 @@ class Message {
             emojis = Array.isArray(emojis) ? emojis.map(e => e.id) : emojis;
         }
         if (typeof emojis === 'string') {
-            return http.PUT(
-                `/channels/${this.channel_id}/messages/${this.id}` +
-                    `/reactions/${emojis}/@me`
-            );
+            return http.PUT(`/channels/${this.channel_id}/messages/${this.id}` + `/reactions/${emojis}/@me`);
         } else if (inOrder && Array.isArray(emojis)) {
             return http
                 .PUT(

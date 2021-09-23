@@ -15,6 +15,7 @@ misc/
 .travis.yml
 typedoc.json
 docs
+.eslintignore
 
 # Secrets
 *.secret

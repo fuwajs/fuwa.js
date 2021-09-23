@@ -15,14 +15,8 @@ import {
 } from '../_DiscordAPI';
 import http from '../_http';
 
-export function getAvatarUrl(props: {
-    uid: string;
-    avatar: string;
-    isBanner?: boolean;
-}): string {
-    let url = `${discordCDN}/${props.isBanner ?? false ? 'banners' : 'avatars'}/${
-        props.uid
-    }/`;
+export function getAvatarUrl(props: { uid: string; avatar: string; isBanner?: boolean }): string {
+    let url = `${discordCDN}/${props.isBanner ?? false ? 'banners' : 'avatars'}/${props.uid}/`;
     // means its a gif
     if (props.avatar.startsWith('a_')) {
         url += `${props.avatar}.gif`;
@@ -51,9 +45,7 @@ export class User implements IUser {
     constructor(data: IUser) {
         Object.assign(this, {
             ...data,
-            avatar: data.avatar
-                ? getAvatarUrl({ uid: data.id, avatar: data.avatar })
-                : null,
+            avatar: data.avatar ? getAvatarUrl({ uid: data.id, avatar: data.avatar }) : null,
             banner: data.banner
                 ? getAvatarUrl({
                       uid: data.id,
@@ -79,17 +71,13 @@ export class User implements IUser {
             data.embed = content;
             data.tts = false;
         } else {
-            throw new TypeError(
-                `Expected type 'string | Embed' instead found ${typeof content}`
-            );
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
         const dm: Channel = await http
             .POST('/users/@me/channels', JSON.stringify({ recipient_id: this.id }))
             .catch(console.error);
 
-        return http
-            .POST(`/channels/${dm.id}/messages`, JSON.stringify(data))
-            .catch(console.error);
+        return http.POST(`/channels/${dm.id}/messages`, JSON.stringify(data)).catch(console.error);
     }
 }
 

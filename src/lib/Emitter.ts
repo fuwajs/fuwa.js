@@ -4,11 +4,7 @@
  * @fileoverview Exports the emitter class. It is the baseclass for the
  * Client class.
  ******************************************************************************/
-import {
-    DiscordAPIOP as DiscordAPIOPResponse,
-    GatewayEvents,
-    GatewayCodes,
-} from './_DiscordAPI';
+import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from './_DiscordAPI';
 import { erlpack, pack, unpack } from './_erlpack';
 import WebSocket from 'ws';
 import { debug } from './_globals';
@@ -29,10 +25,7 @@ class Emitter {
     private WSEvents: { [key: string]: () => any };
     protected response = {
         op: {
-            emit: <T extends keyof DiscordAPIOPResponse>(
-                op: T,
-                d: DiscordAPIOPResponse[T]['d']
-            ): void => {
+            emit: <T extends keyof DiscordAPIOPResponse>(op: T, d: DiscordAPIOPResponse[T]['d']): void => {
                 //this.ws.send(JSON.stringify({ op, d, t: null, }));
                 this.ws?.send(pack({ op, d, t: null }));
             },
@@ -64,10 +57,7 @@ class Emitter {
                 debug.log('websocket message data', debug.object(res.d));
                 this.WSEvents?.message();
                 if (res.op === GatewayCodes.Dispatch) {
-                    if (!res.t)
-                        throw new Error(
-                            `The event is undefined while the OP Code is 0\n ${res}`
-                        );
+                    if (!res.t) throw new Error(`The event is undefined while the OP Code is 0\n ${res}`);
                     if (this.APIEvents[res.t]) this.APIEvents[res.t](res.d);
                 } else if (this.OPevents[res.op]) this.OPevents[res.op](res.d);
             };
@@ -79,10 +69,7 @@ class Emitter {
     ): void {
         this.OPevents[op] = cb;
     }
-    protected event<T extends keyof GatewayEvents>(
-        e: T,
-        cb: (data: GatewayEvents[T]['d']) => void
-    ): void {
+    protected event<T extends keyof GatewayEvents>(e: T, cb: (data: GatewayEvents[T]['d']) => void): void {
         this.APIEvents[e] = cb;
     }
 }

@@ -74,10 +74,7 @@ class Embed {
      * embed.setImage('https://discord.com/assets/41484d92c876f76b20c7f746221e8151.svg')
      * ```
      */
-    setImage(
-        imageUrl: string,
-        opts?: { proxyUrl?: string; height?: number; width?: number }
-    ): this {
+    setImage(imageUrl: string, opts?: { proxyUrl?: string; height?: number; width?: number }): this {
         // if (!imageUrl.includes('http://') || !imageUrl.includes('https://')) {
         //     let ext = path.extname(imageUrl).replace('.', '');
         //     if (ext === 'svg') ext = 'svg+xml';
@@ -115,10 +112,7 @@ class Embed {
      * embed.setFooter('some value', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setFooter(
-        footerText: string,
-        opts?: { icon?: string; proxyIconUrl?: string } | undefined
-    ): this {
+    setFooter(footerText: string, opts?: { icon?: string; proxyIconUrl?: string } | undefined): this {
         this.footer = {
             text: footerText,
             icon_url: opts?.icon,
@@ -138,10 +132,7 @@ class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    setAuthor(
-        name: string,
-        opts?: { icon: string; url?: string; proxyIconUrl?: string }
-    ): this {
+    setAuthor(name: string, opts?: { icon: string; url?: string; proxyIconUrl?: string }): this {
         this.author = {
             name: name,
             url: opts.url,
@@ -162,10 +153,7 @@ class Embed {
      * embed.setThumbnail('https://cdn.discordapp.com/attachments/792884815631351869/.jpg', { height: 100, width:100 })
      * ```
      */
-    setThumbnail(
-        url: string,
-        opts?: { proxyUrl?: string; height?: number; width?: number }
-    ): this {
+    setThumbnail(url: string, opts?: { proxyUrl?: string; height?: number; width?: number }): this {
         this.thumbnail = {
             url: url,
             proxy_url: opts?.proxyUrl,
@@ -275,10 +263,7 @@ class Embed {
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    setVideo(
-        url: string,
-        opts?: { height?: number; width?: number; proxyUrl?: string }
-    ): this {
+    setVideo(url: string, opts?: { height?: number; width?: number; proxyUrl?: string }): this {
         this.video = {
             url: url,
             height: opts.height,

@@ -66,9 +66,7 @@ export default {
                     // Handle Discord Rate Limits
                     debug.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
-                        this.REQUEST(method, path, data, headers).catch(e =>
-                            console.error(e)
-                        );
+                        this.REQUEST(method, path, data, headers).catch(e => console.error(e));
                     }, d?.retry_after * 1000); // seconds -> milliseconds
                 }
             });

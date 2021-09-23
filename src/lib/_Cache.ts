@@ -24,11 +24,7 @@ class Cache {
         }
     }
     cache<T extends keyof typeof Cache.prototype.data>(type: T, data: any): void {
-        if (
-            this.options?.cacheOptions[type] === undefined
-                ? true
-                : this.options.cacheOptions[type]
-        ) {
+        if (this.options?.cacheOptions[type] === undefined ? true : this.options.cacheOptions[type]) {
             this.data[type].set(data.id, data);
             // const debug = new Debug(true);
             // debug.log('cache', debug.object(this.data));

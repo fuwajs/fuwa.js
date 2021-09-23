@@ -43,9 +43,7 @@ class Request {
     async getGuild(memberLimit = 100) {
         const guild = {
             ...(await http.GET(`/guilds/${this.guild_id}`)),
-            members: await http.GET(
-                `/guilds/${this.guild_id}/members?limit=${memberLimit}`
-            ),
+            members: await http.GET(`/guilds/${this.guild_id}/members?limit=${memberLimit}`),
             channels: await http.GET(`/guilds/${this.guild_id}/channels`),
         };
         const guildClass = new Guild(guild);
@@ -53,9 +51,7 @@ class Request {
         return (this.guild = guildClass);
     }
     async getChannel() {
-        return (this.channel = new Channel(
-            await http.GET(`/channel/${this.channel_id}`)
-        ));
+        return (this.channel = new Channel(await http.GET(`/channel/${this.channel_id}`)));
     }
 }
 

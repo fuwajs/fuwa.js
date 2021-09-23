@@ -28,16 +28,11 @@ class Response {
             data.embed = content;
             data.tts = false;
         } else {
-            throw new TypeError(
-                `Expected type 'string | Embed' instead found ${typeof content}`
-            );
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
 
         return new Message(
-            await http.POST(
-                `/channels/${this.req.channel_id}/messages`,
-                JSON.stringify(data)
-            )
+            await http.POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(data))
         );
     }
     /**
@@ -54,16 +49,11 @@ class Response {
             data.embed = content;
             data.tts = false;
         } else {
-            throw new TypeError(
-                `Expected type 'string | Embed' instead found ${typeof content}`
-            );
+            throw new TypeError(`Expected type 'string | Embed' instead found ${typeof content}`);
         }
 
         return new Message(
-            await http.POST(
-                `/channels/${this.req.channel_id}/messages`,
-                JSON.stringify(data)
-            )
+            await http.POST(`/channels/${this.req.channel_id}/messages`, JSON.stringify(data))
         );
     }
 
@@ -75,10 +65,7 @@ class Response {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     react(emojis: string | string[] | Emoji | Emoji[], inOrder?: boolean) {
         const react = async (emoji: string | Emoji) => {
-            const string =
-                typeof emoji === 'string'
-                    ? encodeURI(emoji)
-                    : `${emoji.name}:${emoji.id}`;
+            const string = typeof emoji === 'string' ? encodeURI(emoji) : `${emoji.name}:${emoji.id}`;
 
             await http.PUT(
                 `/channels/${this.req.channel_id}/messages/${this.req.id}/reactions/${string}/@me`

@@ -30,9 +30,4 @@ export interface commandOptions {
 /**
  * Callback for commands
  */
-export type CommandCallback = (
-    req: Request,
-    res: Response,
-    next: () => void,
-    prefix: string
-) => any;
+export type CommandCallback = (req: Request, res: Response, next: () => void, prefix: string) => any;

@@ -55,13 +55,9 @@ export default class Channel {
             data.embeds = [content];
             data.tts = false;
         } else {
-            throw new InvalidMessageContent(
-                `type ${typeof content} is not a valid content type`
-            );
+            throw new InvalidMessageContent(`type ${typeof content} is not a valid content type`);
         }
-        return new Message(
-            await http.POST(`/channels/${this.id}/messages`, JSON.stringify(data))
-        );
+        return new Message(await http.POST(`/channels/${this.id}/messages`, JSON.stringify(data)));
     }
     async getMessage(id: string) {
         return new Message(await http.GET(`/channels/${this.id}/messages/${id}`));
@@ -74,11 +70,9 @@ export default class Channel {
         );
     }
     async prune(amt: number) {
-        const msgs: Message[] = await http
-            .GET(`/channels/${this.id}/messages?limit=${amt}`)
-            .catch(e => {
-                console.error(e);
-            });
+        const msgs: Message[] = await http.GET(`/channels/${this.id}/messages?limit=${amt}`).catch(e => {
+            console.error(e);
+        });
 
         http.POST(
             `/channels/${this.id}/messages/bulk-delete`,
@@ -88,9 +82,7 @@ export default class Channel {
         });
     }
     async getPins(): Promise<Message[]> {
-        return ((await http.GET(`/channels/${this.id}/pins`)) as IMessage[]).map(
-            m => new Message(m)
-        );
+        return ((await http.GET(`/channels/${this.id}/pins`)) as IMessage[]).map(m => new Message(m));
     }
     pinMessage(mid: string) {
         return http.PUT(`/channels/${this.id}/pins/${mid}`);

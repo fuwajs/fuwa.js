@@ -81,10 +81,7 @@ class Guild {
     async modifyRolePosition(role: Role | string, position: number) {
         const id = role instanceof Role ? role.id : role;
         return new Role(
-            await http.POST(
-                `/guilds/${this.id}/roles/`,
-                JSON.stringify({ id, position })
-            ),
+            await http.POST(`/guilds/${this.id}/roles/`, JSON.stringify({ id, position })),
             this.id
         );
     }
@@ -101,31 +98,22 @@ class Guild {
             this.id
         );
     }
-    modifyEmoji(
-        emoji: Emoji | string,
-        data: { name: string; roles?: string[] | Role[] }
-    ): Promise<Emoji> {
+    modifyEmoji(emoji: Emoji | string, data: { name: string; roles?: string[] | Role[] }): Promise<Emoji> {
         let roles;
-        if (data.roles)
-            roles = data.roles && data.roles.map(r => (typeof r === 'string' ? r : r.id));
+        if (data.roles) roles = data.roles && data.roles.map(r => (typeof r === 'string' ? r : r.id));
         const id = typeof emoji === 'string' ? emoji : emoji.id;
-        return http.PATCH(
-            `/guilds/${this.id}/emojis/${id}`,
-            JSON.stringify({ name: data.name, roles })
-        );
+        return http.PATCH(`/guilds/${this.id}/emojis/${id}`, JSON.stringify({ name: data.name, roles }));
     }
     async getMember(uid: string) {
         return new Member(await http.GET(`/guilds/${this.id}/members/${uid}`));
     }
     async getMembersByNickname(nickname: string) {
-        return (
-            await http.GET(`/guilds/${this.id}/members/search?query=${nickname}`)
-        ).map(member => new Member(member));
+        return (await http.GET(`/guilds/${this.id}/members/search?query=${nickname}`)).map(
+            member => new Member(member)
+        );
     }
     async getEmojis(): Promise<Map<string, Emoji>> {
-        return (this.emojis = new Map(
-            (await http.GET(`/guilds/${this.id}/emojis`)).map(m => [m.id, m])
-        ));
+        return (this.emojis = new Map((await http.GET(`/guilds/${this.id}/emojis`)).map(m => [m.id, m])));
     }
     getEmoji(id: string): Promise<Emoji> {
         return http.GET(`/guilds/${this.id}/emojis/${id}`);
@@ -162,10 +150,7 @@ class Guild {
         );
     }
     async createRole(data: RoleProps) {
-        return new Role(
-            await http.POST(`/guilds/${this.id}/roles`, JSON.stringify(data)),
-            this.id
-        );
+        return new Role(await http.POST(`/guilds/${this.id}/roles`, JSON.stringify(data)), this.id);
     }
     createEmoji(data: {
         name: string;
@@ -176,9 +161,7 @@ class Guild {
         const imageURL =
             typeof data.image === 'string'
                 ? data.image
-                : `data:image/${data.image.mimetype};${data.image.data.toString(
-                      'base64'
-                  )}`;
+                : `data:image/${data.image.mimetype};${data.image.data.toString('base64')}`;
         return http.POST(
             `/guilds/${this.id}/emojis`,
             JSON.stringify({ name: data.name, roles, image: imageURL })
