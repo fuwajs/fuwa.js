@@ -22,7 +22,7 @@ import http from './_http';
 import Response from './Response';
 import Emitter from './Emitter';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Argument, CommandCallback, commandOptions } from './Command';
+import { CommandCallback, commandOptions } from './Command';
 import Embed from './discord/Embed';
 import Colors from './Colors';
 import { erlpack } from './_erlpack';
@@ -259,13 +259,13 @@ class Client extends Emitter {
                         } else {
                             const fields = [];
 
-                            if (cmd[0].options.args) {
-                                const argNames = [...cmd[0].options.args.keys()];
-                                fields.push({
-                                    name: 'Arguments',
-                                    value: `\`${argNames.join(', ')}\``,
-                                });
-                            }
+                            // if (cmd[0].options.args) {
+                            //     const argNames = [...cmd[0].options.args.keys()];
+                            //     fields.push({
+                            //         name: 'Arguments',
+                            //         value: `\`${argNames.join(', ')}\``,
+                            //     });
+                            // }
                             if (cmd[0].options.aliases) {
                                 fields.push({
                                     name: 'Aliases',
@@ -398,42 +398,47 @@ class Client extends Emitter {
                 return ret;
             },
 
-            addArgument: <T>(props: {
-                name: string;
-                desc?: string;
-                parser?: (val: string) => T;
-                default?: T;
-                required?: boolean;
-            }) => {
-                if (!main.options.args) {
-                    main.options.args = [];
-                }
-                main.options.args.push({
-                    parser: props.parser || (v => String(v)),
-                    default: props.default,
-                    name: props.name,
-                    required: props.required ?? false,
-                    desc: props.desc || 'No description provided',
-                });
-                this.commands.set(defaultName, old);
-            },
-            createSlashCommand: (gid?: string) => {
-                if (!this.applicationId)
-                    throw new Error('Application Id is required to do this action');
-                let path = `/applications/${this.applicationId}/commands`;
-                if (gid) {
-                    path += `/guilds/${gid}/commands`;
-                } else {
-                    path += '/commands';
-                }
-                return http.POST(
-                    path,
-                    JSON.stringify({
-                        name: defaultName,
-                        description: main.options.desc,
-                    })
-                );
-            },
+            // addArgument: <T = string>(props: {
+            //     name: string;
+            //     desc?: string;
+            //     parser?: (val: string) => T;
+            //     default?: T;
+            //     required?: boolean;
+            // }) => {
+            //     if (!main.options.args) {
+            //         main.options.args = [];
+            //     }
+            //     main.options.args.push(
+            //         new Argument<any>(props.name, props.desc, props.default, props.parser)
+            //     );
+            //     this.commands.set(defaultName, old);
+            // },
+            // createSlashCommand: (gid?: string) => {
+            //     if (!this.applicationId)
+            //         throw new Error('Application Id is required to do this action');
+            //     let path = `/applications/${this.applicationId}/commands`;
+            //     if (gid) {
+            //         path += `/guilds/${gid}/commands`;
+            //     } else {
+            //         path += '/commands';
+            //     }
+            //     const options = [];
+            //     if (main.options.args) {
+            //         const args = main.options.args.map(arg => ({
+            //             type: ApplicationCommandOptionType.String,
+            //             name: arg.name,
+            //             description: arg.desc,
+            //             required: true,
+            //         }));
+            //     }
+            //     return http.POST(
+            //         path,
+            //         JSON.stringify({
+            //             name: defaultName,
+            //             description: main.options.desc,
+            //         })
+            //     );
+            // },
 
             // exit: () => this
         };

@@ -7,23 +7,6 @@
 import Request from './Request';
 import Response from './Response';
 
-export class Argument<T extends number | string | unknown> {
-    /**
-     * Default value of the argument
-     */
-    readonly defaultValue: T;
-
-    /**
-     * A description of the argument
-     */
-    readonly desc: string;
-
-    constructor(desc: string, defaultValue: T) {
-        this.defaultValue = defaultValue;
-        this.desc = desc;
-    }
-}
-
 /**
  * Options for your command
  * @interface
@@ -41,13 +24,7 @@ export interface commandOptions {
     /**
      * Command Arguments
      */
-    args?: {
-        parser: (val: string) => any;
-        default: any;
-        desc: string;
-        name: string;
-        required: boolean;
-    }[];
+    // args?: Argument[];
 }
 
 /**

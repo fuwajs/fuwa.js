@@ -75,7 +75,13 @@
             "sourceType": "module"
         },
         "rules": {
-            "prettier/prettier": "error",
+            "prettier/prettier": [
+                "error",
+                {},
+                {
+                    "usePrettierrc": true
+                }
+            ],
             "@typescript-eslint/no-explicit-any": "off",
             "@typescript-eslint/ban-ts-comment": "off",
             "@typescript-eslint/explicit-module-boundary-types": "off"
