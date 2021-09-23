@@ -335,6 +335,8 @@ export interface DiscordAPIOP {
                 $browser: string;
                 $device: string;
             };
+            shard?: [number, number];
+            presence?: any; //! FIX THIS ASAP
         };
         s: number;
     };
@@ -424,6 +426,7 @@ export interface Ready {
     relationships: any[];
     private_channels: any[];
     presences: any[];
+    shard?: [number, number];
     guilds: Guild[];
     guild_join_requests: any[];
     geo_ordered_rtc_regions: string[];

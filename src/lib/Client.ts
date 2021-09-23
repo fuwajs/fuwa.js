@@ -14,6 +14,7 @@ import {
     GatewayCodes,
     UserStatus,
     ActivityType,
+    DiscordAPIOP,
     GatewayIntents,
 } from './_DiscordAPI';
 import User from './discord/User';
@@ -63,7 +64,11 @@ export interface StatusOptions {
 }
 
 export interface Events {
-    ready();
+    /**
+     *
+     * @param shardId Shardid will be specified if the bot is sharded
+     */
+    ready(shardId?: number);
     message(req: Request, res: Response);
     reaction(reaction: Reaction);
     'invalid command': (req: Request, res: Response) => any;
@@ -82,6 +87,7 @@ export interface clientOptions {
      * the library.
      */
     debug?: boolean;
+    shards?: number;
     applicationId?: string;
     /**
      * If this is turned on (true) When someone mentions your bot it will behave
@@ -152,7 +158,7 @@ export interface clientOptions {
  * const client = new fuwa.Client('?'); // Create and initialize a Client
  * ```
  */
-const next = (
+export const next = (
     req: Request,
     res: Response,
     prefix: string,
@@ -174,6 +180,7 @@ class Client extends Emitter {
     protected debug: Debug;
     private sessionId = '';
     public cache: Cache;
+    public shardCount: number;
     protected status: any = [];
     protected applicationId = '';
     protected parser: clientOptions['parser'];
@@ -197,7 +204,7 @@ class Client extends Emitter {
         options?: clientOptions
     ) {
         super();
-
+        this.shardCount = options.shards ?? 0;
         this.options = {
             cache: true,
             debug: false,
@@ -308,6 +315,7 @@ class Client extends Emitter {
                 return [commands, str.slice(mentionPrefix ? 2 : 1)];
             });
     }
+
     protected async runCommand(msg: Message) {
         const req = new Request(msg, this.cache);
         const res = new Response(msg);
@@ -459,6 +467,16 @@ class Client extends Emitter {
         this.middleware.push(cb);
         return this;
     }
+    protected async spawnShard(
+        shardId: number,
+        data: DiscordAPIOP[GatewayCodes.Identify]['d']
+    ) {
+        this.response.op.emit(GatewayCodes.Identify, {
+            ...data,
+            shard: [shardId, this.shardCount],
+        });
+        this.debug.log('shards', `Sent shard ${shardId}`);
+    }
     protected initOp() {
         this.op(GatewayCodes.Hello, data => {
             this.debug.log(
@@ -469,8 +487,7 @@ class Client extends Emitter {
                 () => this.response.op.emit(GatewayCodes.Heartbeat, 251),
                 data.heartbeat_interval
             );
-            this.debug.log('discord login', 'Attempting to connect to discord');
-            this.response.op.emit(GatewayCodes.Identify, {
+            const identify = {
                 token: token.toString(),
                 intents: this.options.intents,
                 properties: {
@@ -478,7 +495,15 @@ class Client extends Emitter {
                     $browser: 'Fuwa.js',
                     $device: 'Fuwa.js',
                 },
-            });
+            };
+            if (this.shardCount) {
+                for (let i = 0; i <= this.shardCount; i++) {
+                    this.spawnShard(i, identify);
+                }
+            }
+
+            this.debug.log('discord login', 'Attempting to connect to discord');
+            this.response.op.emit(GatewayCodes.Identify, identify);
         });
         this.op(GatewayCodes.InvalidSession, () => {
             this.debug.error(
@@ -496,14 +521,14 @@ class Client extends Emitter {
             );
             this.sessionId = data.session_id;
             this.bot = new User(data.user);
+            this.applicationId = data.application.id;
             setBot(this.bot);
             data.guilds.forEach(g => {
-                console.log(g);
                 this.debug.success('guild recieved', `${g.id} Received, `);
                 g.unavailable ? '' : this.cache.cache('guilds', new Guild(g));
             });
             const ready = this.events.get('ready');
-            if (ready) ready();
+            if (ready) ready(data.shard ? data.shard[0] : undefined);
         });
         this.event('MESSAGE_REACTION_ADD', json => {
             if (this.events.has('reaction')) {

@@ -14,8 +14,7 @@ const { readFileSync } = require('fs');
 const fetch = require('node-fetch');
 
 const { UserFlags } = Enums;
-const TOKEN =
-    process.env.TOKEN || readFileSync(join(__dirname, 'token.secret'));
+const TOKEN = process.env.TOKEN || readFileSync(join(__dirname, 'token.secret'));
 const APP_ID = process.env.APP_ID || '883909870418534410';
 // Set the bot prefixes. Prefixes can be any length.
 const client = new Client(['!', 'a!'], {
@@ -25,6 +24,8 @@ const client = new Client(['!', 'a!'], {
         },
     },
     applicationId: APP_ID,
+    shards: 5,
+    debug: true,
 });
 
 // Log the bot into discord
@@ -33,11 +34,11 @@ client.login(TOKEN);
 // Users can do '@<bot name>' instead of the prefix '?'
 client.set('useMentionPrefix', true);
 // This function is ran when the bot is connected to discord
-client.on('ready', function ready() {
-    console.log(`Hello, my name is ${client.bot.username}!`);
+client.on('ready', function ready(shard) {
+    console.log(`Hello, my name is ${client.bot.username}! I'm on shard ${shard}`);
 });
 
-client.on('reaction', async (reaction) => {
+client.on('reaction', async reaction => {
     const res = await reaction.getResponse();
 
     res.reply(`You reacted with ${reaction.emoji.name}`);
@@ -56,7 +57,7 @@ client.use(function reactMiddleware(req, res, next) {
 // milliseconds) within an embed.
 client
     .command(['ping', 'latency'], async function ping(req, res) {
-        res.send('Loading...').then((msg) => {
+        res.send('Loading...').then(msg => {
             msg.edit(
                 new Embed()
                     .setTitle('Pong')
@@ -80,9 +81,7 @@ client.command('react', async (req, res) => {
         .map(([, e]) => e);
     let emoji;
     if (emojis === []) {
-        const emojiIMG = readFileSync(
-            join(__dirname, 'images/sweat-emoji.png')
-        );
+        const emojiIMG = readFileSync(join(__dirname, 'images/sweat-emoji.png'));
         emoji = await req.guild.createEmoji({
             image: { data: emojiIMG, mimetype: 'png' },
             name: 'Sweat emoji',
@@ -187,8 +186,5 @@ client.command('guildinfo', async function (req, res) {
 
 client.command('modify-this-channel', async function (req, res) {
     await req.getGuild();
-    req.guild.channels
-        .get(req.channel_id)
-        .modify({ nsfw: true })
-        .then(console.log);
+    req.guild.channels.get(req.channel_id).modify({ nsfw: true }).then(console.log);
 });
