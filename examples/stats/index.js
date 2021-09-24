@@ -9,7 +9,7 @@ const TOKEN = process.env.TOKEN || readFile(path.join(__dirname, 'token.secret')
 //! Make sure to run the next function in your middleware otherwise the command won't run!
 
 // This Middleware reacts to every command that is triggered
-function ReactMiddleware(req, res, next) {
+function ReactMiddleware(_, res, next) {
     res.react('✅');
     next();
 }
@@ -33,9 +33,19 @@ client
 // This command should respond to any command with
 client.command('ping', (req, res) => {
     const ping = new Date() - req.message.timestamp;
+    let color;
+
+    if (ping >= 200) {
+        color = Colors.lightGreen;
+    } else if (ping >= 500 && 999 >= ping) {
+        color = Colors.orange;
+    } else {
+        color = Colors.red;
+    }
 
     const embed = new Embed()
         .setTitle('Ping')
+        .setColor(color)
         .addField({ name: 'Pong', value: 'My Latency is ' + ping + 'ms!' });
 
     res.send(embed);
@@ -43,7 +53,7 @@ client.command('ping', (req, res) => {
 
 client.command('guild', async (req, res) => {
     const channel = await req.getChannel();
-    if (channel.type === Enums.ChannelTypes.Dm) {
+    if (channel.type === Enums.ChannelType.Dm) {
         res.reply('This command does not work in dms!');
         return;
     }
@@ -75,6 +85,5 @@ client.command('guild', async (req, res) => {
 
         .setFooter('Guild created at ' + guildCreatedAt, { icon: guild.icon })
         .setTimestamp();
-    console.log(embed);
     res.send(embed);
 });

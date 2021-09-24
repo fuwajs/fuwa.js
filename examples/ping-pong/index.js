@@ -1,4 +1,4 @@
-const { Client, Embed, Enums } = require('../../');
+const { Client, Embed, Colors } = require('../../');
 
 const client = new Client('?');
 const TOKEN = process.env.TOKEN || readFileSync(path.join(__dirname, 'token.secret'));
@@ -29,11 +29,22 @@ client
 // Commands
 
 // This command should respond to any command with
+// This command should respond to any command with
 client.command('ping', (req, res) => {
     const ping = new Date() - req.message.timestamp;
+    let color;
+
+    if (ping >= 200) {
+        color = Colors.lightGreen;
+    } else if (ping >= 500 && 999 >= ping) {
+        color = Colors.orange;
+    } else {
+        color = Colors.red;
+    }
 
     const embed = new Embed()
         .setTitle('Ping')
+        .setColor(color)
         .addField({ name: 'Pong', value: 'My Latency is ' + ping + 'ms!' });
 
     res.send(embed);

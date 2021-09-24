@@ -15,7 +15,9 @@
         "docs": "npx typedoc --out docs --entryPointStrategy expand ./src/lib --json docs/v1.json",
         "watch": "tsc -w -p  .",
         "build": "npx tsc -p .",
-        "lint": "npx eslint ./src/**/*.ts --fix"
+        "lint": "npx eslint ./src/**/*.ts --fix",
+        "pretest": "npx yarn build",
+        "test": "node tests/index.js"
     },
     "repository": {
         "type": "git",
