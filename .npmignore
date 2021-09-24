@@ -1,6 +1,7 @@
 # Dev utils
 .vscode/
 .prettierrc.json
+.prettierrc
 .eslintcache
 .eslintignore
 .eslintrc
@@ -8,6 +9,7 @@
 # Optional Things for github
 .github/
 .gitignore
+.gitattributes
 examples/
 
 misc/
@@ -26,8 +28,11 @@ docs
 tsconfig.json
 src/
 *.map
+
+
 # Misc
 node_modules/
 docs.js
 tests
 browser
+yarn.lock
