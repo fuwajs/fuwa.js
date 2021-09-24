@@ -1,17 +1,23 @@
 # Secrets and logs
 *.secret
-# *.log
+*.log
+.env
 
 # Cache
 .eslintcache
 
-# Misc
+# Output files
 node_modules/
-.vscode/
-.typedoc.json
-*.swp
-browser/bundle.js
-docs.js
-.env
 /dist
+
+# Project files
+.vscode/
+
+# Documentation
+.typedoc.json
+docs.js
 docs/README.md
+
+# Vim Swap Files
+_.swp
+*.swp
