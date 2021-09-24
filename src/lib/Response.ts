@@ -7,8 +7,7 @@
 import Embed from './discord/Embed';
 import Message from './discord/Message';
 // import User from './discord/User';
-import { Emoji } from './_DiscordAPI';
-import { Message as IMessage } from './_DiscordAPI';
+import { Emoji, Message as IMessage } from './_DiscordAPI';
 import http from './_http';
 // import Role from './discord/Role';
 
