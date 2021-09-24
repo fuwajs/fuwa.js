@@ -50,7 +50,7 @@ The baseclass for the Client class.
 
 #### Defined in
 
-[src/lib/Emitter.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L28)
+[src/lib/Emitter.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L24)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L26)
+[src/lib/Emitter.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L22)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L29)
+[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L25)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L30)
+[src/lib/Emitter.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L26)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L25)
+[src/lib/Emitter.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L21)
 
 ## Methods
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L50)
+[src/lib/Emitter.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L40)
 
 ___
 
@@ -155,7 +155,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L87)
+[src/lib/Emitter.ts:72](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L72)
 
 ___
 
@@ -182,4 +182,4 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L81)
+[src/lib/Emitter.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L66)

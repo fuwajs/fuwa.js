@@ -8,10 +8,10 @@
 
 ### Methods
 
-- [invalid%20command](Client.Events.md#invalid command)
+- [invalid command](Client.Events.md#invalid command)
 - [message](Client.Events.md#message)
-- [new%20channel](Client.Events.md#new channel)
-- [new%20guild](Client.Events.md#new guild)
+- [new channel](Client.Events.md#new channel)
+- [new guild](Client.Events.md#new guild)
 - [reaction](Client.Events.md#reaction)
 - [ready](Client.Events.md#ready)
 
@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L68)
+[src/lib/Client.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L74)
 
 ___
 
@@ -55,7 +55,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L66)
+[src/lib/Client.ts:72](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L72)
 
 ___
 
@@ -75,7 +75,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:70](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L70)
+[src/lib/Client.ts:76](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L76)
 
 ___
 
@@ -95,7 +95,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L69)
+[src/lib/Client.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L75)
 
 ___
 
@@ -115,13 +115,19 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:67](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L67)
+[src/lib/Client.ts:73](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L73)
 
 ___
 
 ### ready
 
-▸ **ready**(): `any`
+▸ **ready**(`shardId?`): `any`
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `shardId?` | `number` | Shardid will be specified if the bot is sharded |
 
 #### Returns
 
@@ -129,4 +135,4 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L65)
+[src/lib/Client.ts:71](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L71)

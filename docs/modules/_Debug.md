@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / _Debug
+[fuwa.js](../README.md) / [Exports](../modules.md) / \_Debug
 
 # Module: \_Debug
 

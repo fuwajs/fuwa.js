@@ -1,31 +1,43 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / Channel
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_DiscordAPI](../modules/_DiscordAPI.md) / Channel
 
 # Interface: Channel
 
 [_DiscordAPI](../modules/_DiscordAPI.md).Channel
 
+**`description`** Represents a guild or DM channel within Discord.
+
+**`see`** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure
+
 ## Table of contents
 
 ### Properties
 
-- [application_id](_DiscordAPI.Channel.md#application_id)
+- [application\_id](_DiscordAPI.Channel.md#application_id)
 - [bitrate](_DiscordAPI.Channel.md#bitrate)
-- [guild_id](_DiscordAPI.Channel.md#guild_id)
+- [default\_auto\_archive\_duration](_DiscordAPI.Channel.md#default_auto_archive_duration)
+- [guild\_id](_DiscordAPI.Channel.md#guild_id)
 - [icon](_DiscordAPI.Channel.md#icon)
 - [id](_DiscordAPI.Channel.md#id)
-- [last_message_id](_DiscordAPI.Channel.md#last_message_id)
-- [last_pin_timestamp](_DiscordAPI.Channel.md#last_pin_timestamp)
+- [last\_message\_id](_DiscordAPI.Channel.md#last_message_id)
+- [last\_pin\_timestamp](_DiscordAPI.Channel.md#last_pin_timestamp)
+- [member](_DiscordAPI.Channel.md#member)
+- [member\_count](_DiscordAPI.Channel.md#member_count)
+- [message\_count](_DiscordAPI.Channel.md#message_count)
 - [name](_DiscordAPI.Channel.md#name)
 - [nsfw](_DiscordAPI.Channel.md#nsfw)
-- [owner_id](_DiscordAPI.Channel.md#owner_id)
-- [parent_id](_DiscordAPI.Channel.md#parent_id)
-- [permission_overwrites](_DiscordAPI.Channel.md#permission_overwrites)
+- [owner\_id](_DiscordAPI.Channel.md#owner_id)
+- [parent\_id](_DiscordAPI.Channel.md#parent_id)
+- [permission\_overwrites](_DiscordAPI.Channel.md#permission_overwrites)
+- [permissions](_DiscordAPI.Channel.md#permissions)
 - [position](_DiscordAPI.Channel.md#position)
-- [rate_limit_per_user](_DiscordAPI.Channel.md#rate_limit_per_user)
+- [rate\_limit\_per\_user](_DiscordAPI.Channel.md#rate_limit_per_user)
 - [recipients](_DiscordAPI.Channel.md#recipients)
+- [rtc\_region](_DiscordAPI.Channel.md#rtc_region)
+- [thread\_metadata](_DiscordAPI.Channel.md#thread_metadata)
 - [topic](_DiscordAPI.Channel.md#topic)
 - [type](_DiscordAPI.Channel.md#type)
-- [user_limit](_DiscordAPI.Channel.md#user_limit)
+- [user\_limit](_DiscordAPI.Channel.md#user_limit)
+- [video\_quality\_mode](_DiscordAPI.Channel.md#video_quality_mode)
 
 ## Properties
 
@@ -35,7 +47,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:785](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L785)
+[src/lib/_DiscordAPI.ts:793](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L793)
 
 ___
 
@@ -45,7 +57,17 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:779](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L779)
+[src/lib/_DiscordAPI.ts:787](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L787)
+
+___
+
+### default\_auto\_archive\_duration
+
+• `Optional` **default\_auto\_archive\_duration**: `number`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:802](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L802)
 
 ___
 
@@ -55,7 +77,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:772](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L772)
+[src/lib/_DiscordAPI.ts:780](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L780)
 
 ___
 
@@ -65,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:783](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L783)
+[src/lib/_DiscordAPI.ts:791](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L791)
 
 ___
 
@@ -75,7 +97,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:770](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L770)
+[src/lib/_DiscordAPI.ts:778](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L778)
 
 ___
 
@@ -85,7 +107,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:778](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L778)
+[src/lib/_DiscordAPI.ts:786](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L786)
 
 ___
 
@@ -95,7 +117,37 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:787](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L787)
+[src/lib/_DiscordAPI.ts:795](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L795)
+
+___
+
+### member
+
+• `Optional` **member**: [`ThreadMember`](_DiscordAPI.ThreadMember.md)
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:801](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L801)
+
+___
+
+### member\_count
+
+• `Optional` **member\_count**: `number`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:799](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L799)
+
+___
+
+### message\_count
+
+• `Optional` **message\_count**: `number`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:798](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L798)
 
 ___
 
@@ -105,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:775](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L775)
+[src/lib/_DiscordAPI.ts:783](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L783)
 
 ___
 
@@ -115,7 +167,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:777](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L777)
+[src/lib/_DiscordAPI.ts:785](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L785)
 
 ___
 
@@ -125,7 +177,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:784](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L784)
+[src/lib/_DiscordAPI.ts:792](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L792)
 
 ___
 
@@ -135,7 +187,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:786](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L786)
+[src/lib/_DiscordAPI.ts:794](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L794)
 
 ___
 
@@ -145,7 +197,17 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:774](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L774)
+[src/lib/_DiscordAPI.ts:782](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L782)
+
+___
+
+### permissions
+
+• `Optional` **permissions**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:803](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L803)
 
 ___
 
@@ -155,7 +217,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:773](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L773)
+[src/lib/_DiscordAPI.ts:781](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L781)
 
 ___
 
@@ -165,7 +227,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:781](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L781)
+[src/lib/_DiscordAPI.ts:789](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L789)
 
 ___
 
@@ -175,7 +237,27 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:782](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L782)
+[src/lib/_DiscordAPI.ts:790](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L790)
+
+___
+
+### rtc\_region
+
+• `Optional` **rtc\_region**: `string`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:796](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L796)
+
+___
+
+### thread\_metadata
+
+• `Optional` **thread\_metadata**: [`ThreadMetadata`](_DiscordAPI.ThreadMetadata.md)
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:800](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L800)
 
 ___
 
@@ -185,17 +267,17 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:776](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L776)
+[src/lib/_DiscordAPI.ts:784](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L784)
 
 ___
 
 ### type
 
-• **type**: [`ChannelTypes`](../enums/_DiscordAPI.ChannelTypes.md)
+• **type**: [`ChannelType`](../enums/_DiscordAPI.ChannelType.md)
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:771](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L771)
+[src/lib/_DiscordAPI.ts:779](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L779)
 
 ___
 
@@ -205,4 +287,14 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:780](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L780)
+[src/lib/_DiscordAPI.ts:788](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L788)
+
+___
+
+### video\_quality\_mode
+
+• `Optional` **video\_quality\_mode**: `number`
+
+#### Defined in
+
+[src/lib/_DiscordAPI.ts:797](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L797)

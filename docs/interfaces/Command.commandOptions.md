@@ -13,7 +13,6 @@ Options for your command
 ### Properties
 
 - [aliases](Command.commandOptions.md#aliases)
-- [args](Command.commandOptions.md#args)
 - [desc](Command.commandOptions.md#desc)
 
 ## Properties
@@ -26,19 +25,7 @@ Aliases for your command
 
 #### Defined in
 
-[src/lib/Command.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L40)
-
-___
-
-### args
-
-• `Optional` **args**: { `default`: `any` ; `desc`: `string` ; `name`: `string` ; `required`: `boolean` ; `parser`: (`val`: `string`) => `any`  }[]
-
-Command Arguments
-
-#### Defined in
-
-[src/lib/Command.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L44)
+[src/lib/Command.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Command.ts#L23)
 
 ___
 
@@ -50,4 +37,4 @@ Description for your command.
 
 #### Defined in
 
-[src/lib/Command.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L35)
+[src/lib/Command.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Command.ts#L18)

@@ -12,51 +12,51 @@
 
 ### Properties
 
-- [afk_channel_id](discord_Guild.Guild.md#afk_channel_id)
-- [afk_timeout](discord_Guild.Guild.md#afk_timeout)
-- [application_id](discord_Guild.Guild.md#application_id)
+- [afk\_channel\_id](discord_Guild.Guild.md#afk_channel_id)
+- [afk\_timeout](discord_Guild.Guild.md#afk_timeout)
+- [application\_id](discord_Guild.Guild.md#application_id)
 - [banner](discord_Guild.Guild.md#banner)
 - [bans](discord_Guild.Guild.md#bans)
 - [channels](discord_Guild.Guild.md#channels)
-- [created_at](discord_Guild.Guild.md#created_at)
-- [default_message_notifications](discord_Guild.Guild.md#default_message_notifications)
+- [created\_at](discord_Guild.Guild.md#created_at)
+- [default\_message\_notifications](discord_Guild.Guild.md#default_message_notifications)
 - [description](discord_Guild.Guild.md#description)
-- [discovery_splash](discord_Guild.Guild.md#discovery_splash)
+- [discovery\_splash](discord_Guild.Guild.md#discovery_splash)
 - [emojis](discord_Guild.Guild.md#emojis)
-- [explicit_content_filter](discord_Guild.Guild.md#explicit_content_filter)
+- [explicit\_content\_filter](discord_Guild.Guild.md#explicit_content_filter)
 - [features](discord_Guild.Guild.md#features)
-- [guild_hashes](discord_Guild.Guild.md#guild_hashes)
+- [guild\_hashes](discord_Guild.Guild.md#guild_hashes)
 - [icon](discord_Guild.Guild.md#icon)
-- [icon_hash](discord_Guild.Guild.md#icon_hash)
+- [icon\_hash](discord_Guild.Guild.md#icon_hash)
 - [id](discord_Guild.Guild.md#id)
 - [large](discord_Guild.Guild.md#large)
 - [lazy](discord_Guild.Guild.md#lazy)
-- [max_members](discord_Guild.Guild.md#max_members)
-- [max_video_channel_users](discord_Guild.Guild.md#max_video_channel_users)
+- [max\_members](discord_Guild.Guild.md#max_members)
+- [max\_video\_channel\_users](discord_Guild.Guild.md#max_video_channel_users)
 - [members](discord_Guild.Guild.md#members)
-- [mfa_level](discord_Guild.Guild.md#mfa_level)
+- [mfa\_level](discord_Guild.Guild.md#mfa_level)
 - [name](discord_Guild.Guild.md#name)
 - [owner](discord_Guild.Guild.md#owner)
-- [owner_id](discord_Guild.Guild.md#owner_id)
+- [owner\_id](discord_Guild.Guild.md#owner_id)
 - [permissions](discord_Guild.Guild.md#permissions)
-- [preferred_locale](discord_Guild.Guild.md#preferred_locale)
-- [premium_subscription_count](discord_Guild.Guild.md#premium_subscription_count)
-- [premium_tier](discord_Guild.Guild.md#premium_tier)
+- [preferred\_locale](discord_Guild.Guild.md#preferred_locale)
+- [premium\_subscription\_count](discord_Guild.Guild.md#premium_subscription_count)
+- [premium\_tier](discord_Guild.Guild.md#premium_tier)
 - [presences](discord_Guild.Guild.md#presences)
-- [public_updates_channel_id](discord_Guild.Guild.md#public_updates_channel_id)
+- [public\_updates\_channel\_id](discord_Guild.Guild.md#public_updates_channel_id)
 - [region](discord_Guild.Guild.md#region)
 - [roles](discord_Guild.Guild.md#roles)
-- [rules_channel_id](discord_Guild.Guild.md#rules_channel_id)
+- [rules\_channel\_id](discord_Guild.Guild.md#rules_channel_id)
 - [splash](discord_Guild.Guild.md#splash)
-- [system_channel_flags](discord_Guild.Guild.md#system_channel_flags)
-- [system_channel_id](discord_Guild.Guild.md#system_channel_id)
+- [system\_channel\_flags](discord_Guild.Guild.md#system_channel_flags)
+- [system\_channel\_id](discord_Guild.Guild.md#system_channel_id)
 - [threads](discord_Guild.Guild.md#threads)
 - [unavailable](discord_Guild.Guild.md#unavailable)
-- [vanity_url_code](discord_Guild.Guild.md#vanity_url_code)
-- [verification_level](discord_Guild.Guild.md#verification_level)
-- [voice_states](discord_Guild.Guild.md#voice_states)
-- [widget_channel_id](discord_Guild.Guild.md#widget_channel_id)
-- [widget_enabled](discord_Guild.Guild.md#widget_enabled)
+- [vanity\_url\_code](discord_Guild.Guild.md#vanity_url_code)
+- [verification\_level](discord_Guild.Guild.md#verification_level)
+- [voice\_states](discord_Guild.Guild.md#voice_states)
+- [widget\_channel\_id](discord_Guild.Guild.md#widget_channel_id)
+- [widget\_enabled](discord_Guild.Guild.md#widget_enabled)
 
 ### Methods
 
@@ -96,7 +96,7 @@
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L69)
+[src/lib/discord/Guild.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L68)
 
 ## Properties
 
@@ -106,7 +106,7 @@
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L34)
+[src/lib/discord/Guild.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L33)
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L35)
+[src/lib/discord/Guild.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L34)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:60](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L60)
+[src/lib/discord/Guild.ts:59](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L59)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:51](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L51)
+[src/lib/discord/Guild.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L50)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:59](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L59)
+[src/lib/discord/Guild.ts:58](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L58)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L52)
+[src/lib/discord/Guild.ts:51](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L51)
 
 ___
 
@@ -166,7 +166,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L68)
+[src/lib/discord/Guild.ts:67](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L67)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L66)
+[src/lib/discord/Guild.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L65)
 
 ___
 
@@ -186,7 +186,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L39)
+[src/lib/discord/Guild.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L38)
 
 ___
 
@@ -196,7 +196,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L29)
+[src/lib/discord/Guild.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L28)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L56)
+[src/lib/discord/Guild.ts:55](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L55)
 
 ___
 
@@ -216,7 +216,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L62)
+[src/lib/discord/Guild.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L61)
 
 ___
 
@@ -226,7 +226,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L42)
+[src/lib/discord/Guild.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L41)
 
 ___
 
@@ -236,7 +236,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:45](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L45)
+[src/lib/discord/Guild.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L44)
 
 ___
 
@@ -246,7 +246,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L26)
+[src/lib/discord/Guild.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L25)
 
 ___
 
@@ -256,7 +256,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L27)
+[src/lib/discord/Guild.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L26)
 
 ___
 
@@ -266,7 +266,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L24)
+[src/lib/discord/Guild.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L23)
 
 ___
 
@@ -276,7 +276,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L41)
+[src/lib/discord/Guild.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L40)
 
 ___
 
@@ -286,7 +286,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:58](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L58)
+[src/lib/discord/Guild.ts:57](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L57)
 
 ___
 
@@ -296,7 +296,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L44)
+[src/lib/discord/Guild.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L43)
 
 ___
 
@@ -306,7 +306,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:53](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L53)
+[src/lib/discord/Guild.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L52)
 
 ___
 
@@ -316,7 +316,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:49](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L49)
+[src/lib/discord/Guild.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L48)
 
 ___
 
@@ -326,7 +326,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L61)
+[src/lib/discord/Guild.ts:60](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L60)
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L25)
+[src/lib/discord/Guild.ts:24](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L24)
 
 ___
 
@@ -346,7 +346,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L30)
+[src/lib/discord/Guild.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L29)
 
 ___
 
@@ -356,7 +356,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L31)
+[src/lib/discord/Guild.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L30)
 
 ___
 
@@ -366,7 +366,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L32)
+[src/lib/discord/Guild.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L31)
 
 ___
 
@@ -376,7 +376,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:54](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L54)
+[src/lib/discord/Guild.ts:53](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L53)
 
 ___
 
@@ -386,7 +386,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:67](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L67)
+[src/lib/discord/Guild.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L66)
 
 ___
 
@@ -396,7 +396,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L47)
+[src/lib/discord/Guild.ts:46](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L46)
 
 ___
 
@@ -406,7 +406,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L50)
+[src/lib/discord/Guild.ts:49](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L49)
 
 ___
 
@@ -416,7 +416,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L40)
+[src/lib/discord/Guild.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L39)
 
 ___
 
@@ -426,7 +426,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L33)
+[src/lib/discord/Guild.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L32)
 
 ___
 
@@ -436,7 +436,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:57](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L57)
+[src/lib/discord/Guild.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L56)
 
 ___
 
@@ -446,7 +446,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:55](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L55)
+[src/lib/discord/Guild.ts:54](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L54)
 
 ___
 
@@ -456,7 +456,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:28](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L28)
+[src/lib/discord/Guild.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L27)
 
 ___
 
@@ -466,7 +466,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:46](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L46)
+[src/lib/discord/Guild.ts:45](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L45)
 
 ___
 
@@ -476,7 +476,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:64](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L64)
+[src/lib/discord/Guild.ts:63](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L63)
 
 ___
 
@@ -486,7 +486,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L65)
+[src/lib/discord/Guild.ts:64](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L64)
 
 ___
 
@@ -496,7 +496,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L43)
+[src/lib/discord/Guild.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L42)
 
 ___
 
@@ -506,7 +506,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:63](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L63)
+[src/lib/discord/Guild.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L62)
 
 ___
 
@@ -516,7 +516,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L38)
+[src/lib/discord/Guild.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L37)
 
 ___
 
@@ -526,7 +526,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L48)
+[src/lib/discord/Guild.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L47)
 
 ___
 
@@ -536,7 +536,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L37)
+[src/lib/discord/Guild.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L36)
 
 ___
 
@@ -546,7 +546,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L36)
+[src/lib/discord/Guild.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L35)
 
 ## Methods
 
@@ -568,7 +568,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:196](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L196)
+[src/lib/discord/Guild.ts:170](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L170)
 
 ___
 
@@ -589,7 +589,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:164](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L164)
+[src/lib/discord/Guild.ts:145](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L145)
 
 ___
 
@@ -612,7 +612,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L179)
+[src/lib/discord/Guild.ts:155](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L155)
 
 ___
 
@@ -632,7 +632,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:173](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L173)
+[src/lib/discord/Guild.ts:152](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L152)
 
 ___
 
@@ -652,7 +652,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:156](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L156)
+[src/lib/discord/Guild.ts:137](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L137)
 
 ___
 
@@ -672,7 +672,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:160](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L160)
+[src/lib/discord/Guild.ts:141](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L141)
 
 ___
 
@@ -692,7 +692,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:152](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L152)
+[src/lib/discord/Guild.ts:133](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L133)
 
 ___
 
@@ -712,7 +712,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:143](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L143)
+[src/lib/discord/Guild.ts:124](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L124)
 
 ___
 
@@ -726,7 +726,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:140](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L140)
+[src/lib/discord/Guild.ts:121](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L121)
 
 ___
 
@@ -746,7 +746,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:137](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L137)
+[src/lib/discord/Guild.ts:118](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L118)
 
 ___
 
@@ -760,7 +760,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:132](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L132)
+[src/lib/discord/Guild.ts:115](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L115)
 
 ___
 
@@ -780,7 +780,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:149](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L149)
+[src/lib/discord/Guild.ts:130](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L130)
 
 ___
 
@@ -794,7 +794,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:146](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L146)
+[src/lib/discord/Guild.ts:127](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L127)
 
 ___
 
@@ -814,7 +814,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:122](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L122)
+[src/lib/discord/Guild.ts:107](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L107)
 
 ___
 
@@ -834,7 +834,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:125](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L125)
+[src/lib/discord/Guild.ts:110](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L110)
 
 ___
 
@@ -848,7 +848,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L81)
+[src/lib/discord/Guild.ts:78](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L78)
 
 ___
 
@@ -871,7 +871,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:107](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L107)
+[src/lib/discord/Guild.ts:101](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L101)
 
 ___
 
@@ -892,7 +892,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:94](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L94)
+[src/lib/discord/Guild.ts:88](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L88)
 
 ___
 
@@ -913,7 +913,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:84](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L84)
+[src/lib/discord/Guild.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L81)
 
 ___
 
@@ -934,7 +934,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:216](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L216)
+[src/lib/discord/Guild.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L186)
 
 ___
 
@@ -954,4 +954,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Guild.ts:211](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Guild.ts#L211)
+[src/lib/discord/Guild.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Guild.ts#L181)

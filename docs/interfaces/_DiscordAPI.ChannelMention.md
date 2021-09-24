@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / ChannelMention
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_DiscordAPI](../modules/_DiscordAPI.md) / ChannelMention
 
 # Interface: ChannelMention
 
@@ -8,7 +8,7 @@
 
 ### Properties
 
-- [guild_id](_DiscordAPI.ChannelMention.md#guild_id)
+- [guild\_id](_DiscordAPI.ChannelMention.md#guild_id)
 - [id](_DiscordAPI.ChannelMention.md#id)
 - [name](_DiscordAPI.ChannelMention.md#name)
 - [type](_DiscordAPI.ChannelMention.md#type)
@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:292](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L292)
+[src/lib/_DiscordAPI.ts:292](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L292)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:291](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L291)
+[src/lib/_DiscordAPI.ts:291](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L291)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:294](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L294)
+[src/lib/_DiscordAPI.ts:294](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L294)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:293](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L293)
+[src/lib/_DiscordAPI.ts:293](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L293)

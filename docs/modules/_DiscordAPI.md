@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / _DiscordAPI
+[fuwa.js](../README.md) / [Exports](../modules.md) / \_DiscordAPI
 
 # Module: \_DiscordAPI
 
@@ -17,7 +17,7 @@ TODO: make a web scraper that does this work
 - [ApplicationCommandOptionType](../enums/_DiscordAPI.ApplicationCommandOptionType.md)
 - [ApplicationCommandType](../enums/_DiscordAPI.ApplicationCommandType.md)
 - [AuditLogEvents](../enums/_DiscordAPI.AuditLogEvents.md)
-- [ChannelTypes](../enums/_DiscordAPI.ChannelTypes.md)
+- [ChannelType](../enums/_DiscordAPI.ChannelType.md)
 - [GatewayCodes](../enums/_DiscordAPI.GatewayCodes.md)
 - [GatewayIntents](../enums/_DiscordAPI.GatewayIntents.md)
 - [InteractionType](../enums/_DiscordAPI.InteractionType.md)
@@ -57,6 +57,8 @@ TODO: make a web scraper that does this work
 - [Role](../interfaces/_DiscordAPI.Role.md)
 - [RoleTags](../interfaces/_DiscordAPI.RoleTags.md)
 - [SelectOption](../interfaces/_DiscordAPI.SelectOption.md)
+- [ThreadMember](../interfaces/_DiscordAPI.ThreadMember.md)
+- [ThreadMetadata](../interfaces/_DiscordAPI.ThreadMetadata.md)
 - [User](../interfaces/_DiscordAPI.User.md)
 - [UserSettings](../interfaces/_DiscordAPI.UserSettings.md)
 
@@ -92,13 +94,13 @@ TODO: make a web scraper that does this work
 | `rate_limit_per_user?` | `number` | - |
 | `rtc_region?` | `string` | - |
 | `topic?` | `string` | - |
-| `type` | [`ChannelTypes`](../enums/_DiscordAPI.ChannelTypes.md) | - |
+| `type` | [`ChannelType`](../enums/_DiscordAPI.ChannelType.md) | - |
 | `user_limit?` | `number` | Only works for voice channels |
 | `video_quality_mode?` | `number` | Video quality of a voice channel |
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:841](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L841)
+[src/lib/_DiscordAPI.ts:933](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L933)
 
 ___
 
@@ -108,7 +110,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:318](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L318)
+[src/lib/_DiscordAPI.ts:318](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L318)
 
 ___
 
@@ -128,7 +130,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:834](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L834)
+[src/lib/_DiscordAPI.ts:926](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L926)
 
 ___
 
@@ -138,7 +140,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:658](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L658)
+[src/lib/_DiscordAPI.ts:662](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L662)
 
 ## Variables
 
@@ -156,7 +158,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L48)
+[src/lib/_DiscordAPI.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L48)
 
 ___
 
@@ -166,4 +168,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:54](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L54)
+[src/lib/_DiscordAPI.ts:54](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L54)

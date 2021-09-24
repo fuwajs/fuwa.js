@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / GatewayEvents
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_DiscordAPI](../modules/_DiscordAPI.md) / GatewayEvents
 
 # Interface: GatewayEvents
 
@@ -11,11 +11,11 @@ TODO: Add more events
 
 ### Properties
 
-- [CHANNEL_CREATE](_DiscordAPI.GatewayEvents.md#channel_create)
-- [GUILD_CREATE](_DiscordAPI.GatewayEvents.md#guild_create)
-- [INVALID_SESSION](_DiscordAPI.GatewayEvents.md#invalid_session)
-- [MESSAGE_CREATE](_DiscordAPI.GatewayEvents.md#message_create)
-- [MESSAGE_REACTION_ADD](_DiscordAPI.GatewayEvents.md#message_reaction_add)
+- [CHANNEL\_CREATE](_DiscordAPI.GatewayEvents.md#channel_create)
+- [GUILD\_CREATE](_DiscordAPI.GatewayEvents.md#guild_create)
+- [INVALID\_SESSION](_DiscordAPI.GatewayEvents.md#invalid_session)
+- [MESSAGE\_CREATE](_DiscordAPI.GatewayEvents.md#message_create)
+- [MESSAGE\_REACTION\_ADD](_DiscordAPI.GatewayEvents.md#message_reaction_add)
 - [READY](_DiscordAPI.GatewayEvents.md#ready)
 - [RESUMED](_DiscordAPI.GatewayEvents.md#resumed)
 
@@ -35,7 +35,7 @@ TODO: Add more events
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:80](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L80)
+[src/lib/_DiscordAPI.ts:80](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L80)
 
 ___
 
@@ -53,7 +53,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L61)
+[src/lib/_DiscordAPI.ts:61](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L61)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:71](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L71)
+[src/lib/_DiscordAPI.ts:71](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L71)
 
 ___
 
@@ -88,7 +88,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:85](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L85)
+[src/lib/_DiscordAPI.ts:85](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L85)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:90](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L90)
+[src/lib/_DiscordAPI.ts:90](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L90)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L75)
+[src/lib/_DiscordAPI.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L75)
 
 ___
 
@@ -142,4 +142,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L66)
+[src/lib/_DiscordAPI.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L66)

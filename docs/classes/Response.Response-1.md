@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[src/lib/Response.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Response.ts#L16)
+[src/lib/Response.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Response.ts#L15)
 
 ## Properties
 
@@ -61,7 +61,7 @@
 
 #### Defined in
 
-[src/lib/Response.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Response.ts#L75)
+[src/lib/Response.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Response.ts#L65)
 
 ___
 
@@ -81,7 +81,7 @@ ___
 
 #### Defined in
 
-[src/lib/Response.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Response.ts#L20)
+[src/lib/Response.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Response.ts#L19)
 
 ___
 
@@ -101,4 +101,4 @@ ___
 
 #### Defined in
 
-[src/lib/Response.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Response.ts#L47)
+[src/lib/Response.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Response.ts#L41)

@@ -31,6 +31,7 @@
 - [prefix](Client.Client-1.md#prefix)
 - [response](Client.Client-1.md#response)
 - [sessionId](Client.Client-1.md#sessionid)
+- [shardCount](Client.Client-1.md#shardcount)
 - [status](Client.Client-1.md#status)
 - [ws](Client.Client-1.md#ws)
 
@@ -56,6 +57,7 @@
 - [runCommand](Client.Client-1.md#runcommand)
 - [set](Client.Client-1.md#set)
 - [setStatus](Client.Client-1.md#setstatus)
+- [spawnShard](Client.Client-1.md#spawnshard)
 - [use](Client.Client-1.md#use)
 
 ## Constructors
@@ -77,7 +79,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:202](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L202)
+[src/lib/Client.ts:200](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L200)
 
 ## Properties
 
@@ -87,7 +89,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L182)
+[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L186)
 
 ___
 
@@ -97,7 +99,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L177)
+[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L180)
 
 ___
 
@@ -107,7 +109,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:180](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L180)
+[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L183)
 
 ___
 
@@ -117,7 +119,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L194)
+[src/lib/Client.ts:195](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L195)
 
 ___
 
@@ -127,7 +129,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:178](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L178)
+[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L181)
 
 ___
 
@@ -137,7 +139,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:186](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L186)
+[src/lib/Client.ts:190](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L190)
 
 ___
 
@@ -147,7 +149,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:193](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L193)
+[src/lib/Client.ts:194](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L194)
 
 ___
 
@@ -157,7 +159,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:198](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L198)
+[src/lib/Client.ts:196](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L196)
 
 ___
 
@@ -167,7 +169,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L191)
+[src/lib/Client.ts:192](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L192)
 
 ___
 
@@ -195,7 +197,7 @@ The
 
 #### Defined in
 
-[src/lib/Client.ts:183](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L183)
+[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L187)
 
 ___
 
@@ -205,7 +207,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L187)
+[src/lib/Client.ts:191](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L191)
 
 ___
 
@@ -228,7 +230,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L30)
+[src/lib/Emitter.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L26)
 
 ___
 
@@ -238,7 +240,17 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:179](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L179)
+[src/lib/Client.ts:182](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L182)
+
+___
+
+### shardCount
+
+• **shardCount**: `number`
+
+#### Defined in
+
+[src/lib/Client.ts:184](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L184)
 
 ___
 
@@ -248,7 +260,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:181](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L181)
+[src/lib/Client.ts:185](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L185)
 
 ___
 
@@ -262,7 +274,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L25)
+[src/lib/Emitter.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L21)
 
 ## Methods
 
@@ -295,13 +307,11 @@ Command Options
 
 | Name | Type |
 | :------ | :------ |
-| `addAlias` | (...`aliases`: `string`[]) => { addAlias: (...aliases: string[]) =\> ...; addArgument: <T\>(props: { name: string; desc?: string; parser?: (val: string) =\> T; default?: T; required?: boolean; }) =\> void; createSlashCommand: (gid?: string) =\> Promise<...\>; } |
-| `addArgument` | <T\>(`props`: { `default?`: `T` ; `desc?`: `string` ; `name`: `string` ; `required?`: `boolean` ; `parser?`: (`val`: `string`) => `T`  }) => `void` |
-| `createSlashCommand` | (`gid?`: `string`) => `Promise`<`any`\> |
+| `addAlias` | (...`aliases`: `string`[]) => { addAlias: (...aliases: string[]) =\> ...; } |
 
 #### Defined in
 
-[src/lib/Client.ts:391](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L391)
+[src/lib/Client.ts:373](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L373)
 
 ___
 
@@ -326,7 +336,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L50)
+[src/lib/Emitter.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L40)
 
 ___
 
@@ -346,7 +356,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:606](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L606)
+[src/lib/Client.ts:580](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L580)
 
 ___
 
@@ -367,7 +377,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:645](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L645)
+[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L614)
 
 ___
 
@@ -398,7 +408,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L87)
+[src/lib/Emitter.ts:72](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L72)
 
 ___
 
@@ -412,7 +422,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:555](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L555)
+[src/lib/Client.ts:535](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L535)
 
 ___
 
@@ -432,7 +442,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:603](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L603)
+[src/lib/Client.ts:577](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L577)
 
 ___
 
@@ -448,7 +458,7 @@ List of guilds
 
 #### Defined in
 
-[src/lib/Client.ts:600](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L600)
+[src/lib/Client.ts:574](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L574)
 
 ___
 
@@ -468,7 +478,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:560](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L560)
+[src/lib/Client.ts:539](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L539)
 
 ___
 
@@ -488,7 +498,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:661](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L661)
+[src/lib/Client.ts:628](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L628)
 
 ___
 
@@ -502,7 +512,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:517](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L517)
+[src/lib/Client.ts:503](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L503)
 
 ___
 
@@ -516,7 +526,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:485](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L485)
+[src/lib/Client.ts:473](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L473)
 
 ___
 
@@ -538,7 +548,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:575](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L575)
+[src/lib/Client.ts:552](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L552)
 
 ___
 
@@ -558,7 +568,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L590)
+[src/lib/Client.ts:564](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L564)
 
 ___
 
@@ -578,7 +588,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:614](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L614)
+[src/lib/Client.ts:583](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L583)
 
 ___
 
@@ -605,7 +615,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:465](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L465)
+[src/lib/Client.ts:446](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L446)
 
 ___
 
@@ -636,7 +646,7 @@ ___
 
 #### Defined in
 
-[src/lib/Emitter.ts:81](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Emitter.ts#L81)
+[src/lib/Emitter.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Emitter.ts#L66)
 
 ___
 
@@ -656,7 +666,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:328](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L328)
+[src/lib/Client.ts:313](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L313)
 
 ___
 
@@ -683,7 +693,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:617](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L617)
+[src/lib/Client.ts:586](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L586)
 
 ___
 
@@ -703,7 +713,36 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:621](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L621)
+[src/lib/Client.ts:590](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L590)
+
+___
+
+### spawnShard
+
+▸ `Protected` **spawnShard**(`shardId`, `data`): `Promise`<`void`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `shardId` | `number` |
+| `data` | `Object` |
+| `data.intents` | `number` |
+| `data.presence?` | `any` |
+| `data.properties` | `Object` |
+| `data.properties.$browser` | `string` |
+| `data.properties.$device` | `string` |
+| `data.properties.$os` | `string` |
+| `data.shard?` | [`number`, `number`] |
+| `data.token` | `string` |
+
+#### Returns
+
+`Promise`<`void`\>
+
+#### Defined in
+
+[src/lib/Client.ts:466](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L466)
 
 ___
 
@@ -735,4 +774,4 @@ A **client** so you can *chain* methods.
 
 #### Defined in
 
-[src/lib/Client.ts:481](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L481)
+[src/lib/Client.ts:462](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L462)

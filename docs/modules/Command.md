@@ -4,10 +4,6 @@
 
 ## Table of contents
 
-### Classes
-
-- [Argument](../classes/Command.Argument.md)
-
 ### Interfaces
 
 - [commandOptions](../interfaces/Command.commandOptions.md)
@@ -43,4 +39,4 @@ Callback for commands
 
 #### Defined in
 
-[src/lib/Command.ts:56](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Command.ts#L56)
+[src/lib/Command.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Command.ts#L33)

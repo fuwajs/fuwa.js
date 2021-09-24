@@ -15,6 +15,7 @@
 - [debug](Client.clientOptions.md#debug)
 - [intents](Client.clientOptions.md#intents)
 - [owners](Client.clientOptions.md#owners)
+- [shards](Client.clientOptions.md#shards)
 - [useMentionPrefix](Client.clientOptions.md#usementionprefix)
 
 ### Methods
@@ -29,7 +30,7 @@
 
 #### Defined in
 
-[src/lib/Client.ts:84](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L84)
+[src/lib/Client.ts:91](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L91)
 
 ___
 
@@ -45,7 +46,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:93](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L93)
+[src/lib/Client.ts:100](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L100)
 
 ___
 
@@ -62,7 +63,7 @@ caching off = more memory for other tasks
 
 #### Defined in
 
-[src/lib/Client.ts:122](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L122)
+[src/lib/Client.ts:129](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L129)
 
 ___
 
@@ -85,7 +86,7 @@ Settings for caching
 
 #### Defined in
 
-[src/lib/Client.ts:126](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L126)
+[src/lib/Client.ts:133](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L133)
 
 ___
 
@@ -98,7 +99,7 @@ the library.
 
 #### Defined in
 
-[src/lib/Client.ts:83](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L83)
+[src/lib/Client.ts:89](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L89)
 
 ___
 
@@ -110,7 +111,7 @@ ___
 
 #### Defined in
 
-[src/lib/Client.ts:104](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L104)
+[src/lib/Client.ts:111](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L111)
 
 ___
 
@@ -122,7 +123,17 @@ The owners' discord ID
 
 #### Defined in
 
-[src/lib/Client.ts:78](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L78)
+[src/lib/Client.ts:84](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L84)
+
+___
+
+### shards
+
+• `Optional` **shards**: `number`
+
+#### Defined in
+
+[src/lib/Client.ts:90](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L90)
 
 ___
 
@@ -135,7 +146,7 @@ as a prefix.
 
 #### Defined in
 
-[src/lib/Client.ts:89](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L89)
+[src/lib/Client.ts:96](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L96)
 
 ## Methods
 
@@ -159,4 +170,4 @@ The
 
 #### Defined in
 
-[src/lib/Client.ts:108](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/Client.ts#L108)
+[src/lib/Client.ts:115](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/Client.ts#L115)

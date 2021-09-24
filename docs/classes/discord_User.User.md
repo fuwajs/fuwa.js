@@ -16,7 +16,7 @@
 
 ### Properties
 
-- [accent_color](discord_User.User.md#accent_color)
+- [accent\_color](discord_User.User.md#accent_color)
 - [avatar](discord_User.User.md#avatar)
 - [banner](discord_User.User.md#banner)
 - [bot](discord_User.User.md#bot)
@@ -25,9 +25,9 @@
 - [flags](discord_User.User.md#flags)
 - [id](discord_User.User.md#id)
 - [locale](discord_User.User.md#locale)
-- [mfa_enabled](discord_User.User.md#mfa_enabled)
-- [premium_type](discord_User.User.md#premium_type)
-- [public_flags](discord_User.User.md#public_flags)
+- [mfa\_enabled](discord_User.User.md#mfa_enabled)
+- [premium\_type](discord_User.User.md#premium_type)
+- [public\_flags](discord_User.User.md#public_flags)
 - [system](discord_User.User.md#system)
 - [username](discord_User.User.md#username)
 - [verified](discord_User.User.md#verified)
@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[src/lib/discord/User.ts:51](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L51)
+[src/lib/discord/User.ts:45](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L45)
 
 ## Properties
 
@@ -64,7 +64,7 @@
 
 #### Defined in
 
-[src/lib/discord/User.ts:46](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L46)
+[src/lib/discord/User.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L40)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L38)
+[src/lib/discord/User.ts:32](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L32)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L40)
+[src/lib/discord/User.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L34)
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L39)
+[src/lib/discord/User.ts:33](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L33)
 
 ___
 
@@ -120,7 +120,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L37)
+[src/lib/discord/User.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L31)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:45](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L45)
+[src/lib/discord/User.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L39)
 
 ___
 
@@ -148,7 +148,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L47)
+[src/lib/discord/User.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L41)
 
 ___
 
@@ -162,7 +162,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L35)
+[src/lib/discord/User.ts:29](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L29)
 
 ___
 
@@ -176,7 +176,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L43)
+[src/lib/discord/User.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L37)
 
 ___
 
@@ -192,7 +192,7 @@ IS 2FA Enabled
 
 #### Defined in
 
-[src/lib/discord/User.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L42)
+[src/lib/discord/User.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L36)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:48](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L48)
+[src/lib/discord/User.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L42)
 
 ___
 
@@ -220,7 +220,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:49](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L49)
+[src/lib/discord/User.ts:43](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L43)
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:41](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L41)
+[src/lib/discord/User.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L35)
 
 ___
 
@@ -248,7 +248,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/User.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L36)
+[src/lib/discord/User.ts:30](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L30)
 
 ___
 
@@ -264,7 +264,7 @@ Is the user's email verfied?
 
 #### Defined in
 
-[src/lib/discord/User.ts:44](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L44)
+[src/lib/discord/User.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L38)
 
 ## Methods
 
@@ -286,4 +286,4 @@ Send a Direct Message to 'this' user.
 
 #### Defined in
 
-[src/lib/discord/User.ts:71](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/User.ts#L71)
+[src/lib/discord/User.ts:63](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/User.ts#L63)

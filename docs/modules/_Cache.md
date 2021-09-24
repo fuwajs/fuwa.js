@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / _Cache
+[fuwa.js](../README.md) / [Exports](../modules.md) / \_Cache
 
 # Module: \_Cache
 

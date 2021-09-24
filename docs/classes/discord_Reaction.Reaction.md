@@ -16,12 +16,12 @@
 
 ### Properties
 
-- [channel_id](discord_Reaction.Reaction.md#channel_id)
+- [channel\_id](discord_Reaction.Reaction.md#channel_id)
 - [emoji](discord_Reaction.Reaction.md#emoji)
-- [guild_id](discord_Reaction.Reaction.md#guild_id)
+- [guild\_id](discord_Reaction.Reaction.md#guild_id)
 - [member](discord_Reaction.Reaction.md#member)
-- [message_id](discord_Reaction.Reaction.md#message_id)
-- [user_id](discord_Reaction.Reaction.md#user_id)
+- [message\_id](discord_Reaction.Reaction.md#message_id)
+- [user\_id](discord_Reaction.Reaction.md#user_id)
 
 ### Methods
 
@@ -42,7 +42,7 @@
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L20)
+[src/lib/discord/Reaction.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L19)
 
 ## Properties
 
@@ -56,7 +56,7 @@
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L14)
+[src/lib/discord/Reaction.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L13)
 
 ___
 
@@ -70,7 +70,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L18)
+[src/lib/discord/Reaction.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L17)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L16)
+[src/lib/discord/Reaction.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L15)
 
 ___
 
@@ -98,7 +98,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L17)
+[src/lib/discord/Reaction.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L16)
 
 ___
 
@@ -112,7 +112,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L15)
+[src/lib/discord/Reaction.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L14)
 
 ___
 
@@ -126,7 +126,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L13)
+[src/lib/discord/Reaction.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L12)
 
 ## Methods
 
@@ -142,7 +142,7 @@ Get the message the reaction was on
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:27](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L27)
+[src/lib/discord/Reaction.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L26)
 
 ___
 
@@ -156,4 +156,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Reaction.ts:36](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Reaction.ts#L36)
+[src/lib/discord/Reaction.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Reaction.ts#L35)

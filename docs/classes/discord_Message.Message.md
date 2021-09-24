@@ -13,12 +13,12 @@
 ### Properties
 
 - [author](discord_Message.Message.md#author)
-- [channel_id](discord_Message.Message.md#channel_id)
+- [channel\_id](discord_Message.Message.md#channel_id)
 - [content](discord_Message.Message.md#content)
 - [embeds](discord_Message.Message.md#embeds)
-- [guild_id](discord_Message.Message.md#guild_id)
+- [guild\_id](discord_Message.Message.md#guild_id)
 - [id](discord_Message.Message.md#id)
-- [message_reference](discord_Message.Message.md#message_reference)
+- [message\_reference](discord_Message.Message.md#message_reference)
 - [timestamp](discord_Message.Message.md#timestamp)
 
 ### Methods
@@ -43,7 +43,7 @@
 
 #### Defined in
 
-[src/lib/discord/Message.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L23)
+[src/lib/discord/Message.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L23)
 
 ## Properties
 
@@ -53,7 +53,7 @@
 
 #### Defined in
 
-[src/lib/discord/Message.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L15)
+[src/lib/discord/Message.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L15)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L17)
+[src/lib/discord/Message.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L17)
 
 ___
 
@@ -73,7 +73,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L22)
+[src/lib/discord/Message.ts:22](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L22)
 
 ___
 
@@ -83,7 +83,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L18)
+[src/lib/discord/Message.ts:18](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L18)
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L16)
+[src/lib/discord/Message.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L16)
 
 ___
 
@@ -103,7 +103,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L20)
+[src/lib/discord/Message.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L20)
 
 ___
 
@@ -113,7 +113,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L19)
+[src/lib/discord/Message.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L19)
 
 ___
 
@@ -123,7 +123,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L21)
+[src/lib/discord/Message.ts:21](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L21)
 
 ## Methods
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L66)
+[src/lib/discord/Message.ts:60](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L60)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L38)
+[src/lib/discord/Message.ts:38](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L38)
 
 ___
 
@@ -171,7 +171,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:71](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L71)
+[src/lib/discord/Message.ts:63](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L63)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:82](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L82)
+[src/lib/discord/Message.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L74)
 
 ___
 
@@ -206,4 +206,4 @@ ___
 
 #### Defined in
 
-[src/lib/discord/Message.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/discord/Message.ts#L74)
+[src/lib/discord/Message.ts:66](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/discord/Message.ts#L66)

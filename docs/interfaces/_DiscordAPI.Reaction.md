@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / Reaction
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_DiscordAPI](../modules/_DiscordAPI.md) / Reaction
 
 # Interface: Reaction
 
@@ -12,12 +12,12 @@
 
 ### Properties
 
-- [channel_id](_DiscordAPI.Reaction.md#channel_id)
+- [channel\_id](_DiscordAPI.Reaction.md#channel_id)
 - [emoji](_DiscordAPI.Reaction.md#emoji)
-- [guild_id](_DiscordAPI.Reaction.md#guild_id)
+- [guild\_id](_DiscordAPI.Reaction.md#guild_id)
 - [member](_DiscordAPI.Reaction.md#member)
-- [message_id](_DiscordAPI.Reaction.md#message_id)
-- [user_id](_DiscordAPI.Reaction.md#user_id)
+- [message\_id](_DiscordAPI.Reaction.md#message_id)
+- [user\_id](_DiscordAPI.Reaction.md#user_id)
 
 ## Properties
 
@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:398](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L398)
+[src/lib/_DiscordAPI.ts:400](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L400)
 
 ___
 
@@ -37,7 +37,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:402](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L402)
+[src/lib/_DiscordAPI.ts:404](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L404)
 
 ___
 
@@ -47,7 +47,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:400](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L400)
+[src/lib/_DiscordAPI.ts:402](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L402)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:401](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L401)
+[src/lib/_DiscordAPI.ts:403](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L403)
 
 ___
 
@@ -67,7 +67,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:399](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L399)
+[src/lib/_DiscordAPI.ts:401](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L401)
 
 ___
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:397](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L397)
+[src/lib/_DiscordAPI.ts:399](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L399)

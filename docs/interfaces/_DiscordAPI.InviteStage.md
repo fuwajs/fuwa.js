@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_DiscordAPI](../modules/_DiscordAPI.md) / InviteStage
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_DiscordAPI](../modules/_DiscordAPI.md) / InviteStage
 
 # Interface: InviteStage
 
@@ -9,8 +9,8 @@
 ### Properties
 
 - [members](_DiscordAPI.InviteStage.md#members)
-- [participant_count](_DiscordAPI.InviteStage.md#participant_count)
-- [speaker_count](_DiscordAPI.InviteStage.md#speaker_count)
+- [participant\_count](_DiscordAPI.InviteStage.md#participant_count)
+- [speaker\_count](_DiscordAPI.InviteStage.md#speaker_count)
 - [topic](_DiscordAPI.InviteStage.md#topic)
 
 ## Properties
@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:948](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L948)
+[src/lib/_DiscordAPI.ts:1040](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L1040)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:949](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L949)
+[src/lib/_DiscordAPI.ts:1041](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L1041)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:950](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L950)
+[src/lib/_DiscordAPI.ts:1042](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L1042)
 
 ___
 
@@ -51,4 +51,4 @@ ___
 
 #### Defined in
 
-[src/lib/_DiscordAPI.ts:951](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_DiscordAPI.ts#L951)
+[src/lib/_DiscordAPI.ts:1043](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_DiscordAPI.ts#L1043)

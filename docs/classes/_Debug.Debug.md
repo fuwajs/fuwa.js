@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / [_Debug](../modules/_Debug.md) / Debug
+[fuwa.js](../README.md) / [Exports](../modules.md) / [\_Debug](../modules/_Debug.md) / Debug
 
 # Class: Debug
 
@@ -38,7 +38,7 @@ messages.
 
 #### Defined in
 
-[src/lib/_Debug.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L26)
+[src/lib/_Debug.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L26)
 
 ## Properties
 
@@ -48,7 +48,7 @@ messages.
 
 #### Defined in
 
-[src/lib/_Debug.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L25)
+[src/lib/_Debug.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L25)
 
 ## Methods
 
@@ -69,7 +69,7 @@ messages.
 
 #### Defined in
 
-[src/lib/_Debug.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L42)
+[src/lib/_Debug.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L42)
 
 ___
 
@@ -92,7 +92,7 @@ Log a string paired with an event to stdout
 
 #### Defined in
 
-[src/lib/_Debug.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L34)
+[src/lib/_Debug.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L34)
 
 ___
 
@@ -116,7 +116,7 @@ Print an object or primitive to stdout
 
 #### Defined in
 
-[src/lib/_Debug.ts:69](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L69)
+[src/lib/_Debug.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L65)
 
 ___
 
@@ -137,4 +137,4 @@ ___
 
 #### Defined in
 
-[src/lib/_Debug.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_Debug.ts#L52)
+[src/lib/_Debug.ts:50](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_Debug.ts#L50)

@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / _erlpack
+[fuwa.js](../README.md) / [Exports](../modules.md) / \_erlpack
 
 # Module: \_erlpack
 
@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[src/lib/_erlpack.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_erlpack.ts#L6)
+[src/lib/_erlpack.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_erlpack.ts#L6)
 
 ## Functions
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_erlpack.ts#L19)
+[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_erlpack.ts#L19)
 
 ▸ `Const` **pack**(`value`, `replacer?`, `space?`): `string` \| `Buffer`
 
@@ -72,7 +72,7 @@
 
 #### Defined in
 
-[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_erlpack.ts#L19)
+[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_erlpack.ts#L19)
 
 ▸ `Const` **pack**(`data`): `string` \| `Buffer`
 
@@ -88,7 +88,7 @@
 
 #### Defined in
 
-[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_erlpack.ts#L19)
+[src/lib/_erlpack.ts:19](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_erlpack.ts#L19)
 
 ___
 
@@ -109,4 +109,4 @@ ___
 
 #### Defined in
 
-[src/lib/_erlpack.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/5bd8aa0/src/lib/_erlpack.ts#L20)
+[src/lib/_erlpack.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/d4e1de5/src/lib/_erlpack.ts#L20)
