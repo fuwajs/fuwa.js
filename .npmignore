@@ -29,4 +29,5 @@ src/
 # Misc
 node_modules/
 docs.js
+tests
 browser
