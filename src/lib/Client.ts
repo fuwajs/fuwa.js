@@ -8,15 +8,7 @@ import Request from './Request';
 import Cache from './_Cache';
 import Debug from './_Debug';
 import { InvalidToken, InvalidPrefix } from './Errors';
-import {
-    discordAPI,
-    Message,
-    GatewayCodes,
-    UserStatus,
-    ActivityType,
-    DiscordAPIOP,
-    GatewayIntents,
-} from './_DiscordAPI';
+import { discordAPI, Message, GatewayCodes, DiscordAPIOP, GatewayIntents, Presence } from './_DiscordAPI';
 import User from './discord/User';
 import http from './_http';
 import Response from './Response';
@@ -32,36 +24,6 @@ import Guild from './discord/Guild';
 import Channel from './discord/Channel';
 
 export type statusType = 'playing' | 'listening' | 'streaming' | 'competing';
-
-/**
- * status options for bot
- */
-export interface StatusOptions {
-    /**
-     * The status message to be displayed
-     */
-    name: string;
-
-    /**
-     * The available status types are playing, listening, streaming, and
-     * competing.
-     */
-    type?: ActivityType;
-    /**
-     * The URL of a stream
-     */
-
-    url?: string;
-
-    /**
-     * The status of your bot. Online by default
-     */
-    status?: UserStatus;
-    /**
-     * Whether or not the bot is afk.
-     */
-    afk?: boolean;
-}
 
 export interface Events {
     /**
@@ -485,6 +447,7 @@ class Client extends Emitter {
                     $browser: 'Fuwa.js',
                     $device: 'Fuwa.js',
                 },
+                status: this.status,
             };
             if (this.shardCount) {
                 for (let i = 0; i <= this.shardCount; i++) {
@@ -587,28 +550,13 @@ class Client extends Emitter {
         this.options[key] = val;
         return this;
     }
-    setStatus(status: StatusOptions) {
-        let cred = {
-            d: {
-                presence: {
-                    activities: [],
-                    status: 'online',
-                    afk: false,
-                },
-            },
-        };
-        let activities: any = [
-            {
-                name: status.name,
-            },
-        ];
-        activities[0] = status?.type;
-
-        cred.d.presence.activities = activities;
-        cred.d.presence.status = status.status || 'online';
-        cred.d.presence.afk = status.afk || false;
-
-        this.status = cred;
+    setStatus(status: Presence) {
+        if (!this.connected) {
+            this.status = status;
+        } else {
+            this.response.op.emit(GatewayCodes.StatusUpdate, { user: this.bot, ...status } as any);
+        }
+        console.log(status);
         return this;
     }
     async deleteMessages(amt: number, channelID: string) {

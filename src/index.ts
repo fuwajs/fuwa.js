@@ -18,13 +18,17 @@ import {
     InviteTargets,
     ApplicationCommandOptionType,
     UserFlags,
+    AuditLogEvents,
     ApplicationCommandType,
+    InteractionType,
 } from './lib/_DiscordAPI';
 
 export const Enums = {
     PermissionFlags,
     GatewayIntents,
     MessageType,
+    AuditLogEvents,
+    InteractionType,
     ActivityType,
     ChannelType,
     PremiumTypes,

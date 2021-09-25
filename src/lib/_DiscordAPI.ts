@@ -317,6 +317,15 @@ export interface Member {
 
 export type GuildMember = Member;
 
+export interface Presence {
+    since: number;
+    activities: {
+        name: string;
+        type: ActivityType;
+    }[];
+    status: UserStatus;
+    afk?: boolean;
+}
 export interface DiscordAPIOP {
     1: {
         op?: 1;
@@ -336,22 +345,14 @@ export interface DiscordAPIOP {
                 $device: string;
             };
             shard?: [number, number];
-            presence?: any; //! FIX THIS ASAP
+            presence?: Presence; //! FIX THIS ASAP
         };
         s: number;
     };
     3: {
         op?: 3;
         t?: null;
-        d: {
-            since: number;
-            activities: {
-                name: string;
-                type: 0 | 1 | 2 | 3 | 4 | 5;
-            }[];
-            status: UserStatus;
-            afk: boolean;
-        };
+        d: Presence;
     };
     4: {
         op?: 4;
@@ -690,6 +691,7 @@ export enum ActivityType {
     Game,
     Streaming,
     Listening,
+    Watching,
     Custom,
     Competing,
 }

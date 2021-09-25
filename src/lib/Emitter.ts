@@ -20,7 +20,7 @@ export interface QueryOptions {
 class Emitter {
     protected ws?: any;
     private OPevents: { [key: number]: (data: any) => any } = {};
-
+    protected connected = false;
     private APIEvents: { [key: string]: (data: any) => any } = {};
     private WSEvents: { [key: string]: () => any };
     protected response = {
@@ -44,6 +44,7 @@ class Emitter {
         }
         this.ws = new WebSocket(url + `?v=${query.v ?? 8}&encoding=${encoding}`);
         this.ws.onopen = () => {
+            this.connected = true;
             this.WSEvents?.open();
             this.ws.onmessage = ({ data }) => {
                 const res: {
