@@ -1,0 +1,6 @@
+{
+    "eslint.lintTask.enable": true,
+    "eslint.packageManager": "npm",
+    "eslint.debug": true,
+    "eslint.validate": [],
+}
