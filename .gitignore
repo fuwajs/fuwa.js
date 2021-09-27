@@ -1,3 +1,7 @@
 *.secret
 dist
 node_modules
+types
+*.map
+.vscode
+*.log

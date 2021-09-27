@@ -1,0 +1,52 @@
+{
+    "name": "fuwa.js",
+    "version": "3.0.0",
+    "description": "The new way of making discord bots",
+    "main": "dist/index.js",
+    "repository": "https://github.com/fuwajs/fuwa.js.git",
+    "author": "Artrix <39530102+Artrix9095@users.noreply.github.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "build": "npx tsc -p .",
+        "lint": "npx eslint ./src/**/*.ts --fix"
+    },
+    "dependencies": {
+        "ws": "^8.2.2"
+    },
+    "devDependencies": {
+        "@types/ws": "^8.2.0",
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
+        "eslint": "^7.32.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.4.1",
+        "typescript": "^4.4.3"
+    },
+    "eslintConfig": {
+        "plugins": [
+            "prettier"
+        ],
+        "extends": [
+            "plugin:@typescript-eslint/recommended"
+        ],
+        "parser": "@typescript-eslint/parser",
+        "parserOptions": {
+            "project": "./tsconfig.json",
+            "ecmaVersion": 2018,
+            "sourceType": "module"
+        },
+        "rules": {
+            "prettier/prettier": [
+                "error",
+                {},
+                {
+                    "usePrettierrc": true
+                }
+            ],
+            "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/ban-ts-comment": "off",
+            "@typescript-eslint/explicit-module-boundary-types": "off"
+        }
+    }
+}
