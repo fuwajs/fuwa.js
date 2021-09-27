@@ -15,6 +15,7 @@ export default class Client extends WebSocket {
     public events = new Map<keyof Events, (...args: any[]) => any>();
     public commands = new Map<string, Command>();
     public bot: any | null = null;
+    public defaultPrefix: string | null
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
     public constructor(options?: ClientOptions) {
@@ -56,5 +57,11 @@ export default class Client extends WebSocket {
             Globs.sessionId = ready.session_id;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
+    }
+    public async fetchPrefix(): Promise<string> {
+        if(this.defaultPrefix === null) {
+            throw new Error("You dont have a default prefix set in the client constructor. fetchPrefix returned undefined.")
+        }
+        return this.defaultPrefix
     }
 }
