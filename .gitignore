@@ -1,0 +1,3 @@
+*.secret
+dist
+node_modules
