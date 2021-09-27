@@ -3,18 +3,24 @@
     "version": "3.0.0",
     "description": "The new way of making discord bots",
     "main": "dist/index.js",
+    "types": "types/index.d.ts",
     "repository": "https://github.com/fuwajs/fuwa.js.git",
     "author": "Artrix <39530102+Artrix9095@users.noreply.github.com>",
     "license": "MIT",
     "private": false,
     "scripts": {
         "build": "npx tsc -p .",
-        "lint": "npx eslint ./src/**/*.ts --fix"
+        "lint": "npx eslint ./src/**/*.ts --fix",
+        "test": "node tests/index"
     },
     "dependencies": {
         "ws": "^8.2.2"
     },
+    "optionalDependencies": {
+        "erlpack": "^0.1.3"
+    },
     "devDependencies": {
+        "@types/node": "^16.10.1",
         "@types/ws": "^8.2.0",
         "@typescript-eslint/eslint-plugin": "^4.31.2",
         "@typescript-eslint/parser": "^4.31.2",

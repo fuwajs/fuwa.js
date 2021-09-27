@@ -61,7 +61,7 @@ export interface GatewayEvents {
     HELLO: {
         op: 0;
         t: null;
-        d: { heartbeatInterval: number };
+        d: { heartbeat_interval: number };
     };
     READY: {
         op: 0;
@@ -458,7 +458,7 @@ export enum InteractionType {
 /**
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type
  */
-export enum ApplicationCommandOptionType {
+export enum CommandOptionTypes {
     SubCommand = 1,
     SubCommandGroup,
     String,
@@ -500,7 +500,7 @@ export interface InteractionData {
     name: string;
     type: ApplicationCommandType;
     resolved?: ResolvedData;
-    options?: ApplicationCommandInteractionDataOption[];
+    options?: CommandOptions[];
     custom_id?: string;
     component_type?: ComponentType;
     values?: SelectOption[];
@@ -515,10 +515,10 @@ export interface ResolvedData {
     messages?: Map<string, Message>;
 }
 
-export interface ApplicationCommandInteractionDataOption {
+export interface CommandOptions {
     name: string;
-    type: ApplicationCommandOptionType;
-    value?: ApplicationCommandOptionType;
+    type: CommandOptionTypes;
+    value?: CommandOptionTypes;
 }
 
 export interface SelectOption {

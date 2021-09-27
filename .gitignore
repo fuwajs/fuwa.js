@@ -4,4 +4,5 @@ node_modules
 types
 *.map
 .vscode
+.env
 *.log
