@@ -1,9 +1,9 @@
-import { CommandOptionTypes } from '../util/DiscordAPI';
-import Globs from '../util/Global';
+import { CommandOptionTypes } from '../../util/DiscordAPI';
+import Globs from '../../util/Global';
 
 export interface CommandType {
     name: string;
-    desc: string;
+    description: string;
     run(ctx: any /*Context */, args: { [key: string]: any });
 }
 
@@ -11,14 +11,14 @@ console.log(Globs);
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
-    desc: string;
+    description: string;
     name: string;
     command?: Command;
 }
 
 export default class Command implements CommandType {
     name: string;
-    desc = 'This command has no description';
+    description = 'This command has no description';
     run: (ctx: any /*Context */, args: { [key: string]: Argument }) => any;
     args: Argument[];
     constructor(data: CommandType) {

@@ -1,6 +1,6 @@
 import WebSocket from '../util/WebSocket';
 import { discordAPI, GatewayCodes, GatewayIntents } from '../util/DiscordAPI';
-import Command from './Command';
+import Command from './structures/Command';
 import Globs from '../util/Global';
 
 export interface ClientOptions {
