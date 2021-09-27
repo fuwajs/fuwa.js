@@ -33,7 +33,7 @@ export default class Client extends WebSocket {
         Globs.token = _token;
         this.connect(discordAPI.gateway, 9);
         this.op(GatewayCodes.Hello, data => {
-            // this.debug.log('hello', `Recieved Hello event and recieved:\n${this.debug.object(data, 1)}`);
+            // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(() => this.response.op.emit(GatewayCodes.Heartbeat, 251), data.heartbeat_interval);
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
             const identify = {
