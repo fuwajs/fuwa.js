@@ -35,10 +35,11 @@ export default class WebSocket {
             this.ws.onmessage = ({ data }) => {
                 const res: {
                     op: GatewayCodes;
-                    t: string | null;
+                    t: keyof GatewayEvents | null;
                     d: unknown;
                     s: number;
                 } = unpack(data as any);
+                console.log(res);
                 this.WSEvents?.message();
                 if (res.op === GatewayCodes.Dispatch) {
                     if (!res.t) throw new Error(`The event is undefined while the OP Code is 0\n ${res}`);

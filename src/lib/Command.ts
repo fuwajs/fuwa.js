@@ -1,10 +1,13 @@
-import { CommandOptionTypes } from 'util/DiscordAPI';
+import { CommandOptionTypes } from '../util/DiscordAPI';
+import Globs from '../util/Global';
 
 export interface CommandType {
     name: string;
     desc: string;
     run(ctx: any /*Context */, args: { [key: string]: any });
 }
+
+console.log(Globs);
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;

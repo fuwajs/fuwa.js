@@ -11,7 +11,8 @@
     "scripts": {
         "build": "npx tsc -p .",
         "lint": "npx eslint ./src/**/*.ts --fix",
-        "test": "node tests/index"
+        "watch": "npx yarn build -w",
+        "test": "nodemon tests/index"
     },
     "dependencies": {
         "ws": "^8.2.2"
@@ -26,6 +27,7 @@
         "@typescript-eslint/parser": "^4.31.2",
         "eslint": "^7.32.0",
         "eslint-plugin-prettier": "^4.0.0",
+        "nodemon": "^2.0.13",
         "prettier": "^2.4.1",
         "typescript": "^4.4.3"
     },

@@ -1,0 +1,5 @@
+*.js
+
+tests
+dist
+node_modules
