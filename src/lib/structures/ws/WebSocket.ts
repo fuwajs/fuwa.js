@@ -1,9 +1,9 @@
 import { WebSocket as Socket } from 'ws';
 
-import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from './DiscordAPI';
+import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from '../../../util/DiscordAPI';
 import { erlpack, pack, unpack } from './Pack';
 
-export default class WebSocket {
+export class WebSocket {
     public ws: Socket;
     private OPevents: { [key: number]: (data: any) => any } = {};
     protected connected = false;
@@ -39,7 +39,10 @@ export default class WebSocket {
                     d: unknown;
                     s: number;
                 } = unpack(data as any);
+
+                // ws information
                 console.log(res);
+
                 this.WSEvents?.message();
                 if (res.op === GatewayCodes.Dispatch) {
                     if (!res.t) throw new Error(`The event is undefined while the OP Code is 0\n ${res}`);

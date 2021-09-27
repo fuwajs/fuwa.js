@@ -1,5 +1,5 @@
-import { CommandOptionTypes } from '../../util/DiscordAPI';
-import Globs from '../../util/Global';
+import { CommandOptionTypes } from '../../../util/DiscordAPI';
+import Globs from '../../../util/Global';
 
 export interface CommandType {
     name: string;

@@ -1,6 +1,6 @@
-import WebSocket from '../util/WebSocket';
+import { WebSocket } from '../lib/structures/index';
 import { discordAPI, GatewayCodes, GatewayIntents } from '../util/DiscordAPI';
-import Command from './structures/Command';
+import Command from './structures/handlers/Command';
 import Globs from '../util/Global';
 
 export interface ClientOptions {
@@ -17,7 +17,7 @@ export default class Client extends WebSocket {
     public bot: any | null = null;
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
-    constructor(options?: ClientOptions) {
+    public constructor(options?: ClientOptions) {
         super();
         Object.assign(this, {
             intents: ['DirectMessages', 'Guilds', 'GuildMessages'],
@@ -25,10 +25,10 @@ export default class Client extends WebSocket {
         });
     }
 
-    on<T extends keyof Events>(event: T, callback: Events[T]) {
+    public on<T extends keyof Events>(event: T, callback: Events[T]) {
         this.events.set(event, callback);
     }
-    login(token?: string | Buffer) {
+    public login(token?: string | Buffer) {
         const _token = this.token || token.toString();
         Globs.token = _token;
         this.connect(discordAPI.gateway, 9);
