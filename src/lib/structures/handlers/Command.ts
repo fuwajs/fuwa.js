@@ -1,4 +1,4 @@
-import { CommandOptionTypes } from '../../../util/DiscordAPI';
+import { CommandOptionTypes } from '../../../interfaces/interactions/DiscordAPI.ts';
 import Globs from '../../../util/Global';
 
 export interface CommandType {
@@ -28,7 +28,7 @@ export default class Command implements CommandType {
 
 export class Argument {
     type: CommandOptionTypes;
-    desc: string;
+    description: string;
     name: string;
     command?: Command;
     constructor(data: ArgumentType) {

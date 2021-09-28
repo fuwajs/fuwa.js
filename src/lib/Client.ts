@@ -1,5 +1,5 @@
 import { WebSocket } from '../lib/structures/index';
-import { discordAPI, GatewayCodes, GatewayIntents } from '../util/DiscordAPI';
+import { discordAPI, GatewayCodes, GatewayIntents } from '../interfaces/DiscordAPI';
 import Command from './structures/handlers/Command';
 import Globs from '../util/Global';
 
@@ -15,9 +15,10 @@ export default class Client extends WebSocket {
     public events = new Map<keyof Events, (...args: any[]) => any>();
     public commands = new Map<string, Command>();
     public bot: any | null = null;
-    public defaultPrefix: string | null
+    public defaultPrefix: string | null;
     protected intents: (keyof typeof GatewayIntents)[];
-    protected token = '';
+    protected readonly token = '';
+    public readonly uptime;
     public constructor(options?: ClientOptions) {
         super();
         Object.assign(this, {
@@ -59,9 +60,11 @@ export default class Client extends WebSocket {
         });
     }
     public async fetchPrefix(): Promise<string> {
-        if(this.defaultPrefix === null) {
-            throw new Error("You dont have a default prefix set in the client constructor. fetchPrefix returned undefined.")
+        if (this.defaultPrefix === null) {
+            throw new Error(
+                'You dont have a default prefix set in the client constructor. fetchPrefix returned undefined.'
+            );
         }
-        return this.defaultPrefix
+        return this.defaultPrefix;
     }
 }

@@ -4,7 +4,7 @@
  * (IEmbed)
  *****************************************************************************/
 
-import { Embed as IEmbed } from '../../util/DiscordAPI';
+import { Embed as IEmbed } from '../../interfaces/message/DiscordAPI';
 
 type Media = {
     url: string;
