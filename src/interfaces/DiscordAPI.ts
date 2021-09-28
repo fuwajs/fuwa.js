@@ -1,8 +1,8 @@
-import type { CommandOptionTypes} from "./interactions"
-import type {Member, User } from"./member"
-import type { ActivityType, Guild, GuildFeatures, GuildMember, UserStatus} from "./guild"
-import type { Emoji, Message, Reaction} from "./message"
-import type { Channel, ChannelType } from "./channel";
+import type { CommandOptionTypes } from './interactions';
+import type { Member, User } from './member';
+import type { ActivityType, Guild, GuildFeatures, GuildMember, UserStatus } from './guild';
+import type { Emoji, Message, Reaction } from './message';
+import type { Channel, ChannelType } from './channel';
 /******************************************************************************
  * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts
@@ -188,7 +188,7 @@ export interface GatewayEvents {
 // We use these types much since user always exists unless its a `CREATE_MESSAGE` or `MESSAGE_UPDATE` event
 
 /** https://discord.com/developers/docs/resources/guild#guild-member-object */
-export type GuildMemberWithUser = Omit<GuildMember, "user"> & { user: User };
+export type GuildMemberWithUser = Omit<GuildMember, 'user'> & { user: User };
 
 export interface Presence {
     since: number;
@@ -269,8 +269,6 @@ export interface DiscordAPIOP {
     };
 }
 
-
-
 export interface Ready {
     v: number;
     user_settings: UserSettings;
@@ -285,8 +283,6 @@ export interface Ready {
     geo_ordered_rtc_regions: string[];
     application: Application;
 }
-
-
 
 export interface ResolvedData {
     users?: Map<string, User>;
@@ -332,7 +328,6 @@ export enum UserFlags {
     DiscordMod = 1 << 18,
 }
 
-
 /* eslint-disable */
 export interface UserSettings {}
 
@@ -370,7 +365,6 @@ export type RoleProps = {
     hoist: boolean;
     mentionable: boolean;
 };
-
 
 export enum PermissionFlags {
     CreateInstantInvite = 1 << 0,

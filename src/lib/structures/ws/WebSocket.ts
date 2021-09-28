@@ -1,6 +1,10 @@
 import { WebSocket as Socket } from 'ws';
 
-import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from '../../../interfaces/DiscordAPI';
+import {
+    DiscordAPIOP as DiscordAPIOPResponse,
+    GatewayEvents,
+    GatewayCodes,
+} from '../../../interfaces/DiscordAPI';
 import { erlpack, pack, unpack } from './Pack';
 
 export class WebSocket {

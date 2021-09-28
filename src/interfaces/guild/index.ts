@@ -1,7 +1,7 @@
-import type { Member, User } from "../member";
-import type { Channel} from "../channel"
-import type { Channels, Role } from "../DiscordAPI";
-import type { Emoji } from "../message";
+import type { Member, User } from '../member';
+import type { Channel } from '../channel';
+import type { Channels, Role } from '../DiscordAPI';
+import type { Emoji } from '../message';
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */
@@ -54,7 +54,6 @@ export interface Guild {
     aproximate_presence_count?: number;
 }
 
-
 /** @see https://discord.com/developers/docs/resources/guild#guild-member-object */
 export interface GuildMember {
     /** The user this guild member represents */
@@ -93,7 +92,6 @@ export type GuildFeatures =
     | 'BANNER'
     | 'WELCOME_SCREEN_ENABLED';
 
-    
 /**
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
  */
@@ -114,7 +112,6 @@ interface PresenceUpdate {
     activities: Activity[];
     client_status: ClientStatus;
 }
-
 
 export type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
 

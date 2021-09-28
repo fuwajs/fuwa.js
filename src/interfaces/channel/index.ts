@@ -1,4 +1,4 @@
-import type { User } from "../member";
+import type { User } from '../member';
 
 /**
  * @description Represents a guild or DM channel within Discord.
@@ -126,7 +126,6 @@ export interface Overwrite {
     allow: string;
     deny: string;
 }
-
 
 export type ChannelProps = {
     name: string;
