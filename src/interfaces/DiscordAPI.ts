@@ -200,14 +200,14 @@ export interface Presence {
     afk?: boolean;
 }
 export interface DiscordAPIOP {
-    1: {
-        op?: 1;
+    [GatewayCodes.Heartbeat]: {
+        op?: GatewayCodes.Heartbeat;
         t?: null;
         d: number | null;
         s: number;
     };
-    2: {
-        op?: 2;
+    [GatewayCodes.Identify]: {
+        op?: GatewayCodes.Identify;
         t?: null;
         d: {
             token: string;
@@ -222,13 +222,13 @@ export interface DiscordAPIOP {
         };
         s: number;
     };
-    3: {
-        op?: 3;
+    [GatewayCodes.StatusUpdate]: {
+        op?: GatewayCodes.StatusUpdate;
         t?: null;
         d: Presence;
     };
-    4: {
-        op?: 4;
+    [GatewayCodes.VoiceStateUpdate]: {
+        op?: GatewayCodes.VoiceStateUpdate;
         t?: null;
         d: {
             guild_id: string;
@@ -237,8 +237,8 @@ export interface DiscordAPIOP {
             self_deaf: boolean;
         };
     };
-    6: {
-        op?: 6;
+    [GatewayCodes.Resume]: {
+        op?: GatewayCodes.Resume;
         t?: null;
         d: {
             token: string;
@@ -246,8 +246,8 @@ export interface DiscordAPIOP {
             seq: 1337;
         };
     };
-    8: {
-        op?: 8;
+    [GatewayCodes.RequestGuildMembers]: {
+        op?: GatewayCodes.RequestGuildMembers;
         t?: null;
         d: {
             guild_id: number;
@@ -255,13 +255,13 @@ export interface DiscordAPIOP {
             limit: number;
         };
     };
-    9: {
-        op?: 9;
+    [GatewayCodes.InvalidSession]: {
+        op?: GatewayCodes.InvalidSession;
         t?: null;
         d: false;
     };
-    10: {
-        op?: 10;
+    [GatewayCodes.Hello]: {
+        op?: GatewayCodes.Hello;
         t?: null;
         d: {
             heartbeat_interval: number;
