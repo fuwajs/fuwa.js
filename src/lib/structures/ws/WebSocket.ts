@@ -1,6 +1,6 @@
 import { WebSocket as Socket } from 'ws';
 
-import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from '../../../util/DiscordAPI';
+import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents, GatewayCodes } from '../../../interfaces/DiscordAPI';
 import { erlpack, pack, unpack } from './Pack';
 
 export class WebSocket {
@@ -40,7 +40,7 @@ export class WebSocket {
                     s: number;
                 } = unpack(data as any);
 
-                // ws information
+                // logs all ws information.
                 console.log(res);
 
                 this.WSEvents?.message();

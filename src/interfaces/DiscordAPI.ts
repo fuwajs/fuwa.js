@@ -1,8 +1,8 @@
-import type { CommandOptionTypes} from "./interactions/DiscordAPI.ts"
-import type {Member, User } from"./member/DiscordAPI"
-import type { ActivityType, Guild, GuildFeatures, GuildMember, UserStatus} from "./guild/DiscordAPI"
-import type { Emoji, Message, Reaction} from "./message/DiscordAPI"
-import type { Channel, ChannelType } from "./channel/DiscordAPI";
+import type { CommandOptionTypes} from "./interactions"
+import type {Member, User } from"./member"
+import type { ActivityType, Guild, GuildFeatures, GuildMember, UserStatus} from "./guild"
+import type { Emoji, Message, Reaction} from "./message"
+import type { Channel, ChannelType } from "./channel";
 /******************************************************************************
  * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts

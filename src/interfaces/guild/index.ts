@@ -1,7 +1,7 @@
-import type { Member, User } from "../member/DiscordAPI";
-import type { Channel} from "../channel/DiscordAPI"
+import type { Member, User } from "../member";
+import type { Channel} from "../channel"
 import type { Channels, Role } from "../DiscordAPI";
-import { Emoji } from "../message/DiscordAPI";
+import type { Emoji } from "../message";
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */

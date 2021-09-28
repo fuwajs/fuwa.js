@@ -1,4 +1,4 @@
-import { Attachment as IAttachment } from '../../interfaces/message/DiscordAPI';
+import { Attachment as IAttachment } from '../../interfaces/message';
 // import fs from 'fs';
 
 export default class Attachment implements IAttachment {

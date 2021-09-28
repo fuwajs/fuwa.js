@@ -1,7 +1,7 @@
 import type { Role } from '../DiscordAPI';
-import type { User } from '../member/DiscordAPI';
-import type { CreateMessage, Message } from '../message/DiscordAPI';
-import type { InteractionChannel, InteractionGuildMember } from './DiscordAPI.ts';
+import type { User } from '../member';
+import type { CreateMessage, Message } from '../message';
+import type { InteractionChannel, InteractionGuildMember } from '.';
 
 /** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype */
 export enum ApplicationCommandOptionTypes {

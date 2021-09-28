@@ -1,4 +1,4 @@
-import type { User } from "../member/DiscordAPI";
+import type { User } from "../member";
 
 /**
  * @description Represents a guild or DM channel within Discord.

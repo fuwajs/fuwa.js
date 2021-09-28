@@ -1,7 +1,7 @@
 import type { Channel } from 'diagnostics_channel';
 import type { ResolvedData, CommandOptions, SelectOption, GuildMemberWithUser } from '../DiscordAPI';
-import type { Member, User } from '../member/DiscordAPI';
-import type { Message, ComponentType } from '../message/DiscordAPI';
+import type { Member, User } from '../member';
+import type { Message, ComponentType } from '../message';
 import type { ApplicationCommandInteractionData } from './ApplicationTypes';
 
 /**

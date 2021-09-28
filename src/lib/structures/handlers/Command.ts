@@ -1,4 +1,4 @@
-import { CommandOptionTypes } from '../../../interfaces/interactions/DiscordAPI.ts';
+import { CommandOptionTypes } from '../../../interfaces/interactions';
 import Globs from '../../../util/Global';
 
 export interface CommandType {

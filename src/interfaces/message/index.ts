@@ -1,6 +1,6 @@
 import { GuildMemberWithUser } from "../DiscordAPI";
-import type { Member, User } from "../member/DiscordAPI";
-import type { MessageComponents} from "./MessageTypes"
+import type { Member, User } from "../member";
+import type { MessageComponents} from "./componentTypes"
 
 export interface Message {
     id: string;
