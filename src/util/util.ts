@@ -4,11 +4,10 @@
  * @returns an interval of time in ms
  */
 export function delay(ms: number): Promise<void> {
-    return new Promise(
-        (res): ReturnType<typeof setTimeout> =>
-            setTimeout((): void => {
-                res();
-            }, ms)
+    return new Promise(res =>
+        setTimeout(() => {
+            res();
+        }, ms)
     );
 }
 
@@ -25,7 +24,7 @@ export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif';
 
 // Typescript is not so good as we developers so we need this little utility function to help it out
 // Taken from https://fettblog.eu/typescript-hasownproperty/
-/** TS save way to check if a property exists in an object */
+/** TS safe way to check if a property exists in an object */
 export function hasOwnProperty<T extends Record<string, unknown>, Y extends PropertyKey = string>(
     obj: T,
     prop: Y

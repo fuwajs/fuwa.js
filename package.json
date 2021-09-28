@@ -1,6 +1,6 @@
 {
     "name": "fuwa.js",
-    "version": "3.0.0",
+    "version": "0.2.0",
     "description": "The new way of making discord bots",
     "main": "dist/index.js",
     "types": "types/index.d.ts",
@@ -12,6 +12,7 @@
         "build": "npx tsc -p .",
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build -w",
+        "format": "prettier --ignore-path .gitignore --write .",
         "test": "nodemon tests/index"
     },
     "dependencies": {
@@ -25,10 +26,17 @@
         "@types/ws": "^8.2.0",
         "@typescript-eslint/eslint-plugin": "^4.31.2",
         "@typescript-eslint/parser": "^4.31.2",
+        "del": "^6.0.0",
         "eslint": "^7.32.0",
         "eslint-plugin-prettier": "^4.0.0",
+        "gulp": "^4.0.2",
+        "gulp-eslint": "^6.0.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-typescript": "^6.0.0-alpha.1",
         "nodemon": "^2.0.13",
         "prettier": "^2.4.1",
+        "ts-node": "^10.2.1",
+        "tsconfig-paths": "^3.11.0",
         "typescript": "^4.4.3"
     },
     "eslintConfig": {
