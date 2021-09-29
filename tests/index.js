@@ -14,4 +14,4 @@ async () => {
 
 client.commands.set('ping', 'pong');
 
-console.log(client.commands.get('ping'));
+console.log(client.commands.get('ping!'));
