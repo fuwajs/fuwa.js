@@ -1,0 +1,17 @@
+*.secret
+src
+node_modules
+types
+*.map
+.vscode
+.env
+*.log
+config.json
+.dockerignore
+yarn.lock
+tests
+tsconfig.json
+.prettierrc
+Dockerfile
+gulpfie.js
+.eslintignore

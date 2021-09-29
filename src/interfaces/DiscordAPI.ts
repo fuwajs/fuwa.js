@@ -133,7 +133,7 @@ export enum GatewayCodes {
 
 export const discordAPI = {
     gateway: 'wss://gateway.discord.gg/',
-    api: 'https://discord.com/api/v8/',
+    api: 'https://discord.com/api/v9/',
     discord: 'https://discord.com',
 };
 

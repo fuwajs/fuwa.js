@@ -17,6 +17,7 @@
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
     },
     "dependencies": {
+        "undici": "^4.7.0",
         "ws": "^8.2.2"
     },
     "optionalDependencies": {
