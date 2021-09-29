@@ -27,6 +27,11 @@ export class WebSocket {
             },
         },
     };
+    /**
+     * ws connection
+     * @param url websocket url to connect to
+     * @param version api version to connect to
+     */
     protected connect(url: string, version: 6 | 8 | 9): void {
         const encoding = erlpack ? 'etf' : 'json';
         if (!erlpack && encoding === 'etf') {
