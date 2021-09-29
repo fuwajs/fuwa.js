@@ -13,7 +13,8 @@
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build -w",
         "format": "prettier --ignore-path .gitignore --write .",
-        "test": "nodemon tests/index"
+        "test": "nodemon tests/index",
+        "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
     },
     "dependencies": {
         "ws": "^8.2.2"

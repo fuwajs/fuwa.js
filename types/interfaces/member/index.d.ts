@@ -1,6 +1,5 @@
 import { GuildMember } from '../guild';
 import { Integration } from '../integrations';
-
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  */
@@ -14,26 +13,23 @@ export interface Member {
     mute: boolean;
     pending?: boolean;
 }
-
 /** @see https://discord.com/developers/docs/resources/user#user-object-user-flags */
-
-export enum UserFlags {
+export declare enum UserFlags {
     None = 0,
-    DiscordEmployee = 1 << 0,
-    PartneredServerOwner = 1 << 1,
-    HypesquadEvents = 1 << 2,
-    BugHunterLevelOne = 1 << 3,
-    HouseBravery = 1 << 6,
-    HouseBrilliance = 1 << 7,
-    HouseBalance = 1 << 8,
-    EarlySupporter = 1 << 9,
-    TeamUser = 1 << 10,
-    BugHunterLevelTwo = 1 << 14,
-    VerifiedBot = 1 << 16,
-    EarlyVerifiedBotDev = 1 << 17,
-    DiscordMod = 1 << 18,
+    DiscordEmployee = 1,
+    PartneredServerOwner = 2,
+    HypesquadEvents = 4,
+    BugHunterLevelOne = 8,
+    HouseBravery = 64,
+    HouseBrilliance = 128,
+    HouseBalance = 256,
+    EarlySupporter = 512,
+    TeamUser = 1024,
+    BugHunterLevelTwo = 16384,
+    VerifiedBot = 65536,
+    EarlyVerifiedBotDev = 131072,
+    DiscordMod = 262144
 }
-
 /** https://discord.com/developers/docs/resources/user#user-object */
 export interface User {
     /** The user's id */
@@ -63,76 +59,67 @@ export interface User {
     /** The public flags on a user's account */
     public_flags?: UserFlags;
 }
-
 export interface Author {
     id: string;
     username: string;
     discriminator: string;
     avatar: string;
 }
-
-/* eslint-disable */
-// export interface UserSettings {}
-
-// We use these types much since user always exists unless its a `CREATE_MESSAGE` or `MESSAGE_UPDATE` event
 /** https://discord.com/developers/docs/resources/guild#guild-member-object */
-export type GuildMemberWithUser = Omit<GuildMember, 'user'> & { user: User };
-
+export declare type GuildMemberWithUser = Omit<GuildMember, 'user'> & {
+    user: User;
+};
 /** https://discord.com/developers/docs/resources/user#connection-objecthttps://discord.com/developers/docs/resources/user#user-object-premium-types */
 export interface Connection {
-  /** id of the connection account */
-  id: string;
-  /** The username of the connection account */
-  name: string;
-  /** The service of the connection (twitch, youtube) */
-  type: string;
-  /** Whether the connection is revoked */
-  revoked?: boolean;
-  /** An array of partial server integrations */
-  integrations?: Integration[];
-  /** Whether the connection is verified */
-  verified: boolean;
-  /** Whether friend sync is enabled for this connection */
-  friendSync: boolean;
-  /** Whether activities related to this connection will be shown in presence updates */
-  showActivity: boolean;
-  /** Visibility of this connection */
-  visibility: VisibilityTypes;
+    /** id of the connection account */
+    id: string;
+    /** The username of the connection account */
+    name: string;
+    /** The service of the connection (twitch, youtube) */
+    type: string;
+    /** Whether the connection is revoked */
+    revoked?: boolean;
+    /** An array of partial server integrations */
+    integrations?: Integration[];
+    /** Whether the connection is verified */
+    verified: boolean;
+    /** Whether friend sync is enabled for this connection */
+    friendSync: boolean;
+    /** Whether activities related to this connection will be shown in presence updates */
+    showActivity: boolean;
+    /** Visibility of this connection */
+    visibility: VisibilityTypes;
 }
-
 /** @see https://discord.com/developers/docs/resources/user#create-dm */
 export interface CreateDM {
-  /** The recipient to open a DM channel with */
-  recipientId: string;
+    /** The recipient to open a DM channel with */
+    recipientId: string;
 }
-
 /** @see https://discord.com/developers/docs/resources/user#create-group-dm */
 export interface CreateGroupDM {
-  /** Access tokens of users that have granted your app the `gdm.join` scope */
-  access_tokens: string[];
-  /** A dictionary of user ids to their respective nicknames */
-  nicks: Record<string, string>;
+    /** Access tokens of users that have granted your app the `gdm.join` scope */
+    access_tokens: string[];
+    /** A dictionary of user ids to their respective nicknames */
+    nicks: Record<string, string>;
 }
-
 /** @see https://discord.com/developers/docs/resources/user#modify-current-user */
 export interface ModifyCurrentUser {
-  /** User's username, if changed may cause the user's discriminator to be randomized. */
-  username?: string;
-  /** If passed, modifies the user's avatar */
-  avatar?: string;
+    /** User's username, if changed may cause the user's discriminator to be randomized. */
+    username?: string;
+    /** If passed, modifies the user's avatar */
+    avatar?: string;
 }
-
 /** @see https://discord.com/developers/docs/resources/user#user-object-premium-types */
-export enum PremiumTypes {
-  None,
-  NitroClassic,
-  Nitro,
+export declare enum PremiumTypes {
+    None = 0,
+    NitroClassic = 1,
+    Nitro = 2
 }
-
 /** @see https://discord.com/developers/docs/resources/user#connection-object-visibility-types */
-export enum VisibilityTypes {
-  /** Invisible to everyone except the user themselves */
-  None,
-  /** Visible to everyone */
-  Everyone,
+export declare enum VisibilityTypes {
+    /** Invisible to everyone except the user themselves */
+    None = 0,
+    /** Visible to everyone */
+    Everyone = 1
 }
+//# sourceMappingURL=index.d.ts.map

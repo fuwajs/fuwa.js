@@ -15,7 +15,7 @@ type Media = {
 
 type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
-export default class Embed {
+export class Embed {
     protected type: EmbedType;
     protected title?: string;
     protected description?: string;

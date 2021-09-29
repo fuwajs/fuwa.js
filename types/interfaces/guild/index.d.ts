@@ -53,7 +53,6 @@ export interface Guild {
     approximate_member_count?: number;
     aproximate_presence_count?: number;
 }
-
 /** @see https://discord.com/developers/docs/resources/guild#guild-member-object */
 export interface GuildMember {
     /** The user this guild member represents */
@@ -73,25 +72,10 @@ export interface GuildMember {
     /** Whether the user has not yet passed the guild's Membership Screening requirements */
     pending?: boolean;
 }
-
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
  */
-export type GuildFeatures =
-    | 'INVITE_SPLASH'
-    | 'VIP_REGIONS'
-    | 'VANITY_URL'
-    | 'VERIFIED'
-    | 'PARTNERED'
-    | 'COMMUNITY'
-    | 'COMMERCE'
-    | 'NEWS'
-    | 'DISCOVERABLE'
-    | 'FEATURABLE'
-    | 'ANIMATED_ICON'
-    | 'BANNER'
-    | 'WELCOME_SCREEN_ENABLED';
-
+export declare type GuildFeatures = 'INVITE_SPLASH' | 'VIP_REGIONS' | 'VANITY_URL' | 'VERIFIED' | 'PARTNERED' | 'COMMUNITY' | 'COMMERCE' | 'NEWS' | 'DISCOVERABLE' | 'FEATURABLE' | 'ANIMATED_ICON' | 'BANNER' | 'WELCOME_SCREEN_ENABLED';
 /**
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
  */
@@ -101,7 +85,6 @@ interface VoiceState {
     user_id: string;
     member?: Member;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#presence-update-presence-update-event-fields
  */
@@ -112,9 +95,7 @@ interface PresenceUpdate {
     activities: Activity[];
     client_status: ClientStatus;
 }
-
-export type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
-
+export declare type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
 /**
  * Could be important for Rich Presence (the thing that allows you to see what
  * game someone is playing)
@@ -136,19 +117,17 @@ interface Activity {
     instance?: boolean;
     flags?: ActivityFlags;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
  */
-export enum ActivityType {
-    Game,
-    Streaming,
-    Listening,
-    Watching,
-    Custom,
-    Competing,
+export declare enum ActivityType {
+    Game = 0,
+    Streaming = 1,
+    Listening = 2,
+    Watching = 3,
+    Custom = 4,
+    Competing = 5
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-timestamps
  */
@@ -156,7 +135,6 @@ interface ActivityTimestamps {
     start?: number;
     end?: number;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-emoji
  */
@@ -165,7 +143,6 @@ interface ActivityEmoji {
     id?: string;
     animated?: boolean;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-party
  */
@@ -177,7 +154,6 @@ interface ActivityParty {
      */
     size?: number[];
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-assets
  */
@@ -187,7 +163,6 @@ interface ActivityAssets {
     small_image?: string;
     small_text?: string;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-secrets
  */
@@ -196,19 +171,17 @@ interface ActivitySecrets {
     spectate?: string;
     match?: string;
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-flags
  */
-enum ActivityFlags {
-    Instance = 1 << 0,
-    Join = 1 << 1,
-    Spectate = 1 << 2,
-    JoinRequest = 1 << 3,
-    Sync = 1 << 4,
-    Play = 1 << 5,
+declare enum ActivityFlags {
+    Instance = 1,
+    Join = 2,
+    Spectate = 4,
+    JoinRequest = 8,
+    Sync = 16,
+    Play = 32
 }
-
 /**
  * @see https://discord.com/developers/docs/topics/gateway#client-status-object
  */
@@ -217,15 +190,13 @@ interface ClientStatus {
     mobile?: string;
     web?: string;
 }
-
 export interface GuildHashes {
     version: number;
     roles: Channels;
     metadata: Channels;
     channels: Channels;
 }
-
-export enum AuditLogEvents {
+export declare enum AuditLogEvents {
     GuildUpdate = 1,
     ChannelCreate = 10,
     ChannelUpdate = 11,
@@ -269,5 +240,7 @@ export enum AuditLogEvents {
     StickerDelete = 92,
     ThreadCreate = 110,
     ThreadUpdate = 111,
-    ThreadDelete = 112,
+    ThreadDelete = 112
 }
+export {};
+//# sourceMappingURL=index.d.ts.map
