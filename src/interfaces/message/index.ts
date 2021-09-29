@@ -1,5 +1,5 @@
-import { GuildMemberWithUser } from '../DiscordAPI';
-import type { Member, User } from '../member';
+import { GuildMember } from '../guild';
+import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
 
 export interface Message {
@@ -225,13 +225,6 @@ interface EmbedField {
     inline?: boolean;
 }
 
-export interface Author {
-    id: string;
-    username: string;
-    discriminator: string;
-    avatar: string;
-}
-
 /** @see https://discord.com/developers/docs/resources/channel#reaction-object */
 export interface Reaction {
     user_id: string;
@@ -412,6 +405,7 @@ export interface MessageReactionAdd {
     /** The emoji used to react */
     emoji: Partial<Emoji>;
 }
+
 
 /** https://discord.com/developers/docs/topics/gateway#message-reaction-remove */
 export type MessageReactionRemove = Omit<MessageReactionAdd, 'member'>;

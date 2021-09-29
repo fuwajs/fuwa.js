@@ -185,10 +185,6 @@ export interface GatewayEvents {
         d: Reaction;
     };
 }
-// We use these types much since user always exists unless its a `CREATE_MESSAGE` or `MESSAGE_UPDATE` event
-
-/** https://discord.com/developers/docs/resources/guild#guild-member-object */
-export type GuildMemberWithUser = Omit<GuildMember, 'user'> & { user: User };
 
 export interface Presence {
     since: number;
@@ -309,23 +305,6 @@ export interface SelectOption {
 export interface Application {
     id: string;
     flags: number;
-}
-
-export enum UserFlags {
-    None = 0,
-    DiscordEmployee = 1 << 0,
-    PartneredServerOwner = 1 << 1,
-    HypesquadEvents = 1 << 2,
-    BugHunterLevelOne = 1 << 3,
-    HouseBravery = 1 << 6,
-    HouseBrilliance = 1 << 7,
-    HouseBalance = 1 << 8,
-    EarlySupporter = 1 << 9,
-    TeamUser = 1 << 10,
-    BugHunterLevelTwo = 1 << 14,
-    VerifiedBot = 1 << 16,
-    EarlyVerifiedBotDev = 1 << 17,
-    DiscordMod = 1 << 18,
 }
 
 /* eslint-disable */
