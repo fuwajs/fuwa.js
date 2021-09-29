@@ -36,9 +36,10 @@ export enum CommandOptionTypes {
     Number,
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface Interaction<
+    // @typescript-eslint/no-unused-vars
     T extends InteractionType,
+    // @typescript-eslint/no-unused-vars
     D extends ApplicationCommandInteractionData | undefined
 > {
     /**
