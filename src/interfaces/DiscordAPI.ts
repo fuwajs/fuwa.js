@@ -1,8 +1,8 @@
 import type { CommandOptionTypes } from './interactions';
 import type { Member, User } from './member';
-import type { ActivityType, Guild, GuildFeatures, GuildMember, UserStatus } from './guild';
+import type { ActivityType, Guild, UserStatus } from './guild';
 import type { Emoji, Message, Reaction } from './message';
-import type { Channel, ChannelType } from './channel';
+import type { Channel } from './channel';
 /******************************************************************************
  * TODO: make a web scraper that does this work
  * @file src/lib/_DiscordAPI.ts
@@ -389,45 +389,7 @@ export interface Ban {
     user: User;
 }
 
-export interface Invite {
-    code: string;
-    guild?: {
-        id: string;
-        name: string;
-        splash?: string;
-        banner?: string;
-        description: string;
-        icon: string;
-        features: GuildFeatures[];
-        verification_level: number;
-        vanity_url_code?: number;
-    };
-    channel: {
-        id: string;
-        name: string;
-        type: ChannelType;
-    };
-    inviter?: User;
-    target_type?: InviteTargets;
-    target_user?: User;
-    target_application?: Application;
-    approximate_presence_count?: number;
-    approximate_member_count?: number;
-    expires_at?: number;
-    state_instance?: InviteStage;
-}
 
-export enum InviteTargets {
-    Stream = 1,
-    EmbeddedApplication,
-}
-
-export interface InviteStage {
-    members: Member[];
-    participant_count: number;
-    speaker_count: number;
-    topic: string;
-}
 
 export enum AuditLogEvents {
     GuildUpdate = 1,

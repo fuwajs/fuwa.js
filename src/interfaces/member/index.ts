@@ -1,4 +1,4 @@
-import { GuildMember } from "../guild";
+import { GuildMember } from '../guild';
 
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object

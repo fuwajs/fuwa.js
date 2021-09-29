@@ -11,11 +11,11 @@ gulp.task('lint', () =>
 );
 
 gulp.task('build', async () => {
-    del.sync(['dist/**/*.*']);
+    del.sync(['dist/**/*.*']); // delete old code, then rebuild
     const tsCompile = gulp
         .src('./src/**/*.ts')
         .pipe(sourcemaps.init({ base: 'src' }))
-        .pipe(project());
+        .pipe(project({ declaration: true, noLibCheck: true, experimentalDecorators: true, outDir: './types' }));
 
     await tsCompile.pipe(gulp.dest('dist/'));
 
@@ -23,8 +23,13 @@ gulp.task('build', async () => {
     gulp.src('./src/**/*.json').pipe(gulp.dest('dist/'));
     gulp.src('./src/**/*.lang').pipe(gulp.dest('dist/'));
     
-    return
-    // return tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('dist/'));
+    return tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('dist/'));
 });
 
+// like tsc -w
+gulp.task('watch', async () =>  {
+    gulp.watch('./src/*.ts', ['scripts']);
+});
+
+// if no args are passed, run build
 gulp.task('default', gulp.series('build'));

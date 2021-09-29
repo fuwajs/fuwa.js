@@ -162,7 +162,6 @@ type StringArrayToDelimiterCase<
       >}${StringArrayToDelimiterCase<RemainingParts, UsedWordSeparators, UsedUpperCaseCharacters, Delimiter>}`
     : '';
 
-
 export type DelimiterCase<Value, Delimiter extends string> = Value extends string
     ? StringArrayToDelimiterCase<
           SplitIncludingDelimiters<Value, WordSeparators | UpperCaseCharacters>,
@@ -171,13 +170,13 @@ export type DelimiterCase<Value, Delimiter extends string> = Value extends strin
           Delimiter
       >
     : Value;
-
+/* eslint-disable @typescript-eslint/ban-types */
 export type DelimiterCasedProperties<Value, Delimiter extends string> = Value extends Function
     ? Value
     : Value extends Array<infer U>
     ? Value
     : { [K in keyof Value as DelimiterCase<K, Delimiter>]: Value[K] };
-
+/* eslint-disable @typescript-eslint/ban-types */
 export type DelimiterCasedPropertiesDeep<Value, Delimiter extends string> = Value extends Function
     ? Value
     : Value extends Array<infer U>
@@ -196,7 +195,7 @@ export type SnakeCase<Value> = DelimiterCase<Value, '_'>;
 export type CamelCase<K> = K extends string ? CamelCaseStringArray<Split<K, WordSeparators>> : K;
 
 export type SnakeCasedProperties<Value> = DelimiterCasedProperties<Value, '_'>;
-
+/* eslint-disable @typescript-eslint/ban-types */
 export type CamelCasedProperties<Value> = Value extends Function
     ? Value
     : Value extends Array<infer U>
@@ -206,7 +205,7 @@ export type CamelCasedProperties<Value> = Value extends Function
       };
 
 export type SnakeCasedPropertiesDeep<Value> = DelimiterCasedPropertiesDeep<Value, '_'>;
-
+/* eslint-disable @typescript-eslint/ban-types */
 export type CamelCasedPropertiesDeep<Value> = Value extends Function
     ? Value
     : Value extends Array<infer U>

@@ -2,7 +2,7 @@ import { WebSocket } from '../lib/structures/index';
 import { discordAPI, DiscordAPIOP, GatewayCodes, GatewayIntents } from '../interfaces/DiscordAPI';
 import Command from './structures/handlers/Command';
 import Globs from '../util/Global';
-import {debug as Debug} from "../util/Debug"
+import { debug as Debug } from '../util/Debug';
 
 export interface ClientOptions {
     /**Discord Bot Token */
@@ -116,7 +116,7 @@ export default class Client extends WebSocket {
     }
 
     /**
-     * 
+     *
      * @param shardId the shard(s) spawned from websocket
      * @param data discord raw api json
      */

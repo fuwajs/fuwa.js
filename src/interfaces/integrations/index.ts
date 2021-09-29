@@ -1,4 +1,4 @@
-import { User } from "../index";
+import { User } from '../index';
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
 export interface Integration {
@@ -36,52 +36,52 @@ export interface Integration {
 
 /** @see https://discord.com/developers/docs/topics/gateway#guild-integrations-update */
 export interface GuildIntegrationsUpdate {
-  /** id of the guild whose integrations were updated */
-  guild_id: string;
+    /** id of the guild whose integrations were updated */
+    guild_id: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#integration-account-object-integration-account-structure */
 export interface IntegrationAccount {
-  /** Id of the account */
-  id: string;
-  /** Name of the account */
-  name: string;
+    /** Id of the account */
+    id: string;
+    /** Name of the account */
+    name: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
 export interface IntegrationApplication {
-  /** The id of the app */
-  id: string;
-  /** The name of the app */
-  name: string;
-  /** the icon hash of the app */
-  icon: string | null;
-  /** The description of the app */
-  description: string;
-  /** The summary of the app */
-  summary: string;
-  /** The bot associated with this application */
-  bot?: User;
+    /** The id of the app */
+    id: string;
+    /** The name of the app */
+    name: string;
+    /** the icon hash of the app */
+    icon: string | null;
+    /** The description of the app */
+    description: string;
+    /** The summary of the app */
+    summary: string;
+    /** The bot associated with this application */
+    bot?: User;
 }
 
 /** @see https://github.com/discord/discord-api-docs/blob/master/docs/topics/Gateway.md#integration-create-event-additional-fields */
 export interface IntegrationCreateUpdate extends Integration {
-  /** Id of the guild */
-  guild_id: string;
+    /** Id of the guild */
+    guild_id: string;
 }
 
 /** @see https://github.com/discord/discord-api-docs/blob/master/docs/topics/Gateway.md#integration-delete-event-fields */
 export interface IntegrationDelete {
-  /** Integration id */
-  id: string;
-  /** Id of the guild */
-  guild_id: string;
-  /** Id of the bot/OAuth2 application for this discord integration */
-  application_id?: string;
+    /** Integration id */
+    id: string;
+    /** Id of the guild */
+    guild_id: string;
+    /** Id of the bot/OAuth2 application for this discord integration */
+    application_id?: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors */
 export enum IntegrationExpireBehaviors {
-  RemoveRole,
-  Kick,
+    RemoveRole,
+    Kick,
 }
