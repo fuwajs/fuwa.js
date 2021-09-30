@@ -24,7 +24,7 @@ import type {
 } from '.';
 import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
 import { Collection } from '../util/Collection';
-import { Thread } from '../util/transformers/channel_to_thread';
+import { Thread } from '../util/transformers/channelToThread';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
