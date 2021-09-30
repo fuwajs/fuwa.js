@@ -28,7 +28,6 @@ export interface Member {
 /** https://discord.com/developers/docs/resources/guild#guild-member-object */
 export type GuildMemberWithUser = Omit<GuildMember, 'user'> & { user: User };
 
-
 /** @see https://discord.com/developers/docs/resources/user#user-object-user-flags */
 
 export enum UserFlags {

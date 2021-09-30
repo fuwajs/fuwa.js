@@ -1,3 +1,5 @@
+/** Allows easy way to add a prop to a base object when needing to use complicated getters solution. */
+export declare function createNewProp(value: any): PropertyDescriptor;
 /**
  * Pauses a function for x amount of time.
  * @param ms

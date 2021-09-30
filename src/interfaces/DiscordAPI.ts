@@ -1,7 +1,7 @@
 import type { CommandOptionTypes } from './interactions';
 import type { Member, User } from './member';
 import type { ActivityType, Guild, UserStatus } from './guild';
-import type { Emoji, Message, Reaction } from './message';
+import type { Message, Reaction } from './message';
 import type { Channel } from './channel';
 import { GatewayCodes, Role, UnavailableGuild } from './index';
 /******************************************************************************
@@ -314,52 +314,52 @@ export interface GatewayPayload {
 
 /** @see https://discord.com/developers/docs/topics/gateway#connecting-gateway-url-params */
 export interface GatewayURLParams {
-  /** Gateway version to use */
-  v: string;
-  /** The encoding of received gateway packets */
-  encoding: string;
-  /** The (optional) compression of gateway packets */
-  compress?: string;
+    /** Gateway version to use */
+    v: string;
+    /** The encoding of received gateway packets */
+    encoding: string;
+    /** The (optional) compression of gateway packets */
+    compress?: string;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
 export interface GetGatewayBot {
-  /** The WSS URL that can be used for connecting to the gateway */
-  url: string;
-  /** The recommended number of shards to use when connecting */
-  shards: number;
-  /** Information on the current session start limit */
-  session_start_limit: SessionStartLimit;
+    /** The WSS URL that can be used for connecting to the gateway */
+    url: string;
+    /** The recommended number of shards to use when connecting */
+    shards: number;
+    /** Information on the current session start limit */
+    session_start_limit: SessionStartLimit;
 }
 
 /** https://discord.com/developers/docs/topics/gateway#session-start-limit-object */
 export interface SessionStartLimit {
-  /** The total number of session starts the current user is allowed */
-  total: number;
-  /** The remaining number of session starts the current user is allowed */
-  remaining: number;
-  /** The number of milliseconds after which the limit resets */
-  reset_after: number;
-  /** The number of identify requests allowed per 5 seconds */
-  max_concurrency: number;
+    /** The total number of session starts the current user is allowed */
+    total: number;
+    /** The remaining number of session starts the current user is allowed */
+    remaining: number;
+    /** The number of milliseconds after which the limit resets */
+    reset_after: number;
+    /** The number of identify requests allowed per 5 seconds */
+    max_concurrency: number;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#identify */
 export interface Identify {
-  /** Authentication token */
-  token: string;
-  /** Connection properties */
-  properties: IdentifyConnectionProperties;
-  /** Whether this connection supports compression of packets */
-  compress?: boolean;
-  /** Value between 50 and 250, total number of members where the gateway will stop sending offline members in the guild member list */
-  largeThreshold?: number;
-  /** Used for Guild Sharding */
-  shard?: [shard_id: number, numberOfShards: number];
-  /** Presence structure for initial presence information */
-  presence?: Presence;
-  /** The Gateway Intents you wish to receive */
-  intents: number;
+    /** Authentication token */
+    token: string;
+    /** Connection properties */
+    properties: IdentifyConnectionProperties;
+    /** Whether this connection supports compression of packets */
+    compress?: boolean;
+    /** Value between 50 and 250, total number of members where the gateway will stop sending offline members in the guild member list */
+    largeThreshold?: number;
+    /** Used for Guild Sharding */
+    shard?: [shard_id: number, numberOfShards: number];
+    /** Presence structure for initial presence information */
+    presence?: Presence;
+    /** The Gateway Intents you wish to receive */
+    intents: number;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#identify-identify-connection-properties */

@@ -1,5 +1,15 @@
 import { SnakeCasedPropertiesDeep } from '@root/src/util/util';
-import { Channel, ChannelTypes, Emoji, Guild, GuildFeatures, Overwrite, PermissionStrings, Role, User } from '..';
+import {
+    Channel,
+    ChannelTypes,
+    Emoji,
+    Guild,
+    GuildFeatures,
+    Overwrite,
+    PermissionStrings,
+    Role,
+    User,
+} from '..';
 
 /** @see https://discord.com/developers/docs/resources/guild#begin-guild-prune */
 export interface BeginGuildPrune {
@@ -211,18 +221,18 @@ export interface GuildRoleDelete {
 
 /** @see https://discord.com/developers/docs/topics/gateway#guild-role-update */
 export interface GuildRoleUpdate {
-  /** The id of the guild */
-  guild_id: string;
-  /** The role updated */
-  role: Role;
+    /** The id of the guild */
+    guild_id: string;
+    /** The role updated */
+    role: Role;
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#guild-widget-object-guild-widget-structure */
 export interface GuildWidget {
-  /** Whether the widget is enabled */
-  enabled: boolean;
-  /** The widget channel id */
-  channel_id: string | null;
+    /** Whether the widget is enabled */
+    enabled: boolean;
+    /** The widget channel id */
+    channel_id: string | null;
 }
 
 export interface FuwaGuildWidgetDetails {
@@ -250,24 +260,24 @@ export type GuildWidgetDetails = SnakeCasedPropertiesDeep<FuwaGuildWidgetDetails
 
 /** @see https://discord.com/developers/docs/resources/guild#guild-object-mfa-level */
 export enum MfaLevels {
-  /** Guild has no MFA/2FA requirement for moderation actions */
-  None,
-  /** Guild has a 2FA requirement for moderation actions */
-  Elevated,
+    /** Guild has no MFA/2FA requirement for moderation actions */
+    None,
+    /** Guild has a 2FA requirement for moderation actions */
+    Elevated,
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#guild-object-verification-level */
 export enum VerificationLevels {
-  /** Unrestricted */
-  None,
-  /** Must have verified email on account */
-  Low,
-  /** Must be registered on Discord for longer than 5 minutes */
-  Medium,
-  /** Must be a member of the server for longer than 10 minutes */
-  High,
-  /** Must have a verified phone number */
-  VeryHigh,
+    /** Unrestricted */
+    None,
+    /** Must have verified email on account */
+    Low,
+    /** Must be registered on Discord for longer than 5 minutes */
+    Medium,
+    /** Must be a member of the server for longer than 10 minutes */
+    High,
+    /** Must have a verified phone number */
+    VeryHigh,
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#modify-guild */

@@ -1,4 +1,4 @@
-import { Channel } from "./index";
+import { Channel } from './index';
 
 // TODO: add docs link
 export interface ListActiveThreads {
@@ -12,45 +12,45 @@ export interface ListActiveThreads {
 
 // TODO: add docs link
 export interface ListPublicArchivedThreads {
-  // TODO: convert unix to ISO9601 timestamp
-  /** Returns threads before this timestamp. UNIX or ISO8601 timestamp */
-  before?: number | string;
-  /** Optional maximum number of threads to return */
-  limit?: number;
+    // TODO: convert unix to ISO9601 timestamp
+    /** Returns threads before this timestamp. UNIX or ISO8601 timestamp */
+    before?: number | string;
+    /** Optional maximum number of threads to return */
+    limit?: number;
 }
 
 /** @see https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread */
 export interface ModifyThread {
-  /** 2-100 character thread name */
-  name?: string;
-  /** Whether the thread is archived */
-  archived?: boolean;
-  /** Duration in minutes to automatically archive the thread after recent activity */
-  auto_archive_duration?: 60 | 1440 | 4320 | 10080;
-  /** When a thread is locked, only users with `MANAGE_THREADS` can unarchive it */
-  locked?: boolean;
-  /** Amount of seconds a user has to wait before sending another message (0-21600); bots, as well as users with the permission `MANAGE_MESSAGES`, `MANAGE_THREAD` or `MANAGE_CHANNEL` are unaffected */
-  rate_limit_per_user?: number;
+    /** 2-100 character thread name */
+    name?: string;
+    /** Whether the thread is archived */
+    archived?: boolean;
+    /** Duration in minutes to automatically archive the thread after recent activity */
+    auto_archive_duration?: 60 | 1440 | 4320 | 10080;
+    /** When a thread is locked, only users with `MANAGE_THREADS` can unarchive it */
+    locked?: boolean;
+    /** Amount of seconds a user has to wait before sending another message (0-21600); bots, as well as users with the permission `MANAGE_MESSAGES`, `MANAGE_THREAD` or `MANAGE_CHANNEL` are unaffected */
+    rate_limit_per_user?: number;
 }
 
 // TODO: add docs link
 export interface StartThread {
-  /** 2-100 character thread name */
-  name: string;
-  /** Duration in minutes to automatically archive the thread after recent activity */
-  auto_archive_duration: 60 | 1440 | 4320 | 10080;
+    /** 2-100 character thread name */
+    name: string;
+    /** Duration in minutes to automatically archive the thread after recent activity */
+    auto_archive_duration: 60 | 1440 | 4320 | 10080;
 }
 // TODO: add docs link
 export interface ThreadListSync {
-  /** The id of the guild */
-  guild_id: string;
-  /** The parent channel ids whose threads are being synced. If omitted, then threads were synced for the entire guild. This array may contain channelIds that have no active threads as well, so you know to clear that data */
-  channel_ids?: string[];
-  // TODO: check if need to omit
-  /** All active threads in the given channels that the current user can access */
-  threads: Channel[];
-  /** All thread member objects from the synced threads for the current user, indicating which threads the current user has been added to */
-  members: ThreadMember[];
+    /** The id of the guild */
+    guild_id: string;
+    /** The parent channel ids whose threads are being synced. If omitted, then threads were synced for the entire guild. This array may contain channelIds that have no active threads as well, so you know to clear that data */
+    channel_ids?: string[];
+    // TODO: check if need to omit
+    /** All active threads in the given channels that the current user can access */
+    threads: Channel[];
+    /** All thread member objects from the synced threads for the current user, indicating which threads the current user has been added to */
+    members: ThreadMember[];
 }
 
 export interface ThreadMemberBase {

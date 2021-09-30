@@ -1,4 +1,5 @@
 export * from './extra';
+export * from './thread';
 import type { User } from '../member';
 /**
  * @description Represents a guild or DM channel within Discord.
@@ -98,7 +99,7 @@ export interface ThreadMetadata {
     /**
      * @description timestamp when the thread's archive status was last changed, used for calculating recent activity
      */
-    archive_timestamp: Date;
+    archive_timestamp: string;
     /**
      * @description wheter the thread is locked; when a thread is locked, only users with the manage threads permissions can unarchive it
      */
@@ -117,6 +118,7 @@ export interface ThreadMember {
     join_timestamp: Date;
     flags?: number;
 }
+/** @see https://discord.com/developers/docs/resources/channel#overwrite-object */
 export interface Overwrite {
     id: string;
     type: number;
@@ -150,4 +152,29 @@ export declare type ChannelProps = {
     video_quality_mode?: number;
     default_auto_archive_duration?: number;
 };
+/** @see https://discord.com/developers/docs/resources/channel#channel-object-channel-types */
+export declare enum ChannelTypes {
+    /** A text channel within a server */
+    GuildText = 0,
+    /** A direct message between users */
+    DM = 1,
+    /** A voice channel within a server */
+    GuildVoice = 2,
+    /** A direct message between multiple users */
+    GroupDm = 3,
+    /** An organizational category that contains up to 50 channels */
+    GuildCategory = 4,
+    /** A channel that users can follow and crosspost into their own server */
+    GuildNews = 5,
+    /** A channel in which game developers can sell their game on Discord */
+    GuildStore = 6,
+    /** A temporary sub-channel within a GUILD_NEWS channel */
+    GuildNewsThread = 10,
+    /** A temporary sub-channel within a GUILD_TEXT channel */
+    GuildPublicThread = 11,
+    /** A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission */
+    GuildPrivateThread = 12,
+    /** A voice channel for hosting events with an audience */
+    GuildStageVoice = 13
+}
 //# sourceMappingURL=index.d.ts.map

@@ -1,7 +1,26 @@
-import type { Role } from '../DiscordAPI';
 import type { User } from '../member';
 import type { CreateMessage, Message } from '../message';
 import type { InteractionChannel, InteractionGuildMember } from '.';
+import { Role } from '..';
+/** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommand */
+export interface ApplicationCommand {
+    /** Unique id of the command */
+    id: string;
+    /** Unique id of the parent application */
+    application_id: string;
+    /** Guild id of the command, if not global */
+    guild_id?: string;
+    /** 1-32 character name matching */
+    name: string;
+    /** 1-100 character description */
+    description?: string;
+    /** The parameters for the command */
+    options?: ApplicationCommandOption[];
+    /** Whether the command is enbaled by default when the app is added to a guild */
+    default_permission?: boolean;
+    /** The type of command. By default this is a slash command(ChatInput). */
+    type?: ApplicationCommandTypes;
+}
 /** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype */
 export declare enum ApplicationCommandOptionTypes {
     SubCommand = 1,
@@ -183,6 +202,11 @@ export interface GuildApplicationCommandPermissions {
 export interface InteractionApplicationCommandCallbackData extends Omit<CreateMessage, 'messageReference'> {
     /** Set to `64` to make your response ephemeral */
     flags?: number;
+}
+/** @see https://discord.com/developers/docs/topics/gateway#application-command-delete-application-command-extra-fields */
+export interface ApplicationCommandCreateUpdateDelete extends ApplicationCommand {
+    /** Id of the guild the command is in */
+    guildId?: string;
 }
 export {};
 //# sourceMappingURL=ApplicationTypes.d.ts.map

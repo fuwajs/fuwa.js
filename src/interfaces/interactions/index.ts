@@ -1,8 +1,8 @@
 export * from './ApplicationTypes';
 import type { Channel } from 'diagnostics_channel';
-import type { ResolvedData, CommandOptions, SelectOption } from '../DiscordAPI';
-import type { GuildMemberWithUser, Member, User } from '../member';
-import type { Message, ComponentType, ButtonData, SelectMenuData } from '../message';
+import type { ResolvedData, CommandOptions } from '../DiscordAPI';
+import type { GuildMemberWithUser, User } from '../member';
+import type { Message, ComponentType, ButtonData, SelectMenuData, SelectOption } from '../message';
 import type { ApplicationCommandInteractionData } from './ApplicationTypes';
 
 /**

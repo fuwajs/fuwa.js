@@ -1,8 +1,30 @@
-import type {ApplicationCommandCreateUpdateDelete, BigInteraction, Channel, Emoji, GatewayPayload, Guild, GuildMember, InviteCreate, InviteDelete, Member, Message, MessageReactionAdd, MessageReactionRemove, MessageReactionRemoveAll, PresenceUpdate, Role, StageInstance, ThreadMemberModified, ThreadMembersUpdateModified, User, VoiceServerUpdate, VoiceState } from "."
-import  { IntegrationCreateUpdate, IntegrationDelete } from "./integrations";
-import { Collection} from "../util/Collection"
-import { Thread } from "../util/transformers/channel_to_thread";
-
+import type {
+    ApplicationCommandCreateUpdateDelete,
+    BigInteraction,
+    Channel,
+    Emoji,
+    GatewayPayload,
+    Guild,
+    GuildMember,
+    InviteCreate,
+    InviteDelete,
+    Member,
+    Message,
+    MessageReactionAdd,
+    MessageReactionRemove,
+    MessageReactionRemoveAll,
+    PresenceUpdate,
+    Role,
+    StageInstance,
+    ThreadMemberModified,
+    ThreadMembersUpdateModified,
+    User,
+    VoiceServerUpdate,
+    VoiceState,
+} from '.';
+import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
+import { Collection } from '../util/Collection';
+import { Thread } from '../util/transformers/channel_to_thread';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
@@ -20,14 +42,10 @@ export type EventHandlersDefinitions = {
     /** Sent when a channel relevant to the current user is deleted. */
     channelDelete: [channel: Channel];
     /** Sent when a message pin is updated */
-    channelPinsUpdate: [
-        channel: Channel,
-        guild?: Guild,
-        lastPinTimestamp?: string | null
-    ];
+    channelPinsUpdate: [channel: Channel, guild?: Guild, lastPinTimestamp?: string | null];
     debug: [args: string | DebugArg, data?: string];
     /** Sent before every event.  awaits the execution of this event before main event gets sent. */
-    dispatchRequirements: [data:GatewayPayload, shardId: number];
+    dispatchRequirements: [data: GatewayPayload, shardId: number];
     /** Sent when a user is banned from a guild. */
     guildBanAdd: [guild: Guild, user: User, member?: Member];
     /** Sent when a user is unbanned from a guild. */
@@ -56,8 +74,8 @@ export type EventHandlersDefinitions = {
     /** Sent when a guild's emojis have been updated. */
     guildEmojisUpdate: [
         guild: Guild,
-        emojis: Collection<bigint, Emoji>,
-        oldEmojis: Collection<bigint, Emoji>
+        emojis: Collection<number, Emoji>,
+        oldEmojis: Collection<number, Emoji>
     ];
     /** Sent when a new user joins a guild. */
     guildMemberAdd: [guild: Guild, member: Member];
@@ -80,12 +98,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a message is updated. */
     messageUpdate: [message: Message, oldMessage: Message];
     /** Sent when a user updates its nickname */
-    nicknameUpdate: [
-        guild: Guild,
-        member: Member,
-        nickname: string,
-        oldNickname?: string
-    ];
+    nicknameUpdate: [guild: Guild, member: Member, nickname: string, oldNickname?: string];
     /** A user's presence is their current state on a guild. This event is sent when a user's presence or info, such as name or avatar, is updated. */
     presenceUpdate: [presence: PresenceUpdate, oldPresence?: PresenceUpdate];
     /** Sent before every event execution.  will not await its execution. */
@@ -99,18 +112,18 @@ export type EventHandlersDefinitions = {
     /** Sent when a user explicitly removes all reactions from a message. */
     reactionRemoveAll: [payload: MessageReactionRemoveAll, message?: Message];
     /** Sent when a bot removes all instances of a given emoji from the reactions of a message. */
-    reactionRemoveEmoji: [emoji: Partial<Emoji>, messageId: bigint, channelId: bigint, guildId?: bigint];
+    reactionRemoveEmoji: [emoji: Partial<Emoji>, messageId: number, channel_id: number, guild_id?: number];
     /** Sent when a guild role is created. */
     roleCreate: [guild: Guild, role: Role];
     /** Sent when a guild role is deleted. */
     roleDelete: [guild: Guild, role: Role];
     /** Sent when a guild role is updated. */
     roleUpdate: [guild: Guild, role: Role, old: Role];
-    roleGained: [guild: Guild, member: Member, roleId: bigint];
-    roleLost: [guild: Guild, member: Member, roleId: bigint];
+    roleGained: [guild: Guild, member: Member, role_id: number];
+    roleLost: [guild: Guild, member: Member, role_id: number];
     shardReady: [shardId: number];
     /** Sent when a shard failed to load. */
-    shardFailedToLoad: [shardId: number, unavailableGuildIds: Set<bigint>];
+    shardFailedToLoad: [shard_id: number, unavailableGuild_ids: Set<number>];
     /** Sent when a Stage instance is created (i.e. the Stage is now "live"). */
     stageInstanceCreate: [instance: StageInstance];
     /** Sent when a Stage instance has been deleted (i.e. the Stage has been closed). */
@@ -122,11 +135,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a thread is updated */
     threadUpdate: [thread: Thread, oldThread: Thread];
     /** Sent when the bot gains access to threads */
-    threadListSync: [
-        threads: Collection<bigint, Thread>,
-        members: ThreadMemberModified[],
-        guildId: bigint
-    ];
+    threadListSync: [threads: Collection<number, Thread>, members: ThreadMemberModified[], guild_id: number];
     /** Sent when the current users thread member is updated */
     threadMemberUpdate: [threadMember: ThreadMemberModified, thread: Thread];
     /** Sent when anyone is added to or removed from a thread */
@@ -136,17 +145,17 @@ export type EventHandlersDefinitions = {
     /** Sent when a user starts typing in a channel. */
     typingStart: [data: TypingStart];
     /** Sent when a user joins a voice channel */
-    voiceChannelJoin: [member: Member, channelId: bigint];
+    voiceChannelJoin: [member: Member, channel_id: number];
     /** Sent when a user leaves a voice channel. Does not get sent when user switches the voice channel */
-    voiceChannelLeave: [member: Member, channelId: bigint];
+    voiceChannelLeave: [member: Member, channel_id: number];
     /** Sent when a user switches the voice channel */
-    voiceChannelSwitch: [member: Member, channelId: bigint, oldChannelId: bigint];
+    voiceChannelSwitch: [member: Member, channel_id: number, oldChannel_id: number];
     /** Sent when a voice server is updated with information for making the bot connect to a voice channel. */
     voiceServerUpdate: [payload: VoiceServerUpdate, guild: Guild];
     /** Sent when someone joins/leaves/moves voice channels. */
     voiceStateUpdate: [member: Member, voiceState: VoiceState];
     /** Sent when a guild channel's webhook is created, updated, or deleted. */
-    webhooksUpdate: [channelId: bigint, guildId: bigint];
+    webhooksUpdate: [channelId: number, guild_id: number];
     /** Sent when a member has passed the guild's Membership Screening requirements */
     membershipScreeningPassed: [guild: Guild, member: Member];
     /** Sent when an integration is created on a server such as twitch, youtube etc.. */
@@ -198,14 +207,14 @@ export interface GuildUpdateChange {
 
 /** @see https://discord.com/developers/docs/topics/gateway#typing-start */
 export interface TypingStart {
-  /** id of the channel */
-  channelId: string;
-  /** id of the guild */
-  guildId?: string;
-  /** id of the user */
-  userId: string;
-  /** Unix time (in seconds) of when the user started typing */
-  timestamp: number;
-  /** The member who started typing if this happened in a guild */
-  member?: GuildMember;
+    /** id of the channel */
+    channel_id: string;
+    /** id of the guild */
+    guild_id?: string;
+    /** id of the user */
+    user_id: string;
+    /** Unix time (in seconds) of when the user started typing */
+    timestamp: number;
+    /** The member who started typing if this happened in a guild */
+    member?: GuildMember;
 }

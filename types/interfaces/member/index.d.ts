@@ -4,15 +4,28 @@ import { Integration } from '../integrations';
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  */
 export interface Member {
+    guilds: any;
+    /** The user this guild member represents */
     user?: User;
-    nick: string | null;
+    /** This users guild nickname */
+    nick?: string | null;
+    /** Array of role object ids */
     roles: string[];
+    /** When the user joined the guild */
     joined_at: Date;
+    /** When the user started boosing the guild */
     premium_since?: Date | null;
+    /** Whether the user is deafened in voice channels */
     deaf: boolean;
+    /** Whether the user is muted in voice channels */
     mute: boolean;
+    /** Whether the user has not yet passed the guild's Membership Screening requirements */
     pending?: boolean;
 }
+/** https://discord.com/developers/docs/resources/guild#guild-member-object */
+export declare type GuildMemberWithUser = Omit<GuildMember, 'user'> & {
+    user: User;
+};
 /** @see https://discord.com/developers/docs/resources/user#user-object-user-flags */
 export declare enum UserFlags {
     None = 0,
@@ -65,10 +78,6 @@ export interface Author {
     discriminator: string;
     avatar: string;
 }
-/** https://discord.com/developers/docs/resources/guild#guild-member-object */
-export declare type GuildMemberWithUser = Omit<GuildMember, 'user'> & {
-    user: User;
-};
 /** https://discord.com/developers/docs/resources/user#connection-objecthttps://discord.com/developers/docs/resources/user#user-object-premium-types */
 export interface Connection {
     /** id of the connection account */
