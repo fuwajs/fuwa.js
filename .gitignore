@@ -6,6 +6,4 @@ types
 .vscode
 .env
 *.log
-
-test/
 tests/config.json

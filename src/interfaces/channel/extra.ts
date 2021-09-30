@@ -45,19 +45,19 @@ export interface Invite {
 
 export interface CreateChannelInvite {
     /** Duration of invite in seconds before expiry, or 0 for never. Between 0 and 604800 (7 days). Default: 86400 (24 hours) */
-    maxAge?: number;
+    max_age?: number;
     /** Max number of users or 0 for unlimited. Between 0 and 100. Default: 0 */
-    maxUses?: number;
+    max_uses?: number;
     /** Whether this invite only grants temporary membership. Default: false */
     temporary?: boolean;
     /** If true, don't try to reuse simmilar invite (useful for creating many unique one time use invites). Default: false */
     unique?: boolean;
     /** The type of target for this voice channel invite */
-    targetType?: InviteTargetTypes;
+    target_type?: InviteTargetTypes;
     /** The id of the user whose stream to display for this invite, required if `target_type` is 1, the user must be streaming in the channel */
-    targetUserId?: string;
+    target_user_id?: string;
     /** The id of the embedded application to open for this invite, required if `target_type` is 2, the application must have the `EMBEDDED` flag */
-    targetApplicationId?: string;
+    target_application_id?: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types */
@@ -69,18 +69,18 @@ export enum InviteTargetTypes {
 /** @see https://discord.com/developers/docs/resources/invite#get-invite */
 export interface GetInvite {
     /** Whether the invite should contain approximate member counts */
-    withCounts?: boolean;
+    with_counts?: boolean;
     /** Whether the invite should contain the expiration date */
-    withExpiration?: boolean;
+    wit_expiration?: boolean;
 }
 
 export interface InviteStageInstance {
     /** The members speaking in the Stage */
     members: Partial<GuildMember>[];
     /** The number of users in the Stage */
-    participantCount: number;
+    participant_count: number;
     /** The number of users speaking in the Stage */
-    speakerCount: number;
+    speaker_count: number;
     /** The topic of the Stage instance (1-120 characters) */
     topic: string;
 }
@@ -90,21 +90,21 @@ export interface InviteMetadata extends Invite {
     /** Number of times this invite has been used */
     uses: number;
     /** Max number of times this invite can be used */
-    maxUses: number;
+    max_uses: number;
     /** Duration (in seconds) after which the invite expires */
-    maxAge: number;
+    max_age: number;
     /** Whether this invite only grants temporary membership */
     temporary: boolean;
     /** When this invite was created */
-    createdAt: string;
+    created_at: string;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#invite-delete */
 export interface InviteDelete {
     /** The channel of the invite */
-    channelId: string;
+    channel_id: string;
     /** The guild of the invite */
-    guildId?: string;
+    guild_id?: string;
     /** The unique invite code */
     code: string;
 }
@@ -112,25 +112,25 @@ export interface InviteDelete {
 /** @see https://discord.com/developers/docs/topics/gateway#invite-create */
 export interface InviteCreate {
     /** The channel the invite is for */
-    channelId: string;
+    channel_id: string;
     /** The unique invite code */
     code: string;
     /** The time at which the invite was created */
-    createdAt: string;
+    created_at: string;
     /** The guild of the invite */
-    guildId?: string;
+    guild_id?: string;
     /** The user that created the invite */
     inviter?: User;
     /** How long the invite is valid for (in seconds) */
-    maxAge: number;
+    max_age: number;
     /** The maximum number of times the invite can be used */
-    maxUses: number;
+    max_uses: number;
     /** The type of target for this voice channel invite */
-    targetType: InviteTargetTypes;
+    target_type: InviteTargetTypes;
     /** The target user for this invite */
-    targetUser?: Partial<User>;
+    target_user?: Partial<User>;
     /** The embedded application to open for this voice channel embedded application invite */
-    targetApplication?: Partial<Application>;
+    target_application?: Partial<Application>;
     /** Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role) */
     temporary: boolean;
     /** How many times the invite has been used (always will be 0) */
@@ -156,7 +156,7 @@ export interface AuditLog {
     /** List of users found in the audit log */
     users: User[];
     /** List of audit log entries */
-    auditLogEntries: AuditLogEntry[];
+    auditLog_entries: AuditLogEntry[];
     /** List of partial integration objects */
     integrations: Partial<Integration>[];
 }
@@ -248,7 +248,7 @@ export type AuditLogChange =
 /** @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-entry-structure */
 export interface AuditLogEntry {
     /** id of the affected entity (webhook, user, role, etc.) */
-    targetId: string | null;
+    target_id: string | null;
     /** Changes made to the `target_id` */
     changes?: AuditLogChange[];
     /** The user who made the changes */
@@ -256,7 +256,7 @@ export interface AuditLogEntry {
     /** id of the entry */
     id: string;
     /** Type of action that occured */
-    actionType: AuditLogEvents;
+    action_type: AuditLogEvents;
     /** Additional info for certain action types */
     options?: OptionalAuditEntryInfo;
     /** The reason for the change (0-512 characters) */
@@ -308,9 +308,9 @@ export enum DiscordAuditLogEvents {
 /** @see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log-query-string-parameters */
 export interface GetGuildAuditLog {
     /** Filter the log for actions made by a user */
-    userId?: string;
+    user_id?: string;
     /** The type of audit log event */
-    actionType?: DiscordAuditLogEvents;
+    action_type?: DiscordAuditLogEvents;
     /** Filter the log before a certain entry id */
     before?: string;
     /** How many entries are returned (default 50, minimum 1, maximum 100) */
@@ -320,13 +320,13 @@ export interface GetGuildAuditLog {
 /** @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info */
 export interface OptionalAuditEntryInfo {
     /** Number of days after which inactive members were kicked */
-    deleteMemberDays: string;
+    delete_member_days: string;
     /** Number of members removed by the prune */
-    membersRemoved: string;
+    members_removed: string;
     /** Channel in which the entities were targeted */
-    channelId: string;
+    channel_id: string;
     /** id of the message that was targeted, types: MESSAGE_PIN & MESSAGE_UNPIN & STAGE_INSTANCE_CREATE & STAGE_INSTANCE_UPDATE & STAGE_INSTANCE_DELETE */
-    messageId: string;
+    message_id: string;
     /** Number of entities that were targeted */
     count: string;
     /** id of the overwritten entity */
@@ -334,7 +334,7 @@ export interface OptionalAuditEntryInfo {
     /** type of overwritten entity - "0", for "role", or "1" for "member" */
     type: string;
     /** Name of the role if type is "0" (not present if type is "1") */
-    roleName: string;
+    role_name: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
@@ -346,9 +346,9 @@ export interface IncomingWebhook {
     /** The type of the webhook */
     type: WebhookTypes;
     /** The guild id this webhook is for */
-    guildId?: string;
+    guild_id?: string;
     /** The channel id this webhook is for */
-    channelId: string;
+    channel_id: string;
     /** The user this webhook was created by (not returned when getting a webhook with its token) */
     user?: User;
     /** The default name of the webhook */
@@ -358,19 +358,19 @@ export interface IncomingWebhook {
     /** The secure token of the webhook (returned for Incomming Webhooks) */
     token?: string;
     /** The bot/OAuth2 application that created this webhook */
-    applicationId: string | null;
+    application_id: string | null;
     /** The guild of the channel that this webhook is following (returned for Channel Follower Webhooks) */
-    sourceGuild?: Partial<Guild>;
+    source_guild?: Partial<Guild>;
     /** The channel that this webhook is following (returned for Channel Follower Webhooks) */
-    sourceChannel?: Partial<Channel>;
+    source_channel?: Partial<Channel>;
     /** The url used for executing the webhook (returned by the webhooks OAuth2 flow) */
     url?: string;
 }
 
-export interface ApplicationWebhook extends Omit<IncomingWebhook, 'type' | 'guildId' | 'channelId'> {
+export interface ApplicationWebhook extends Omit<IncomingWebhook, 'type' | 'guild_id' | 'channel_id'> {
     type: WebhookTypes.Application;
-    guildId?: string | null;
-    channelId?: string | null;
+    guild_id?: string | null;
+    channel_id?: string | null;
 }
 
 /** @see https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types */
@@ -399,7 +399,7 @@ export interface EditWebhookMessage {
     /** The contents of the file being sent/edited */
     file?: FileContent | FileContent[] | null;
     /** Allowed mentions for the message */
-    allowedMentions?: AllowedMentions | null;
+    allowed_mentions?: AllowedMentions | null;
     /** Attached files to keep */
     attachments?: Attachment | null;
     /** The components you would like to have sent in this message */
@@ -411,13 +411,13 @@ export interface ExecuteWebhook {
     /** Waits for server confirmation of message send before response, and returns the created message body (defaults to `false`; when `false` a message that is not saved does not return an error) */
     wait?: boolean;
     /** Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived. */
-    threadId?: bigint;
+    thread_id?: bigint;
     /** The message contents (up to 2000 characters) */
     content?: string;
     /** Override the default username of the webhook */
     username?: string;
     /** Override the default avatar of the webhook */
-    avatarUrl?: string;
+    avatar_url?: string;
     /** True if this is a TTS message */
     tts?: boolean;
     /** The contents of the file being sent */
@@ -425,7 +425,7 @@ export interface ExecuteWebhook {
     /** Embedded `rich` content */
     embeds?: Embed[];
     /** Allowed mentions for the message */
-    allowedMentions?: AllowedMentions;
+    allowed_mentions?: AllowedMentions;
 }
 
 export type DiscordExecuteWebhook = SnakeCasedPropertiesDeep<Omit<ExecuteWebhook, 'wait'>>;
@@ -437,13 +437,13 @@ export interface ModifyWebhook {
     /** Image for the default webhook avatar */
     avatar?: string | null;
     /** The new channel id this webhook should be moved to */
-    channelId?: string;
+    channel_id?: string;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#webhooks-update-webhook-update-event-fields */
 export interface WebhookUpdate {
     /** id of the guild */
-    guildId: string;
+    guild_id: string;
     /** id of the channel */
-    channelId: string;
+    channel_id: string;
 }
