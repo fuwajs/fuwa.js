@@ -1,4 +1,4 @@
-import { GatewayCodes } from '@root/src/interfaces';
+import { GatewayCodes } from '../../../interfaces';
 import { WebSocket as Socket } from 'ws';
 
 import { DiscordAPIOP as DiscordAPIOPResponse, GatewayEvents } from '../../../interfaces/DiscordAPI';
