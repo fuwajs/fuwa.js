@@ -9,7 +9,7 @@
     "license": "MIT",
     "private": false,
     "scripts": {
-        "build": "npx tsc -p .",
+        "build": "npx gulp",
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build -w",
         "format": "prettier --ignore-path .gitignore --write .",
