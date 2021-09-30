@@ -1,8 +1,10 @@
 import { WebSocket } from '../lib/structures/index';
-import { discordAPI, DiscordAPIOP, GatewayCodes, GatewayIntents } from '../interfaces/DiscordAPI';
+import { discordAPI, DiscordAPIOP, GatewayIntents } from '../interfaces/DiscordAPI';
 import Command from './structures/handlers/Command';
-import Globs from '../util/Global';
+import Globs, { InvalidToken } from '../util/Global';
 import { debug as Debug } from '../util/Debug';
+import { EventHandlers } from '../interfaces/EventHandler';
+import { GatewayCodes } from '../interfaces';
 
 export interface ClientOptions {
     /**Discord Bot Token */
@@ -11,7 +13,7 @@ export interface ClientOptions {
      * @description Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
      */
-    intents?: (keyof typeof GatewayIntents)[];
+    intents?: (keyof typeof GatewayIntents | GatewayIntents)[];
     /**
      * The owner(s) discord ID. These users can bypass default bot permissions.
      */
@@ -21,12 +23,24 @@ export interface ClientOptions {
      */
     shards?: number;
     /**
-     *
+     * Your Bot ID
+     * @see https://discord.com/developers/applications
      */
     applicationId?: string;
+    /**
+     * Events you
+     */
+    eventHandlers?: EventHandlers;
 }
 export interface Events {
     ready(shardId?: number): any;
+    interaction();
+    reaction();
+    COMMAND_DENIED: () => any;
+    COMMAND_SUCCESS: () => any;
+    GUILD_JOIN: () => any;
+    GUILD_LEAVE: () => any;
+    message();
 }
 
 export default class Client extends WebSocket {
@@ -40,6 +54,8 @@ export default class Client extends WebSocket {
     public applicationId: string;
     protected options;
     protected debug: typeof Debug;
+    protected loop?: NodeJS.Timeout;
+    public eventHandlers: EventHandlers = {};
     public constructor(options?: ClientOptions) {
         super();
         Object.assign(this, {
@@ -51,14 +67,13 @@ export default class Client extends WebSocket {
             this.shardCount = options.shards ?? 0;
         }
         this.shardCount = 0;
-        this.options = {
-            intents:
-                GatewayIntents.Guilds |
-                GatewayIntents.GuildMessages |
-                GatewayIntents.GuildBans |
-                GatewayIntents.DirectMessages,
-            ...options,
-        };
+
+        if (options.eventHandlers) {
+            this.eventHandlers = {
+                ...options.eventHandlers,
+                dispatchRequirements: options.eventHandlers.dispatchRequirements,
+            };
+        }
     }
 
     /**
@@ -70,6 +85,7 @@ export default class Client extends WebSocket {
      */
     public on<T extends keyof Events>(event: T, callback: Events[T]) {
         this.events.set(event, callback);
+        return this;
     }
 
     public login(token?: string | Buffer) {
@@ -91,7 +107,7 @@ export default class Client extends WebSocket {
                 // status: this.status,
             };
 
-            // this.debug.log('discord login', 'Attempting to connect to discord');
+            this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(GatewayCodes.Identify, identify);
         });
         this.event('READY', ready => {
@@ -100,6 +116,20 @@ export default class Client extends WebSocket {
             Globs.sessionId = ready.session_id;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
+        this.event('INVALID_SESSION', () => {
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
+            throw new InvalidToken('Invalid token');
+        });
+    }
+
+    /**
+     * Shuts down the bot process
+     */
+    public logout(end = true) {
+        if (this?.ws && this.loop) {
+            clearInterval(this.loop);
+            if (end) process.exit();
+        }
     }
 
     /**
