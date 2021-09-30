@@ -1,4 +1,3 @@
 // TODO cache structure
 
-
-export const cache = {}
+export const cache = {};

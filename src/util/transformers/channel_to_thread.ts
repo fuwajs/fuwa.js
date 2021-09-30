@@ -23,9 +23,10 @@ const baseThread: Partial<FuwaThread> = {
     get is_public() {
         return !this.is_private;
     },
-    get guild_id() {
-        return Cache.channels.get(this.parent_id!)!.guildId;
-    },
+    // TODO Make Cache
+    // get guild_id() {
+    //     return Cache.channels.get(this.parent_id!)!.guildId;
+    // },
     toJSON() {
         return {
             id: this.id?.toString(),

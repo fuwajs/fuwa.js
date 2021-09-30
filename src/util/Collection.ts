@@ -1,8 +1,8 @@
 export class Collection<K, V> extends Map<K, V> {
     maxSize?: number;
-    private sweeper?: CollectionSweeper<K, V> & { intervalId?: any};
+    private sweeper?: CollectionSweeper<K, V> & { intervalId?: any };
 
-    constructor(
+    public constructor(
         entries?: (readonly (readonly [K, V])[] | null) | Map<K, V>,
         options?: CollectionOptions<K, V>
     ) {
@@ -14,7 +14,7 @@ export class Collection<K, V> extends Map<K, V> {
         this.startSweeper(options.sweeper);
     }
 
-    startSweeper(options: CollectionSweeper<K, V>): number {
+    public startSweeper(options: CollectionSweeper<K, V>): number {
         if (this.sweeper?.intervalId) clearInterval(this.sweeper.intervalId);
 
         this.sweeper = options;
@@ -30,23 +30,23 @@ export class Collection<K, V> extends Map<K, V> {
         return this.sweeper.intervalId!;
     }
 
-    stopSweeper(): void {
+    public stopSweeper(): void {
         return clearInterval(this.sweeper?.intervalId);
     }
 
-    changeSweeperInterval(newInterval: number) {
+    public changeSweeperInterval(newInterval: number) {
         if (!this.sweeper) return;
 
         this.startSweeper({ filter: this.sweeper.filter, interval: newInterval });
     }
 
-    changeSweeperFilter(newFilter: (value: V, key: K) => boolean | Promise<boolean>) {
+    public changeSweeperFilter(newFilter: (value: V, key: K) => boolean | Promise<boolean>) {
         if (!this.sweeper) return;
 
         this.startSweeper({ filter: newFilter, interval: this.sweeper.interval });
     }
 
-    set(key: K, value: V) {
+    public set(key: K, value: V) {
         // When this collection is maxSizeed make sure we can add first
         if ((this.maxSize || this.maxSize === 0) && this.size >= this.maxSize) {
             return this;
@@ -55,25 +55,25 @@ export class Collection<K, V> extends Map<K, V> {
         return super.set(key, value);
     }
 
-    array() {
+    public array() {
         return [...this.values()];
     }
 
     /** Retrieve the value of the first element in this collection */
-    first(): V | undefined {
+    public first(): V | undefined {
         return this.values().next().value;
     }
 
-    last(): V | undefined {
+    public last(): V | undefined {
         return [...this.values()][this.size - 1];
     }
 
-    random(): V | undefined {
+    public random(): V | undefined {
         const array = [...this.values()];
         return array[Math.floor(Math.random() * array.length)];
     }
 
-    find(callback: (value: V, key: K) => boolean) {
+    public find(callback: (value: V, key: K) => boolean) {
         for (const key of this.keys()) {
             const value = this.get(key)!;
             if (callback(value, key)) return value;
@@ -82,7 +82,7 @@ export class Collection<K, V> extends Map<K, V> {
         return;
     }
 
-    filter(callback: (value: V, key: K) => boolean) {
+    public filter(callback: (value: V, key: K) => boolean) {
         const relevant = new Collection<K, V>();
         this.forEach((value, key) => {
             if (callback(value, key)) relevant.set(key, value);
@@ -91,7 +91,7 @@ export class Collection<K, V> extends Map<K, V> {
         return relevant;
     }
 
-    map<T>(callback: (value: V, key: K) => T) {
+    public map<T>(callback: (value: V, key: K) => T) {
         const results = [];
         for (const key of this.keys()) {
             const value = this.get(key)!;
@@ -100,7 +100,7 @@ export class Collection<K, V> extends Map<K, V> {
         return results;
     }
 
-    some(callback: (value: V, key: K) => boolean) {
+    public some(callback: (value: V, key: K) => boolean) {
         for (const key of this.keys()) {
             const value = this.get(key)!;
             if (callback(value, key)) return true;
@@ -109,7 +109,7 @@ export class Collection<K, V> extends Map<K, V> {
         return false;
     }
 
-    every(callback: (value: V, key: K) => boolean) {
+    public every(callback: (value: V, key: K) => boolean) {
         for (const key of this.keys()) {
             const value = this.get(key)!;
             if (!callback(value, key)) return false;
@@ -118,7 +118,7 @@ export class Collection<K, V> extends Map<K, V> {
         return true;
     }
 
-    reduce<T>(callback: (accumulator: T, value: V, key: K) => T, initialValue?: T): T {
+    public reduce<T>(callback: (accumulator: T, value: V, key: K) => T, initialValue?: T): T {
         let accumulator: T = initialValue!;
 
         for (const key of this.keys()) {
