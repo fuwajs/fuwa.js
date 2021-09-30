@@ -1,58 +1,112 @@
-export * from "./member"
+export * from "./extention"
 import type { Member, User } from '../member';
-import type { Channel } from '../channel';
+import type { Channel, StageInstance } from '../channel';
 import type { Emoji } from '../message';
-import { Channels, GuildMemberWithUser } from '..';
+import { Channels, GuildMemberWithUser, GuildNsfwLevel, WelcomeScreen } from '..';
 /**
  * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-structure
  */
 export interface Guild {
+    /** Guild id */
     id: string;
+    /** Guild name (2-100 characaters, excluding trailing and leading whitespace) */
     name: string;
+    /** Icon hash */
     icon: string | null;
+    /** Icon hash, returned when in the template object */
     icon_hash?: string | null;
+    /** Splash hash */
     splash: string | null;
+    /** Discovery splash hash; only present for guilds with the "DISCOVERABLE" feature */
     discovery_splash: string | null;
+    /** True if the user is the owner of the guild */
     owner?: boolean;
+
     owner_id: string;
+    /** Id of the owner */
     permissions?: string;
+    /** Total permissions for the user in the guild (execludes overwrites) */
     region: string;
+    /** Id of afk channel */
     afk_channel_id: string | null;
+    /** Afk timeout in seconds */
     afk_timeout: number;
+    /** True if the server widget is enabled */
     widget_enabled?: boolean;
+    /** The channel id that the widget will generate an invite to, or null if set to no invite */
     widget_channel_id?: string;
+    /** Verification level required for the guild */
     verification_level: number;
+    /** Default message notifications level */
     default_message_notifications: number;
+    /** Explicit content filter level */
     explicit_content_filter: number;
+    /** Roles in the guild */
     roles: Role[];
     /** Custom guild emojis */
     emojis: Emoji[];
+    /** Enabled guild features */
     features: GuildFeatures[];
+    /** Required MFA level for the guild */
     mfa_level: number;
+    /** Application id of the guild creator if it is bot-created */
     application_id: string | null;
+
+    /** The id of the channel where guild notices such as welcome messages and boost events are posted */
     system_channel_id: string | null;
+    /** System channel flags */
     system_channel_flags: number;
+    /** The id of the channel where community guilds can display rules and/or guidelines */
     rules_channel_id: string | null;
+    /** When this guild was joined at */
     joined_at?: Date;
+    /** True if this is considered a large guild */
     large?: boolean;
+    /** True if this guild is unavailable due to an outage */
     unavailable?: boolean;
+    /** Total number of members in this guild */
     member_count?: number;
-    voice_states: VoiceState[];
+    /** States of members currently in voice channels; lacks the guild_id key */
+    voice_states: Omit<VoiceState, 'guild_id'>[];
+    /** Users in the guild */
     members?: Member[];
+    /** Channels in the guild */
     channels: Channel[];
-    presences?: PresenceUpdate[];
+    // TODO: check if need to omit
+    /** All active threads in the guild that the current user has permission to view */
+    threads?: Channel[];
+    /** Presences of the members in the guild, will only include non-offline members if the size is greater than large threshold */
+    presences?: Partial<PresenceUpdate>[];
+    /** The maximum number of presences for the guild (the default value, currently 25000, is in effect when null is returned) */
     max_presences?: number;
+    /** The maximum number of members for the guild */
     max_members?: number;
+    /** The vaniy url code for the guild */
     vanity_url_code: string | null;
+    /** The description of a Community guild */
     description: string | null;
+    /** Banner hash */
     banner: string | null;
+    /** Premium tier (Server Boost level) */
     premium_tier: number;
+    /** The number of boosts this guild currently has */
     premium_subscription_count?: number;
+    /** The preferred locale of a Community guild; used in server discovery and notices from Discord; defaults to "en-US" */
     preferred_locale: string;
+    /** The id of the channel where admins and moderators of Community guilds receive notices from Discord */
     public_updates_channel_id?: string | null;
+    /** The maximum amount of users in a video channel */
     max_video_channel_users?: number;
+    /** Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true */
     approximate_member_count?: number;
+    /**	Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true */
     aproximate_presence_count?: number;
+    /** The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object */
+    welcome_screen?: WelcomeScreen;
+    /** Guild NSFW level */
+    nsfw_level: GuildNsfwLevel;
+    /** Stage instances in the guild */
+    stage_instances?: StageInstance[];
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#guild-member-object */
@@ -75,24 +129,47 @@ export interface GuildMember {
     pending?: boolean;
 }
 
-/**
- * @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features
- */
-export type GuildFeatures =
-    | 'INVITE_SPLASH'
-    | 'VIP_REGIONS'
-    | 'VANITY_URL'
-    | 'VERIFIED'
-    | 'PARTNERED'
-    | 'COMMUNITY'
-    | 'COMMERCE'
-    | 'NEWS'
-    | 'DISCOVERABLE'
-    | 'FEATURABLE'
-    | 'ANIMATED_ICON'
-    | 'BANNER'
-    | 'WELCOME_SCREEN_ENABLED';
-
+/** @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features */
+export enum GuildFeatures {
+  /** Guild has access to set an invite splash background */
+  InviteSplash = "INVITE_SPLASH",
+  /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
+  VipRegions = "VIP_REGIONS",
+  /** Guild has access to set a vanity URL */
+  VanityUrl = "VANITY_URL",
+  /** Guild is verified */
+  Verified = "VERIFIED",
+  /** Guild is partnered */
+  Partnered = "PARTNERED",
+  /** Guild can enable welcome screen, Membership Screening, stage channels and discovery, and recives community updates */
+  Community = "COMMUNITY",
+  /** Guild has access to use commerce features (i.e. create store channels) */
+  Commerce = "COMMERCE",
+  /** Guild has access to create news channels */
+  News = "NEWS",
+  /** Guild is able to be discovered in the directory */
+  Discoverable = "DISCOVERABLE",
+  /** guild cannot be discoverable */
+  DiscoverableDisabled = "DISCOVERABLE_DISABLED",
+  /** Guild is able to be featured in the directory */
+  Feature = "FEATURABLE",
+  /** Guild has access to set an animated guild icon */
+  AnimatedIcon = "ANIMATED_ICON",
+  /** Guild has access to set a guild banner image */
+  Banner = "BANNER",
+  /** Guild has enabled the welcome screen */
+  WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
+  /** Guild has enabled [Membership Screening](https://discord.com/developers/docs/resources/guild#membership-screening-object) */
+  MemberVerificationGateEnabled = "MEMBER_VERIFICATION_GATE_ENABLED",
+  /** Guild can be previewed before joining via Membership Screening or the directory */
+  PreviewEnabled = "PREVIEW_ENABLED",
+  /** Guild has enabled ticketed events */
+  TicketedEventsEnabled = "TICKETED_EVENTS_ENABLED",
+  /** Guild has enabled monetization */
+  MonetizationEnabled = "MONETIZATION_ENABLED",
+  /** Guild has increased custom sticker slots */
+  MoreStickers = "MORE_STICKERS",
+}
 /**
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure
  */

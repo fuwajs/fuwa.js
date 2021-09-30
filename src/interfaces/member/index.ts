@@ -5,6 +5,7 @@ import { Integration } from '../integrations';
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  */
 export interface Member {
+    guilds: any;
     /** The user this guild member represents */
     user?: User;
     /** This users guild nickname */

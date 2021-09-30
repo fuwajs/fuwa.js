@@ -582,3 +582,4 @@ export enum BitwisePermissionFlags {
   USE_EXTERNAL_STICKERS = 0x2000000000,
 }
 
+export type PermissionStrings = keyof typeof BitwisePermissionFlags;
