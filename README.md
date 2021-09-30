@@ -14,6 +14,12 @@
     </p>
 </div>
 
+# Notice 
+
+Refactoring on branch [@next](https://github.com/fuwajs/fuwa.js/tree/%40next)
+
+This branch will be depreaded soon...
+
 # Table of Contents
 
 
