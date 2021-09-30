@@ -20,15 +20,23 @@ export interface ClientOptions {
      */
     shards?: number;
     /**
-     *
+     * Your Bot ID
+     * @see https://discord.com/developers/applications
      */
     applicationId?: string;
 }
 export interface Events {
     ready(shardId?: number): any;
+    interaction(): any;
+    reaction(): any;
+    COMMAND_DENIED: () => any;
+    COMMAND_SUCCESS: () => any;
+    GUILD_JOIN: () => any;
+    GUILD_LEAVE: () => any;
+    message(): any;
 }
 export default class Client extends WebSocket {
-    events: Map<"ready", (...args: any[]) => any>;
+    events: Map<keyof Events, (...args: any[]) => any>;
     commands: Map<string, Command>;
     bot: any | null;
     defaultPrefix: string | null;
@@ -38,6 +46,7 @@ export default class Client extends WebSocket {
     applicationId: string;
     protected options: any;
     protected debug: typeof Debug;
+    protected loop?: NodeJS.Timeout;
     constructor(options?: ClientOptions);
     /**
      * @typeParam T The event name
@@ -46,8 +55,12 @@ export default class Client extends WebSocket {
      * <clint>.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
-    on<T extends keyof Events>(event: T, callback: Events[T]): void;
+    on<T extends keyof Events>(event: T, callback: Events[T]): this;
     login(token?: string | Buffer): void;
+    /**
+     * Shuts down the bot process
+     */
+    logout(end?: boolean): void;
     /**
      * TODO remove to commands client plugin when its created.
      * this client will be the core and only deal with interactions (latest discord api)

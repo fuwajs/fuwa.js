@@ -128,16 +128,16 @@ interface MessageApplication {
 /** @see https://discord.com/developers/docs/resources/channel#message-object-message-reference-structure */
 export interface MessageReference {
     /** id of the originating message */
-    messageId?: string;
+    message_id?: string;
     /**
      * id of the originating message's channel
      * Note: `channel_id` is optional when creating a reply, but will always be present when receiving an event/response that includes this data model.
      */
-    channelId?: string;
+    channel_id?: string;
     /** id of the originating message's guild */
-    guildId?: string;
+    guild_id?: string;
     /** When sending, whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message, default true */
-    failIfNotExists: boolean;
+    fail_if_not_exists: boolean;
 }
 export interface Attachment {
     id: string;
@@ -233,9 +233,9 @@ export interface CreateMessage {
     /** Embedded `rich` content (up to 6000 characters) */
     embeds?: Embed[];
     /** Allowed mentions for the message */
-    allowedMentions?: AllowedMentions;
+    allowed_mentions?: AllowedMentions;
     /** Include to make your message a reply */
-    messageReference?: MessageReference;
+    message_reference?: MessageReference;
     /** The contents of the file being sent */
     file?: FileContent | FileContent[];
     /** The components you would like to have sent in this message */
@@ -250,7 +250,7 @@ export interface AllowedMentions {
     /** Array of user_ids to mention (Max size of 100) */
     users?: string[];
     /** For replies, whether to mention the author of the message being replied to (default false) */
-    repliedUser?: boolean;
+    replied_user?: boolean;
 }
 /** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
 export declare enum AllowedMentionsTypes {
@@ -278,7 +278,7 @@ export interface EditMessage {
     /** The contents of the file being sent/edited */
     file?: FileContent | FileContent[] | null;
     /** Allowed mentions for the message */
-    allowedMentions?: AllowedMentions | null;
+    allowed_mentions?: AllowedMentions | null;
     /** Attached files to keep */
     attachments?: Attachment | null;
     /** The components you would like to have sent in this message */
@@ -311,18 +311,18 @@ export interface MessageDelete {
     /** The id of the message */
     id: string;
     /** The id of the channel */
-    channelId: string;
+    channel_id: string;
     /** The id of the guild */
-    guildId?: string;
+    guild_id?: string;
 }
 /** @see https://discord.com/developers/docs/topics/gateway#message-delete-bulk */
 export interface MessageDeleteBulk {
     /** The ids of the messages */
     ids: string[];
     /** The id of the channel */
-    channelId: string;
+    channel_id: string;
     /** The id of the guild */
-    guildId?: string;
+    guild_id?: string;
 }
 /** @see https://discord.com/developers/docs/resources/channel#message-object-message-flags */
 export declare enum MessageFlags {
@@ -355,11 +355,11 @@ export interface MessageReactionAdd {
     /** The id of the user */
     userId: string;
     /** The id of the channel */
-    channelId: string;
+    channel_id: string;
     /** The id of the message */
-    messageId: string;
+    message_id: string;
     /** The id of the guild */
-    guildId?: string;
+    guild_id?: string;
     /** The member who reacted if this happened in a guild */
     member?: GuildMemberWithUser;
     /** The emoji used to react */
@@ -368,15 +368,15 @@ export interface MessageReactionAdd {
 /** https://discord.com/developers/docs/topics/gateway#message-reaction-remove */
 export declare type MessageReactionRemove = Omit<MessageReactionAdd, 'member'>;
 /** https://discord.com/developers/docs/topics/gateway#message-reaction-remove-all */
-export declare type MessageReactionRemoveAll = Pick<MessageReactionAdd, 'channelId' | 'messageId' | 'guildId'>;
+export declare type MessageReactionRemoveAll = Pick<MessageReactionAdd, 'channel_id' | 'message_id' | 'guild_id'>;
 /** https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji */
-export declare type MessageReactionRemoveEmoji = Pick<MessageReactionAdd, 'channelId' | 'guildId' | 'messageId' | 'emoji'>;
+export declare type MessageReactionRemoveEmoji = Pick<MessageReactionAdd, 'channel_id' | 'guild_id' | 'message_id' | 'emoji'>;
 /** https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure */
 export interface MessageSticker {
     /** Id of the sticker */
     id: string;
     /** Id of the pack the sticker is from */
-    packId?: string;
+    pack_id?: string;
     /** Name of the sticker */
     name: string;
     /** Description of the sticker */
@@ -390,15 +390,15 @@ export interface MessageSticker {
      */
     asset: string;
     /** Type of sticker format */
-    formatType: MessageStickerFormatTypes;
+    format_type: MessageStickerFormatTypes;
     /**  Whether or not the sticker is available */
     available?: boolean;
     /** Id of the guild that owns this sticker */
-    guildId?: string;
+    guild_id?: string;
     /** The user that uploaded the sticker */
     user?: User;
     /** A sticker's sort order within a pack */
-    sortValue?: number;
+    sort_value?: number;
 }
 /** @see https://discord.com/developers/docs/resources/channel#message-object-message-sticker-format-types */
 export declare enum MessageStickerFormatTypes {
@@ -412,7 +412,7 @@ export interface MessageStickerItem {
     /** Name of the sticker */
     name: string;
     /** Type of sticker format */
-    formatType: MessageStickerFormatTypes;
+    format_type: MessageStickerFormatTypes;
 }
 /** https://discord.com/developers/docs/resources/channel#message-object-message-types */
 export declare enum MessageTypes {

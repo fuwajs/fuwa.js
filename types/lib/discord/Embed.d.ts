@@ -11,7 +11,7 @@ declare type Media = {
     width: number;
 };
 declare type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
-export default class Embed {
+export declare class Embed {
     protected type: EmbedType;
     protected title?: string;
     protected description?: string;

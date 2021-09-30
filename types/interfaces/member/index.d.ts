@@ -84,16 +84,16 @@ export interface Connection {
     /** Whether the connection is verified */
     verified: boolean;
     /** Whether friend sync is enabled for this connection */
-    friendSync: boolean;
+    friend_sync: boolean;
     /** Whether activities related to this connection will be shown in presence updates */
-    showActivity: boolean;
+    show_activity: boolean;
     /** Visibility of this connection */
     visibility: VisibilityTypes;
 }
 /** @see https://discord.com/developers/docs/resources/user#create-dm */
 export interface CreateDM {
     /** The recipient to open a DM channel with */
-    recipientId: string;
+    recipient_id: string;
 }
 /** @see https://discord.com/developers/docs/resources/user#create-group-dm */
 export interface CreateGroupDM {

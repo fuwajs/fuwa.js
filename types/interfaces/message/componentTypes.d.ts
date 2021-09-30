@@ -5,7 +5,7 @@ export interface ButtonComponent {
     /** for what the button says (max 80 characters) */
     label: string;
     /** a dev-defined unique string sent on click (max 100 characters). type 5 Link buttons can not have a custom_id */
-    customId?: string;
+    custom_id?: string;
     /** For different styles/colors of the buttons */
     style: ButtonStyles;
     /** Emoji object that includes fields of name, id, and animated supporting unicode and custom emojis. */
@@ -24,9 +24,9 @@ export interface ButtonComponent {
 }
 export interface ButtonData {
     /** with the value you defined for this component */
-    customId: string;
+    custom_id: string;
     /** The type of this component */
-    componentType: MessageComponentTypes.Button;
+    component_type: MessageComponentTypes.Button;
 }
 export declare type ActionRoleComponents = ButtonComponent | SelectMenuComponent;
 /** https://discord.com/developers/docs/interactions/message-components#buttons-button-styles */
@@ -61,22 +61,22 @@ export interface ActionRow {
 }
 export interface SelectMenuData {
     /** The type of component */
-    componentType: MessageComponentTypes.SelectMenu;
+    component_type: MessageComponentTypes.SelectMenu;
     /** The custom id provided for this component. */
-    customId: string;
+    custom_id: string;
     /** The values chosen by the user. */
     values: string[];
 }
 export interface SelectMenuComponent {
     type: MessageComponentTypes.SelectMenu;
     /** A custom identifier for this component. Maximum 100 characters. */
-    customId: string;
+    custom_id: string;
     /** A custom placeholder text if nothing is selected. Maximum 100 characters. */
-    placeholder?: string;
+    place_holder?: string;
     /** The minimum number of items that must be selected. Default 1. Between 1-25. */
-    minValues?: number;
+    min_values?: number;
     /** The maximum number of items that can be selected. Default 1. Between 1-25. */
-    maxValues?: number;
+    max_values?: number;
     /** The choices! Maximum of 25 items. */
     options: SelectOption[];
 }

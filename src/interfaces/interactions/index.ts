@@ -2,7 +2,7 @@ export * from './ApplicationTypes';
 import type { Channel } from 'diagnostics_channel';
 import type { ResolvedData, CommandOptions, SelectOption } from '../DiscordAPI';
 import type { GuildMemberWithUser, Member, User } from '../member';
-import type { Message, ComponentType } from '../message';
+import type { Message, ComponentType, ButtonData, SelectMenuData } from '../message';
 import type { ApplicationCommandInteractionData } from './ApplicationTypes';
 
 /**
@@ -14,7 +14,10 @@ export enum ApplicationCommandType {
     Message,
 }
 
-export enum InteractionType {
+/** @see https://discord.com/developers/docs/interactions/slash-commands#interaction */
+export type Interaction = InteractionTypes;
+
+export enum InteractionTypes {
     Ping = 1,
     ApplicationCommand,
     MessageComponent,
@@ -36,31 +39,60 @@ export enum CommandOptionTypes {
     Number,
 }
 
-export interface Interaction<
-    // @typescript-eslint/no-unused-vars
-    T extends InteractionType,
-    // @typescript-eslint/no-unused-vars
-    D extends ApplicationCommandInteractionData | undefined
+export interface BaseInteraction<
+    T extends InteractionTypes,
+    D extends ApplicationCommandInteractionData | ButtonData | SelectMenuData | undefined
 > {
-    /**
-     * @description id of the interaction
-     */
+    /** Id of the interaction */
     id: string;
-    /**
-     * @description id of the application this interaction is for
-     */
-    application_id: string;
-    /**
-     * @description the type of interaction
-     */
-    type: InteractionType;
-    data: InteractionData;
-    guild_id?: string;
-    channel_id?: string;
-    member?: Member;
+    /** Id of the application this interaction is for */
+    applicationId: string;
+    /** The type of interaction */
+    type: T;
+    /** The guild it was sent from */
+    guildId?: string;
+    /** The channel it was sent from */
+    channelId?: string;
+    /** Guild member data for the invoking user, including permissions */
+    member?: InteractionGuildMember;
+    /** User object for the invoking user, if invoked in a DM */
     user?: User;
+    /** A continuation token for responding to the interaction */
     token: string;
+    /** Read-only property, always `1` */
     version: 1;
+    /** For the message the button was attached to */
+    message?: Message;
+
+    data?: D;
+}
+
+export interface BigInteraction
+    extends Omit<
+        Interaction,
+        'id' | 'applicationId' | 'guildId' | 'channelId' | 'member' | 'user' | 'message'
+    > {
+    /** Id of the interaction */
+    id: bigint;
+    /** Id of the application this interaction is for */
+    applicationId: bigint;
+    /** The guild it was sent from */
+    guildId?: bigint;
+    /** The channel it was sent from */
+    channelId?: bigint;
+    /** Guild member data for the invoking user, including permissions */
+    member?: Omit<InteractionGuildMember, 'roles' | 'user'> & {
+        /** Array of role object ids */
+        roles: bigint[];
+        /** The user this guild member represents */
+        user: Omit<User, 'id'> & {
+            /** The user's id */
+            id: bigint;
+        };
+    };
+    /** User object for the invoking user, if invoked in a DM */
+    user: Omit<User, 'id'> & { id: bigint };
+    /** For the message the button was attached to */
     message?: Message;
 }
 
@@ -95,7 +127,7 @@ export interface MessageInteraction {
     /** Id of the interaction */
     id: string;
     /** The type of interaction */
-    type: InteractionType;
+    type: InteractionTypes;
     /** The name of the ApplicationCommand */
     name: string;
     /** The user who invoked the interaction */

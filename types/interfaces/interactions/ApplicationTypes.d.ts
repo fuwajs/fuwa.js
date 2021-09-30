@@ -53,7 +53,7 @@ export interface ApplicationCommandInteractionData {
     /** The params + values from the user */
     options?: ApplicationCommandInteractionDataOption[];
     /** The target id if this is a context menu command. */
-    targetId?: string;
+    target_id?: string;
 }
 export interface ApplicationCommandInteractionDataResolved {
     /** The Ids and Message objects */
@@ -89,7 +89,7 @@ export interface ApplicationCommandInteractionData {
     /** The params + values from the user */
     options?: ApplicationCommandInteractionDataOption[];
     /** The target id if this is a context menu command. */
-    targetId?: string;
+    target_id?: string;
 }
 export interface ApplicationCommandInteractionDataOptionSubCommand extends Omit<ApplicationCommandInteractionDataOptionBase<ApplicationCommandOptionTypes.SubCommand>, 'value'> {
     /** Present if this option is a group or subcommand */
@@ -157,7 +157,7 @@ export interface EditGlobalApplicationCommand {
     /** The parameters for the command */
     options?: ApplicationCommandOption[] | null;
     /** Whether the command is enabled by default when the app is added to a guild. Default: true */
-    defaultPermission?: boolean;
+    default_permission?: boolean;
 }
 /** @see https://discord.com/developers/docs/interactions/slash-commands#edit-guild-application-command-json-params */
 export interface EditGuildApplicationCommand {
@@ -173,9 +173,9 @@ export interface GuildApplicationCommandPermissions {
     /** The id of the command */
     id: string;
     /** The id of the application to command belongs to */
-    applicationId: string;
+    application_id: string;
     /** The id of the guild */
-    guildId: string;
+    guild_id: string;
     /** The permissions for the command in the guild */
     permissions: ApplicationCommandPermissions[];
 }

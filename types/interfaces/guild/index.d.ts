@@ -62,9 +62,9 @@ export interface GuildMember {
     /** Array of role object ids */
     roles: string[];
     /** When the user joined the guild */
-    joinedAt: string;
+    joined_at: string;
     /** When the user started boosing the guild */
-    premiumSince?: string | null;
+    premium_since?: string | null;
     /** Whether the user is deafened in voice channels */
     deaf: boolean;
     /** Whether the user is muted in voice channels */
