@@ -1,16 +1,17 @@
-const { Client } = require('../types');
-const { token } = require('./config.json');
+const { readFileSync } = require('fs');
+const { join } = require('path');
+const { Client } = require('../../');
 
 const client = new Client({ intents: ['Guilds', 'GuildMessages', 'DirectMessages'], defaultPrefix: '?' });
 
 client.on('ready', () => console.log('Online!'));
 
-client.login(token);
+client.on('guild loaded', console.table);
 
-async () => {
-    console.log(`prefix fetch check: ${client.fetchPrefix()}`);
-};
+client.on('new channel', console.table);
 
-client.commands.set('ping', 'pong');
+client.login(readFileSync(join(__dirname, 'token.secret')));
 
-console.log(client.commands.get('ping!'));
+client.on('message', function (message) {
+    console.log(message.content);
+});

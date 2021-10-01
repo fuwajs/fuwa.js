@@ -12,9 +12,9 @@
         "pretest": "npx yarn build",
         "build": "npx gulp",
         "lint": "npx eslint ./src/**/*.ts --fix",
-        "watch": "npx yarn build -w",
+        "watch": "npx yarn build watch",
         "format": "prettier --ignore-path .gitignore --write ./src",
-        "testbot": "nodemon tests/bot/index",
+        "testbot": "nodemon test/bot/index",
         "test": "jest test/tests",
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
     },

@@ -35,6 +35,7 @@ export class WebSocket {
             throw new Error('ETF encoding selected but erlpack not found');
         }
         this.ws = new Socket(url + `?v=${version ?? 8}&encoding=${encoding}`);
+
         this.ws.onopen = () => {
             this.connected = true;
             this.WSEvents?.open();
@@ -47,7 +48,7 @@ export class WebSocket {
                 } = unpack(data as any);
 
                 // logs all ws information.
-                console.log(res);
+                // console.log(res);
 
                 this.WSEvents?.message();
                 if (res.op === GatewayCodes.Dispatch) {

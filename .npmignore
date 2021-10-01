@@ -9,7 +9,7 @@ types
 config.json
 .dockerignore
 yarn.lock
-tests
+test
 tsconfig.json
 .prettierrc
 Dockerfile

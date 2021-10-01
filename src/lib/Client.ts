@@ -68,7 +68,7 @@ export default class Client extends WebSocket {
      * @typeParam T The event name
      * @param cb The callback function
      * ```typescript
-     * <clint>.on('ready', () => console.log ('Up and ready to go!'));
+     * client.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
     public on<T extends keyof EventHandlers>(event: T, callback: EventHandlers[T]) {
@@ -95,14 +95,16 @@ export default class Client extends WebSocket {
                 // status: this.status,
             };
 
-            this.debug.log('discord login', 'Attempting to connect to discord');
+            // this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(GatewayCodes.Identify, identify);
         });
         this.event('READY', ready => {
             this.bot = ready.user;
             Globs.appId = ready.application.id;
             Globs.sessionId = ready.session_id;
-            this.events.has('guild loaded') ? ready.guilds.forEach(this.events.get('guild loaded')) : void 0;
+            this.events.has('guild loaded')
+                ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
+                : void 0;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
         this.event('MESSAGE_CREATE', msg => {
