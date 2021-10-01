@@ -1,0 +1,7 @@
+{
+    "typeAcquisition": {
+        "include": ["jest"],
+        "enable": true,
+        "exclude": ["*.ts"]
+    }
+}

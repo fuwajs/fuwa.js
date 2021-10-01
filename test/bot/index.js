@@ -1,4 +1,4 @@
-const { Client } = require('../');
+const { Client } = require('../types');
 const { token } = require('./config.json');
 
 const client = new Client({ intents: ['Guilds', 'GuildMessages', 'DirectMessages'], defaultPrefix: '?' });
