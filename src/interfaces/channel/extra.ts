@@ -1,3 +1,4 @@
+import { SnakeCasedPropertiesDeep } from '../../util';
 import type {
     AllowedMentions,
     Application,
@@ -450,7 +451,7 @@ export interface ExecuteWebhook {
     allowed_mentions?: AllowedMentions;
 }
 
-export type FuwaExecuteWebhook = Omit<ExecuteWebhook, 'wait'>;
+export type DiscordExecuteWebhook = SnakeCasedPropertiesDeep<Omit<ExecuteWebhook, 'wait'>>;
 
 /** @see https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params */
 export interface ModifyWebhook {
