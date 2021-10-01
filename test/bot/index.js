@@ -7,7 +7,6 @@ client.on('ready', () => console.log('Online!'));
 
 client.login(token);
 
-console.log(`prefix passed to client: ${client.defaultPrefix}`);
 async () => {
     console.log(`prefix fetch check: ${client.fetchPrefix()}`);
 };

@@ -44,18 +44,24 @@ export interface Events {
 }
 
 export default class Client extends WebSocket {
+    /** A Map of fuwa#client events*/ 
     public events = new Map<keyof Events, (...args: any[]) => any>();
+    /** A Map of commands */
     public commands = new Map<string, Command>();
     public bot: any | null = null;
+    /** The message prefix. */
     public defaultPrefix: string | null;
+    /** DiscordAPI GateWay Intents */
     protected intents: (keyof typeof GatewayIntents)[];
     protected readonly token = '';
     public shardCount: number;
+    /** Your bot ID */
     public applicationId: string;
+    /** Options to pass to the client */
     protected options;
     protected debug: typeof Debug;
     protected loop?: NodeJS.Timeout;
-    public eventHandlers: EventHandlers = {};
+    public eventHandlers: EventHandlers ;
     public constructor(options?: ClientOptions) {
         super();
         Object.assign(this, {
@@ -71,7 +77,7 @@ export default class Client extends WebSocket {
         if (options.eventHandlers) {
             this.eventHandlers = {
                 ...options.eventHandlers,
-                dispatchRequirements: options.eventHandlers.dispatchRequirements,
+                ['dispatch requirements']: options.eventHandlers['dispatch requirements'],
             };
         }
     }

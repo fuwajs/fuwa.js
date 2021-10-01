@@ -1,4 +1,3 @@
-import { SnakeCasedPropertiesDeep } from '../../util/util';
 import {
     Channel,
     ChannelTypes,
@@ -80,7 +79,7 @@ export interface FuwaCreateGuildChannel {
 
 /** @see https://discord.com/developers/docs/resources/guild#create-guild-channel */
 export interface CreateGuildChannel
-    extends SnakeCasedPropertiesDeep<Omit<FuwaCreateGuildChannel, 'permissionOverwrites'>> {
+    extends Omit<FuwaCreateGuildChannel, 'permissionOverwrites'> {
     // deno-lint-ignore camelcase
     permission_overwrites: Overwrite[];
 }
@@ -256,7 +255,7 @@ export interface FuwaGuildWidgetDetails {
 }
 
 /** @see https://discord.com/developers/docs/resources/guild#get-guild-widget-example-get-guild-widget */
-export type GuildWidgetDetails = SnakeCasedPropertiesDeep<FuwaGuildWidgetDetails>;
+export type GuildWidgetDetails = FuwaGuildWidgetDetails
 
 /** @see https://discord.com/developers/docs/resources/guild#guild-object-mfa-level */
 export enum MfaLevels {
