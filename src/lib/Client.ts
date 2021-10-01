@@ -32,20 +32,10 @@ export interface ClientOptions {
      */
     eventHandlers?: EventHandlers;
 }
-export interface Events {
-    ready(shardId?: number): any;
-    interaction();
-    reaction();
-    COMMAND_DENIED: () => any;
-    COMMAND_SUCCESS: () => any;
-    GUILD_JOIN: () => any;
-    GUILD_LEAVE: () => any;
-    message();
-}
 
 export default class Client extends WebSocket {
-    /** A Map of fuwa#client events*/ 
-    public events = new Map<keyof Events, (...args: any[]) => any>();
+    /** A Map of fuwa#client events*/
+    public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
     public commands = new Map<string, Command>();
     public bot: any | null = null;
@@ -61,7 +51,6 @@ export default class Client extends WebSocket {
     protected options;
     protected debug: typeof Debug;
     protected loop?: NodeJS.Timeout;
-    public eventHandlers: EventHandlers ;
     public constructor(options?: ClientOptions) {
         super();
         Object.assign(this, {
@@ -73,13 +62,6 @@ export default class Client extends WebSocket {
             this.shardCount = options.shards ?? 0;
         }
         this.shardCount = 0;
-
-        if (options.eventHandlers) {
-            this.eventHandlers = {
-                ...options.eventHandlers,
-                ['dispatch requirements']: options.eventHandlers['dispatch requirements'],
-            };
-        }
     }
 
     /**
@@ -89,7 +71,7 @@ export default class Client extends WebSocket {
      * <clint>.on('ready', () => console.log ('Up and ready to go!'));
      * ```
      */
-    public on<T extends keyof Events>(event: T, callback: Events[T]) {
+    public on<T extends keyof EventHandlers>(event: T, callback: EventHandlers[T]) {
         this.events.set(event, callback);
         return this;
     }
@@ -120,7 +102,17 @@ export default class Client extends WebSocket {
             this.bot = ready.user;
             Globs.appId = ready.application.id;
             Globs.sessionId = ready.session_id;
+            this.events.has('guild loaded') ? ready.guilds.forEach(this.events.get('guild loaded')) : void 0;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
+        });
+        this.event('MESSAGE_CREATE', msg => {
+            this.events.has('message') ? this.events.get('message')(msg) : void 0;
+        });
+        this.event('CHANNEL_CREATE', channel => {
+            this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
+        });
+        this.event('GUILD_CREATE', guild => {
+            this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
         this.event('INVALID_SESSION', () => {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');

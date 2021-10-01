@@ -1,4 +1,4 @@
-import { SnakeCasedPropertiesDeep} from "../../util"
+import { SnakeCasedPropertiesDeep } from '../../util';
 import {
     Channel,
     ChannelTypes,

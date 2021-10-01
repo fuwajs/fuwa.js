@@ -1,4 +1,4 @@
-import {  ChannelTypes } from '../../interfaces';
+import { ChannelTypes } from '../../interfaces';
 // import { ThreadMemberModified } from '../../interfaces';
 // import { Collection } from '../Collection';
 // import { createNewProp } from '../util';
@@ -66,7 +66,6 @@ import {  ChannelTypes } from '../../interfaces';
 //         members: createNewProp(new Collection<bigint, Omit<ThreadMemberModified, 'id'>>()),
 //     }) as FuwaThread;
 // }
-
 
 /**
  * TODO move to types folder later
