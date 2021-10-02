@@ -10,6 +10,7 @@ client.on('guild loaded', console.table);
 
 client.on('new channel', console.table);
 
+client.on('')
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
 client.on('message', function (message) {

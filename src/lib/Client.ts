@@ -1,10 +1,10 @@
 import { WebSocket } from '../lib/structures/index';
-import { discordAPI, DiscordAPIOP, GatewayIntents } from '../interfaces/DiscordAPI';
+import { discordAPI, GatewayCommands, GatewayIntents } from '../interfaces/DiscordAPI';
 import Command from './structures/handlers/Command';
 import Globs, { InvalidToken } from '../util/Global';
 import { debug as Debug } from '../util/Debug';
 import { EventHandlers } from '../interfaces/EventHandler';
-import { GatewayCodes } from '../interfaces';
+import { GatewayOpcodes } from '../interfaces';
 
 export interface ClientOptions {
     /**Discord Bot Token */
@@ -80,9 +80,9 @@ export default class Client extends WebSocket {
         const _token = this.token || token.toString();
         Globs.token = _token;
         this.connect(discordAPI.gateway, 9);
-        this.op(GatewayCodes.Hello, data => {
+        this.op(GatewayOpcodes.Hello, data => {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
-            setInterval(() => this.response.op.emit(GatewayCodes.Heartbeat, 251), data.heartbeat_interval);
+            setInterval(() => this.response.op.emit(GatewayOpcodes.Heartbeat, 251), data.heartbeat_interval);
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
             const identify = {
                 token: _token,
@@ -96,7 +96,7 @@ export default class Client extends WebSocket {
             };
 
             // this.debug.log('discord login', 'Attempting to connect to discord');
-            this.response.op.emit(GatewayCodes.Identify, identify);
+            this.response.op.emit(GatewayOpcodes.Identify, identify);
         });
         this.event('READY', ready => {
             this.bot = ready.user;
@@ -150,8 +150,8 @@ export default class Client extends WebSocket {
      * @param shardId the shard(s) spawned from websocket
      * @param data discord raw api json
      */
-    protected async spawnShard(shardId: number, data: DiscordAPIOP[GatewayCodes.Identify]['d']) {
-        this.response.op.emit(GatewayCodes.Identify, {
+    protected async spawnShard(shardId: number, data: GatewayCommands[GatewayOpcodes.Identify]['d']) {
+        this.response.op.emit(GatewayOpcodes.Identify, {
             ...data,
             shard: [shardId, this.shardCount],
         });

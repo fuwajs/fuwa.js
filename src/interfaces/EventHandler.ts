@@ -73,7 +73,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a guild becomes or was already unavailable due to an outage, or when the user leaves or is removed from a guild. If the `unavailable` field is not set, the user was removed from the guild. */
     'guild removed': (guild: Guild) => any;
     /** Sent when a guild's emojis have been updated. */
-    'emojis Update': (
+    'emojis update': (
         guild: Guild,
         emojis: Collection<number, Emoji>,
         oldEmojis: Collection<number, Emoji>
@@ -89,11 +89,17 @@ export type EventHandlersDefinitions = {
     /** Sent when a user uses a Slash Command in a guild (type 2) or clicks a button (type 3). */
     'new guild interaction': (data: BigInteraction, member: Member) => any;
     /** Sent when a user uses a Slash Command in a dm (type 2) or clicks a button (type 3). */
-    'new DM interaction': (data: Omit<BigInteraction, 'member'>) => any;
+    'new dm interaction': (data: Omit<BigInteraction, 'member'>) => any;
     /** Sent when a lurker joins/leaves/moves stage channels. */
     'lurker voice state update': (member: Member, voiceState: VoiceState) => any;
-    /** Sent when a message is created. */
+    /**
+     * @deprecated Please use 'new message'
+     *
+     * Sent when a message is created.
+     * */
     message: (message: Message) => any;
+    /** Sent when a message is created. */
+    'new message': (message: Message) => any;
     /** Sent when a message is deleted. */
     'message removed': (partial: { id: string; channel: Channel }, message?: Message) => any;
     /** Sent when a message is updated. */
@@ -113,7 +119,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a user explicitly removes all reactions from a message. */
     'all reactions removed': (payload: MessageReactionRemoveAll, message?: Message) => any;
     /** Sent when a bot removes all instances of a given emoji from the reactions of a message. */
-    'remove reaction emoji': (
+    'reaction emoji removed': (
         emoji: Partial<Emoji>,
         messageId: number,
         channel_id: number,

@@ -137,7 +137,7 @@ export enum GatewayCloseEventCodes {
 /**
  * @link https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes
  */
-export enum GatewayCodes {
+export enum GatewayOpcodes {
     Dispatch,
     Heartbeat,
     Identify,
