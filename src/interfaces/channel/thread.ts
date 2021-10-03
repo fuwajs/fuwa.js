@@ -114,7 +114,7 @@ export interface ThreadMetadata {
     archived: boolean;
     /** Duration in minutes to automatically archive the thread after recent activity */
     auto_archive_duration: 60 | 1440 | 4320 | 10080;
-    // TODO(threads): channel struct should convert this to a unixx
+    // TODO(threads): channel struct should convert this to a unix
     /** Timestamp when the thread's archive status was last changed, used for calculating recent activity */
     archive_timestamp: string;
     /** When a thread is locked, only users with `MANAGE_THREADS` can unarchive it */

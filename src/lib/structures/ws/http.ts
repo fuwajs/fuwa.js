@@ -12,6 +12,7 @@
  * TODO http
  */
 
+import Globs from '../../../util/Global';
 import { Client } from 'undici';
 
 import { discordAPI } from '../../../interfaces';
@@ -39,25 +40,28 @@ export default {
         headers?: any,
         version?: 6 | 8 | 9
     ): Promise<any> {
-        debug.log('new request', `Making a request to /api/v${version || 8}${path}`);
+        // console.log('new request', `Making a request to /api/v${version || 8}${path}`);
         return new Promise(async (resolve, reject) => {
             const params: any = {
                 path: `/api/v${version || 8}` + path,
                 method,
                 headers: {
+                    Authorization: `Bot ${Globs.token}`,
                     'Content-Type': 'application/json',
                     ...headers,
                 },
                 body: data,
             };
             if (token) params.headers.authorization = `Bot ${token}`;
-            debug.log('request paramters', debug.object(params, 1));
+            // console.log('request parameters', params);
             const res = await http.request(params);
-            debug.log('request', 'request has been made');
+            // console.log('request', 'request has been made');
+
             const chunks = [];
             res.body.on('data', chunk => chunks.push(chunk));
             res.body.on('end', () => {
                 const str = Buffer.concat(chunks).toString();
+                // console.log(str);
                 let d;
                 if (!str) resolve({});
                 try {
@@ -67,13 +71,15 @@ export default {
                 }
                 // Sucess 200->299
                 if (res.statusCode > 199 && res.statusCode < 300) {
-                    resolve(d);
+                    Promise.resolve(d);
                 } // Sucess 200->299
                 else if (res.statusCode === 429) {
                     // Handle Discord Rate Limits
-                    debug.log('rate limits', 'Hit a discord rate limit');
+                    // console.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
-                        resolve(this.REQUEST(method, path, data, headers).catch(e => console.error(e)));
+                        Promise.resolve(
+                            this.REQUEST(method, path, data, headers).catch(e => console.error(e))
+                        );
                     }, (d?.retry_after ?? res.headers['retry-after'] ?? 10) * 1000); // seconds -> milliseconds
                 }
             });

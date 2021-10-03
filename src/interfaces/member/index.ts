@@ -14,7 +14,7 @@ export interface Member {
     roles: string[];
     /** When the user joined the guild */
     joined_at: Date;
-    /** When the user started boosing the guild */
+    /** When the user started boosting the guild */
     premium_since?: Date | null;
     /** Whether the user is deafened in voice channels */
     deaf: boolean;

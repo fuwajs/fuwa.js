@@ -280,5 +280,5 @@ export interface InteractionApplicationCommandCallbackData extends Omit<CreateMe
 /** @see https://discord.com/developers/docs/topics/gateway#application-command-delete-application-command-extra-fields */
 export interface ApplicationCommandCreateUpdateDelete extends ApplicationCommand {
     /** Id of the guild the command is in */
-    guildId?: string;
+    guild_id?: string;
 }

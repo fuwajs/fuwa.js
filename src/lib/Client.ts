@@ -4,7 +4,8 @@ import Command from './structures/handlers/Command';
 import Globs, { InvalidToken } from '../util/Global';
 import { debug as Debug } from '../util/Debug';
 import { EventHandlers } from '../interfaces/EventHandler';
-import { GatewayOpcodes } from '../interfaces';
+import { GatewayOpcodes, ApplicationCommandCreateUpdateDelete } from '../interfaces';
+import http from './structures/ws/http';
 
 export interface ClientOptions {
     /**Discord Bot Token */
@@ -27,10 +28,6 @@ export interface ClientOptions {
      * @see https://discord.com/developers/applications
      */
     applicationId?: string;
-    /**
-     * Events you
-     */
-    eventHandlers?: EventHandlers;
 }
 
 export default class Client extends WebSocket {
@@ -38,6 +35,7 @@ export default class Client extends WebSocket {
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
     public commands = new Map<string, Command>();
+    protected sessionId = '';
     public bot: any | null = null;
     /** The message prefix. */
     public defaultPrefix: string | null;
@@ -48,7 +46,7 @@ export default class Client extends WebSocket {
     /** Your bot ID */
     public applicationId: string;
     /** Options to pass to the client */
-    protected options;
+    protected options: ClientOptions;
     protected debug: typeof Debug;
     protected loop?: NodeJS.Timeout;
     public constructor(options?: ClientOptions) {
@@ -75,7 +73,21 @@ export default class Client extends WebSocket {
         this.events.set(event, callback);
         return this;
     }
-
+    public async mountCommand(cmd: Command) {
+        if (!this.applicationId) throw new Error('Application Id is required to do this action');
+        let path = `/applications/${this.applicationId}`;
+        if (cmd.guild) {
+            path += `/guilds/${cmd.guild}/commands`;
+        } else {
+            path += '/commands';
+        }
+        const command: ApplicationCommandCreateUpdateDelete = await http.POST(
+            path,
+            JSON.stringify({ name: cmd.name, description: cmd.description })
+        );
+        this.commands.set(command.id, cmd);
+        return this;
+    }
     public login(token?: string | Buffer) {
         const _token = this.token || token.toString();
         Globs.token = _token;
@@ -100,8 +112,9 @@ export default class Client extends WebSocket {
         });
         this.event('READY', ready => {
             this.bot = ready.user;
-            Globs.appId = ready.application.id;
-            Globs.sessionId = ready.session_id;
+            Globs.appId = this.applicationId = ready.application.id;
+
+            Globs.sessionId = this.sessionId = ready.session_id;
             this.events.has('guild loaded')
                 ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
                 : void 0;
@@ -110,16 +123,27 @@ export default class Client extends WebSocket {
         this.event('MESSAGE_CREATE', msg => {
             this.events.has('message') ? this.events.get('message')(msg) : void 0;
         });
+        this.event('MESSAGE_UPDATE', () => {
+            this.events.get('message update');
+        });
         this.event('CHANNEL_CREATE', channel => {
             this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
         });
         this.event('GUILD_CREATE', guild => {
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
+        this.event('GUILD_MEMBER_ADD', async member => {
+            const guild = await http.GET(`/guilds/${member.guild_id}`);
+            this.events.has('new member') ? this.events.get('new guild')(guild, member) : void 0;
+        });
+        this.event('INTERACTION_CREATE', interaction => {
+            this.commands.get(interaction.id).run(interaction, {});
+        });
         this.event('INVALID_SESSION', () => {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
+        // this.event('MESSAGE_UPDATE', () => {});
     }
 
     /**
