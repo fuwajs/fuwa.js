@@ -30,10 +30,10 @@ import {
     BigInteraction,
     GuildMemberRemove,
     GuildBanAddRemove,
+    ThreadMember,
 } from './index';
 import { GuildIntegrationsUpdate, IntegrationCreateUpdate, IntegrationDelete } from './integrations';
 import { Merge } from '../util';
-import { ThreadMember } from '#interfaces';
 
 /******************************************************************************
  * TODO: make a web scraper that does this work
