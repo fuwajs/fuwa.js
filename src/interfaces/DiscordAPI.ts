@@ -171,10 +171,10 @@ export interface GuildMembersChunk {
  */
 export interface GatewayEvents {
     //TODO: Add threads asap
-    HELLO: EventBase<null, Hello>;
+    HELLO: EventBase<'HELLO', Hello>;
     READY: EventBase<'READY', Ready>;
     RESUMED: EventBase<'RESUMED', any>;
-    RECONNECT: EventBase<'RESUMED', any>;
+    RECONNECT: EventBase<'RECONNECT', any>;
     INVALID_SESSION: EventBase<'INVALID_SESSION', false>;
     CHANNEL_CREATE: EventBase<'CHANNEL_CREATE', Channel>;
     CHANNEL_UPDATE: EventBase<'CHANNEL_UPDATE', Channel>;
