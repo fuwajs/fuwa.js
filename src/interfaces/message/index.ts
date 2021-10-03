@@ -473,7 +473,7 @@ export type MessageReactionRemoveEmoji = Pick<
     'channel_id' | 'guild_id' | 'message_id' | 'emoji'
 >;
 
-/** https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure */
+/** @see https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure */
 export interface MessageSticker {
     /** Id of the sticker */
     id: string;

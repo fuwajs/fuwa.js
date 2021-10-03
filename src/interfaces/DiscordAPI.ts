@@ -2,11 +2,13 @@ import type { CommandOptionTypes } from './interactions';
 import type { Member, User } from './member';
 import type { ActivityType, Guild, UserStatus } from './guild';
 import type {
+    Emoji,
     Message,
     MessageDelete,
     MessageReactionRemove,
     MessageReactionRemoveAll,
     MessageReactionRemoveEmoji,
+    MessageSticker,
     Reaction,
 } from './message';
 import { PresenceUpdate, VoiceState } from './guild';
@@ -14,11 +16,24 @@ import type { Channel, StageInstance } from './channel';
 import {
     GatewayOpcodes,
     Role,
+    InviteDelete,
+    InviteCreate,
     UnavailableGuild,
+    ThreadListSync,
     VoiceServerUpdate,
     TypingStart,
     WebhookUpdate,
+    GuildRoleCreate,
+    GuildRoleDelete,
+    ThreadMembersUpdate,
+    GuildRoleUpdate,
+    BigInteraction,
+    GuildMemberRemove,
+    GuildBanAddRemove,
 } from './index';
+import { GuildIntegrationsUpdate, IntegrationCreateUpdate, IntegrationDelete } from './integrations';
+import { Merge } from '../util';
+import { ThreadMember } from '#interfaces';
 
 /******************************************************************************
  * TODO: make a web scraper that does this work
@@ -140,18 +155,64 @@ export const discordCDN = 'https://cdn.discordapp.com';
 
 export type EventBase<Event extends GatewayPayload['t'] | null, Data> = { op: 0; t: Event; d: Data };
 
+export interface GuildMembersChunk {
+    guild_id: string;
+    members: Member[];
+    chunk_index: number;
+    chunk_count: number;
+    not_found?: string[];
+    presences?: Presence[];
+    nonce?: string;
+}
+
 /**
  * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
  * TODO: Add more events
  */
 export interface GatewayEvents {
+    //TODO: Add threads asap
     HELLO: EventBase<null, Hello>;
     READY: EventBase<'READY', Ready>;
     RESUMED: EventBase<'RESUMED', any>;
     RECONNECT: EventBase<'RESUMED', any>;
     INVALID_SESSION: EventBase<'INVALID_SESSION', false>;
-    GUILD_CREATE: EventBase<'GUILD_CREATE', Guild>;
     CHANNEL_CREATE: EventBase<'CHANNEL_CREATE', Channel>;
+    CHANNEL_UPDATE: EventBase<'CHANNEL_UPDATE', Channel>;
+    CHANNEL_DELETE: EventBase<'CHANNEL_DELETE', Channel>;
+    CHANNEL_PINS_UPDATE: EventBase<
+        'CHANNEL_PINS_UPDATE',
+        { guild_id: string; channel_id: string; last_pin_timestamp: number }
+    >;
+    THREAD_CREATE: EventBase<'THREAD_CREATE', Channel>; // this needs to have a thread member in it but threads aren't supported yet
+    THREAD_UPDATE: EventBase<'THREAD_UPDATE', Channel>; // this needs to have a thread member in it but threads aren't supported yet
+    THREAD_DELETE: EventBase<'THREAD_UPDATE', Pick<Channel, 'id' | 'guild_id' | 'parent_id' | 'type'>>; // this needs to have a thread member in it but threads aren't supported yet
+    THREAD_LIST_SYNC: EventBase<'THREAD_LIST_SYNC', ThreadListSync>;
+    THREAD_MEMBER_UPDATE: EventBase<'THREAD_MEMBER_UPDATE', ThreadMember>;
+    THREAD_MEMBERS_UPDATE: EventBase<'THREAD_MEMBERS_UPDATE', ThreadMembersUpdate>;
+    GUILD_CREATE: EventBase<'GUILD_CREATE', Guild | UnavailableGuild>;
+    GUILD_UPDATE: EventBase<'GUILD_UPDATE', Guild>;
+    GUILD_DELETE: EventBase<'GUILD_DELETE', UnavailableGuild>;
+    GUILD_BAN_ADD: EventBase<'GUILD_BAN_ADD', GuildBanAddRemove>;
+    GUILD_BAN_REMOVE: EventBase<'GUILD_BAN_REMOVE', GuildBanAddRemove>;
+    GUILD_EMOJIS_UPDATE: EventBase<'GUILD_EMOJIS_UPDATE', { guild_id: string; emojis: Emoji[] }>;
+    GUILD_STICKERS_UPDATE: EventBase<
+        'GUILD_STICKERS_UPDATE',
+        { guild_id: string; stickers: MessageSticker[] }
+    >;
+    GUILD_INTEGRATIONS_UPDATE: EventBase<'GUILD_INTEGRATIONS_UPDATE', GuildIntegrationsUpdate>;
+    GUILD_MEMBER_ADD: EventBase<'GUILD_MEMBER_REMOVE', Merge<Member, { guild_id: string }>>;
+    GUILD_MEMBER_REMOVE: EventBase<'GUILD_MEMBER_REMOVE', GuildMemberRemove>;
+    GUILD_MEMBER_UPDATE: EventBase<'GUILD_MEMBER_UPDATE', Merge<Member, { guild_id: string }>>;
+    GUILD_MEMBERS_CHUNK: EventBase<'GUILD_MEMBERS_CHUNK', GuildMembersChunk>;
+    GUILD_ROLE_CREATE: EventBase<'GUILD_ROLE_CREATE', GuildRoleCreate>;
+    GUILD_ROLE_UPDATE: EventBase<'GUILD_ROLE_UPDATE', GuildRoleUpdate>;
+    GUILD_ROLE_DELETE: EventBase<'GUILD_ROLE_CREATE', GuildRoleDelete>;
+    INTEGRATION_CREATE: EventBase<'INTEGRATION_CREATE', IntegrationCreateUpdate>;
+    INTEGRATION_UPDATE: EventBase<'INTEGRATION_UPDATE', IntegrationCreateUpdate>;
+    INTEGRATION_DELETE: EventBase<'INTEGRATION_DELETE', IntegrationDelete>;
+    INTERACTION_CREATE: EventBase<'INTERACTION_CREATE', BigInteraction>;
+    INVITE_CREATE: EventBase<'INVITE_CREATE', InviteCreate>;
+    INVITE_DELETE: EventBase<'INVITE_DELETE', InviteDelete>;
     MESSAGE_CREATE: EventBase<'MESSAGE_CREATE', Message>;
     MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', { id: string; guild_id: string; channel_id?: string }>;
     MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageDelete>;
@@ -308,6 +369,12 @@ export interface GatewayPayload {
         | 'CHANNEL_DELETE'
         | 'CHANNEL_PINS_UPDATE'
         | 'CHANNEL_UPDATE'
+        | 'THREAD_CREATE'
+        | 'THREAD_UPDATE'
+        | 'THREAD_DELETE'
+        | 'THREAD_LIST_SYNC'
+        | 'THREAD_MEMBER_UPDATE'
+        | 'THREAD_MEMBERS_UPDATE'
         | 'APPLICATION_COMMAND_CREATE'
         | 'APPLICATION_COMMAND_DELETE'
         | 'APPLICATION_COMMAND_UPDATE'
@@ -316,6 +383,7 @@ export interface GatewayPayload {
         | 'GUILD_CREATE'
         | 'GUILD_DELETE'
         | 'GUILD_EMOJIS_UPDATE'
+        | 'GUILD_STICKERS_UPDATE'
         | 'GUILD_INTEGRATIONS_UPDATE'
         | 'GUILD_MEMBER_ADD'
         | 'GUILD_MEMBER_REMOVE'

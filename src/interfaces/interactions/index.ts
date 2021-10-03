@@ -73,25 +73,25 @@ export interface BigInteraction
         'id' | 'applicationId' | 'guildId' | 'channelId' | 'member' | 'user' | 'message'
     > {
     /** Id of the interaction */
-    id: bigint;
+    id: string;
     /** Id of the application this interaction is for */
-    applicationId: bigint;
+    applicationId: string;
     /** The guild it was sent from */
-    guildId?: bigint;
+    guildId?: string;
     /** The channel it was sent from */
-    channelId?: bigint;
+    channelId?: string;
     /** Guild member data for the invoking user, including permissions */
     member?: Omit<InteractionGuildMember, 'roles' | 'user'> & {
         /** Array of role object ids */
-        roles: bigint[];
+        roles: string[];
         /** The user this guild member represents */
         user: Omit<User, 'id'> & {
             /** The user's id */
-            id: bigint;
+            id: string;
         };
     };
     /** User object for the invoking user, if invoked in a DM */
-    user: Omit<User, 'id'> & { id: bigint };
+    user: Omit<User, 'id'> & { id: string };
     /** For the message the button was attached to */
     message?: Message;
 }

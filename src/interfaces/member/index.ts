@@ -5,7 +5,7 @@ import { Integration } from '../integrations';
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  */
 export interface Member {
-    guilds: any;
+    // guilds: any; why is this here
     /** The user this guild member represents */
     user?: User;
     /** This users guild nickname */
@@ -88,59 +88,59 @@ export interface Author {
 // export interface UserSettings {}
 /** https://discord.com/developers/docs/resources/user#connection-objecthttps://discord.com/developers/docs/resources/user#user-object-premium-types */
 export interface Connection {
-  /** id of the connection account */
-  id: string;
-  /** The username of the connection account */
-  name: string;
-  /** The service of the connection (twitch, youtube) */
-  type: string;
-  /** Whether the connection is revoked */
-  revoked?: boolean;
-  /** An array of partial server integrations */
-  integrations?: Integration[];
-  /** Whether the connection is verified */
-  verified: boolean;
-  /** Whether friend sync is enabled for this connection */
-  friend_sync: boolean;
-  /** Whether activities related to this connection will be shown in presence updates */
-  show_activity: boolean;
-  /** Visibility of this connection */
-  visibility: VisibilityTypes;
+    /** id of the connection account */
+    id: string;
+    /** The username of the connection account */
+    name: string;
+    /** The service of the connection (twitch, youtube) */
+    type: string;
+    /** Whether the connection is revoked */
+    revoked?: boolean;
+    /** An array of partial server integrations */
+    integrations?: Integration[];
+    /** Whether the connection is verified */
+    verified: boolean;
+    /** Whether friend sync is enabled for this connection */
+    friend_sync: boolean;
+    /** Whether activities related to this connection will be shown in presence updates */
+    show_activity: boolean;
+    /** Visibility of this connection */
+    visibility: VisibilityTypes;
 }
 
 /** @see https://discord.com/developers/docs/resources/user#create-dm */
 export interface CreateDM {
-  /** The recipient to open a DM channel with */
-  recipient_id: string;
+    /** The recipient to open a DM channel with */
+    recipient_id: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/user#create-group-dm */
 export interface CreateGroupDM {
-  /** Access tokens of users that have granted your app the `gdm.join` scope */
-  access_tokens: string[];
-  /** A dictionary of user ids to their respective nicknames */
-  nicks: Record<string, string>;
+    /** Access tokens of users that have granted your app the `gdm.join` scope */
+    access_tokens: string[];
+    /** A dictionary of user ids to their respective nicknames */
+    nicks: Record<string, string>;
 }
 
 /** @see https://discord.com/developers/docs/resources/user#modify-current-user */
 export interface ModifyCurrentUser {
-  /** User's username, if changed may cause the user's discriminator to be randomized. */
-  username?: string;
-  /** If passed, modifies the user's avatar */
-  avatar?: string;
+    /** User's username, if changed may cause the user's discriminator to be randomized. */
+    username?: string;
+    /** If passed, modifies the user's avatar */
+    avatar?: string;
 }
 
 /** @see https://discord.com/developers/docs/resources/user#user-object-premium-types */
 export enum PremiumTypes {
-  None,
-  NitroClassic,
-  Nitro,
+    None,
+    NitroClassic,
+    Nitro,
 }
 
 /** @see https://discord.com/developers/docs/resources/user#connection-object-visibility-types */
 export enum VisibilityTypes {
-  /** Invisible to everyone except the user themselves */
-  None,
-  /** Visible to everyone */
-  Everyone,
+    /** Invisible to everyone except the user themselves */
+    None,
+    /** Visible to everyone */
+    Everyone,
 }

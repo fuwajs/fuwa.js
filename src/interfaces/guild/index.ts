@@ -211,7 +211,6 @@ export interface VoiceServerUpdate {
     /** The voice server host */
     endpoint: string | null;
 }
-
 /** @see https://discord.com/developers/docs/topics/gateway#update-voice-state */
 export interface UpdateVoiceState {
     /** id of the guild */
@@ -249,6 +248,11 @@ export interface PresenceUpdate {
     status: UserStatus;
     activities: Activity[];
     client_status: ClientStatus;
+}
+
+export interface GuildMemberRemove {
+    guild_id: string;
+    user: User;
 }
 
 export type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
