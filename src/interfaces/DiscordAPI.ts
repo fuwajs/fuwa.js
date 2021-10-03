@@ -8,8 +8,9 @@ import type {
     MessageReactionRemove,
     MessageReactionRemoveAll,
     MessageReactionRemoveEmoji,
-    MessageSticker,
+    Sticker,
     Reaction,
+    MessageUpdate,
 } from './message';
 import { PresenceUpdate, VoiceState } from './guild';
 import type { Channel, StageInstance } from './channel';
@@ -165,6 +166,22 @@ export interface GuildMembersChunk {
     nonce?: string;
 }
 
+interface ChannelPinsUpdate {
+    guild_id?: string;
+    channel_id: string;
+    last_pin_timestamp?: Date | null;
+}
+
+interface GuildEmojisUpdate {
+    guild_id: string;
+    emojis: Emoji[];
+}
+
+interface GuildStickersUpdate {
+    guild_id: string;
+    stickers: Sticker[];
+
+}
 /**
  * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events
  * TODO: Add more events
@@ -174,15 +191,12 @@ export interface GatewayEvents {
     HELLO: EventBase<'HELLO', Hello>;
     READY: EventBase<'READY', Ready>;
     RESUMED: EventBase<'RESUMED', any>;
-    RECONNECT: EventBase<'RECONNECT', any>;
-    INVALID_SESSION: EventBase<'INVALID_SESSION', false>;
+    RECONNECT: EventBase<'RECONNECT', null>;
+    INVALID_SESSION: EventBase<'INVALID_SESSION', boolean>;
     CHANNEL_CREATE: EventBase<'CHANNEL_CREATE', Channel>;
     CHANNEL_UPDATE: EventBase<'CHANNEL_UPDATE', Channel>;
     CHANNEL_DELETE: EventBase<'CHANNEL_DELETE', Channel>;
-    CHANNEL_PINS_UPDATE: EventBase<
-        'CHANNEL_PINS_UPDATE',
-        { guild_id: string; channel_id: string; last_pin_timestamp: number }
-    >;
+    CHANNEL_PINS_UPDATE: EventBase<'CHANNEL_PINS_UPDATE', ChannelPinsUpdate>;
     THREAD_CREATE: EventBase<'THREAD_CREATE', Channel>; // this needs to have a thread member in it but threads aren't supported yet
     THREAD_UPDATE: EventBase<'THREAD_UPDATE', Channel>; // this needs to have a thread member in it but threads aren't supported yet
     THREAD_DELETE: EventBase<'THREAD_UPDATE', Pick<Channel, 'id' | 'guild_id' | 'parent_id' | 'type'>>; // this needs to have a thread member in it but threads aren't supported yet
@@ -194,11 +208,8 @@ export interface GatewayEvents {
     GUILD_DELETE: EventBase<'GUILD_DELETE', UnavailableGuild>;
     GUILD_BAN_ADD: EventBase<'GUILD_BAN_ADD', GuildBanAddRemove>;
     GUILD_BAN_REMOVE: EventBase<'GUILD_BAN_REMOVE', GuildBanAddRemove>;
-    GUILD_EMOJIS_UPDATE: EventBase<'GUILD_EMOJIS_UPDATE', { guild_id: string; emojis: Emoji[] }>;
-    GUILD_STICKERS_UPDATE: EventBase<
-        'GUILD_STICKERS_UPDATE',
-        { guild_id: string; stickers: MessageSticker[] }
-    >;
+    GUILD_EMOJIS_UPDATE: EventBase<'GUILD_EMOJIS_UPDATE', GuildEmojisUpdate>;
+    GUILD_STICKERS_UPDATE: EventBase<'GUILD_STICKERS_UPDATE', GuildStickersUpdate>;
     GUILD_INTEGRATIONS_UPDATE: EventBase<'GUILD_INTEGRATIONS_UPDATE', GuildIntegrationsUpdate>;
     GUILD_MEMBER_ADD: EventBase<'GUILD_MEMBER_REMOVE', Merge<Member, { guild_id: string }>>;
     GUILD_MEMBER_REMOVE: EventBase<'GUILD_MEMBER_REMOVE', GuildMemberRemove>;
@@ -214,7 +225,7 @@ export interface GatewayEvents {
     INVITE_CREATE: EventBase<'INVITE_CREATE', InviteCreate>;
     INVITE_DELETE: EventBase<'INVITE_DELETE', InviteDelete>;
     MESSAGE_CREATE: EventBase<'MESSAGE_CREATE', Message>;
-    MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', { id: string; guild_id: string; channel_id?: string }>;
+    MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', MessageUpdate>;
     MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageDelete>;
     MESSAGE_DELETE_BULK: EventBase<'MESSAGE_DELETE_BULK', MessageDelete>;
     MESSAGE_REACTION_ADD: EventBase<'MESSAGE_REACTION_ADD', Reaction>;
@@ -362,28 +373,31 @@ export interface GatewayPayload {
     s: number | null;
     /** The event name for this payload */
     t:
+        | 'HELLO'
         | 'READY'
-        | 'INVALID_SESSION'
         | 'RESUMED'
+        | 'RECONNECT'
+        | 'INVALID_SESSION'
         | 'CHANNEL_CREATE'
+        | 'CHANNEL_UPDATE'
         | 'CHANNEL_DELETE'
         | 'CHANNEL_PINS_UPDATE'
-        | 'CHANNEL_UPDATE'
         | 'THREAD_CREATE'
         | 'THREAD_UPDATE'
         | 'THREAD_DELETE'
         | 'THREAD_LIST_SYNC'
         | 'THREAD_MEMBER_UPDATE'
         | 'THREAD_MEMBERS_UPDATE'
+        | 'GUILD_CREATE'
+        | 'GUILD_UPDATE'
+        | 'GUILD_DELETE'
+        | 'GUILD_BAN_ADD'
+        | 'GUILD_BAN_REMOVE'
+        | 'GUILD_EMOJIS_UPDATE'
+        | 'GUILD_STICKERS_UPDATE'
         | 'APPLICATION_COMMAND_CREATE'
         | 'APPLICATION_COMMAND_DELETE'
         | 'APPLICATION_COMMAND_UPDATE'
-        | 'GUILD_BAN_ADD'
-        | 'GUILD_BAN_REMOVE'
-        | 'GUILD_CREATE'
-        | 'GUILD_DELETE'
-        | 'GUILD_EMOJIS_UPDATE'
-        | 'GUILD_STICKERS_UPDATE'
         | 'GUILD_INTEGRATIONS_UPDATE'
         | 'GUILD_MEMBER_ADD'
         | 'GUILD_MEMBER_REMOVE'
@@ -392,7 +406,6 @@ export interface GatewayPayload {
         | 'GUILD_ROLE_CREATE'
         | 'GUILD_ROLE_DELETE'
         | 'GUILD_ROLE_UPDATE'
-        | 'GUILD_UPDATE'
         | 'INTERACTION_CREATE'
         | 'INVITE_CREATE'
         | 'INVITE_DELETE'

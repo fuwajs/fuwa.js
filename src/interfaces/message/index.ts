@@ -1,9 +1,9 @@
 export * from './componentTypes';
-import { Channel } from 'diagnostics_channel';
 import { MessageInteraction, ThreadMember } from '..';
 import { GuildMember } from '../guild';
 import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
+import { Channel } from 'interfaces';
 
 /** @see https://discord.com/developers/docs/resources/channel#message-object */
 export interface Message {
@@ -140,23 +140,6 @@ export enum ComponentType {
     ActionRow = 1,
     Button = 2,
     SelectMenu = 3,
-}
-
-interface Sticker {
-    id: string;
-    pack_id: string;
-    name: string;
-    description: string;
-    tags?: string;
-    asset: string;
-    preview_asset: string | null;
-    format_type: StickerFormat;
-}
-
-enum StickerFormat {
-    Png,
-    Apng,
-    Lottie,
 }
 
 export enum MessageType {
@@ -407,6 +390,12 @@ export interface MessageDelete {
     guild_id?: string;
 }
 
+export interface MessageUpdate {
+    id: string;
+    guild_id: string;
+    channel_id?: string;
+}
+
 /** @see https://discord.com/developers/docs/topics/gateway#message-delete-bulk */
 export interface MessageDeleteBulk {
     /** The ids of the messages */
@@ -473,8 +462,8 @@ export type MessageReactionRemoveEmoji = Pick<
     'channel_id' | 'guild_id' | 'message_id' | 'emoji'
 >;
 
-/** @see https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure */
-export interface MessageSticker {
+/** @see https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
+export interface Sticker {
     /** Id of the sticker */
     id: string;
     /** Id of the pack the sticker is from */
@@ -482,7 +471,7 @@ export interface MessageSticker {
     /** Name of the sticker */
     name: string;
     /** Description of the sticker */
-    description: string;
+    description: string | null;
     /** For guild stickers, a unicode emoji representing the sticker's expression. For Nitro stickers, a comma-separated list of related expressions */
     tags: string;
     /**
@@ -491,8 +480,9 @@ export interface MessageSticker {
      * @deprecated the value of the asset field will an empty string.
      */
     asset: string;
+    type: StickerType;
     /** Type of sticker format */
-    format_type: MessageStickerFormatTypes;
+    format_type: StickerFormatType;
     /**  Whether or not the sticker is available */
     available?: boolean;
     /** Id of the guild that owns this sticker */
@@ -503,8 +493,18 @@ export interface MessageSticker {
     sort_value?: number;
 }
 
+/**
+ * @see https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types
+ */
+export enum StickerType {
+    /** @description an official sticker in a pack, part of Nitro or in a removed purchasble pack */
+    Standard = 1,
+    /** @description a sticker uploaded to a Boosted guild for the guild's members */
+    Guild,
+}
+
 /** @see https://discord.com/developers/docs/resources/channel#message-object-message-sticker-format-types */
-export enum MessageStickerFormatTypes {
+export enum StickerFormatType {
     Png = 1,
     Apng,
     Lottie,
@@ -516,7 +516,7 @@ export interface MessageStickerItem {
     /** Name of the sticker */
     name: string;
     /** Type of sticker format */
-    format_type: MessageStickerFormatTypes;
+    format_type: StickerFormatType;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-types */
