@@ -11,6 +11,7 @@ import Plugin from './Plugin';
 export interface ClientOptions {
     /** Discord Bot Token */
     token?: string | Buffer;
+    /** An array of all fuwa.js#plugins assigned to the client class. */
     plugins?: Plugin[];
     /**
      * @description Discord Intends, enabling bot functions with our api.

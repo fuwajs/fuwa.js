@@ -18,16 +18,26 @@ export interface ArgumentType {
 }
 
 export default class Command implements CommandType {
+    /** The id of the application command */
     id: string;
+    /** The display name of the slash interaction.
+     * Must be all lowercase.
+     */
     name: string;
     description = 'This command has no description';
+    /**
+     * The guild for the command to be registered in. If left blank, the command will be registered as a global command.
+     */
     guild?: string;
-    run: (ctx: any /*Context */, args: { [key: string]: Argument }) => any;
+    /** An array of options for the command.
+     * type of class Argument[]
+     */
     args: Argument[];
+    run: (ctx: any, args: { [key: string]: Argument }) => any;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }
-    mount() {
+    public async mount(): Promise<ApplicationCommandCreateUpdateDelete> {
         if (!Globs.appId) throw new Error('Application Id is required to do this action');
         let path = `/applications/${Globs.appId}`;
         if (this.guild) {
@@ -42,7 +52,7 @@ export default class Command implements CommandType {
                 return cmd;
             });
     }
-    addArg(...args: Argument[]) {
+    public addArg(...args: Argument[]): void {
         this.args.push(...args);
     }
 }

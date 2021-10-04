@@ -1,8 +1,10 @@
 import Client from './Client';
 
 export interface PluginOptions {
+    /** Plugin name */
     name: string;
-    desc: string;
+    /** Description of the plugin*/
+    description: string;
 }
 export default class Plugin {
     constructor(data: PluginOptions) {
