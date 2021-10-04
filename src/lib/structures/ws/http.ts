@@ -16,7 +16,6 @@ import Globs from '../../../util/Global';
 import { Client } from 'undici';
 
 import { discordAPI } from '../../../interfaces';
-import { debug } from '../../../util/Debug';
 
 const token: string | null = null;
 
@@ -61,7 +60,6 @@ export default {
             res.body.on('data', chunk => chunks.push(chunk));
             res.body.on('end', () => {
                 const str = Buffer.concat(chunks).toString();
-                // console.log(str);
                 let d;
                 if (!str) resolve({});
                 try {
@@ -71,34 +69,53 @@ export default {
                 }
                 // Sucess 200->299
                 if (res.statusCode > 199 && res.statusCode < 300) {
-                    Promise.resolve(d);
+                    resolve(d);
                 } // Sucess 200->299
                 else if (res.statusCode === 429) {
                     // Handle Discord Rate Limits
                     // console.log('rate limits', 'Hit a discord rate limit');
                     setTimeout(() => {
-                        Promise.resolve(
-                            this.REQUEST(method, path, data, headers).catch(e => console.error(e))
-                        );
+                        resolve(this.REQUEST(method, path, data, headers).catch(e => console.error(e)));
                     }, (d?.retry_after ?? res.headers['retry-after'] ?? 10) * 1000); // seconds -> milliseconds
+                } else {
+                    resolve({ error: d });
                 }
             });
         });
     },
 
-    async GET(path: string, headers?: any): Promise<any> {
+    /** Makes a GET request to the discord api and reads found data
+     * @param path the api path to fetch
+     */
+    GET(path: string, headers?: any): Promise<any> {
         return this.REQUEST('GET', path, undefined, headers, 9);
     },
-    async DELETE(path: string, headers?: any): Promise<any> {
+    /**
+     * Delete some data from the discord api
+     * @param path the api path to fetch
+     */
+    DELETE(path: string, headers?: any): Promise<any> {
         return this.REQUEST('DELETE', path, undefined, headers, 9);
     },
-    async POST(path: string, data?: string | Buffer, headers?: any): Promise<any> {
+    /**
+     * Creates new data for the discord api
+     * @param path the api path to fetch
+     */
+    POST(path: string, data?: string | Buffer, headers?: any): Promise<any> {
         return this.REQUEST('POST', path, data, headers, 9);
     },
+    /**
+     * Updates or replaces old data from the api
+     * @param path the api path to fetch
+     */
     async PUT(path: string, data?: string | Buffer, headers?: any): Promise<any> {
         return this.REQUEST('PUT', path, data, headers, 9);
     },
-    async PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any> {
+    /**
+     * Modifies old data from the api.
+     * @param path the api path to fetch
+     */
+    PATCH(path: string, data?: string | Buffer, headers?: any): Promise<any> {
         return this.REQUEST('PATCH', path, data, headers, 9);
     },
 };

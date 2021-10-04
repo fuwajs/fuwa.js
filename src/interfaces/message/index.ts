@@ -437,7 +437,7 @@ export interface GetReactions {
 /** @see https://discord.com/developers/docs/topics/gateway#message-reaction-add */
 export interface MessageReactionAdd {
     /** The id of the user */
-    userId: string;
+    user_id: string;
     /** The id of the channel */
     channel_id: string;
     /** The id of the message */

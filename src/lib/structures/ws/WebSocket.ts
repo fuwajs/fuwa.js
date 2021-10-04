@@ -9,7 +9,7 @@ export class WebSocket {
     private OPevents: { [key: number]: (data: any) => any } = {};
     protected connected = false;
     private APIEvents: { [key: string]: (data: any) => any } = {};
-    private WSEvents: { [key: string]: () => any };
+    private WSEvents: { [key: string]: (data?: any) => any };
     protected response = {
         op: {
             emit: <T extends keyof GatewayCommands>(op: T, d: GatewayCommands[T]['d']): void => {
@@ -50,7 +50,7 @@ export class WebSocket {
                 // logs all ws information.
                 // console.log(res);
 
-                this.WSEvents?.message();
+                this.WSEvents?.message(res);
                 if (res.op === GatewayOpcodes.Dispatch) {
                     if (!res.t) throw new Error(`The event is undefined while the OP Code is 0\n ${res}`);
                     if (this.APIEvents[res.t]) this.APIEvents[res.t](res.d);
@@ -63,5 +63,8 @@ export class WebSocket {
     }
     protected event<T extends keyof GatewayEvents>(e: T, cb: (data: GatewayEvents[T]['d']) => void): void {
         this.APIEvents[e] = cb;
+    }
+    protected wsEvent<T extends 'open' | 'message'>(e: T, cb: (data: any) => any) {
+        this.WSEvents[e] = cb;
     }
 }

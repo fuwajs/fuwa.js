@@ -180,7 +180,6 @@ interface GuildEmojisUpdate {
 interface GuildStickersUpdate {
     guild_id: string;
     stickers: Sticker[];
-
 }
 /**
  * @see https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events

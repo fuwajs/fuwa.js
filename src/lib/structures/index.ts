@@ -1,4 +1,4 @@
 // handlers
 export * from './handlers/Command';
-// ws
-export * from './ws/WebSocket';
+export * from './handlers/Client';
+export * from './handlers/Plugin';

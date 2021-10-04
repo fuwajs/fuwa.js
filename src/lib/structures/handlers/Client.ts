@@ -1,15 +1,17 @@
-import { WebSocket } from '../lib/structures/index';
-import { discordAPI, GatewayCommands, GatewayIntents } from '../interfaces/DiscordAPI';
-import Command from './structures/handlers/Command';
-import Globs, { InvalidToken } from '../util/Global';
-import { debug as Debug } from '../util/Debug';
-import { EventHandlers } from '../interfaces/EventHandler';
-import { GatewayOpcodes, ApplicationCommandCreateUpdateDelete } from '../interfaces';
-import http from './structures/ws/http';
+import { WebSocket } from '../ws/WebSocket';
+import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
+import Command from './Command';
+import Globs, { InvalidToken } from '../../../util/Global';
+import { debug as Debug } from '../../../util/Debug';
+import { EventHandlers } from '../../../interfaces/EventHandler';
+import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
+import http from '../ws/http';
+import Plugin from './Plugin';
 
 export interface ClientOptions {
-    /**Discord Bot Token */
+    /** Discord Bot Token */
     token?: string | Buffer;
+    plugins?: Plugin[];
     /**
      * @description Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
@@ -35,16 +37,17 @@ export default class Client extends WebSocket {
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
     public commands = new Map<string, Command>();
-    protected sessionId = '';
+    protected plugins: Plugin[];
     public bot: any | null = null;
     /** The message prefix. */
     public defaultPrefix: string | null;
-    /** DiscordAPI GateWay Intents */
-    protected intents: (keyof typeof GatewayIntents)[];
-    protected readonly token = '';
     public shardCount: number;
     /** Your bot ID */
     public applicationId: string;
+    protected sessionId = '';
+    /** DiscordAPI GateWay Intents */
+    protected intents: (keyof typeof GatewayIntents)[];
+    protected token = '';
     /** Options to pass to the client */
     protected options: ClientOptions;
     protected debug: typeof Debug;
@@ -58,6 +61,7 @@ export default class Client extends WebSocket {
         if (options) {
             this.applicationId = options.applicationId;
             this.shardCount = options.shards ?? 0;
+            this.token = options.token ? options.token.toString() : '';
         }
         this.shardCount = 0;
     }
@@ -73,7 +77,12 @@ export default class Client extends WebSocket {
         this.events.set(event, callback);
         return this;
     }
-    public async mountCommand(cmd: Command) {
+    /**
+     * Alias for on
+     */
+    once = this.on;
+    /** Something about this... */
+    public mountCommand(cmd: Command) {
         if (!this.applicationId) throw new Error('Application Id is required to do this action');
         let path = `/applications/${this.applicationId}`;
         if (cmd.guild) {
@@ -81,13 +90,46 @@ export default class Client extends WebSocket {
         } else {
             path += '/commands';
         }
-        const command: ApplicationCommandCreateUpdateDelete = await http.POST(
-            path,
-            JSON.stringify({ name: cmd.name, description: cmd.description })
-        );
-        this.commands.set(command.id, cmd);
+        http.POST(path, JSON.stringify({ name: cmd.name, description: cmd.description })).then(command => {
+            this.commands.set(command.id, cmd);
+        });
         return this;
     }
+    /**
+     * Returns all mounted commands.
+     * @param guildId the id of the guild your application command is registierd in.
+     */
+    public getMountedCommands(guildId?: string): Promise<ApplicationCommand[]> {
+        let path = `/applications/${this.applicationId}`;
+        if (guildId) {
+            path += `/guilds/${guildId}/commands`;
+        } else {
+            path += '/commands';
+        }
+        return http.GET(path);
+    }
+    /**
+     *
+     * @param cmd command or command id
+     * @param guildId only needed if your command is a guild command and your id is a string
+     */
+    unmountCommand(cmd: Command | string, guildId?: string) {
+        if (!this.applicationId) throw new Error('Application Id is required to do this action');
+        const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
+        const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
+        let path = `/applications/${this.applicationId}`;
+        if (!guild) {
+            path += `/guilds/${guild}/commands`;
+        } else {
+            path += '/commands';
+        }
+        return http.DELETE(path + `/${cmdId}`);
+    }
+
+    /** Connects the websocket client to discords api.
+     * @param token Your discord bot token.
+     * @see https://discord.com/developers/applications
+     */
     public login(token?: string | Buffer) {
         const _token = this.token || token.toString();
         Globs.token = _token;
@@ -96,6 +138,7 @@ export default class Client extends WebSocket {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(() => this.response.op.emit(GatewayOpcodes.Heartbeat, 251), data.heartbeat_interval);
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
+            this.wsEvent('message', data => this.plugins.forEach(plugin => plugin.event(this, data)));
             const identify = {
                 token: _token,
                 intents,
@@ -121,10 +164,10 @@ export default class Client extends WebSocket {
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
         this.event('MESSAGE_CREATE', msg => {
-            this.events.has('message') ? this.events.get('message')(msg) : void 0;
+            this.events.has('new message') ? this.events.get('new message')(msg) : void 0;
         });
-        this.event('MESSAGE_UPDATE', () => {
-            this.events.get('message update');
+        this.event('MESSAGE_UPDATE', msg => {
+            this.events.get('message update') ? this.events.get('message update')(msg) : void 0;
         });
         this.event('CHANNEL_CREATE', channel => {
             this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
@@ -132,9 +175,14 @@ export default class Client extends WebSocket {
         this.event('GUILD_CREATE', guild => {
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
+        this.event('MESSAGE_REACTION_ADD', reaction => {
+            this.events.has('add reaction') ? this.events.get('add reaction')(reaction) : void 0;
+        });
+
         this.event('GUILD_MEMBER_ADD', async member => {
-            const guild = await http.GET(`/guilds/${member.guild_id}`);
-            this.events.has('new member') ? this.events.get('new guild')(guild, member) : void 0;
+            this.events.has('new member')
+                ? this.events.get('new member')(await http.GET(`/guilds/${member.guild_id}`), member)
+                : void 0;
         });
         this.event('INTERACTION_CREATE', interaction => {
             this.commands.get(interaction.id).run(interaction, {});
@@ -143,30 +191,17 @@ export default class Client extends WebSocket {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
-        // this.event('MESSAGE_UPDATE', () => {});
     }
 
     /**
-     * Shuts down the bot process
+     * Shuts down the bot process.
      */
-    public logout(end = true) {
+    public logout(end = true): void | never {
         if (this?.ws && this.loop) {
             clearInterval(this.loop);
-            if (end) process.exit();
+            this.ws.close();
         }
-    }
-
-    /**
-     * TODO remove to commands client plugin when its created.
-     * this client will be the core and only deal with interactions (latest discord api)
-     */
-    public async fetchPrefix(): Promise<string> {
-        if (this.defaultPrefix === null) {
-            throw new Error(
-                'You dont have a default prefix set in the client constructor. fetchPrefix returned undefined.'
-            );
-        }
-        return this.defaultPrefix;
+        if (end) process.exit();
     }
 
     /**

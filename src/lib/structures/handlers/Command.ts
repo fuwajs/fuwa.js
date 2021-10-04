@@ -1,4 +1,5 @@
-import { CommandOptionTypes } from '../../../interfaces/interactions';
+import http from '../ws/http';
+import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
 import Globs from '../../../util/Global';
 
 export interface CommandType {
@@ -7,8 +8,6 @@ export interface CommandType {
     guild?: string;
     run(ctx: any /*Context */, args: { [key: string]: any });
 }
-
-console.log(Globs);
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
@@ -19,6 +18,7 @@ export interface ArgumentType {
 }
 
 export default class Command implements CommandType {
+    id: string;
     name: string;
     description = 'This command has no description';
     guild?: string;
@@ -26,6 +26,24 @@ export default class Command implements CommandType {
     args: Argument[];
     constructor(data: CommandType) {
         Object.assign(this, data);
+    }
+    mount() {
+        if (!Globs.appId) throw new Error('Application Id is required to do this action');
+        let path = `/applications/${Globs.appId}`;
+        if (this.guild) {
+            path += `/guilds/${this.guild}/commands`;
+        } else {
+            path += '/commands';
+        }
+        return http
+            .POST(path, JSON.stringify({ name: this.name, description: this.description }))
+            .then((cmd: ApplicationCommandCreateUpdateDelete) => {
+                this.id = cmd.id;
+                return cmd;
+            });
+    }
+    addArg(...args: Argument[]) {
+        this.args.push(...args);
     }
 }
 

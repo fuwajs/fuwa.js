@@ -34,7 +34,7 @@ export enum UserFlags {
     None = 0,
     DiscordEmployee = 1 << 0,
     PartneredServerOwner = 1 << 1,
-    HypesquadEvents = 1 << 2,
+    HypeSquadEvents = 1 << 2,
     BugHunterLevelOne = 1 << 3,
     HouseBravery = 1 << 6,
     HouseBrilliance = 1 << 7,
