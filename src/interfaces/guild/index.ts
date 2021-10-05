@@ -243,26 +243,36 @@ export interface VoiceRegion {
  * @see https://discord.com/developers/docs/topics/gateway#presence-update-presence-update-event-fields
  */
 export interface PresenceUpdate {
+    /** the user presence is being update for */
     user: User;
+    /** id of the guild */
     guild_id: string;
-    status: UserStatus;
+    /** either "idle", "dnd", "online", or "offline" */ 
+    status: Omit<StatusType, 'invisible'>;
+    /** user's current activities */
     activities: Activity[];
+    /** user's platform-dependent status */
     client_status: ClientStatus;
 }
+
+export type Presence = PresenceUpdate;
 
 export interface GuildMemberRemove {
     guild_id: string;
     user: User;
 }
 
-export type UserStatus = 'idle' | 'dnd' | 'online' | 'offline';
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#update-presence-status-types
+ */
+export type StatusType = 'online' | 'dnd' | 'idle' | 'invisible' | 'offline';
 
 /**
  * Could be important for Rich Presence (the thing that allows you to see what
  * game someone is playing)
  * @see https://discord.com/developers/docs/topics/gateway#activity-object-activity-structure
  */
-interface Activity {
+export interface Activity {
     name: string;
     type: ActivityType;
     url?: string | null;

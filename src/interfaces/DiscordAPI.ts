@@ -1,6 +1,6 @@
 import type { CommandOptionTypes } from './interactions';
 import type { Member, User } from './member';
-import type { ActivityType, Guild, UserStatus } from './guild';
+import type { Activity, Guild, Presence, StatusType } from './guild';
 import type {
     Emoji,
     Message,
@@ -187,10 +187,14 @@ interface GuildStickersUpdate {
  */
 export interface GatewayEvents {
     //TODO: Add threads asap
+    /** defines the heartbeat interval */
     HELLO: EventBase<'HELLO', Hello>;
+    /** contains the initial state information */
     READY: EventBase<'READY', Ready>;
-    RESUMED: EventBase<'RESUMED', any>;
-    RECONNECT: EventBase<'RECONNECT', null>;
+    /** response to RESUME */
+    RESUMED: EventBase<'RESUMED', Resumed>;
+    /** server is going away, client should reconnect to gateway and resume */
+    RECONNECT: EventBase<'RECONNECT', Reconnect>;
     INVALID_SESSION: EventBase<'INVALID_SESSION', boolean>;
     CHANNEL_CREATE: EventBase<'CHANNEL_CREATE', Channel>;
     CHANNEL_UPDATE: EventBase<'CHANNEL_UPDATE', Channel>;
@@ -241,6 +245,7 @@ export interface GatewayEvents {
     VOICE_SERVER_UPDATE: EventBase<'VOICE_SERVER_UPDATE', VoiceServerUpdate>;
     WEBHOOKS_UPDATE: EventBase<'WEBHOOKS_UPDATE', WebhookUpdate>;
 }
+
 export interface Hello {
     heartbeat_interval: number;
 }
@@ -256,44 +261,13 @@ export interface Ready {
     /** Used for resuming connections */
     session_id: string;
     /** The shard information associated with this session, if sent when identifying */
-    shard?: [number, number];
+    shard?: [shardId: number, numShards: number];
     /** Contains id and flags */
     application: Partial<Application> & Pick<Application, 'id' | 'flags'>;
 }
 
-export interface Reconnect {
-    fix: 'this later pls';
-}
-
-/** @see https://discord.com/developers/docs/topics/gateway#update-status */
-export interface Presence {
-    /** Unix time (in milliseconds) of when the client went idle, or null if the client is not idle */
-    since: number;
-    /** The user's activities */
-    activities: {
-        name: string;
-        type: ActivityType;
-    }[];
-    /** The user's new status */
-    status: UserStatus;
-    /** Whether or not the client is afk */
-    afk?: boolean;
-}
-
-/** @see https://discord.com/developers/docs/topics/gateway#identify-identify-structure */
-export interface Identify {
-    token: string;
-    properties: {
-        $os: string;
-        $browser: string;
-        $device: string;
-    };
-    compress?: boolean;
-    large_threshold?: number;
-    shard?: [number, number];
-    presence?: any; // fix later
-    intents: number;
-}
+type Resumed = null;
+type Reconnect = null;
 
 /**
  * @description Used to replay missed events when a disconnected client resumes.
@@ -476,9 +450,23 @@ export interface Identify {
     /** Used for Guild Sharding */
     shard?: [shard_id: number, numberOfShards: number];
     /** Presence structure for initial presence information */
-    presence?: any; //! work on later
+    presence?: GatewayPresenceUpdate;
     /** The Gateway Intents you wish to receive */
     intents: number;
+}
+
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#update-presence-gateway-presence-update-structure
+ */
+interface GatewayPresenceUpdate {
+    /** unix time (in milliseconds) of when the client went idle, or null if the client is not idle */
+    since: number | null;
+    /** the user's activities */
+    activities: Activity[];
+    /** the user's new status */
+    status: StatusType;
+    /** whether or not the client is afk */
+    afk: boolean;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#identify-identify-connection-properties */
