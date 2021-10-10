@@ -1,18 +1,18 @@
 import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import Command from './Command';
+import { Command } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
 import { debug as Debug } from '../../../util/Debug';
 import { EventHandlers } from '../../../interfaces/EventHandler';
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
-import Plugin from './Plugin';
+import { Plugin } from './Plugin';
 
 export interface ClientOptions {
     /** Discord Bot Token */
     token?: string | Buffer;
     /** An array of all fuwa.js#plugins assigned to the client class. */
-    plugins?: Plugin[];
+    plugins: Plugin[];
     /**
      * @description Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
@@ -33,7 +33,7 @@ export interface ClientOptions {
     applicationId?: string;
 }
 
-export default class Client extends WebSocket {
+export class Client extends WebSocket {
     /** A Map of fuwa#client events*/
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
@@ -57,6 +57,7 @@ export default class Client extends WebSocket {
         super();
         Object.assign(this, {
             intents: ['DirectMessages', 'Guilds', 'GuildMessages'],
+            plugins: [],
             ...options,
         });
         if (options) {

@@ -17,7 +17,7 @@ export interface ArgumentType {
     required?: boolean;
 }
 
-export default class Command implements CommandType {
+export class Command implements CommandType {
     /** The id of the application command */
     id: string;
     /** The display name of the slash interaction.

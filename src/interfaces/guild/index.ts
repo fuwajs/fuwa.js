@@ -247,7 +247,7 @@ export interface PresenceUpdate {
     user: User;
     /** id of the guild */
     guild_id: string;
-    /** either "idle", "dnd", "online", or "offline" */ 
+    /** either "idle", "dnd", "online", or "offline" */
     status: Omit<StatusType, 'invisible'>;
     /** user's current activities */
     activities: Activity[];

@@ -1,6 +1,8 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
 const { Client, Command, Plugin } = require('../../');
+console.log(require('../../'));
+
 const Logger = class _ extends Plugin {
     constructor() {
         super({ name: '' });
@@ -31,7 +33,7 @@ client.on('ready', async () => {
 client.on('guild loaded', async function (guild) {
     console.table([{ guild_name: guild.name, guild_id: guild.id }]);
 });
-    
+
 // client.on('new channel', console.table);
 
 client.login(readFileSync(join(__dirname, 'token.secret')));

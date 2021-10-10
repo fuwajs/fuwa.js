@@ -1,4 +1,4 @@
 // handlers
-export * from './handlers/Command';
-export * from './handlers/Client';
-export * from './handlers/Plugin';
+export { Command, Argument } from './handlers/Command';
+export { Client, ClientOptions } from './handlers/Client';
+export { PluginOptions, Plugin } from './handlers/Plugin';

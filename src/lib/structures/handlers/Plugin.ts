@@ -1,4 +1,4 @@
-import Client from './Client';
+import { Client } from './Client';
 
 export interface PluginOptions {
     /** Plugin name */
@@ -6,7 +6,7 @@ export interface PluginOptions {
     /** Description of the plugin*/
     description: string;
 }
-export default class Plugin {
+export class Plugin {
     constructor(data: PluginOptions) {
         Object.assign(this, data);
     }
