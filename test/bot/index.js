@@ -21,13 +21,10 @@ client.on('ready', async () => {
             description: 'ez',
             guild: '788135963528134656',
             run(ctx) {
-                console.log(ctx);
+                console.log('hiii');
             },
         })
     );
-    console.log(client.commands);
-    console.log('ready');
-    console.log(await client.getMountedCommands('788135963528134656'));
 });
 
 client.on('guild loaded', async function (guild) {
