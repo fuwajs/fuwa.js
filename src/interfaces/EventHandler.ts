@@ -21,11 +21,12 @@ import type {
     User,
     VoiceServerUpdate,
     VoiceState,
+    GatewayEvents,
+    UnavailableGuild,
 } from '.';
 import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
 import { Collection } from '../util/Collection';
 import { Thread } from '../util/transformers/channelToThread';
-import { UnavailableGuild } from 'interfaces';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
@@ -115,7 +116,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a user adds a reaction to a message. */
     'add reaction': (data: MessageReactionAdd, message?: Message) => any;
     /** Sent when a user removes a reaction from a message. */
-    'remove reaction ': (data: MessageReactionRemove, message?: Message) => any;
+    'reaction removed': (data: MessageReactionRemove, message?: Message) => any;
     /** Sent when a user explicitly removes all reactions from a message. */
     'all reactions removed': (payload: MessageReactionRemoveAll, message?: Message) => any;
     /** Sent when a bot removes all instances of a given emoji from the reactions of a message. */
@@ -157,7 +158,7 @@ export type EventHandlersDefinitions = {
     /** Sent when anyone is added to or removed from a thread */
     'thread members update': (update: ThreadMembersUpdateModified) => any;
     /** Sent when a thread is deleted */
-    'thread removed ': (thread: Thread) => any;
+    'thread removed': (thread: Thread) => any;
     /** Sent when a user starts typing in a channel. */
     typing: (data: TypingStart) => any;
     /** Sent when a user joins a voice channel */
@@ -188,6 +189,63 @@ export type EventHandlersDefinitions = {
 
 export type EventHandlers = {
     [E in keyof EventHandlersDefinitions]?: EventHandlersDefinitions[E];
+};
+
+export type EventHandlerConverter = {
+    [E in keyof GatewayEvents]?: keyof EventHandlers;
+};
+
+export const GatewayEventsConverter: EventHandlerConverter = {
+    USER_UPDATE: 'bot update',
+    GUILD_ROLE_DELETE: 'role removed',
+    GUILD_ROLE_UPDATE: 'role update',
+    GUILD_ROLE_CREATE: 'new role',
+    READY: 'ready',
+    TYPING_START: 'typing',
+    INVITE_DELETE: 'invite removed',
+    INVITE_CREATE: 'new invite',
+    GUILD_MEMBER_ADD: 'new member',
+    GUILD_MEMBER_UPDATE: 'member update',
+    GUILD_MEMBER_REMOVE: 'member removed',
+    GUILD_UPDATE: 'guild update',
+    GUILD_BAN_ADD: 'ban',
+    GUILD_BAN_REMOVE: 'ban remove',
+    GUILD_CREATE: 'guild loaded',
+    GUILD_DELETE: 'guild removed',
+    GUILD_INTEGRATIONS_UPDATE: 'guild integrations update',
+    INTEGRATION_CREATE: 'new integration',
+    INTEGRATION_DELETE: 'integration removed',
+    INTEGRATION_UPDATE: 'integration update',
+    GUILD_EMOJIS_UPDATE: 'emojis update',
+    MESSAGE_CREATE: 'new message',
+    INTERACTION_CREATE: 'new interaction',
+    MESSAGE_DELETE: 'message removed',
+    MESSAGE_UPDATE: 'message update',
+    STAGE_INSTANCE_CREATE: 'new stage instance',
+    STAGE_INSTANCE_DELETE: 'stage instance removed',
+    STAGE_INSTANCE_UPDATE: 'stage instance update',
+    PRESENCE_UPDATE: 'presence update',
+    MESSAGE_REACTION_ADD: 'add reaction',
+    MESSAGE_REACTION_REMOVE_ALL: 'all reactions removed',
+    MESSAGE_REACTION_REMOVE: 'reaction removed',
+    MESSAGE_REACTION_REMOVE_EMOJI: 'reaction emoji removed',
+    THREAD_CREATE: 'new thread',
+    THREAD_DELETE: 'thread removed',
+    THREAD_LIST_SYNC: 'thread list sync',
+    THREAD_MEMBERS_UPDATE: 'thread members update',
+    THREAD_MEMBER_UPDATE: 'thread member update',
+    THREAD_UPDATE: 'thread update',
+    VOICE_SERVER_UPDATE: 'voice server update',
+    VOICE_STATE_UPDATE: 'voice state update',
+    WEBHOOKS_UPDATE: 'webhooks update',
+    CHANNEL_CREATE: 'new channel',
+    CHANNEL_DELETE: 'channel removed',
+    CHANNEL_UPDATE: 'channel update',
+    CHANNEL_PINS_UPDATE: 'channel pins update',
+};
+
+export type GatewayEventsArgsType = {
+    [Name in keyof EventHandlers]?: Parameters<EventHandlers[Name]>;
 };
 
 export interface DebugArg {

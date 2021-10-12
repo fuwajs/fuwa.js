@@ -1,45 +1,74 @@
 import { discordCDN } from '../../interfaces/DiscordAPI';
-import { Guild as GuildData } from '../../interfaces/guild';
+import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
 import { formatImageURL } from '../../util';
 discordCDN;
+import { User } from './User';
 
 export class Guild {
     constructor(protected data: GuildData) {}
     /** id of the guild */
-    get id() {
+    public get id() {
         return this.data.id;
     }
-    get icon() {
+    public get icon() {
         return `${discordCDN}/icons/${this.id}/${formatImageURL(this.data.icon, 512)}`;
     }
-    get banner() {
-        return formatImageURL(this.data.banner, 512);
+    public get banner() {
+        return `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
     }
-    get name() {
+    public get name() {
         return this.data.name;
     }
-    get desc() {
+    public get desc() {
         return this.data.description;
     }
-    get isUnavailable() {
+    public get isUnavailable() {
         return this.data.unavailable ?? false;
     }
-    get roles() {
+    public get roles() {
         return this.data.roles;
     }
-    get isOwner() {
+    public get isOwner() {
         return this.data.owner ?? false;
     }
-    get createdAt() {
+    public get createdAt() {
         return new Date(this.data.joined_at);
     }
-    get nsfwLevel() {
+    public get nsfwLevel() {
         return this.data.nsfw_level;
     }
-    get large() {
+    public get large() {
         return this.data.large;
     }
-    get welcomeChannels() {
+    public get welcomeChannels() {
         return this.data.welcome_screen;
+    }
+}
+
+export class Member {
+    constructor(protected data: MemberData) {}
+    public get user(): User | null {
+        return this.data.user ? new User(this.data.user) : null;
+    }
+    public get joinedAt() {
+        return new Date(this.data.joined_at);
+    }
+    public get nickname() {
+        return this.data.nick ?? null;
+    }
+    public get isMuted() {
+        return this.data.mute;
+    }
+    public get isDeafened() {
+        return this.data.deaf;
+    }
+    public get isPending() {
+        return this.data.pending ?? false;
+    }
+    public get roleIds() {
+        return this.data.roles;
+    }
+    public get guildId() {
+        return (this.data as any).guild_id ?? null;
     }
 }
