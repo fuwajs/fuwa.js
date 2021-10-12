@@ -103,7 +103,7 @@ export class Embed {
     }
 
     /**
-     * @param footertext text to be displayed in footer of embed
+     * @param footerText text to be displayed in footer of embed
      * @param extraOpts extra options for footer
      * ```js
      * //without options

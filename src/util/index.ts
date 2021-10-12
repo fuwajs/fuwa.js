@@ -18,8 +18,8 @@ export function delay(ms: number): Promise<void> {
 }
 
 /** Format url type  */
-export const formatImageURL = (url: string, size: ImageSize = 128, format?: ImageFormat) => {
-    return `${url}.${format || (url.includes('/a_') ? 'gif' : 'jpg')}?size=${size}`;
+export const formatImageURL = (hash: string, size: ImageSize = 128, format?: ImageFormat) => {
+    return `${hash}.${format || (hash.includes('/a_') ? 'gif' : 'jpg')}?size=${size}`;
 };
 
 /** @see https://discord.com/developers/docs/reference#image-formatting */
