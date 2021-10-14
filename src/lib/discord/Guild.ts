@@ -1,3 +1,4 @@
+import { Channel as ChannelHandler } from './Channel';
 import { discordCDN } from '../../interfaces/DiscordAPI';
 import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
 import { formatImageURL } from '../../util';
@@ -29,7 +30,7 @@ export class Guild {
         return this.data.owner_id;
     }
     public get channels() {
-        return this.data.channels;
+        return this.data.channels.map(c => new ChannelHandler(c));
     }
     public get desc() {
         return this.data.description;
@@ -56,7 +57,6 @@ export class Guild {
         return this.data.welcome_screen;
     }
 }
-
 export class Member {
     constructor(protected data: MemberData) {}
     public get user(): User | null {

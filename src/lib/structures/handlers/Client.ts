@@ -11,6 +11,9 @@ import {
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
+import { Guild } from '../../discord/Guild';
+import { User } from '../../discord/User';
+import { Channel } from '../../discord/Channel';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -100,6 +103,24 @@ export class Client extends WebSocket {
             this.commands.set(command.id, cmd);
         });
         return this;
+    }
+    getGuild(gid: string): Promise<Guild | null> {
+        return http
+            .GET(`/guilds/${gid}`)
+            .catch(() => Promise.resolve(null))
+            .then(res => new Guild(res));
+    }
+    getUser(uid: string): Promise<User | null> {
+        return http
+            .GET(`/users/${uid}`)
+            .catch(() => Promise.resolve(null))
+            .then(res => new User(res));
+    }
+    getChannel(cid: string): Promise<Channel | null> {
+        return http
+            .GET(`/channels/${cid}`)
+            .catch(() => Promise.resolve(null))
+            .then(res => new Channel(res));
     }
     /**
      * Returns all mounted commands.
