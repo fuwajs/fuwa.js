@@ -19,6 +19,18 @@ export class Guild {
     public get name() {
         return this.data.name;
     }
+    public get size() {
+        return this.data.member_count ?? null;
+    }
+    public get members() {
+        return this.data.members.map(m => new Member(m)) ?? [];
+    }
+    public get ownerId() {
+        return this.data.owner_id;
+    }
+    public get channels() {
+        return this.data.channels;
+    }
     public get desc() {
         return this.data.description;
     }

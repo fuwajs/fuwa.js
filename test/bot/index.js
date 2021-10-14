@@ -11,38 +11,27 @@ const Logger = class _ extends Plugin {
 
 const client = new Client({
     plugin: [],
-    intents: ['Guilds', 'GuildMessages', 'DirectMessages'],
+    intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
 });
 
 client.on('ready', async () => {
-    await client.mountCommand(
-        new Command({
-            name: 'oof',
-            description: 'ez',
-            guild: '788135963528134656',
-            run(ctx) {
-                console.log('hiii');
-            },
-        })
-    );
+    console.log('ready');
 });
 
 client.on('guild loaded', async function (guild) {
-    console.table([{ guild_name: guild.name, guild_id: guild.id }]);
+    console.log(guild.size);
 });
 
 // client.on('new channel', console.table);
 
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
-client.on('new message', async function (message) {
-    console.table([{ context: message }]);
-});
+client.on('new message', ({ content }) => console.log(content));
 
 client.on('message update', async function (ctx, _ctx) {
     console.table([{ new_message: ctx, old_message: _ctx }]);
 });
 
-client.on('add reaction', function (data, ctx) {
-    console.table([{ reaction: data, message: ctx }]);
+client.on('new message reaction', function (data, ctx) {
+    console.log(data);
 });

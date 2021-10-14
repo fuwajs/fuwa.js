@@ -3,7 +3,11 @@ import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces
 import { Command } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
 import { debug as Debug } from '../../../util/Debug';
-import { EventHandlers } from '../../../interfaces/EventHandler';
+import {
+    EventHandlers,
+    GatewayEventsConverter,
+    GatewayEventArgConverter,
+} from '../../../interfaces/EventHandler';
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
@@ -127,6 +131,28 @@ export class Client extends WebSocket {
         }
         return http.DELETE(path + `/${cmdId}`);
     }
+    protected parseDiscordEventNames(e: string): string {
+        let str = e
+            .toLowerCase()
+            .replace(/_/g, ' ')
+            // Easily fixable bugs
+            .replace(/delete|remove/g, 'removed')
+            .replace('typing start', 'typing');
+        if (str.includes('create') || str.includes('add')) {
+            str = str.replace(' create', '').replace(' add', '');
+            str = 'new ' + str;
+        }
+        if (str.includes('all')) {
+            str = `all ${str.replace(' all', '')}`;
+        }
+        if (
+            str.includes('guild') &&
+            (str.includes('role') || str.includes('member') || str.includes('ban') || str.includes('emojis'))
+        ) {
+            str = str.replace('guild ', '');
+        }
+        return str.replace('new ban', 'ban');
+    }
 
     /** Connects the websocket client to discords api.
      * @param token Your discord bot token.
@@ -140,7 +166,16 @@ export class Client extends WebSocket {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(() => this.response.op.emit(GatewayOpcodes.Heartbeat, 251), data.heartbeat_interval);
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
-            this.wsEvent('message', data => this.plugins.forEach(plugin => plugin.event(this, data)));
+            this.wsEvent('message', data => {
+                this.plugins.forEach(plugin => plugin.event(this, data));
+                if (data.op === GatewayOpcodes.Dispatch && data.t) {
+                    const eventName = GatewayEventsConverter[data.t] || this.parseDiscordEventNames(data.t);
+                    const event = this.events.get(eventName);
+                    if (!event) return;
+                    const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
+                    event(...args);
+                }
+            });
             const identify = {
                 token: _token,
                 intents,
@@ -163,32 +198,9 @@ export class Client extends WebSocket {
             this.events.has('guild loaded')
                 ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
                 : void 0;
-            this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
-        this.event('MESSAGE_CREATE', msg => {
-            this.events.has('new message') ? this.events.get('new message')(msg) : void 0;
-        });
-        this.event('MESSAGE_UPDATE', msg => {
-            this.events.get('message update') ? this.events.get('message update')(msg) : void 0;
-        });
-        this.event('CHANNEL_CREATE', channel => {
-            this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
-        });
-        this.event('GUILD_CREATE', guild => {
-            this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
-        });
-        this.event('MESSAGE_REACTION_ADD', reaction => {
-            this.events.has('add reaction') ? this.events.get('add reaction')(reaction) : void 0;
-        });
+        // this.event('GUILD_CREATE', guild => {});
 
-        this.event('GUILD_MEMBER_ADD', async member => {
-            this.events.has('new member')
-                ? this.events.get('new member')(await http.GET(`/guilds/${member.guild_id}`), member)
-                : void 0;
-        });
-        this.event('INTERACTION_CREATE', interaction => {
-            this.commands.get(interaction.id).run(interaction, {});
-        });
         this.event('INVALID_SESSION', () => {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
