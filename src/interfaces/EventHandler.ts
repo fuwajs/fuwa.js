@@ -63,7 +63,7 @@ export type EventHandlersDefinitions = {
      */
     'new guild': (guild: Guild) => any;
     /** This event does get sent on start when shards are loading the guilds */
-    'guild loaded': (guild: GuildHandler | UnavailableGuild) => any;
+    'guild loaded': (guild: GuildHandler) => any;
     /** When a guild goes available this event will be ran. */
     'guild online': (guild: Guild) => any;
     /** When a guild goes unavailable this event will be ran. */
