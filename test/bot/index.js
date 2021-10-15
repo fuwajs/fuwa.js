@@ -19,7 +19,7 @@ client.on('ready', async () => {
 });
 
 client.on('guild loaded', async function (guild) {
-    console.log(guild.size);
+    console.log(`Guild (${guild.name}) | Size (${guild.size})`);
 });
 
 // client.on('new channel', console.table);

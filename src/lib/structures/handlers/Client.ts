@@ -104,19 +104,19 @@ export class Client extends WebSocket {
         });
         return this;
     }
-    getGuild(gid: string): Promise<Guild | null> {
+    public getGuild(gid: string): Promise<Guild | null> {
         return http
             .GET(`/guilds/${gid}`)
             .catch(() => Promise.resolve(null))
             .then(res => new Guild(res));
     }
-    getUser(uid: string): Promise<User | null> {
+    public getUser(uid: string): Promise<User | null> {
         return http
             .GET(`/users/${uid}`)
             .catch(() => Promise.resolve(null))
             .then(res => new User(res));
     }
-    getChannel(cid: string): Promise<Channel | null> {
+    public getChannel(cid: string): Promise<Channel | null> {
         return http
             .GET(`/channels/${cid}`)
             .catch(() => Promise.resolve(null))
@@ -140,7 +140,7 @@ export class Client extends WebSocket {
      * @param cmd command or command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */
-    unmountCommand(cmd: Command | string, guildId?: string) {
+    public unmountCommand(cmd: Command | string, guildId?: string) {
         if (!this.applicationId) throw new Error('Application Id is required to do this action');
         const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
         const cmdId = typeof cmd === 'string' ? cmd : cmd.id;

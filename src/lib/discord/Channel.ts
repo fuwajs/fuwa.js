@@ -2,7 +2,7 @@ import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 export class Channel {
     constructor(protected data: ChannelData) {}
 
-    get id() {
+    public get id() {
         return this.data.id;
     }
     /**
