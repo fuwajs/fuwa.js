@@ -70,6 +70,10 @@ export function makeEmojiFromString(
     return emoji;
 }
 
+export const HttpErrorChecker = <T extends { message: string; code: number; [key: string]: any }>(
+    data: T
+): T | false => (data.message && data.code ? false : data);
+
 export type UpperCaseCharacters =
     | 'A'
     | 'B'

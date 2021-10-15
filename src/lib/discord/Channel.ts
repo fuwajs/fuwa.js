@@ -1,7 +1,8 @@
+import { MessageForm, Message } from '../../interfaces/message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
+import http from '../structures/ws/http';
 export class Channel {
     constructor(protected data: ChannelData) {}
-
     public get id() {
         return this.data.id;
     }
@@ -23,9 +24,15 @@ export class Channel {
     public get position() {
         return this.data.position;
     }
-    public get type(): keyof typeof ChannelType {
-        return Object.keys(ChannelType).find(k => this.type === ChannelType[k]) as keyof typeof ChannelType;
+    public type = Object.keys(ChannelType).find(
+        k => this.type === ChannelType[k]
+    ) as keyof typeof ChannelType;
+    public send(...messages: MessageForm[]): Promise<Message[]> {
+        return Promise.all(
+            messages.map(msg => http.POST(`/channels/${this.id}/messages`, JSON.stringify(msg)))
+        );
     }
+
     public get perms() {
         return this.data.permissions;
     }

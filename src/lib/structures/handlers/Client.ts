@@ -2,6 +2,7 @@ import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { Command } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
+import { HttpErrorChecker } from '../../../util';
 import { debug as Debug } from '../../../util/Debug';
 import {
     EventHandlers,
@@ -108,19 +109,22 @@ export class Client extends WebSocket {
         return http
             .GET(`/guilds/${gid}`)
             .catch(() => Promise.resolve(null))
-            .then(res => new Guild(res));
+            .then(HttpErrorChecker)
+            .then(res => (res ? new Guild(res) : null));
     }
     public getUser(uid: string): Promise<User | null> {
         return http
             .GET(`/users/${uid}`)
             .catch(() => Promise.resolve(null))
-            .then(res => new User(res));
+            .then(HttpErrorChecker)
+            .then(res => (res ? new User(res) : null));
     }
     public getChannel(cid: string): Promise<Channel | null> {
         return http
             .GET(`/channels/${cid}`)
             .catch(() => Promise.resolve(null))
-            .then(res => new Channel(res));
+            .then(HttpErrorChecker)
+            .then(res => (res ? new Channel(res) : null));
     }
     /**
      * Returns all mounted commands.

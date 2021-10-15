@@ -23,15 +23,17 @@ export class Guild {
     public get size() {
         return this.data.member_count ?? null;
     }
-    public get members() {
-        return this.data.members.map(m => new Member(m)) ?? [];
-    }
+    public members: Map<string, Member> | null = this.data.members
+        ? new Map(this.data.members.map(m => [m.user.id, new Member(m)]) ?? [])
+        : null;
+    public channels = this.data.channels
+        ? new Map(this.data.channels.map(c => [c.id, new ChannelHandler(c)]))
+        : null;
+
     public get ownerId() {
         return this.data.owner_id;
     }
-    public get channels() {
-        return this.data.channels.map(c => new ChannelHandler(c));
-    }
+
     public get desc() {
         return this.data.description;
     }
@@ -50,7 +52,7 @@ export class Guild {
     public get nsfwLevel() {
         return this.data.nsfw_level;
     }
-    public get large() {
+    public get isLarge() {
         return this.data.large;
     }
     public get welcomeChannels() {

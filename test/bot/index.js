@@ -15,7 +15,10 @@ const client = new Client({
 });
 
 client.on('ready', async () => {
-    console.log('ready');
+    const guild = await client.getGuild('788135963528134656');
+    console.log(guild.data.channel);
+    const channel = guild.channels.get('789395850874322944');
+    channel.send({ content: `Turned on a ${new Date().toDateString()}` });
 });
 
 client.on('guild loaded', async function (guild) {
