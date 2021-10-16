@@ -105,9 +105,15 @@ export class Client extends WebSocket {
         });
         return this;
     }
-    public getGuild(gid: string): Promise<Guild | null> {
+    /**
+     *
+     * @param gid Id of the guild you want to fetch
+     * @param withSize If you want the guild to contain the approximant member count of the guild (and presences), warning this may slow down the request so only use if needed
+     * @returns A Guild, or null if the guild was not found
+     */
+    public getGuild(gid: string, withSize = false): Promise<Guild | null> {
         return http
-            .GET(`/guilds/${gid}`)
+            .GET(`/guilds/${gid}?with_counts=${withSize}`)
             .catch(() => Promise.resolve(null))
             .then(HttpErrorChecker)
             .then(res => (res ? new Guild(res) : null));
@@ -221,7 +227,7 @@ export class Client extends WebSocket {
 
             Globs.sessionId = this.sessionId = ready.session_id;
             this.events.has('guild loaded')
-                ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
+                ? ready.guilds.forEach(g => this.events.get('guild loaded')(new Guild(g as any)))
                 : void 0;
         });
         // this.event('GUILD_CREATE', guild => {});

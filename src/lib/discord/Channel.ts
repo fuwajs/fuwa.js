@@ -25,18 +25,29 @@ export class Channel {
         return this.data.position;
     }
     public type = Object.keys(ChannelType).find(
-        k => this.type === ChannelType[k]
+        k => this.data.type === ChannelType[k]
     ) as keyof typeof ChannelType;
     public send(...messages: MessageForm[]): Promise<Message[]> {
         return Promise.all(
             messages.map(msg => http.POST(`/channels/${this.id}/messages`, JSON.stringify(msg)))
         );
     }
-
     public get perms() {
         return this.data.permissions;
     }
     public get parentId() {
         return this.data.parent_id;
+    }
+    getPins(): Promise<Message[]> {
+        return http.GET(`/channels/${this.id}/pins`);
+    }
+    /**
+     * ! WARNING: This method is not recommend to be used
+     * @see https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * This makes the bot appear to be typing
+     */
+    async startTyping() {
+        await http.POST(`/channels/${this.id}/typing`);
+        return;
     }
 }

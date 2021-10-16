@@ -22,7 +22,12 @@ export class User {
     public get avatar() {
         return `${discordCDN}/avatars/${this.id}/${formatImageURL(this.data.avatar, 512)}`;
     }
-    public get banner() {
-        return `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
+    public get banner(): string | null {
+        return this.data.banner
+            ? `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`
+            : null;
+    }
+    public accentColor(): number | null {
+        return this.data.accent_color ? this.data.accent_color : null;
     }
 }

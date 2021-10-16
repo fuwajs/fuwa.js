@@ -4,6 +4,7 @@ import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/
 import { formatImageURL } from '../../util';
 discordCDN;
 import { User } from './User';
+import http from '../structures/ws/http';
 
 export class Guild {
     constructor(protected data: GuildData) {}
@@ -21,7 +22,7 @@ export class Guild {
         return this.data.name;
     }
     public get size() {
-        return this.data.member_count ?? null;
+        return this.data.member_count ?? this.data.approximate_member_count ?? null;
     }
     public members: Map<string, Member> | null = this.data.members
         ? new Map(this.data.members.map(m => [m.user.id, new Member(m)]) ?? [])
@@ -29,11 +30,9 @@ export class Guild {
     public channels = this.data.channels
         ? new Map(this.data.channels.map(c => [c.id, new ChannelHandler(c)]))
         : null;
-
     public get ownerId() {
         return this.data.owner_id;
     }
-
     public get desc() {
         return this.data.description;
     }
@@ -57,6 +56,10 @@ export class Guild {
     }
     public get welcomeChannels() {
         return this.data.welcome_screen;
+    }
+    public async leave(): Promise<void> {
+        await http.DELETE(`/users/@me/guilds/${this.id}`);
+        return;
     }
 }
 export class Member {
