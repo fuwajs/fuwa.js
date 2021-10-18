@@ -13,6 +13,7 @@ import type {
     MessageReactionAdd,
     MessageReactionRemove,
     MessageReactionRemoveAll,
+    MessageUpdate,
     PresenceUpdate,
     Role,
     StageInstance,
@@ -103,7 +104,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a message is deleted. */
     'message removed': (partial: { id: string; channel: Channel }, message?: Message) => any;
     /** Sent when a message is updated. */
-    'message update': (message: Message, oldMessage: Message) => any;
+    'message update': (data: MessageUpdate) => any;
     /** Sent when a user updates its nickname */
     'nickname update': (guild: Guild, member: Member, nickname: string, oldNickname?: string) => any;
     /** A user's presence is their current state on a guild. This event is sent when a user's presence or info, such as name or avatar, is updated. */
