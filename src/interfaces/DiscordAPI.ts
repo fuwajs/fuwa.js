@@ -11,6 +11,7 @@ import type {
     Sticker,
     Reaction,
     MessageUpdate,
+    MessageReactionAdd,
 } from './message';
 import { PresenceUpdate, VoiceState } from './guild';
 import type { Channel, StageInstance } from './channel';
@@ -206,7 +207,7 @@ export interface GatewayEvents {
     THREAD_LIST_SYNC: EventBase<'THREAD_LIST_SYNC', ThreadListSync>;
     THREAD_MEMBER_UPDATE: EventBase<'THREAD_MEMBER_UPDATE', ThreadMember>;
     THREAD_MEMBERS_UPDATE: EventBase<'THREAD_MEMBERS_UPDATE', ThreadMembersUpdate>;
-    GUILD_CREATE: EventBase<'GUILD_CREATE', Guild | UnavailableGuild>;
+    GUILD_CREATE: EventBase<'GUILD_CREATE', Guild>;
     GUILD_UPDATE: EventBase<'GUILD_UPDATE', Guild>;
     GUILD_DELETE: EventBase<'GUILD_DELETE', UnavailableGuild>;
     GUILD_BAN_ADD: EventBase<'GUILD_BAN_ADD', GuildBanAddRemove>;
@@ -231,7 +232,7 @@ export interface GatewayEvents {
     MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', MessageUpdate>;
     MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageDelete>;
     MESSAGE_DELETE_BULK: EventBase<'MESSAGE_DELETE_BULK', MessageDelete>;
-    MESSAGE_REACTION_ADD: EventBase<'MESSAGE_REACTION_ADD', Reaction>;
+    MESSAGE_REACTION_ADD: EventBase<'MESSAGE_REACTION_ADD', MessageReactionAdd>;
     MESSAGE_REACTION_REMOVE: EventBase<'MESSAGE_REACTION_REMOVE', MessageReactionRemove>;
     MESSAGE_REACTION_REMOVE_ALL: EventBase<'MESSAGE_REACTION_REMOVE_ALL', MessageReactionRemoveAll>;
     MESSAGE_REACTION_REMOVE_EMOJI: EventBase<'MESSAGE_REACTION_REMOVE_EMOJI', MessageReactionRemoveEmoji>;
