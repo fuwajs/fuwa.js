@@ -22,12 +22,12 @@ import type {
     VoiceServerUpdate,
     VoiceState,
     GatewayEvents,
-    UnavailableGuild,
 } from '.';
 import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
 import { Collection } from '../util/Collection';
 import { Thread } from '../util/transformers/channelToThread';
 import { Guild as GuildHandler } from '../lib/discord/Guild';
+import { Message as MessageHandler } from '../lib/discord/Message';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
@@ -101,7 +101,7 @@ export type EventHandlersDefinitions = {
      * */
     message: (message: Message) => any;
     /** Sent when a message is created. */
-    'new message': (message: Message) => any;
+    'new message': (message: MessageHandler) => any;
     /** Sent when a message is deleted. */
     'message removed': (partial: { id: string; channel: Channel }, message?: Message) => any;
     /** Sent when a message is updated. */
@@ -252,6 +252,7 @@ export type GatewayEventsArgsType = {
 export const GatewayEventArgConverter: GatewayEventsArgsType = {
     'guild loaded': data => [new GuildHandler(data)],
     ready: () => [],
+    'new message': data => [new MessageHandler(data)],
 };
 
 export interface DebugArg {

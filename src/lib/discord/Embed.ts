@@ -6,14 +6,14 @@
 
 import { Embed as IEmbed } from '../../interfaces/message';
 
-type Media = {
+export type Media = {
     url: string;
     proxy_url: string;
     height: number;
     width: number;
 };
 
-type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
+export type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
 export class Embed {
     protected type: EmbedType;

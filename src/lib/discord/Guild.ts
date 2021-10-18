@@ -18,18 +18,25 @@ export class Guild {
     public get banner() {
         return `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
     }
+    /** Returns the name of the guild */
     public get name() {
         return this.data.name;
     }
+    /** ! WARNING: This does not *yet*  take into account sharding.
+     * Returns in total guild size
+     */
     public get size() {
         return this.data.member_count ?? this.data.approximate_member_count ?? null;
     }
+    /** Returns total guild members */
     public members: Map<string, Member> | null = this.data.members
         ? new Map(this.data.members.map(m => [m.user.id, new Member(m)]) ?? [])
         : null;
+    /** Returns total guild channels */
     public channels = this.data.channels
         ? new Map(this.data.channels.map(c => [c.id, new ChannelHandler(c)]))
         : null;
+    /** Returns the guild owner id */
     public get ownerId() {
         return this.data.owner_id;
     }
@@ -42,9 +49,13 @@ export class Guild {
     public get roles() {
         return this.data.roles;
     }
+    /** Checks if the user id passed has the same id as the guild owner.
+     * @returns boolean
+     */
     public get isOwner() {
         return this.data.owner ?? false;
     }
+    /** Returns total guild members */
     public get createdAt() {
         return new Date(this.data.joined_at);
     }
@@ -57,6 +68,7 @@ export class Guild {
     public get welcomeChannels() {
         return this.data.welcome_screen;
     }
+    /**Allows the given application to leave the current requested guild. */
     public async leave(): Promise<void> {
         await http.DELETE(`/users/@me/guilds/${this.id}`);
         return;

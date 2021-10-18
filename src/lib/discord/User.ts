@@ -4,13 +4,13 @@ import { formatImageURL } from '../../util';
 
 export class User {
     constructor(protected data: UserData) {}
-    public id() {
+    public get id() {
         return this.data.id;
     }
-    public name() {
+    public get name() {
         return this.data.username;
     }
-    public discriminator() {
+    public get discriminator() {
         return this.data.discriminator;
     }
     public get isBot() {

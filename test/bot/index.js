@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin } = require('../../');
+const { Client, Command, Plugin, Embed } = require('../../');
 
 const client = new Client({
     intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
@@ -8,18 +8,28 @@ const client = new Client({
 
 client.on('ready', async () => {
     console.log('ready');
-    const channel = await client.getChannel('889654344637620224');
-
-    await channel.send({ content: 'hii' })[0];
+    const channel = await client.getChannel('788135963528134659');
+    await channel.send({ content: 'im online and ready to work!' });
 });
-
-// client.on('new channel', console.table);
 
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
-client.on('new message', ({ content }) => console.log(content));
+client.on('new message', async msg => {
+    let prefix = '!';
 
-client.on('message update', async function (ctx, _ctx) {
+    const channel = await client.getChannel(msg.channelId);
+    if (msg.content.startsWith(`${prefix}ping`)) {
+        channel.send({ content: 'Pong!' }, { content: 'Fuwa.js > discord.js all day every day' });
+    } else if (msg.content.startsWith(`${prefix}userinfo`)) {
+        const user = await client.getUser(msg.author.id);
+        channel.send(
+            { content: `ok! ${user.name}` },
+            { embeds: [new Embed().addField({ name: 'title', value: 'embed content' })] }
+        );
+    }
+});
+
+client.on('message update', async (ctx, _ctx) => {
     console.table([{ new_message: ctx, old_message: _ctx }]);
 });
 
