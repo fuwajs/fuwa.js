@@ -6,12 +6,7 @@ const client = new Client({
     intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
 });
 
-client.on('ready', async () => {
-    console.log("Ready!")
-});
-
-client.on('guild loaded', async function (guild) {
-    console.table([{ guild_name: guild.name, guild_id: guild.id }]);
+client.on('ready', async function () {
     console.log('ready');
     const channel = await client.getChannel('788135963528134659');
     await channel.send({ content: 'im online and ready to work!' });
@@ -21,23 +16,31 @@ client.login(readFileSync(join(__dirname, 'token.secret')));
 
 client.on('new message', async msg => {
     let prefix = '!';
-
     const channel = await client.getChannel(msg.channel_id);
-    if (msg.content.startsWith(`${prefix}ping`)) {
+    if(!msg.content.startsWith(prefix) || msg.author.isBot) return
+
+    const args = msg.content.slice(prefix.length).trim().split(/ +/);
+    const msgCommand = args.shift().toLowerCase();
+
+    if (msgCommand === (`ping`)) {
         channel.send({ content: 'Pong!' }, { content: 'Fuwa.js > discord.js all day every day' });
-    } else if (msg.content.startsWith(`${prefix}userinfo`)) {
+    } else if (msgCommand === "userinfo") {
         const user = await client.getUser(msg.author.id);
         channel.send(
-            { content: `ok! ${user.name}` },
-            { embeds: [new Embed().addField({ name: 'title', value: 'embed content' })] }
+            { content: `ok! ${user.name}#${user.discriminator}` },
+            { embeds: [new Embed().addField({ name: 'message content', value: msg.content }).setColor("#99bdee")] }
         );
     }
 });
 
-client.on('message update', async (ctx, _ctx) => {
-    console.table([{ new_message: ctx, old_message: _ctx }]);
-});
+client.on("message removed", async function(ctx, msg) {
+    console.table([{
+        channel: ctx.id, message: msg.content
+    }])
+})
 
-client.on('new message reaction', function (data) {
-    console.log(data);
-});
+client.on("presence update", async function(presence, oldPresence) {
+    console.table([{
+        old_presence: oldPresence.status, new_presence: presence.status
+    }])
+})
