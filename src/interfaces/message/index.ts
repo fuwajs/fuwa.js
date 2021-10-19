@@ -377,10 +377,14 @@ export interface MessageDelete {
     guild_id?: string;
 }
 
+/** @see https://discord.com/developers/docs/topics/gateway#message-update */
 export interface MessageUpdate {
+    /** the id of the message*/
     id: string;
-    guild_id: string;
-    channel_id?: string;
+    /**	id of channel to listen to updates of */
+    channel_id: string;
+    /** the id of the guild */
+    guild_id?: string;
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#message-delete-bulk */

@@ -44,3 +44,9 @@ client.on("presence update", async function(presence, oldPresence) {
         old_presence: oldPresence.status, new_presence: presence.status
     }])
 })
+
+client.on("message update", async function(data) {
+    console.table([{
+        channel: data.channel_id, guild: data.guild_id, message: data.id
+    }])
+})

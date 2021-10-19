@@ -29,7 +29,7 @@ import { Collection } from '../util/Collection';
 import { Thread } from '../util/transformers/channelToThread';
 import { Guild as GuildHandler } from '../lib/discord/Guild';
 import { Message as MessageHandler } from '../lib/discord/Message';
-
+    
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
     'new application command': (data: ApplicationCommandCreateUpdateDelete) => any;
