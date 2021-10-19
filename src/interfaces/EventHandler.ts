@@ -185,6 +185,9 @@ export type EventHandlersDefinitions = {
     'new invite': (data: InviteCreate) => any;
     /** Sent when an invite is deleted. */
     'invite removed': (data: InviteDelete) => any;
+    
+    /** Sent when fuwa emits and error */
+    error: (err: { name: string, description: string }) => any;
 };
 
 export type EventHandlers = {
