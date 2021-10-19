@@ -7,16 +7,7 @@ const client = new Client({
 });
 
 client.on('ready', async () => {
-    client.mountCommand(
-        new Command({
-            name: 'oof',
-            description: 'ez',
-            guild: '788135963528134656',
-            run() {
-                console.log('hiii');
-            },
-        })
-    );
+    console.log("Ready!")
 });
 
 client.on('guild loaded', async function (guild) {

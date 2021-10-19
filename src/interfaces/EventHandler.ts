@@ -29,7 +29,6 @@ import { Collection } from '../util/Collection';
 import { Thread } from '../util/transformers/channelToThread';
 import { Guild as GuildHandler } from '../lib/discord/Guild';
 import { Message as MessageHandler } from '../lib/discord/Message';
-import { UnavailableGuild } from '../interfaces';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
@@ -65,7 +64,7 @@ export type EventHandlersDefinitions = {
      */
     'new guild': (guild: Guild) => any;
     /** This event does get sent on start when shards are loading the guilds */
-    'guild loaded': (guild: UnavailableGuild) => any;
+    'guild loaded': (guild:  GuildHandler) => any;
     /** When a guild goes available this event will be ran. */
     'guild online': (guild: Guild) => any;
     /** When a guild goes unavailable this event will be ran. */

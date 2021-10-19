@@ -1,13 +1,12 @@
 import http from '../ws/http';
 import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
 import Globs from '../../../util/Global';
-import { Context } from 'lib/discord/Context';
 
 export interface CommandType {
     name: string;
     description: string;
     guild?: string;
-    run(ctx: Context, args: { [key: string]: any }): any;
+    run(ctx: any, args: { [key: string]: any }): any;
 }
 
 export interface ArgumentType {
@@ -34,7 +33,7 @@ export class Command implements CommandType {
      * type of class Argument[]
      */
     args: Argument[];
-    run: (ctx: Context, args: { [key: string]: Argument }) => any;
+    run: (ctx: any, args: { [key: string]: Argument }) => any;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }

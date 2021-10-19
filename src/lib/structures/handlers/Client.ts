@@ -12,11 +12,9 @@ import {
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
-import { Context } from '../../discord/Context';
 import { Guild } from '../../discord/Guild';
 import { User } from '../../discord/User';
 import { Channel } from '../../discord/Channel';
-import { Message } from '../../discord/Message';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -228,9 +226,6 @@ export class Client extends WebSocket {
             Globs.appId = this.applicationId = ready.application.id;
 
             Globs.sessionId = this.sessionId = ready.session_id;
-            this.events.has('guild loaded')
-                ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
-                : void 0;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
         this.event('MESSAGE_CREATE', msg => {
@@ -248,8 +243,6 @@ export class Client extends WebSocket {
         this.event('MESSAGE_REACTION_ADD', reaction => {
             this.events.has('new message reaction') ? this.events.get('new message reaction')(reaction) : void 0;
         });
-        // this.event('GUILD_CREATE', guild => {});
-
         this.event('GUILD_MEMBER_ADD', async member => {
             this.events.has('new member')
                 ? this.events.get('new member')(await http.GET(`/guilds/${member.guild_id}`), member)
