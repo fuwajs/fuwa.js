@@ -20,7 +20,7 @@ client.on('ready', async () => {
             name: 'oof',
             description: 'ez',
             guild: '788135963528134656',
-            run(ctx) {
+            run() {
                 console.log('hiii');
             },
         })
