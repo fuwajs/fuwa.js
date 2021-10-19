@@ -228,36 +228,38 @@ export class Client extends WebSocket {
             Globs.appId = this.applicationId = ready.application.id;
 
             Globs.sessionId = this.sessionId = ready.session_id;
-            ready.guilds.forEach(g => {
-                this.runEvent('guild loaded', g);
-            });
-            this.runEvent('ready' /*,ready.shard */);
+            this.events.has('guild loaded')
+                ? ready.guilds.forEach(g => this.events.get('guild loaded')(g))
+                : void 0;
+            this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
         this.event('MESSAGE_CREATE', msg => {
-            this.runEvent('new message', new Message(msg));
+            this.events.has('new message') ? this.events.get('new message')(msg) : void 0;
         });
         this.event('MESSAGE_UPDATE', msg => {
-            this.runEvent('message update', msg);
+            this.events.get('message update') ? this.events.get('message update')(msg) : void 0;
         });
         this.event('CHANNEL_CREATE', channel => {
-            this.runEvent('new channel', channel);
+            this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
         });
         this.event('GUILD_CREATE', guild => {
-            this.runEvent('new guild', guild);
+            this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
         this.event('MESSAGE_REACTION_ADD', reaction => {
-            this.runEvent('new message reaction', reaction);
+            this.events.has('new message reaction') ? this.events.get('new message reaction')(reaction) : void 0;
         });
         // this.event('GUILD_CREATE', guild => {});
 
         this.event('GUILD_MEMBER_ADD', async member => {
-            this.runEvent('new member', await http.GET(`/guilds/${member.guild_id}`), member);
+            this.events.has('new member')
+                ? this.events.get('new member')(await http.GET(`/guilds/${member.guild_id}`), member)
+                : void 0;
         });
         this.event('INTERACTION_CREATE', interaction => {
             this.commands.get(interaction.id).run(interaction, {});
         });
         this.event('INVALID_SESSION', () => {
-            this.runEvent('error', { name: 'invalid token', description: 'an invalid token was passed' });
+            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
     }
@@ -283,26 +285,6 @@ export class Client extends WebSocket {
             ...data,
             shard: [shardId, this.shardCount],
         });
-        // this.debug.log('shards', `Sent shard ${shardId}`);
-    }
-
-    command(name: string, cb: (ctx: Context, args: Record<string, any>) => any) {
-        this.commands.set(
-            name,
-            new Command({
-                name,
-                description: 'todo',
-                run(ctx, args) {
-                    cb(ctx, args);
-                },
-            })
-        );
-    }
-
-    /**
-     * shorthand to run an event
-     */
-    private runEvent<T extends keyof EventHandlers>(name: T, ...args: Parameters<EventHandlers[T]>) {
-        this.events.has(name) ? this.events.get(name)(args) : void 0;
+        this.debug.log('shards', `Sent shard ${shardId}`);
     }
 }
