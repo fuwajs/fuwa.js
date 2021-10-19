@@ -1,21 +1,13 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin } = require('../../');
-console.log(require('../../'));
-
-const Logger = class _ extends Plugin {
-    constructor() {
-        super({ name: '' });
-    }
-};
+const { Client, Command, Plugin, Embed } = require('../../');
 
 const client = new Client({
-    plugin: [],
-    intents: ['Guilds', 'GuildMessages', 'DirectMessages'],
+    intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
 });
 
 client.on('ready', async () => {
-    await client.mountCommand(
+    client.mountCommand(
         new Command({
             name: 'oof',
             description: 'ez',
@@ -29,20 +21,32 @@ client.on('ready', async () => {
 
 client.on('guild loaded', async function (guild) {
     console.table([{ guild_name: guild.name, guild_id: guild.id }]);
+    console.log('ready');
+    const channel = await client.getChannel('788135963528134659');
+    await channel.send({ content: 'im online and ready to work!' });
 });
-
-// client.on('new channel', console.table);
 
 client.login(readFileSync(join(__dirname, 'token.secret')));
 
-client.on('new message', async function (message) {
-    console.table([{ context: message }]);
+client.on('new message', async msg => {
+    let prefix = '!';
+
+    const channel = await client.getChannel(msg.channel_id);
+    if (msg.content.startsWith(`${prefix}ping`)) {
+        channel.send({ content: 'Pong!' }, { content: 'Fuwa.js > discord.js all day every day' });
+    } else if (msg.content.startsWith(`${prefix}userinfo`)) {
+        const user = await client.getUser(msg.author.id);
+        channel.send(
+            { content: `ok! ${user.name}` },
+            { embeds: [new Embed().addField({ name: 'title', value: 'embed content' })] }
+        );
+    }
 });
 
-client.on('message update', async function (ctx, _ctx) {
+client.on('message update', async (ctx, _ctx) => {
     console.table([{ new_message: ctx, old_message: _ctx }]);
 });
 
-client.on('add reaction', function (data, ctx) {
-    console.table([{ reaction: data, message: ctx }]);
+client.on('new message reaction', function (data) {
+    console.log(data);
 });

@@ -1,6 +1,7 @@
 export * from './componentTypes';
 import { MessageInteraction, ThreadMember } from '..';
 import { GuildMember } from '../guild';
+import { Embed as EmbedHander } from '../../lib/discord/Embed';
 import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
 import { Channel } from 'interfaces';
@@ -91,10 +92,10 @@ export interface Message {
  * @see {@link https://discord.com/developers/docs/resources/channel#create-message-jsonform-params}
  */
 export interface MessageForm {
-    content: string;
+    content?: string;
     tts?: boolean;
-    file: string;
-    embeds: Embed[];
+    file?: string;
+    embeds?: (Embed | EmbedHander)[];
     payload_json?: string;
     allowed_mentions?: AllowedMention[];
     message_reference?: MessageReference;
@@ -106,20 +107,6 @@ export interface ChannelMention {
     guild_id: string;
     type: number;
     name: string;
-}
-
-/**
- * @see {@link https://discord.com/developers/docs/resources/channel#create-message-jsonform-params}
- */
-export interface MessageForm {
-    content: string;
-    tts?: boolean;
-    file: string;
-    embeds: Embed[];
-    payload_json?: string;
-    allowed_mentions?: AllowedMention[];
-    message_reference?: MessageReference;
-    components?: MessageComponent[];
 }
 
 type AllowedMentionType = 'roles' | 'users' | 'everyone';
@@ -157,7 +144,7 @@ export enum MessageType {
     UserPremiumGuildSubscriptionTier3,
     ChannelFollowAdd,
     GuildFollowAdd,
-    GuildDiscorveryDisqualified,
+    GuildDiscoveryDisqualified,
     GuildDiscoveryRequalified,
     Reply,
     ApplicationCommand,

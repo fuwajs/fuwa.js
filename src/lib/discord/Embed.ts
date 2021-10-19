@@ -6,14 +6,14 @@
 
 import { Embed as IEmbed } from '../../interfaces/message';
 
-type Media = {
+export type Media = {
     url: string;
     proxy_url: string;
     height: number;
     width: number;
 };
 
-type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
+export type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
 export class Embed {
     protected type: EmbedType;
@@ -103,7 +103,7 @@ export class Embed {
     }
 
     /**
-     * @param footertext text to be displayed in footer of embed
+     * @param footerText text to be displayed in footer of embed
      * @param extraOpts extra options for footer
      * ```js
      * //without options

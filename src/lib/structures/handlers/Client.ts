@@ -2,12 +2,21 @@ import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { Command } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
+import { HttpErrorChecker } from '../../../util';
 import { debug as Debug } from '../../../util/Debug';
-import { EventHandlers } from '../../../interfaces/EventHandler';
+import {
+    EventHandlers,
+    GatewayEventsConverter,
+    GatewayEventArgConverter,
+} from '../../../interfaces/EventHandler';
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
 import { Context } from '../../discord/Context';
+import { Guild } from '../../discord/Guild';
+import { User } from '../../discord/User';
+import { Channel } from '../../discord/Channel';
+import { Message } from '../../discord/Message';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -99,6 +108,33 @@ export class Client extends WebSocket {
         return this;
     }
     /**
+     *
+     * @param gid Id of the guild you want to fetch
+     * @param withSize If you want the guild to contain the approximant member count of the guild (and presences), warning this may slow down the request so only use if needed
+     * @returns A Guild, or null if the guild was not found
+     */
+    public getGuild(gid: string, withSize = false): Promise<Guild | null> {
+        return http
+            .GET(`/guilds/${gid}?with_counts=${withSize}`)
+            .catch(() => Promise.resolve(null))
+            .then(HttpErrorChecker)
+            .then(res => (res ? new Guild(res) : null));
+    }
+    public getUser(uid: string): Promise<User | null> {
+        return http
+            .GET(`/users/${uid}`)
+            .catch(() => Promise.resolve(null))
+            .then(HttpErrorChecker)
+            .then(res => (res ? new User(res) : null));
+    }
+    public getChannel(cid: string): Promise<Channel | null> {
+        return http
+            .GET(`/channels/${cid}`)
+            .catch(() => Promise.resolve(null))
+            .then(HttpErrorChecker)
+            .then(res => (res ? new Channel(res) : null));
+    }
+    /**
      * Returns all mounted commands.
      * @param guildId the id of the guild your application command is registierd in.
      */
@@ -116,7 +152,7 @@ export class Client extends WebSocket {
      * @param cmd command or command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */
-    unmountCommand(cmd: Command | string, guildId?: string) {
+    public unmountCommand(cmd: Command | string, guildId?: string) {
         if (!this.applicationId) throw new Error('Application Id is required to do this action');
         const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
         const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
@@ -127,6 +163,28 @@ export class Client extends WebSocket {
             path += '/commands';
         }
         return http.DELETE(path + `/${cmdId}`);
+    }
+    protected parseDiscordEventNames(e: string): string {
+        let str = e
+            .toLowerCase()
+            .replace(/_/g, ' ')
+            // Easily fixable bugs
+            .replace(/delete|remove/g, 'removed')
+            .replace('typing start', 'typing');
+        if (str.includes('create') || str.includes('add')) {
+            str = str.replace(' create', '').replace(' add', '');
+            str = 'new ' + str;
+        }
+        if (str.includes('all')) {
+            str = `all ${str.replace(' all', '')}`;
+        }
+        if (
+            str.includes('guild') &&
+            (str.includes('role') || str.includes('member') || str.includes('ban') || str.includes('emojis'))
+        ) {
+            str = str.replace('guild ', '');
+        }
+        return str.replace('new ban', 'ban');
     }
 
     /** Connects the websocket client to discords api.
@@ -141,7 +199,16 @@ export class Client extends WebSocket {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(() => this.response.op.emit(GatewayOpcodes.Heartbeat, 251), data.heartbeat_interval);
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
-            this.wsEvent('message', data => this.plugins.forEach(plugin => plugin.event(this, data)));
+            this.wsEvent('message', data => {
+                this.plugins.forEach(plugin => plugin.event(this, data));
+                if (data.op === GatewayOpcodes.Dispatch && data.t) {
+                    const eventName = GatewayEventsConverter[data.t] || this.parseDiscordEventNames(data.t);
+                    const event = this.events.get(eventName);
+                    if (!event) return;
+                    const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
+                    event(...args);
+                }
+            });
             const identify = {
                 token: _token,
                 intents,
@@ -167,7 +234,7 @@ export class Client extends WebSocket {
             this.runEvent('ready' /*,ready.shard */);
         });
         this.event('MESSAGE_CREATE', msg => {
-            this.runEvent('new message', msg);
+            this.runEvent('new message', new Message(msg));
         });
         this.event('MESSAGE_UPDATE', msg => {
             this.runEvent('message update', msg);
@@ -179,8 +246,9 @@ export class Client extends WebSocket {
             this.runEvent('new guild', guild);
         });
         this.event('MESSAGE_REACTION_ADD', reaction => {
-            this.runEvent('add reaction', reaction);
+            this.runEvent('new message reaction', reaction);
         });
+        // this.event('GUILD_CREATE', guild => {});
 
         this.event('GUILD_MEMBER_ADD', async member => {
             this.runEvent('new member', await http.GET(`/guilds/${member.guild_id}`), member);

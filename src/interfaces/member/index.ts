@@ -59,6 +59,14 @@ export interface User {
     avatar: string | null;
     /** Whether the user belongs to an OAuth2 application */
     bot?: boolean;
+    /**
+     * User's banner url
+     */
+    banner?: string;
+    /**
+     * User's hexadecimal banner color
+     */
+    accent_color?: number | null;
     /** Whether the user is an Official Discord System user (part of the urgent message system) */
     system?: boolean;
     /** Whether the user has two factor enabled on their account */
