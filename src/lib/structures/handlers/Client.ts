@@ -7,6 +7,7 @@ import { EventHandlers } from '../../../interfaces/EventHandler';
 import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
+import { Context } from '../../discord/Context';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -214,7 +215,22 @@ export class Client extends WebSocket {
             ...data,
             shard: [shardId, this.shardCount],
         });
-        this.debug.log('shards', `Sent shard ${shardId}`);
+        // this.debug.log('shards', `Sent shard ${shardId}`);
+    }
+
+    command(name: string, cb: (ctx: Context, args: Record<string, any>) => any) {
+        this.commands.set(
+            name,
+            new Command({
+                name,
+                description: 'todo',
+                run(ctx, args) {
+                    cb(ctx, args);
+                },
+            })
+        );
+    }
+
     /**
      * shorthand to run an event
      */
