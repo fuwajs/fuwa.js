@@ -46,6 +46,9 @@ export class Channel {
     public get position() {
         return this.data.position;
     }
+    public isDM() {
+        return ((this.type as any) || '') === 'Dm';
+    }
     public type = Object.keys(ChannelType).find(
         k => this.data.type === ChannelType[k]
     ) as keyof typeof ChannelType;

@@ -241,7 +241,9 @@ export class Client extends WebSocket {
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
         this.event('MESSAGE_REACTION_ADD', reaction => {
-            this.events.has('new message reaction') ? this.events.get('new message reaction')(reaction) : void 0;
+            this.events.has('new message reaction')
+                ? this.events.get('new message reaction')(reaction)
+                : void 0;
         });
         this.event('GUILD_MEMBER_ADD', async member => {
             this.events.has('new member')

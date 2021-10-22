@@ -217,7 +217,7 @@ export class Embed {
      * - gif
      * - article
      * - link
-     * ```ts
+     * ```js
      * embed.setType('rich')
      * ```
      */

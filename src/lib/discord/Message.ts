@@ -40,7 +40,7 @@ export class Message {
     public get channelId() {
         return this.data.channel_id ?? null;
     }
-    delete() {
+    public delete() {
         return http.DELETE(`/channels/${this.channelId}/messages/${this.id}`);
     }
     public embeds = this.data.embeds ? this.data.embeds.map(e => new Embed(e)) : [];
@@ -50,7 +50,6 @@ export class Message {
     public get reactions() {
         return this.data.reactions;
     }
-
     public get member(): Member | null {
         return this.data.member ? new Member(this.data.member as any) : null;
     }
