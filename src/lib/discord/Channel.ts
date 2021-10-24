@@ -75,7 +75,7 @@ export class Channel {
     }
     /** Returns the id of a pined message */
     public getPins(): Promise<Message[]> {
-        return http.GET(`/channels/${this.id}/pins`);
+        return http.GET(`/channels/${this.id}/pins`).then(raw => raw.map(msg => new Message(msg)));
     }
     /**
      * ! WARNING: This method is not recommend to be used
