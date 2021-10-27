@@ -15,6 +15,7 @@ import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User } from '../../discord/User';
 import { Channel } from '../../discord/Channel';
+import { Context } from '../../discord/Context';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -281,5 +282,8 @@ export class Client extends WebSocket {
             shard: [shardId, this.shardCount],
         });
         this.debug.log('shards', `Sent shard ${shardId}`);
+    }
+
+    public command(name: string, cb: (ctx: Context) => any) {
     }
 }
