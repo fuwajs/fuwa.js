@@ -1,5 +1,5 @@
 import type { User } from '../member';
-import type { CreateMessage, Message } from '../message';
+import type { MessageForm, Message } from '../message';
 import type { InteractionChannel, InteractionGuildMember } from '.';
 import { Role } from '..';
 
@@ -272,7 +272,7 @@ export interface GuildApplicationCommandPermissions {
 }
 
 /** @see https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionapplicationcommandcallbackdata */
-export interface InteractionApplicationCommandCallbackData extends Omit<CreateMessage, 'messageReference'> {
+export interface InteractionForm extends Omit<MessageForm, 'messageReference'> {
     /** Set to `64` to make your response ephemeral */
     flags?: number;
 }

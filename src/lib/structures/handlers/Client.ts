@@ -70,7 +70,7 @@ export class Client extends WebSocket {
             ...options,
         });
         if (options) {
-            this.applicationId = options.applicationId;
+            this.applicationId = options.applicationId ?? '';
             this.shardCount = options.shards ?? 0;
             this.token = options.token ? options.token.toString() : '';
         }
@@ -94,8 +94,9 @@ export class Client extends WebSocket {
     once = this.on;
     /** Something about this... */
     public mountCommand(cmd: Command) {
-        if (!this.applicationId) throw new Error('Application Id is required to do this action');
-        let path = `/applications/${this.applicationId}`;
+        if (!(this.applicationId || Globs.appId))
+            throw new Error('Application Id is required to do this action');
+        let path = `/applications/${this.applicationId || Globs.appId}`;
         if (cmd.guild) {
             path += `/guilds/${cmd.guild}/commands`;
         } else {
@@ -203,7 +204,7 @@ export class Client extends WebSocket {
                 if (data.op === GatewayOpcodes.Dispatch && data.t) {
                     const eventName = GatewayEventsConverter[data.t] || this.parseDiscordEventNames(data.t);
                     const event = this.events.get(eventName);
-                    if (!event) return;
+                    if (!event || eventName === 'ready') return;
                     const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
                     event(...args);
                 }
@@ -225,34 +226,17 @@ export class Client extends WebSocket {
         this.event('READY', ready => {
             this.bot = ready.user;
             Globs.appId = this.applicationId = ready.application.id;
-
             Globs.sessionId = this.sessionId = ready.session_id;
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
-        });
-        this.event('MESSAGE_CREATE', msg => {
-            this.events.has('new message') ? this.events.get('new message')(msg) : void 0;
-        });
-        this.event('MESSAGE_UPDATE', msg => {
-            this.events.get('message update') ? this.events.get('message update')(msg) : void 0;
-        });
-        this.event('CHANNEL_CREATE', channel => {
-            this.events.has('new channel') ? this.events.get('new channel')(channel) : void 0;
         });
         this.event('GUILD_CREATE', guild => {
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
-        this.event('MESSAGE_REACTION_ADD', reaction => {
-            this.events.has('new message reaction')
-                ? this.events.get('new message reaction')(reaction)
-                : void 0;
-        });
-        this.event('GUILD_MEMBER_ADD', async member => {
-            this.events.has('new member')
-                ? this.events.get('new member')(await http.GET(`/guilds/${member.guild_id}`), member)
-                : void 0;
-        });
         this.event('INTERACTION_CREATE', interaction => {
-            this.commands.get(interaction.id).run(interaction, {});
+            console.log({ cmds: this.commands, id: interaction.id });
+            const cmd = this.commands.get(interaction.data?.id);
+            console.log(cmd, cmd == null);
+            if (cmd) cmd.run(new Context(interaction), {});
         });
         this.event('INVALID_SESSION', () => {
             this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
@@ -285,5 +269,6 @@ export class Client extends WebSocket {
     }
 
     public command(name: string, cb: (ctx: Context) => any) {
+        return;
     }
 }

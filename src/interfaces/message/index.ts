@@ -274,25 +274,6 @@ export interface Emoji {
     available?: boolean;
 }
 
-/** @see https://discord.com/developers/docs/resources/channel#create-message */
-
-export interface CreateMessage {
-    /** The message contents (up to 2000 characters) */
-    content?: string;
-    /** true if this is a TTS message */
-    tts?: boolean;
-    /** Embedded `rich` content (up to 6000 characters) */
-    embeds?: Embed[];
-    /** Allowed mentions for the message */
-    allowed_mentions?: AllowedMentions;
-    /** Include to make your message a reply */
-    message_reference?: MessageReference;
-    /** The contents of the file being sent */
-    file?: FileContent | FileContent[];
-    /** The components you would like to have sent in this message */
-    components?: MessageComponents;
-}
-
 /** https://discord.com/developers/docs/resources/channel#allowed-mentions-object */
 export interface AllowedMentions {
     /** An array of allowed mention types to parse from the content. */
