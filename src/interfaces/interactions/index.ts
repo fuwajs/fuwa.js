@@ -4,7 +4,7 @@ import type { ResolvedData, CommandOptions } from '../DiscordAPI';
 import type { GuildMemberWithUser, User } from '../member';
 import type { Message, ComponentType, ButtonData, SelectMenuData, SelectOption } from '../message';
 import type { ApplicationCommandInteractionData } from './ApplicationTypes';
-
+import { GuildMember } from '@interfaces';
 /**
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  */
@@ -14,8 +14,21 @@ export enum ApplicationCommandType {
     Message,
 }
 
-/** @see https://discord.com/developers/docs/interactions/slash-commands#interaction */
-export type Interaction = InteractionTypes;
+/** @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
+export interface Interaction {
+    id: string;
+    application_id: string;
+    type: InteractionTypes;
+    data?: InteractionData;
+    guild_id?: string;
+    channel_id?: string;
+    member?: GuildMember;
+    user?: User;
+    token: string;
+    version: 1;
+    message?: Message;
+}
+
 
 export enum InteractionTypes {
     Ping = 1,
