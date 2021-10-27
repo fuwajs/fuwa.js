@@ -18,16 +18,13 @@ gulp.task('build', async () => {
         .pipe(
             project({ declaration: true, noLibCheck: true, experimentalDecorators: true, outDir: './types' })
         );
-
-    await tsCompile.pipe(gulp.dest('dist/'));
-
     gulp.src('./src/**/*.js').pipe(gulp.dest('dist/'));
     gulp.src('./src/**/*.json').pipe(gulp.dest('dist/'));
     gulp.src('./src/**/*.lang').pipe(gulp.dest('dist/'));
 
     return [
-        tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('dist/')),
         tsCompile.dts.pipe(gulp.dest('types/')),
+        tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('dist/')),
     ];
 });
 

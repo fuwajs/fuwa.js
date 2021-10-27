@@ -9,11 +9,12 @@ import {
     GatewayEventsConverter,
     GatewayEventArgConverter,
 } from '../../../interfaces/EventHandler';
-import { GatewayOpcodes, ApplicationCommand } from '../../../interfaces';
+import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
 import http from '../ws/http';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
-import { User } from '../../discord/User';
+import { User, BotUser } from '../../discord/User';
+
 import { Channel } from '../../discord/Channel';
 import { Context } from '../../discord/Context';
 
@@ -48,13 +49,14 @@ export class Client extends WebSocket {
     /** A Map of commands */
     public commands = new Map<string, Command>();
     protected plugins: Plugin[];
-    public bot: any | null = null;
+    public bot: BotUser | null = null;
     /** The message prefix. */
     public defaultPrefix: string | null;
     public shardCount: number;
     /** Your bot ID */
     public applicationId: string;
-    protected sessionId = '';
+    protected session = { id: '', seq: 0 };
+
     /** DiscordAPI GateWay Intents */
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
@@ -120,12 +122,15 @@ export class Client extends WebSocket {
             .then(HttpErrorChecker)
             .then(res => (res ? new Guild(res) : null));
     }
-    public getUser(uid: string): Promise<User | null> {
-        return http
-            .GET(`/users/${uid}`)
-            .catch(() => Promise.resolve(null))
-            .then(HttpErrorChecker)
-            .then(res => (res ? new User(res) : null));
+    public getUser<T extends '@me' | string>(uid: T): Promise<(T extends '@me' ? BotUser : User) | null> {
+        return (
+            http
+                .GET(`/users/${uid}`)
+                .catch(() => Promise.resolve(null))
+                .then(HttpErrorChecker)
+                // Basically checks if the uid is @me to make a bot user out of it
+                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null))
+        );
     }
     public getChannel(cid: string): Promise<Channel | null> {
         return http
@@ -197,7 +202,11 @@ export class Client extends WebSocket {
         this.connect(discordAPI.gateway, 9);
         this.op(GatewayOpcodes.Hello, data => {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
-            setInterval(() => this.response.op.emit(GatewayOpcodes.Heartbeat, 251), data.heartbeat_interval);
+            setInterval(
+                () =>
+                    this.response.op.emit(GatewayOpcodes.Heartbeat, data.heartbeat_interval * Math.random()),
+                data.heartbeat_interval
+            );
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
             this.wsEvent('message', data => {
                 this.plugins.forEach(plugin => plugin.event(this, data));
@@ -223,23 +232,42 @@ export class Client extends WebSocket {
             // this.debug.log('discord login', 'Attempting to connect to discord');
             this.response.op.emit(GatewayOpcodes.Identify, identify);
         });
+        this.op(GatewayOpcodes.Reconnect, () => {
+            this.response.op.emit(GatewayOpcodes.Resume, {
+                token: _token,
+                session_id: this.session.id,
+                seq: this.session.seq,
+            });
+        });
+        this.op(GatewayOpcodes.Heartbeat, seq => (this.session.seq = seq));
         this.event('READY', ready => {
-            this.bot = ready.user;
+            this.bot = new BotUser(ready.user);
             Globs.appId = this.applicationId = ready.application.id;
-            Globs.sessionId = this.sessionId = ready.session_id;
+            Globs.sessionId = ready.session_id;
+            this.session = {
+                id: ready.session_id,
+                seq: 0,
+            };
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
         this.event('GUILD_CREATE', guild => {
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
         this.event('INTERACTION_CREATE', interaction => {
-            console.log({ cmds: this.commands, id: interaction.id });
-            const cmd = this.commands.get(interaction.data?.id);
-            console.log(cmd, cmd == null);
-            if (cmd) cmd.run(new Context(interaction), {});
+            if (!interaction.data) return;
+            if (interaction.type === InteractionTypes.ApplicationCommand) {
+                const cmd = this.commands.get(interaction.data?.id);
+                const args: any = interaction.data.options
+                    ? Object.fromEntries(interaction.data.options.map(c => [c.name, c.value ?? null]))
+                    : {};
+                if (cmd) {
+                    cmd.run(new Context(interaction), args);
+                } else {
+                    console.log('Invalid command used');
+                }
+            }
         });
         this.event('INVALID_SESSION', () => {
-            this.debug.error('invalid token', 'Invalid token was passed, throwing a error...');
             throw new InvalidToken('Invalid token');
         });
     }

@@ -14,7 +14,8 @@ client.on('ready', async function () {
         desc: 'sheesh idk',
         guild: '788135963528134656',
         async run(ctx) {
-            console.log(await ctx.send({ type: 'ChannelMessageWithSource', data: { content: 'urmom' } }));
+            ctx.button({ content: 'urmom gay', style: 'Danger' });
+            await ctx.send({ content: 'urmom' });
         },
     });
     client.mountCommand(cmd);

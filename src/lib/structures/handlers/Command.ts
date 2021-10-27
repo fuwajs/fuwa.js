@@ -7,7 +7,7 @@ export interface CommandType {
     name: string;
     description: string;
     guild?: string;
-    run(ctx: any, args: { [key: string]: any }): any;
+    run<T extends any>(ctx: Context, args: T): any;
 }
 
 export interface ArgumentType {
@@ -34,7 +34,7 @@ export class Command implements CommandType {
      * type of class Argument[]
      */
     args: Argument[];
-    run: (ctx: Context, args: { [key: string]: Argument }) => any;
+    run: <T extends any>(ctx: Context, args: T) => any;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }

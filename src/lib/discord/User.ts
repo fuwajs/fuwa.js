@@ -27,7 +27,12 @@ export class User {
             ? `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`
             : null;
     }
-    public accentColor(): number | null {
+    public get accentColor(): number | null {
         return this.data.accent_color ? this.data.accent_color : null;
+    }
+}
+export class BotUser extends User {
+    constructor(data: UserData) {
+        super(data);
     }
 }
