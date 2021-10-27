@@ -2,8 +2,6 @@ import { MessageForm } from '../../interfaces/message';
 import { Message } from './Message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 import http from '../structures/ws/http';
-import { URL } from 'url';
-import { url } from 'inspector';
 
 export type MessageSearchTerms = {
     around?: string;
