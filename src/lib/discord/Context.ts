@@ -67,6 +67,8 @@ export class Context {
             ...message,
             components,
         };
+        // clear components for next message
+        this.components.clear();
         await http.POST(
             `/interactions/${this.data.id}/${this.data.token}/callback`,
             JSON.stringify({
