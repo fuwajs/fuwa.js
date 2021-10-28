@@ -2,20 +2,46 @@ const { readFileSync } = require('fs');
 const { join } = require('path');
 const { Client, Command, Plugin, Embed } = require('../../');
 
+class Logger extends Plugin {
+    constructor() {
+        super({ name: 'Logger' });
+    }
+    event(client, data) {
+        // console.log(data);
+    }
+}
+
 const client = new Client({
     intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
+    plugins: [new Logger()],
 });
 
 client.on('ready', async function () {
     console.log('ready');
 
     const cmd = new Command({
-        name: 'poofpuf',
-        desc: 'sheesh idk',
+        name: 'gay-mom-detector',
+        description: 'is ur mom gae?',
         guild: '788135963528134656',
         async run(ctx) {
-            ctx.button({ content: 'urmom gay', style: 'Danger' });
-            await ctx.send({ content: 'urmom' });
+            const channel = await ctx.getChannel();
+            // prettier-ignore
+            ctx
+                .button({})
+                    .setContent('ur mum gae')
+                    .setStyle('Danger')
+                    .onClick(() =>
+                        channel.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
+                    )
+                .exit()
+                    .button({})
+                    .setContent('ur mom not gae')
+                    .setStyle('Success')
+                    .onClick(() =>
+                        channel.send({ content: 'ur mom is not gay at all, pog' })
+                    )
+                .exit()
+                    .send({ content: 'urmom' });
         },
     });
     client.mountCommand(cmd);

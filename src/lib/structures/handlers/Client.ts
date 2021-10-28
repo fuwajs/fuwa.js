@@ -50,6 +50,8 @@ export class Client extends WebSocket {
     public commands = new Map<string, Command>();
     protected plugins: Plugin[];
     public bot: BotUser | null = null;
+    /** This is a developer util please don't use this   */
+    public interactionListeners = new Map<string, (ctx: Context) => any>();
     /** The message prefix. */
     public defaultPrefix: string | null;
     public shardCount: number;
@@ -141,7 +143,7 @@ export class Client extends WebSocket {
     }
     /**
      * Returns all mounted commands.
-     * @param guildId the id of the guild your application command is registierd in.
+     * @param guildId the id of the guild your application command is registered in.
      */
     public getMountedCommands(guildId?: string): Promise<ApplicationCommand[]> {
         let path = `/applications/${this.applicationId}`;
@@ -242,6 +244,8 @@ export class Client extends WebSocket {
         this.op(GatewayOpcodes.Heartbeat, seq => (this.session.seq = seq));
         this.event('READY', ready => {
             this.bot = new BotUser(ready.user);
+            Globs.client = this;
+            this.token = _token;
             Globs.appId = this.applicationId = ready.application.id;
             Globs.sessionId = ready.session_id;
             this.session = {
@@ -265,6 +269,10 @@ export class Client extends WebSocket {
                 } else {
                     console.log('Invalid command used');
                 }
+            } else if (interaction.type === InteractionTypes.MessageComponent) {
+                const id = interaction.data.custom_id;
+                const cb = this.interactionListeners.get(id);
+                if (cb) cb(new Context(interaction));
             }
         });
         this.event('INVALID_SESSION', () => {

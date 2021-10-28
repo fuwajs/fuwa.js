@@ -7,6 +7,7 @@ const Globs = {
     token: '',
     sessionId: '',
     appId: '',
+    client: '' as any,
 };
 
 export default Globs;
