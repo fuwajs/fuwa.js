@@ -27,18 +27,18 @@ client.on('ready', async function () {
             const channel = await ctx.getChannel();
             // prettier-ignore
             ctx
-                .button({})
+                .button()
                     .setContent('ur mum gae')
                     .setStyle('Danger')
-                    .onClick(() =>
-                        channel.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
+                    .onClick((ctx) =>
+                        ctx.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
                     )
                 .exit()
-                    .button({})
+                    .button()
                     .setContent('ur mom not gae')
                     .setStyle('Success')
-                    .onClick(() =>
-                        channel.send({ content: 'ur mom is not gay at all, pog' })
+                    .onClick((ctx) =>
+                        ctx.send({ content: 'ur mom is not gay at all, pog' })
                     )
                 .exit()
                     .send({ content: 'urmom' });

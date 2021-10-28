@@ -17,6 +17,9 @@ import { Guild, Member } from './Guild';
 export interface ButtonParams {
     content?: string;
     id?: string;
+    /**
+     * @default Primary
+     */
     style?: keyof typeof ButtonStyles;
     url?: string;
     isDisabled?: boolean;
@@ -28,8 +31,15 @@ export class Context {
      * @param param0
      * @returns
      */
-    button({ style = 'Primary', url, id: btnId, isDisabled = false, content }: ButtonParams) {
+    button(data?: ButtonParams) {
         let id;
+        const {
+            style,
+            url,
+            id: btnId,
+            isDisabled,
+            content,
+        } = { isDisabled: false, style: 'Primary', ...(data ?? {}) };
         if (!url) id = btnId || crypto.randomBytes(16).toString('hex');
         const btn: ButtonComponent = {
             type: 2,
