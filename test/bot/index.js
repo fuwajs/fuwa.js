@@ -41,7 +41,16 @@ client.on('ready', async function () {
                         ctx.send({ content: 'ur mom is not gay at all, pog' })
                     )
                 .exit()
-                    .send({ content: 'urmom' });
+                    .send({ 
+                        embeds: [
+                            new Embed()
+                                .setColor(0x6f00f)
+                                .setDescription('urmommy')
+                                .setTitle('sheeesh')
+                                .setAuthor('urmom')
+                                .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
+                        ]
+                    });
         },
     });
     client.mountCommand(cmd);

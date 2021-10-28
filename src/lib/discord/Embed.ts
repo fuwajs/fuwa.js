@@ -15,6 +15,13 @@ export type Media = {
 
 export type EmbedType = 'rich' | 'image' | 'video' | 'gifv' | 'article' | 'link';
 
+export interface AuthorOpts {
+    name: string;
+    url?: string;
+    icon?: string;
+    proxyIcon?: string;
+}
+
 export class Embed {
     protected type: EmbedType;
     protected title?: string;
@@ -133,12 +140,12 @@ export class Embed {
      * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
-    public setAuthor(name: string, opts?: { icon: string; url?: string; proxyIconUrl?: string }): this {
+    public setAuthor({ name, url, icon, proxyIcon }: AuthorOpts): this {
         this.author = {
-            name: name,
-            url: opts.url,
-            icon_url: opts.icon,
-            proxy_icon_url: opts.proxyIconUrl,
+            name,
+            url,
+            icon_url: icon,
+            proxy_icon_url: proxyIcon,
         };
         return this;
     }
