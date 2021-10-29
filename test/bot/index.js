@@ -24,7 +24,6 @@ client.on('ready', async function () {
         description: 'is ur mom gae?',
         guild: '788135963528134656',
         async run(ctx) {
-            const channel = await ctx.getChannel();
             // prettier-ignore
             ctx
                 .button()
@@ -34,23 +33,23 @@ client.on('ready', async function () {
                         ctx.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
                     )
                 .exit()
-                    .button()
+                .button()
                     .setContent('ur mom not gae')
                     .setStyle('Success')
                     .onClick((ctx) =>
                         ctx.send({ content: 'ur mom is not gay at all, pog' })
                     )
                 .exit()
-                    .send({ 
-                        embeds: [
-                            new Embed()
-                                .setColor(0x6f00f)
-                                .setDescription('urmommy')
-                                .setTitle('sheeesh')
-                                .setAuthor('urmom')
-                                .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
-                        ]
-                    });
+                .send({ 
+                    embeds: [
+                        new Embed()
+                            .setColor(0x6f00f)
+                            .setDescription('urmommy')
+                            .setTitle('sheeesh')
+                            .setAuthor('urmom')
+                            .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
+                    ]
+                });
         },
     });
     client.mountCommand(cmd);
