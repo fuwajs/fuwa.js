@@ -25,7 +25,7 @@ export interface ButtonParams {
     isDisabled?: boolean;
 }
 export class Context {
-    protected components = new Map<'buttons' | 'rows', ActionRow>();
+    protected components = new Map<'buttons' | 'menus', ActionRow>();
     constructor(protected data: Interaction) {}
     /**
      * @param param0
