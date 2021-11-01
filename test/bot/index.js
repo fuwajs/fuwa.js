@@ -29,16 +29,19 @@ client.on('ready', async function () {
                 .button()
                     .setContent('ur mum gae')
                     .setStyle('Danger')
-                    .onClick((ctx) =>
-                        ctx.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
-                    )
+                    .onClick((btn) => {
+                        ctx.delete();
+                        btn.send({ content: 'so u admit ur mom gae? sus' })
+
+                    })
                 .exit()
                 .button()
                     .setContent('ur mom not gae')
                     .setStyle('Success')
-                    .onClick((ctx) =>
-                        ctx.send({ content: 'ur mom is not gay at all, pog' })
-                    )
+                    .onClick((btn) => {
+                        ctx.delete(),
+                        btn.edit({ content: 'ur mom is not gay at all, pog' })
+                    })
                 .exit()
                 .send({ 
                     embeds: [
@@ -80,14 +83,7 @@ client.on('new message', async msg => {
     }
 });
 
-client.on('message removed', async function (ctx, msg) {
-    console.table([
-        {
-            channel: ctx.id,
-            message: msg.content,
-        },
-    ]);
-});
+client.on('message removed', console.log);
 
 client.on('presence update', async function (presence, oldPresence) {
     console.table([

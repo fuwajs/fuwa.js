@@ -13,6 +13,7 @@ import type { Client } from '../structures/handlers/Client';
 import { Channel } from './Channel';
 import { User } from './User';
 import { Guild, Member } from './Guild';
+import { Message } from './Message';
 
 export interface ButtonParams {
     content?: string;
@@ -64,8 +65,8 @@ export class Context {
             ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res))
             : null;
     }
-    public author: User | null = this.data.user ? new User(this.data.user) : null;
-    public member: Member | null = this.data.member ? new Member(this.data.member) : null;
+    public author: User = this.data.user ? new User(this.data.user) : null;
+    public member: Member = this.data.member ? new Member(this.data.member) : null;
     getGuild(): Promise<Guild> | null {
         return this.data.guild_id
             ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res))
@@ -86,6 +87,29 @@ export class Context {
                 data,
             })
         );
+
+        return;
+    }
+    async delete() {
+        await http.DELETE(`/webhooks/${Globs.appId}/${this.data.token}/messages/@original`);
+        return;
+    }
+    edit(message: InteractionForm) {
+        const components = [...(message.components ?? []), ...[...this.components.values()]];
+        const data = {
+            ...message,
+            components,
+        };
+        // clear components for next message
+        this.components.clear();
+        return http
+            .PATCH(
+                `/webhooks/${Globs.appId}/${this.data.token}/messages/@original`,
+                JSON.stringify({
+                    data,
+                })
+            )
+            .then(raw => new Message(raw));
 
         return;
     }
