@@ -4,7 +4,7 @@ import { GuildMember } from '../guild';
 import { Embed as EmbedHander } from '../../lib/discord/Embed';
 import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
-import { Channel } from 'interfaces';
+import { Channel } from '../channel';
 
 /** @see https://discord.com/developers/docs/resources/channel#message-object */
 export interface Message {
