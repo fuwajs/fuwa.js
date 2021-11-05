@@ -17,8 +17,8 @@ const client = new Client({
 });
 
 client.on('ready', async function () {
-    console.log('ready');
-
+    console.clear();
+    console.log(`Connected to discord!`)
     const cmd = new Command({
         name: 'gay-mom-detector',
         description: 'is ur mom gae?',
@@ -43,7 +43,7 @@ client.on('ready', async function () {
                         btn.edit({ content: 'ur mom is not gay at all, pog' })
                     })
                 .exit()
-                .send({ 
+                .send({
                     embeds: [
                         new Embed()
                             .setColor(0x6f00f)
@@ -58,11 +58,15 @@ client.on('ready', async function () {
     client.mountCommand(cmd);
 });
 
-client.login(readFileSync(join(__dirname, 'token.secret')));
-
-client.on('new message', async msg => {
+client.on('new message', async function (msg) {
     let prefix = '!';
     const channel = await client.getChannel(msg.channel_id);
+
+
+    if (msg.content == ".") {
+        channel.send({content: ""})
+    }
+
     if (!msg.content.startsWith(prefix) || msg.author.isBot) return;
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
@@ -103,3 +107,9 @@ client.on('message update', async function (data) {
         },
     ]);
 });
+
+try {
+    client.login(readFileSync(join(__dirname, 'token.secret')));
+} catch (err) {
+    console.error('error', err)
+}

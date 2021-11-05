@@ -96,7 +96,9 @@ export class Client extends WebSocket {
      * Alias for on
      */
     once = this.on;
-    /** Something about this... */
+    /** Function to map slash commands connected to your client.
+     * @param cmd The slash command to mount to the client.
+     */
     public mountCommand(cmd: Command) {
         if (!(this.applicationId || Globs.appId))
             throw new Error('Application Id is required to do this action');
@@ -111,11 +113,31 @@ export class Client extends WebSocket {
         });
         return this;
     }
+
+    /** 
+     * Deletes a command from the discord api.
+     * @param cmd command or command id
+     * @param guildId only needed if your command is a guild command and your id is a string
+     */
+    public unmountCommand(cmd: Command | string, guildId?: string) {
+        if (!this.applicationId) throw new Error('Application Id is required to do this action');
+        const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
+        const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
+        let path = `/applications/${this.applicationId}`;
+        if (!guild) {
+            path += `/guilds/${guild}/commands`;
+        } else {
+            path += '/commands';
+        }
+        return http.DELETE(path + `/${cmdId}`);
+    }
+
     /**
      *
      * @param gid Id of the guild you want to fetch
      * @param withSize If you want the guild to contain the approximant member count of the guild (and presences), warning this may slow down the request so only use if needed
      * @returns A Guild, or null if the guild was not found
+     
      */
     public getGuild(gid: string, withSize = false): Promise<Guild | null> {
         return http
@@ -153,23 +175,6 @@ export class Client extends WebSocket {
             path += '/commands';
         }
         return http.GET(path);
-    }
-    /**
-     *
-     * @param cmd command or command id
-     * @param guildId only needed if your command is a guild command and your id is a string
-     */
-    public unmountCommand(cmd: Command | string, guildId?: string) {
-        if (!this.applicationId) throw new Error('Application Id is required to do this action');
-        const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
-        const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
-        let path = `/applications/${this.applicationId}`;
-        if (!guild) {
-            path += `/guilds/${guild}/commands`;
-        } else {
-            path += '/commands';
-        }
-        return http.DELETE(path + `/${cmdId}`);
     }
     protected parseDiscordEventNames(e: string): string {
         let str = e

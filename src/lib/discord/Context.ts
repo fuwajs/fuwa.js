@@ -29,10 +29,11 @@ export class Context {
     protected components = new Map<'buttons' | 'menus', ActionRow>();
     constructor(protected data: Interaction) {}
     /**
-     * @param param0
+     * The Context#button function
+     * @param data ingest ButtonParams or null
      * @returns
      */
-    button(data?: ButtonParams) {
+    public button(data?: ButtonParams): Button {
         let id;
         const {
             style,
@@ -60,19 +61,25 @@ export class Context {
         const button = new Button(this, self, id);
         return button;
     }
-    getChannel(): Promise<Channel> | null {
+    /** Fetches raw channel data */
+    public getChannel(): Promise<Channel> | null {
         return this.data.channel_id
             ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res))
             : null;
     }
     public author: User = this.data.user ? new User(this.data.user) : null;
     public member: Member = this.data.member ? new Member(this.data.member) : null;
+    /** Fetches raw guild data */
     getGuild(): Promise<Guild> | null {
         return this.data.guild_id
             ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res))
             : null;
     }
-    async send(message: InteractionForm, type: keyof typeof ResponseTypes = 'ChannelMessageWithSource') {
+    /** Sends a POST  */
+    public async send(
+        message: InteractionForm,
+        type: keyof typeof ResponseTypes = 'ChannelMessageWithSource'
+    ): Promise<void> {
         const components = [...(message.components ?? []), ...[...this.components.values()]];
         const data = {
             ...message,
@@ -86,15 +93,18 @@ export class Context {
                 type: ResponseTypes[type],
                 data,
             })
-        );
+        ).catch((expected) => {
+            throw new Error(expected);
+        })
 
         return;
     }
-    async delete() {
+    public async delete(): Promise<void> {
         await http.DELETE(`/webhooks/${Globs.appId}/${this.data.token}/messages/@original`);
         return;
     }
-    edit(message: InteractionForm) {
+    /** Edit some message data*/
+    public edit(message: InteractionForm): Promise<Message> {
         const components = [...(message.components ?? []), ...[...this.components.values()]];
         const data = {
             ...message,
@@ -119,27 +129,27 @@ export class Button {
     protected client = Globs.client as Client;
     constructor(protected ctx: Context, protected self: ButtonComponent, public id: string) {}
 
-    setContent(content: string) {
+    public setContent(content: string): this {
         this.self.label = content;
         return this;
     }
-    setUrl(url: string) {
+    public setUrl(url: string): this {
         this.self.url = url;
         return this;
     }
-    setStyle(style: keyof typeof ButtonStyles) {
+    public setStyle(style: keyof typeof ButtonStyles): this {
         this.self.style = ButtonStyles[style];
         return this;
     }
-    disable(disabled = true) {
+    public disable(disabled = true): this {
         this.self.disabled = disabled;
         return this;
     }
-    onClick(cb: (ctx: Context) => any) {
+    public onClick(cb: (ctx: Context) => any): this {
         this.client.interactionListeners.set(this.id, cb);
         return this;
     }
-    exit() {
+    public exit(): Context {
         return this.ctx;
     }
 }
