@@ -2,13 +2,15 @@ import http from '../ws/http';
 import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
 import Globs from '../../../util/Global';
 import { Context } from '../../discord/Context';
+import type { Client } from './Client';
 
 export interface CommandType {
     name: string;
     description: string;
     guild?: string;
-    run<T extends any>(ctx: Context, args: T): any;
+    run: CommandCalback;
 }
+export type CommandCalback = <T extends any>(ctx: Context, args?: T) => any;
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
@@ -34,7 +36,7 @@ export class Command implements CommandType {
      * type of class Argument[]
      */
     args: Argument[];
-    run: <T extends any>(ctx: Context, args: T) => any;
+    run: CommandCalback;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }
@@ -46,15 +48,27 @@ export class Command implements CommandType {
         } else {
             path += '/commands';
         }
+        const client = Globs.client as Client;
         return http
             .POST(path, JSON.stringify({ name: this.name, description: this.description }))
             .then((cmd: ApplicationCommandCreateUpdateDelete) => {
                 this.id = cmd.id;
+                client.commands.set(this.id, this);
                 return cmd;
             });
     }
     public addArg(...args: Argument[]): void {
         this.args.push(...args);
+    }
+    public static from(cmd: ApplicationCommandCreateUpdateDelete, run: CommandCalback) {
+        const command = new Command({
+            description: cmd.description,
+            guild: cmd.guild_id,
+            run,
+            name: cmd.name,
+        });
+        command.id = cmd.id;
+        return command;
     }
 }
 

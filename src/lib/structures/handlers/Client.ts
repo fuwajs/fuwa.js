@@ -1,6 +1,6 @@
 import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import { Command } from './Command';
+import { Command, CommandCalback } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
 import { HttpErrorChecker } from '../../../util';
 import { debug as Debug } from '../../../util/Debug';
@@ -32,6 +32,7 @@ export interface ClientOptions {
      * The owner(s) discord ID. These users can bypass default bot permissions.
      */
     owners?: string[] | string;
+    mountingCommands: CommandCalback[];
     /**
      * TODO shard manager
      */
@@ -48,10 +49,12 @@ export class Client extends WebSocket {
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
     public commands = new Map<string, Command>();
-    protected plugins: Plugin[];
+    public plugins: Plugin[];
     public bot: BotUser | null = null;
     /** This is a developer util please don't use this   */
-    public interactionListeners = new Map<string, (ctx: Context) => any>();
+    public _interactionListeners = new Map<string, CommandCalback>();
+    /** Commands that will be mounted before the ready event */
+    public mountingCommands = new Array<Command>();
     /** The message prefix. */
     public defaultPrefix: string | null;
     public shardCount: number;
@@ -96,10 +99,10 @@ export class Client extends WebSocket {
      * Alias for on
      */
     once = this.on;
-    /** Function to map slash commands connected to your client.
+    /** Mounts a command at runtime
      * @param cmd The slash command to mount to the client.
      */
-    public mountCommand(cmd: Command) {
+    public async mountCommand(cmd: Command) {
         if (!(this.applicationId || Globs.appId))
             throw new Error('Application Id is required to do this action');
         let path = `/applications/${this.applicationId || Globs.appId}`;
@@ -114,7 +117,7 @@ export class Client extends WebSocket {
         return this;
     }
 
-    /** 
+    /**
      * Deletes a command from the discord api.
      * @param cmd command or command id
      * @param guildId only needed if your command is a guild command and your id is a string
@@ -253,6 +256,7 @@ export class Client extends WebSocket {
             this.token = _token;
             Globs.appId = this.applicationId = ready.application.id;
             Globs.sessionId = ready.session_id;
+            this.mountingCommands.forEach(async cmd => await cmd.mount());
             this.session = {
                 id: ready.session_id,
                 seq: 0,
@@ -276,7 +280,7 @@ export class Client extends WebSocket {
                 }
             } else if (interaction.type === InteractionTypes.MessageComponent) {
                 const id = interaction.data.custom_id;
-                const cb = this.interactionListeners.get(id);
+                const cb = this._interactionListeners.get(id);
                 if (cb) cb(new Context(interaction));
             }
         });
@@ -288,12 +292,13 @@ export class Client extends WebSocket {
     /**
      * Shuts down the bot process.
      */
-    public logout(end = true): void | never {
+    public logout<T extends boolean>(end: T): T extends true ? void : never {
         if (this?.ws && this.loop) {
             clearInterval(this.loop);
             this.ws.close();
         }
         if (end) process.exit();
+        return;
     }
 
     /**
@@ -309,7 +314,29 @@ export class Client extends WebSocket {
         this.debug.log('shards', `Sent shard ${shardId}`);
     }
 
-    public command(name: string, cb: (ctx: Context) => any) {
-        return;
+    public command(
+        name: string,
+        data: CommandCalback | { desc?: string; args?: any; guild?: string },
+        cb?: CommandCalback
+    ) {
+        let callback: CommandCalback;
+        if (typeof data === 'function') {
+            callback = data;
+        } else {
+            callback = cb;
+        }
+        if (!callback) {
+            throw new Error('A Callback is required to do this action');
+        }
+        const info = { ...(typeof data === 'object' ? data : {}) };
+        this.mountingCommands.push(
+            new Command({
+                description: info.desc,
+                run: callback,
+                name,
+                guild: info.guild,
+            })
+        );
+        return this;
     }
 }

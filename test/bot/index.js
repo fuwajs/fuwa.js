@@ -16,55 +16,55 @@ const client = new Client({
     plugins: [new Logger()],
 });
 
+const FUWA_GUILD_ID = '788135963528134656';
+
 client.on('ready', async function () {
     console.clear();
-    console.log(`Connected to discord!`)
-    const cmd = new Command({
-        name: 'gay-mom-detector',
-        description: 'is ur mom gae?',
-        guild: '788135963528134656',
-        async run(ctx) {
-            // prettier-ignore
-            ctx
-                .button()
-                    .setContent('ur mum gae')
-                    .setStyle('Danger')
-                    .onClick((btn) => {
-                        ctx.delete();
-                        btn.send({ content: 'so u admit ur mom gae? sus' })
+    console.log(`Connected to discord!`);
+    const commands = await client.getMountedCommands(FUWA_GUILD_ID);
+    commands.forEach(cmd => {
+        if (cmd.name === 'gay-mom-detector') return;
 
-                    })
-                .exit()
-                .button()
-                    .setContent('ur mom not gae')
-                    .setStyle('Success')
-                    .onClick((btn) => {
-                        ctx.delete(),
-                        btn.edit({ content: 'ur mom is not gay at all, pog' })
-                    })
-                .exit()
-                .send({
-                    embeds: [
-                        new Embed()
-                            .setColor(0x6f00f)
-                            .setDescription('urmommy')
-                            .setTitle('sheeesh')
-                            .setAuthor('urmom')
-                            .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
-                    ]
-                });
-        },
+        client.unmountCommand(cmd.id, cmd.guild_id).then(() => console.log(`Unmounted ${cmd.name}`));
     });
-    client.mountCommand(cmd);
 });
+client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, ctx => {
+    // prettier-ignore
+    ctx
+        .button()
+            .setContent('ur mum gae')
+            .setStyle('Danger')
+            .onClick((btn) => {
+                ctx.delete();
+                btn.send({ content: 'so u admit ur mom gae? sus' })
 
+            })
+        .exit()
+        .button()
+            .setContent('ur mom not gae')
+            .setStyle('Success')
+            .onClick((btn) => {
+                ctx.delete(),
+                btn.edit({ content: 'ur mom is not gay at all, pog' })
+            })
+        .exit()
+        .send({
+            embeds: [
+                new Embed()
+                    .setColor(0x6f00f)
+                    .setDescription('urmommy')
+                    .setTitle('sheeesh')
+                    .setAuthor('urmom')
+                    .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
+            ]
+        });
+});
 client.on('new message', async function (msg) {
     let prefix = '!';
     const channel = await client.getChannel(msg.channel_id);
 
-
-    if (msg.content == ".") {
-        channel.send({content: ""})
+    if (msg.content == '.') {
+        channel.send({ content: '' });
     }
 
     if (!msg.content.startsWith(prefix) || msg.author.isBot) return;
@@ -111,5 +111,5 @@ client.on('message update', async function (data) {
 try {
     client.login(readFileSync(join(__dirname, 'token.secret')));
 } catch (err) {
-    console.error('error', err)
+    console.error('error', err);
 }
