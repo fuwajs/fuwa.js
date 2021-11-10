@@ -22,31 +22,21 @@ client.on('ready', async function () {
     console.clear();
     console.log(`Connected to discord!`);
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
-    commands.forEach(cmd => {
-        if (cmd.name === 'gay-mom-detector') return;
-
-        client.unmountCommand(cmd.id, cmd.guild_id).then(() => console.log(`Unmounted ${cmd.name}`));
-    });
 });
-client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, ctx => {
+client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, async ctx => {
+    const channel = await ctx.getChannel();
+    await channel.startTyping();
     // prettier-ignore
     ctx
         .button()
             .setContent('ur mum gae')
             .setStyle('Danger')
-            .onClick((btn) => {
-                ctx.delete();
-                btn.send({ content: 'so u admit ur mom gae? sus' })
-
-            })
+            .onClick((btn) => btn.send({ content: 'so u admit ur mom gae? sus' }))
         .exit()
         .button()
             .setContent('ur mom not gae')
             .setStyle('Success')
-            .onClick((btn) => {
-                ctx.delete(),
-                btn.edit({ content: 'ur mom is not gay at all, pog' })
-            })
+            .onClick((btn) => btn.edit({ content: 'ur mom is not gay at all, pog' }))
         .exit()
         .send({
             embeds: [
