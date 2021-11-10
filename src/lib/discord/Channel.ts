@@ -44,7 +44,7 @@ export class Channel {
     public get position() {
         return this.data.position;
     }
-    public isDM() {
+    public get isDM() {
         return ((this.type as any) || '') === 'Dm';
     }
     public type = Object.keys(ChannelType).find(
