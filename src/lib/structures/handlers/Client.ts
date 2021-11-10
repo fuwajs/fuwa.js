@@ -51,7 +51,7 @@ export class Client extends WebSocket {
     public commands = new Map<string, Command>();
     public plugins: Plugin[];
     public bot: BotUser | null = null;
-    /** This is a developer util please don't use this   */
+    /** Interaction listeners for buttons */
     public _interactionListeners = new Map<string, CommandCalback>();
     /** Commands that will be mounted before the ready event */
     public mountingCommands = new Array<Command>();
@@ -127,7 +127,7 @@ export class Client extends WebSocket {
         const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
         const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
         let path = `/applications/${this.applicationId}`;
-        if (!guild) {
+        if (guild) {
             path += `/guilds/${guild}/commands`;
         } else {
             path += '/commands';
@@ -273,7 +273,7 @@ export class Client extends WebSocket {
                 const args: any = interaction.data.options
                     ? Object.fromEntries(interaction.data.options.map(c => [c.name, c.value ?? null]))
                     : {};
-                if (cmd) {
+                if (cmd && cmd.run) {
                     cmd.run(new Context(interaction), args);
                 } else {
                     console.log('Invalid command used');
