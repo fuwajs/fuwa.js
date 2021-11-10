@@ -17,7 +17,8 @@ gulp.task('build', async () => {
         .pipe(sourcemaps.init({ base: 'src' }))
         .pipe(
             project({ declaration: true, noLibCheck: true, experimentalDecorators: true, outDir: './types' })
-        );
+        )
+        .on('error', console.log);
     gulp.src('./src/**/*.js').pipe(gulp.dest('dist/'));
     gulp.src('./src/**/*.json').pipe(gulp.dest('dist/'));
     gulp.src('./src/**/*.lang').pipe(gulp.dest('dist/'));
