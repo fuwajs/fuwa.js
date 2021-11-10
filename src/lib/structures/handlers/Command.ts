@@ -8,7 +8,7 @@ export interface CommandType {
     name: string;
     description: string;
     guild?: string;
-    run: CommandCalback;
+    run?: CommandCalback;
 }
 export type CommandCalback = <T extends any>(ctx: Context, args?: T) => any;
 
@@ -60,7 +60,19 @@ export class Command implements CommandType {
     public addArg(...args: Argument[]): void {
         this.args.push(...args);
     }
-    public static from(cmd: ApplicationCommandCreateUpdateDelete, run: CommandCalback) {
+    /**
+     * Convert a slash command into a actual command
+     * @param cmd The command you want to convert
+     * @param run The callback for the command. This is required if mount is true
+     * @param mount if the command should mount or not, the callback is required if so. defaults to false
+     * @returns a new Command
+     */
+    public static from<T extends boolean>(
+        cmd: ApplicationCommandCreateUpdateDelete,
+        run: T extends true ? CommandCalback : undefined,
+        mount?: T
+    ) {
+        const client = Globs.client as Client;
         const command = new Command({
             description: cmd.description,
             guild: cmd.guild_id,
@@ -68,6 +80,9 @@ export class Command implements CommandType {
             name: cmd.name,
         });
         command.id = cmd.id;
+
+        (mount ?? true) && client.commands.set(cmd.id, command);
+
         return command;
     }
 }
