@@ -87,15 +87,17 @@ export class Context {
         };
         // clear components for next message
         this.components.clear();
-        await http.POST(
-            `/interactions/${this.data.id}/${this.data.token}/callback`,
-            JSON.stringify({
-                type: ResponseTypes[type],
-                data,
-            })
-        ).catch((expected) => {
-            throw new Error(expected);
-        })
+        await http
+            .POST(
+                `/interactions/${this.data.id}/${this.data.token}/callback`,
+                JSON.stringify({
+                    type: ResponseTypes[type],
+                    data,
+                })
+            )
+            .catch(expected => {
+                throw new Error(expected);
+            });
 
         return;
     }
@@ -146,7 +148,7 @@ export class Button {
         return this;
     }
     public onClick(cb: (ctx: Context) => any): this {
-        this.client.interactionListeners.set(this.id, cb);
+        this.client._interactionListeners.set(this.id, cb);
         return this;
     }
     public exit(): Context {
