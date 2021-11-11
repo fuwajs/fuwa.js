@@ -1,10 +1,10 @@
-export * from './componentTypes';
-import { MessageInteraction, ThreadMember } from '..';
-import { GuildMember } from '../guild';
-import { Embed as EmbedHandler } from '../../lib/discord/Embed';
-import type { Author, GuildMemberWithUser, Member, User } from '../member';
-import type { MessageComponents } from './componentTypes';
-import { Channel } from '../channel';
+export * from './componentTypes.ts';
+import { MessageInteraction, ThreadMember } from '../index.ts';
+import { GuildMember } from '../guild/index.ts';
+import { Embed as EmbedHandler } from '../../lib/discord/Embed.ts';
+import type { Author, GuildMemberWithUser, Member, User } from '../member/index.ts';
+import type { MessageComponents } from './componentTypes.ts';
+import { Channel } from '../channel/index.ts';
 
 /** @see https://discord.com/developers/docs/resources/channel#message-object */
 export interface Message {

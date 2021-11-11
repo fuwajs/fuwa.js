@@ -1,22 +1,23 @@
-import { WebSocket } from '../ws/WebSocket';
-import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import { Command, CommandCalback } from './Command';
+import { Buffer } from "https://deno.land/std@0.85.0/node/buffer.ts";
+import { WebSocket } from '../ws/WebSocket.ts';
+import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI.ts';
+import { Command, CommandCalback } from './Command.ts';
 import Globs, { InvalidToken } from '../../../util/Global';
-import { HttpErrorChecker } from '../../../util';
-import { debug as Debug } from '../../../util/Debug';
+import { HttpErrorChecker } from '../../../util/index.ts';
+import { debug as Debug } from '../../../util/Debug.ts';
 import {
     EventHandlers,
     GatewayEventsConverter,
     GatewayEventArgConverter,
-} from '../../../interfaces/EventHandler';
-import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
-import http from '../ws/http';
-import { Plugin } from './Plugin';
-import { Guild } from '../../discord/Guild';
-import { User, BotUser } from '../../discord/User';
+} from '../../../interfaces/EventHandler.ts';
+import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces/index.ts';
+import http from '../ws/http.ts';
+import { Plugin } from './Plugin.ts';
+import { Guild } from '../../discord/Guild.ts';
+import { User, BotUser } from '../../discord/User.ts';
 
-import { Channel } from '../../discord/Channel';
-import { Context } from '../../discord/Context';
+import { Channel } from '../../discord/Channel.ts';
+import { Context } from '../../discord/Context.ts';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -112,7 +113,7 @@ export class Client extends WebSocket {
             path += '/commands';
         }
         http.POST(path, JSON.stringify({ name: cmd.name, description: cmd.description })).then(command => {
-            this.commands.set(command.data.id, cmd);
+            this.commands.set(command.id, cmd);
         });
         return this;
     }
@@ -150,12 +151,14 @@ export class Client extends WebSocket {
             .then(res => (res ? new Guild(res) : null));
     }
     public getUser<T extends '@me' | string>(uid: T): Promise<(T extends '@me' ? BotUser : User) | null> {
-        return http
+        return (
+            http
                 .GET(`/users/${uid}`)
                 .catch(() => Promise.resolve(null))
                 .then(HttpErrorChecker)
                 // Basically checks if the uid is @me to make a bot user out of it
-                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null));
+                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null))
+        );
     }
     public getChannel(cid: string): Promise<Channel | null> {
         return http
@@ -175,7 +178,7 @@ export class Client extends WebSocket {
         } else {
             path += '/commands';
         }
-        return http.GET(path).then(res => res.data);
+        return http.GET(path);
     }
     protected parseDiscordEventNames(e: string): string {
         let str = e

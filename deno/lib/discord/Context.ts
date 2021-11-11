@@ -1,5 +1,6 @@
-import http from './../structures/ws/http';
-import crypto from 'crypto';
+import http from './../structures/ws/http.ts';
+import crypto from 'https://deno.land/std@0.85.0/node/crypto.ts';
+import Globs from '../../util/Global.ts';
 import {
     Interaction,
     InteractionForm,
@@ -7,19 +8,25 @@ import {
     ButtonComponent,
     ButtonStyles,
     ActionRow,
-} from '../../interfaces';
-import { Channel } from './Channel';
-import { User } from './User';
-import { Guild, Member } from './Guild';
-import { Button, ButtonParams } from './Button';
-import Globs from 'util/Global';
-import {Message} from './Message';
+} from '../../interfaces/index.ts';
+import type { Client } from '../structures/handlers/Client.ts';
+import { Channel } from './Channel.ts';
+import { User } from './User.ts';
+import { Guild, Member } from './Guild.ts';
+import { Message } from './Message.ts';
 
-export default class Context {
+export interface ButtonParams {
+    content?: string;
+    id?: string;
+    /**
+     * @default Primary
+     */
+    style?: keyof typeof ButtonStyles;
+    url?: string;
+    isDisabled?: boolean;
+}
+export class Context {
     protected components = new Map<'buttons' | 'menus', ActionRow>();
-    public author: User | null = this.data.user ? new User(this.data.user) : null;
-    public member: Member | null = this.data.member ? new Member(this.data.member) : null;
-
     constructor(protected data: Interaction) {}
     /**
      * The Context#button function
@@ -51,22 +58,23 @@ export default class Context {
         const self = this.components
             .get('buttons')
             .components.find(b => b.custom_id === id) as ButtonComponent;
-        return new Button(this, self, id);
+        const button = new Button(this, self, id);
+        return button;
     }
     /** Fetches raw channel data */
     public getChannel(): Promise<Channel> | null {
         return this.data.channel_id
-            ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res.data))
+            ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res))
             : null;
     }
-
+    public author: User = this.data.user ? new User(this.data.user) : null;
+    public member: Member = this.data.member ? new Member(this.data.member) : null;
     /** Fetches raw guild data */
     getGuild(): Promise<Guild> | null {
         return this.data.guild_id
-            ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data))
+            ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res))
             : null;
     }
-
     /** Sends a POST  */
     public async send(
         message: InteractionForm,
@@ -113,6 +121,37 @@ export default class Context {
                     data,
                 })
             )
-            .then(raw => new Message(raw.data));
+            .then(raw => new Message(raw));
+
+        return;
+    }
+}
+
+export class Button {
+    protected client = Globs.client as Client;
+    constructor(protected ctx: Context, protected self: ButtonComponent, public id: string) {}
+
+    public setContent(content: string): this {
+        this.self.label = content;
+        return this;
+    }
+    public setUrl(url: string): this {
+        this.self.url = url;
+        return this;
+    }
+    public setStyle(style: keyof typeof ButtonStyles): this {
+        this.self.style = ButtonStyles[style];
+        return this;
+    }
+    public disable(disabled = true): this {
+        this.self.disabled = disabled;
+        return this;
+    }
+    public onClick(cb: (ctx: Context) => any): this {
+        this.client._interactionListeners.set(this.id, cb);
+        return this;
+    }
+    public exit(): Context {
+        return this.ctx;
     }
 }

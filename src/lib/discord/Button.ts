@@ -3,31 +3,32 @@ import Context from './Context';
 import type { Client } from 'lib/structures/handlers/Client';
 import { ButtonComponent, ButtonStyles } from 'interfaces';
 
+
 export class Button {
     protected client = Globs.client as Client;
     constructor(protected ctx: Context, protected self: ButtonComponent, public id: string) {}
 
-    setContent(content: string) {
+    public setContent(content: string): this {
         this.self.label = content;
         return this;
     }
-    setUrl(url: string) {
+    public setUrl(url: string): this {
         this.self.url = url;
         return this;
     }
-    setStyle(style: keyof typeof ButtonStyles) {
+    public setStyle(style: keyof typeof ButtonStyles): this {
         this.self.style = ButtonStyles[style];
         return this;
     }
-    disable(disabled = true) {
+    public disable(disabled = true): this {
         this.self.disabled = disabled;
         return this;
     }
-    onClick(cb: (ctx: Context) => any) {
-        this.client.interactionListeners.set(this.id, cb);
+    public onClick(cb: (ctx: Context) => any): this {
+        this.client._interactionListeners.set(this.id, cb);
         return this;
     }
-    exit() {
+    public exit(): Context {
         return this.ctx;
     }
 }

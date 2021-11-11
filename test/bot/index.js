@@ -16,50 +16,48 @@ const client = new Client({
     plugins: [new Logger()],
 });
 
-client.on('ready', async function () {
-    console.log('ready');
+const FUWA_GUILD_ID = '788135963528134656';
 
-    const cmd = new Command({
-        name: 'gay-mom-detector',
-        description: 'is ur mom gae?',
-        guild: '788135963528134656',
-        async run(ctx) {
-            // prettier-ignore
-            ctx
-                .button()
-                    .setContent('ur mum gae')
-                    .setStyle('Danger')
-                    .onClick((ctx) =>
-                        ctx.send({ content: 'you clicked the button, you admit ur mom is gay, sus' })
-                    )
-                .exit()
-                .button()
-                    .setContent('ur mom not gae')
-                    .setStyle('Success')
-                    .onClick((ctx) =>
-                        ctx.send({ content: 'ur mom is not gay at all, pog' })
-                    )
-                .exit()
-                .send({ 
-                    embeds: [
-                        new Embed()
-                            .setColor(0x6f00f)
-                            .setDescription('urmommy')
-                            .setTitle('sheeesh')
-                            .setAuthor('urmom')
-                            .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
-                    ]
-                });
-        },
-    });
-    client.mountCommand(cmd);
+client.on('ready', async function () {
+    console.clear();
+    console.log(`Connected to discord!`);
+    const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 });
 
-client.login(readFileSync(join(__dirname, 'token.secret')));
-
-client.on('new message', async msg => {
+client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, async ctx => {
+    const channel = await ctx.getChannel();
+    await channel.startTyping();
+    // prettier-ignore
+    ctx
+        .button()
+            .setContent('ur mum gae')
+            .setStyle('Danger')
+            .onClick((btn) => btn.send({ content: 'so u admit ur mom gae? sus' }))
+        .exit()
+        .button()
+            .setContent('ur mom not gae')
+            .setStyle('Success')
+            .onClick((btn) => btn.edit({ content: 'ur mom is not gay at all, pog' }))
+        .exit()
+        .send({
+            embeds: [
+                new Embed()
+                    .setColor(0x6f00f)
+                    .setDescription('urmommy')
+                    .setTitle('sheeesh')
+                    .setAuthor('urmom')
+                    .addField({ name: 'mommy gayness', value: 'u have been wondering if ur mom is gay? well its time to find out now' })
+            ]
+        });
+});
+client.on('new message', async function (msg) {
     let prefix = '!';
     const channel = await client.getChannel(msg.channel_id);
+
+    if (msg.content == '.') {
+        channel.send({ content: '' });
+    }
+
     if (!msg.content.startsWith(prefix) || msg.author.isBot) return;
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
@@ -80,14 +78,7 @@ client.on('new message', async msg => {
     }
 });
 
-client.on('message removed', async function (ctx, msg) {
-    console.table([
-        {
-            channel: ctx.id,
-            message: msg.content,
-        },
-    ]);
-});
+client.on('message removed', console.log);
 
 client.on('presence update', async function (presence, oldPresence) {
     console.table([
@@ -107,3 +98,9 @@ client.on('message update', async function (data) {
         },
     ]);
 });
+
+try {
+    client.login(readFileSync(join(__dirname, 'token.secret')));
+} catch (err) {
+    console.error('error', err);
+}

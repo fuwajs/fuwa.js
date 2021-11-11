@@ -8,7 +8,7 @@ export function iconHashToNumber(hash: string) {
 
     return {
         animated,
-        number: Number(hash),
+        hash,
     };
 }
 
