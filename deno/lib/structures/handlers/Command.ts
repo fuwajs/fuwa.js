@@ -1,8 +1,8 @@
-import http from '../ws/http';
-import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
-import Globs from '../../../util/Global';
-import { Context } from '../../discord/Context';
-import type { Client } from './Client';
+import http from '../ws/http.ts';
+import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces/index.ts';
+import Globs from '../../../util/Global.ts';
+import { Context } from '../../discord/Context.ts';
+import type { Client } from './Client.ts';
 
 export interface CommandType {
     name: string;
@@ -51,10 +51,10 @@ export class Command implements CommandType {
         const client = Globs.client as Client;
         return http
             .POST(path, JSON.stringify({ name: this.name, description: this.description }))
-            .then(({ data }) => {
-                this.id = data.id;
+            .then((cmd: ApplicationCommandCreateUpdateDelete) => {
+                this.id = cmd.id;
                 client.commands.set(this.id, this);
-                return data;
+                return cmd;
             });
     }
     public addArg(...args: Argument[]): void {

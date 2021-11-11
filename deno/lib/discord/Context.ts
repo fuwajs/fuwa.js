@@ -1,6 +1,6 @@
-import http from './../structures/ws/http';
-import crypto from 'crypto';
-import Globs from '../../util/Global';
+import http from './../structures/ws/http.ts';
+import crypto from 'https://deno.land/std@0.85.0/node/crypto.ts';
+import Globs from '../../util/Global.ts';
 import {
     Interaction,
     InteractionForm,
@@ -8,12 +8,12 @@ import {
     ButtonComponent,
     ButtonStyles,
     ActionRow,
-} from '../../interfaces';
-import type { Client } from '../structures/handlers/Client';
-import { Channel } from './Channel';
-import { User } from './User';
-import { Guild, Member } from './Guild';
-import { Message } from './Message';
+} from '../../interfaces/index.ts';
+import type { Client } from '../structures/handlers/Client.ts';
+import { Channel } from './Channel.ts';
+import { User } from './User.ts';
+import { Guild, Member } from './Guild.ts';
+import { Message } from './Message.ts';
 
 export interface ButtonParams {
     content?: string;
@@ -64,7 +64,7 @@ export class Context {
     /** Fetches raw channel data */
     public getChannel(): Promise<Channel> | null {
         return this.data.channel_id
-            ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res.data))
+            ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res))
             : null;
     }
     public author: User = this.data.user ? new User(this.data.user) : null;
@@ -72,7 +72,7 @@ export class Context {
     /** Fetches raw guild data */
     getGuild(): Promise<Guild> | null {
         return this.data.guild_id
-            ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data))
+            ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res))
             : null;
     }
     /** Sends a POST  */
@@ -121,7 +121,7 @@ export class Context {
                     data,
                 })
             )
-            .then(raw => new Message(raw.data));
+            .then(raw => new Message(raw));
 
         return;
     }

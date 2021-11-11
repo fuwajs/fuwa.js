@@ -1,7 +1,7 @@
-import { MessageForm } from '../../interfaces/message';
-import { Message } from './Message';
-import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
-import http from '../structures/ws/http';
+import { MessageForm } from '../../interfaces/message/index.ts';
+import { Message } from './Message.ts';
+import { Channel as ChannelData, ChannelType } from '../../interfaces/channel/index.ts';
+import http from '../structures/ws/http.ts';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -18,7 +18,7 @@ export class Channel {
         params += data?.around ? `&around=${data.around}` : '';
         return http
             .GET(`/channels/${this.id}/messages?limit=${amount}${params}`)
-            .then(raw => raw.data.map(m => new Message(m)));
+            .then(raw => raw.map(m => new Message(m)));
     }
     /** Returns the channel id */
     public get id() {
@@ -59,9 +59,7 @@ export class Channel {
     public send(...messages: MessageForm[]): Promise<Message[]> {
         return Promise.all(
             messages.map(msg =>
-                http
-                    .POST(`/channels/${this.id}/messages`, JSON.stringify(msg))
-                    .then(raw => new Message(raw.data))
+                http.POST(`/channels/${this.id}/messages`, JSON.stringify(msg)).then(raw => new Message(raw))
             )
         );
     }
@@ -75,7 +73,7 @@ export class Channel {
     }
     /** Returns the id of a pined message */
     public getPins(): Promise<Message[]> {
-        return http.GET(`/channels/${this.id}/pins`).then(raw => raw.data.map(msg => new Message(msg)));
+        return http.GET(`/channels/${this.id}/pins`).then(raw => raw.map(msg => new Message(msg)));
     }
     /**
      * ! WARNING: This method is not recommend to be used
