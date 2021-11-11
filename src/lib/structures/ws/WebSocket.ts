@@ -1,11 +1,14 @@
 import { GatewayOpcodes } from '../../../interfaces';
-import { WebSocket as Socket } from 'ws';
+import { WebSocket as _WebSocket } from 'ws';
 
 import { GatewayCommands, GatewayEvents } from '../../../interfaces/DiscordAPI';
 import { erlpack, pack, unpack } from './Pack';
+import { isBrowser } from '../../../util';
+// @ts-ignore
+const Socket: typeof _WebSocket = isBrowser() ? window.WebSocket : _WebSocket;
 
 export class WebSocket {
-    public ws: Socket;
+    public ws: _WebSocket;
     private OPevents: { [key: number]: (data: any) => any } = {};
     protected connected = false;
     private APIEvents: { [key: string]: (data: any) => any } = {};

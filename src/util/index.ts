@@ -4,6 +4,16 @@ export function createNewProp(value: any): PropertyDescriptor {
     return { configurable: true, enumerable: true, writable: true, value };
 }
 
+export function isBrowser() {
+    try {
+        // @ts-ignore
+        window.WebSocket;
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 /**
  * Pauses a function for x amount of time.
  * @param ms
