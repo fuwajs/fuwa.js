@@ -125,14 +125,12 @@ export class Client extends WebSocket {
             .then(res => (res ? new Guild(res) : null));
     }
     public getUser<T extends '@me' | string>(uid: T): Promise<(T extends '@me' ? BotUser : User) | null> {
-        return (
-            http
+        return http
                 .GET(`/users/${uid}`)
                 .catch(() => Promise.resolve(null))
                 .then(HttpErrorChecker)
                 // Basically checks if the uid is @me to make a bot user out of it
-                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null))
-        );
+                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null));
     }
     public getChannel(cid: string): Promise<Channel | null> {
         return http

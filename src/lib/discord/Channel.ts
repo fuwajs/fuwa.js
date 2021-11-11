@@ -10,6 +10,10 @@ export type MessageSearchTerms = {
     amount?: number;
 };
 export class Channel {
+    public type = Object.keys(ChannelType).find(
+        k => this.data.type === ChannelType[k]
+    ) as keyof typeof ChannelType;
+
     constructor(protected data: ChannelData) {}
     getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
         let params = ``;
@@ -47,10 +51,6 @@ export class Channel {
     public isDM() {
         return ((this.type as any) || '') === 'Dm';
     }
-    public type = Object.keys(ChannelType).find(
-        k => this.data.type === ChannelType[k]
-    ) as keyof typeof ChannelType;
-
     /**
      * A function to send data to a channel.
      * Works with embeds and normal text messages
