@@ -1,7 +1,7 @@
 import http from '../ws/http';
 import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
 import Globs from '../../../util/Global';
-import { Context } from '../../discord/Context';
+import Context from '../../discord/Context';
 import type { Client } from './Client';
 
 export interface CommandType {

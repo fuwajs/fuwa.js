@@ -12,8 +12,8 @@ import { Channel } from './Channel';
 import { User } from './User';
 import { Guild, Member } from './Guild';
 import { Button, ButtonParams } from './Button';
-import Globs from 'util/Global';
-import {Message} from './Message';
+import Globs from '../../util/Global';
+import { Message } from './Message';
 
 export default class Context {
     protected components = new Map<'buttons' | 'menus', ActionRow>();

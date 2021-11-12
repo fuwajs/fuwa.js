@@ -74,11 +74,5 @@
             "@typescript-eslint/ban-ts-comment": "off",
             "@typescript-eslint/explicit-module-boundary-types": "off"
         }
-    },
-    "imports": {
-        "#root": "./dist/*.js",
-        "#lib": "./src/lib/*.js",
-        "#util": "./src/util/*.js",
-        "#interfaces": "./src/interfaces/*.js"
     }
 }

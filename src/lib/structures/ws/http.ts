@@ -16,10 +16,9 @@ import Globs from '../../../util/Global';
 
 import { discordAPI, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
-import type _fetch from 'undici-fetch';
 
 // @ts-ignore
-const fetch: typeof _fetch = isBrowser() ? window.fetch : require('undici-fetch');
+const fetch = isBrowser() ? window.fetch : require('undici').fetch;
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
 export default {
@@ -53,7 +52,7 @@ export default {
         return fetch(`${discordAPI.discord}/api/v${version || 8}` + path, params).then(async res => {
             const status = res.status as APICodes;
             if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
-            const data = ALLOWED_CODES.includes(status) ? await res.json() : {};
+            const data = ALLOWED_CODES.includes(status) ? ((await res.json()) as any) : {};
             console.log(data);
             return {
                 data,

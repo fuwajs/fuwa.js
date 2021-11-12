@@ -1,8 +1,7 @@
-import Globs from 'util/Global';
+import Globs from '../../util/Global';
 import Context from './Context';
-import type { Client } from 'lib/structures/handlers/Client';
-import { ButtonComponent, ButtonStyles } from 'interfaces';
-
+import type { Client } from '../structures/handlers/Client';
+import { ButtonComponent, ButtonStyles } from '../../interfaces';
 
 export class Button {
     protected client = Globs.client as Client;
