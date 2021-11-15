@@ -5,9 +5,13 @@ import { formatImageURL } from '../../util';
 discordCDN;
 import { User } from './User';
 import http from '../structures/ws/http';
+import Globs from '../../util/Global';
 
 export class Guild {
-    constructor(protected data: GuildData) {}
+    constructor(protected data: GuildData) {
+        const cache = Globs.cache;
+        cache.set(`guilds.${this.data.id}`, this);
+    }
     /** id of the guild */
     public get id() {
         return this.data.id;

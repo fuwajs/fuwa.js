@@ -38,7 +38,11 @@ export default {
         data?: string | Buffer,
         headers?: any,
         version?: 6 | 8 | 9
-    ) {
+    ): Promise<{
+        data: any;
+        status: APICodes;
+        headers: any;
+    }> {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
             method,
@@ -53,7 +57,6 @@ export default {
             const status = res.status as APICodes;
             if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
             const data = ALLOWED_CODES.includes(status) ? ((await res.json()) as any) : {};
-            console.log(data);
             return {
                 data,
                 headers: res.headers,

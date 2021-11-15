@@ -1,7 +1,28 @@
 /** Allows easy way to add a prop to a base object when needing to use complicated getters solution. */
+
+import Globs from './Global';
+
 // deno-lint-ignore no-explicit-any
 export function createNewProp(value: any): PropertyDescriptor {
     return { configurable: true, enumerable: true, writable: true, value };
+}
+
+export function arrayToMap<K extends keyof T, T>(key: K, arr: T[]): Map<K, T> {
+    const entries: [K, T][] = arr.map(a => [a[key], a]) as any;
+    return new Map(entries);
+}
+
+export function arrayToObject<K extends keyof T, T>(key: K, arr: T[]): { [key: string]: K } {
+    const entries = arr.map(a => [a[key], a]) as any;
+    return Object.fromEntries(entries);
+}
+
+export function setCachePromise<T>(key: string) {
+    const cache = Globs.cache;
+    return (data: T) => {
+        cache.set(key, data);
+        return data;
+    };
 }
 
 export function isBrowser() {

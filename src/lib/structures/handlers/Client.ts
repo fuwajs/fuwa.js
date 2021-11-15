@@ -2,7 +2,7 @@ import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { Command, CommandCalback } from './Command';
 import Globs, { InvalidToken } from '../../../util/Global';
-import { HttpErrorChecker } from '../../../util';
+import { setCachePromise } from '../../../util';
 import { debug as Debug } from '../../../util/Debug';
 import {
     EventHandlers,
@@ -17,6 +17,7 @@ import { User, BotUser } from '../../discord/User';
 
 import { Channel } from '../../discord/Channel';
 import Context from '../../discord/Context';
+import { Cache, MemoryCache } from '..';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -33,6 +34,7 @@ export interface ClientOptions {
      */
     owners?: string[] | string;
     mountingCommands: CommandCalback[];
+    cache?: Cache | false;
     /**
      * TODO shard manager
      */
@@ -61,7 +63,7 @@ export class Client extends WebSocket {
     /** Your bot ID */
     public applicationId: string;
     protected session = { id: '', seq: 0 };
-
+    public cache: Cache;
     /** DiscordAPI GateWay Intents */
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
@@ -80,8 +82,24 @@ export class Client extends WebSocket {
             this.applicationId = options.applicationId ?? '';
             this.shardCount = options.shards ?? 0;
             this.token = options.token ? options.token.toString() : '';
+            if (options.cache === false) {
+                this.cache = {
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    clear() {},
+                    // eslint-disable-next-line @typescript-eslint/no-empty-function
+                    set(a, b, c) {},
+                    get(_, fb) {
+                        return fb();
+                    },
+                };
+            } else if (options.cache == null) {
+                this.cache = new MemoryCache();
+            } else {
+                this.cache = options.cache;
+            }
         }
         this.shardCount = 0;
+        Globs.cache = this.cache;
     }
 
     /**
@@ -143,28 +161,32 @@ export class Client extends WebSocket {
      
      */
     public getGuild(gid: string, withSize = false): Promise<Guild | null> {
-        return http
-            .GET(`/guilds/${gid}?with_counts=${withSize}`)
-            .catch(() => Promise.resolve(null))
-            .then(HttpErrorChecker)
-            .then(res => (res ? new Guild(res) : null));
+        const fallback = () =>
+            http
+                .GET(`/guilds/${gid}?with_counts=${withSize}`)
+                .then(res => (res.data ? new Guild(res.data) : null));
+        // .then(setCachePromise(`channels.${gid}`));
+        return this.cache.get(`guild.${gid}`, fallback);
     }
     public getUser<T extends '@me' | string>(uid: T): Promise<(T extends '@me' ? BotUser : User) | null> {
         return (
             http
                 .GET(`/users/${uid}`)
-                .catch(() => Promise.resolve(null))
-                .then(HttpErrorChecker)
                 // Basically checks if the uid is @me to make a bot user out of it
-                .then(res => (res ? (uid === '@me' ? (this.bot = new BotUser(res)) : new User(res)) : null))
+                .then(res =>
+                    res.data
+                        ? uid === '@me'
+                            ? (this.bot = new BotUser(res.data))
+                            : new User(res.data)
+                        : null
+                )
         );
     }
     public getChannel(cid: string): Promise<Channel | null> {
-        return http
-            .GET(`/channels/${cid}`)
-            .catch(() => Promise.resolve(null))
-            .then(HttpErrorChecker)
-            .then(res => (res ? new Channel(res) : null));
+        const fallback = () =>
+            http.GET(`/channels/${cid}`).then(res => (res.data ? new Channel(res.data) : null));
+        // .then(setCachePromise(`channels.${cid}`));
+        return this.cache.get(`channels.${cid}`, fallback);
     }
     /**
      * Returns all mounted commands.

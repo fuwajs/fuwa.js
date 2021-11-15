@@ -2,6 +2,7 @@ import { MessageForm } from '../../interfaces/message';
 import { Message } from './Message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 import http from '../structures/ws/http';
+import Globs from '../../util/Global';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -14,7 +15,12 @@ export class Channel {
         k => this.data.type === ChannelType[k]
     ) as keyof typeof ChannelType;
 
-    constructor(protected data: ChannelData) {}
+    constructor(protected data: ChannelData) {
+        const cache = Globs.cache;
+        console.log(this.data);
+        cache.set(`channels.${this.data.id}`, this);
+        console.log('set cache');
+    }
     getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
         let params = ``;
         params += data?.after ? `&after=${data.after}` : '';
