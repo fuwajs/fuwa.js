@@ -16,10 +16,10 @@ export class Channel {
     ) as keyof typeof ChannelType;
 
     constructor(protected data: ChannelData) {
-        const cache = Globs.cache;
-        console.log(this.data);
-        cache.set(`channels.${this.data.id}`, this);
-        console.log('set cache');
+        if (data) {
+            const cache = Globs.cache;
+            cache.set(`channels.${data.id}`, this);
+        }
     }
     getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
         let params = ``;

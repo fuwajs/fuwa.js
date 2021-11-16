@@ -9,8 +9,11 @@ import Globs from '../../util/Global';
 
 export class Guild {
     constructor(protected data: GuildData) {
-        const cache = Globs.cache;
-        cache.set(`guilds.${this.data.id}`, this);
+        // for some reason we keep getting undefined in our cache
+        if (data) {
+            const cache = Globs.cache;
+            cache.set(`guilds.${data.id}`, this);
+        }
     }
     /** id of the guild */
     public get id() {
