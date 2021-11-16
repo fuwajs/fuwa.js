@@ -31,7 +31,6 @@ export class MemoryCache implements Cache {
         }, SIZE_CHECK_SPEED);
     }
     public get<T>(key: string, fallback: () => T) {
-        console.log(this.store);
         if (this.store.has(key)) {
             return this.store.get(key);
         } else {
@@ -39,7 +38,6 @@ export class MemoryCache implements Cache {
         }
     }
     set(key: string, data: any, overwrites?: CacheOverwrites) {
-        console.log(this.store);
         this.store.set(key, data);
     }
     clear() {
