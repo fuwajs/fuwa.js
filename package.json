@@ -11,6 +11,7 @@
     "scripts": {
         "pretest": "npx yarn build",
         "build": "npx gulp",
+        "build:deno": "npx denoify",
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build watch",
         "format": "prettier --ignore-path .gitignore --write ./src",

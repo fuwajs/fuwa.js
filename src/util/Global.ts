@@ -14,10 +14,3 @@ const Globs = {
 };
 
 export default Globs;
-
-export class InvalidToken extends Error {
-    name = 'InvalidTokenError';
-    constructor(msg: string) {
-        super(msg);
-    }
-}

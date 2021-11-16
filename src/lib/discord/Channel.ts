@@ -3,6 +3,7 @@ import { Message } from './Message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 import http from '../structures/ws/http';
 import Globs from '../../util/Global';
+import { enumPropFinder } from '../../util';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -11,16 +12,13 @@ export type MessageSearchTerms = {
     amount?: number;
 };
 export class Channel {
-    public type = Object.keys(ChannelType).find(
-        k => this.data.type === ChannelType[k]
-    ) as keyof typeof ChannelType;
-
     constructor(protected data: ChannelData) {
         if (data) {
             const cache = Globs.cache;
             cache.set(`channels.${data.id}`, this);
         }
     }
+    public type = enumPropFinder<typeof ChannelType>(this.data?.type, ChannelType);
     getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
         let params = ``;
         params += data?.after ? `&after=${data.after}` : '';

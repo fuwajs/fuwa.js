@@ -1,7 +1,7 @@
 import { Channel as ChannelHandler } from './Channel';
 import { discordCDN } from '../../interfaces/DiscordAPI';
 import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
-import { formatImageURL } from '../../util';
+import { arrayToMap, formatImageURL } from '../../util';
 discordCDN;
 import { User } from './User';
 import http from '../structures/ws/http';
@@ -36,13 +36,12 @@ export class Guild {
         return this.data.member_count ?? this.data.approximate_member_count ?? null;
     }
     /** Returns total guild members */
-    public members: Map<string, Member> | null = this.data.members
+    public members: Map<string, Member> | null = this.data?.members
         ? new Map(this.data.members.map(m => [m.user.id, new Member(m)]) ?? [])
         : null;
     /** Returns total guild channels */
-    public channels = this.data.channels
-        ? new Map(this.data.channels.map(c => [c.id, new ChannelHandler(c)]))
-        : null;
+
+    public channels = this.data?.channels ? arrayToMap('id', this.data.channels) : null;
     /** Returns the guild owner id */
     public get ownerId() {
         return this.data.owner_id;
@@ -54,7 +53,7 @@ export class Guild {
         return this.data.unavailable ?? false;
     }
     public get roles() {
-        return this.data.roles;
+        return arrayToMap('id', this.data.roles);
     }
     /** Checks if the user id passed has the same id as the guild owner.
      * @returns boolean

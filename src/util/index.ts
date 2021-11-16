@@ -25,6 +25,10 @@ export function setCachePromise<T>(key: string) {
     };
 }
 
+export function enumPropFinder<K>(key: any, obj: any): keyof K {
+    return (Object.keys(obj).find(k => key === obj[k]) ?? '') as keyof K;
+}
+
 export function isBrowser() {
     try {
         // @ts-ignore

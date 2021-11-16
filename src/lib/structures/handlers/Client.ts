@@ -1,8 +1,9 @@
 import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { Command, CommandCalback } from './Command';
-import Globs, { InvalidToken } from '../../../util/Global';
-import { setCachePromise } from '../../../util';
+import Globs from '../../../util/Global';
+import { InvalidToken } from '../../../util/Errors';
+// import { setCachePromise } from '../../../util';
 import { debug as Debug } from '../../../util/Debug';
 import {
     EventHandlers,
@@ -11,6 +12,7 @@ import {
 } from '../../../interfaces/EventHandler';
 import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
 import http from '../ws/http';
+import { isBrowser } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User, BotUser } from '../../discord/User';
@@ -23,7 +25,7 @@ export interface ClientOptions {
     /** Discord Bot Token */
     token?: string | Buffer;
     /** An array of all fuwa.js#plugins assigned to the client class. */
-    plugins: Plugin[];
+    plugins?: Plugin[];
     /**
      * @description Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
@@ -33,7 +35,7 @@ export interface ClientOptions {
      * The owner(s) discord ID. These users can bypass default bot permissions.
      */
     owners?: string[] | string;
-    mountingCommands: CommandCalback[];
+    mountingCommands?: CommandCalback[];
     cache?: Cache | false;
     /**
      * TODO shard manager
@@ -82,21 +84,24 @@ export class Client extends WebSocket {
             this.applicationId = options.applicationId ?? '';
             this.shardCount = options.shards ?? 0;
             this.token = options.token ? options.token.toString() : '';
-            if (options.cache === false) {
-                this.cache = {
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    clear() {},
-                    // eslint-disable-next-line @typescript-eslint/no-empty-function
-                    set(a, b, c) {},
-                    get(_, fb) {
-                        return fb();
-                    },
-                };
-            } else if (options.cache == null) {
-                this.cache = new MemoryCache();
-            } else {
-                this.cache = options.cache;
-            }
+        }
+        if ((options ?? {})?.cache === false) {
+            this.cache = {
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                clear() {},
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
+                set(_a, _b, _c) {},
+                get(_, fb) {
+                    return fb();
+                },
+            };
+        } else if ((options ?? {}).cache == null) {
+            this.cache = new MemoryCache();
+        } else {
+            //@ts-ignore
+            this.cache = options.cache;
         }
         this.shardCount = 0;
         Globs.cache = this.cache;
@@ -254,7 +259,8 @@ export class Client extends WebSocket {
                 token: _token,
                 intents,
                 properties: {
-                    $os: process.platform,
+                    // @ts-ignore
+                    $os: isBrowser() ? Deno.build.os : process.platform,
                     $browser: 'Fuwa.js',
                     $device: 'Fuwa.js',
                 },
@@ -308,7 +314,7 @@ export class Client extends WebSocket {
             }
         });
         this.event('INVALID_SESSION', () => {
-            throw new InvalidToken('Invalid token');
+            throw new InvalidToken();
         });
     }
 

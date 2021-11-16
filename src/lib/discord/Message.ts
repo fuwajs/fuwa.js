@@ -1,6 +1,7 @@
 import { Message as MessageData, MessageType } from '../../interfaces/message';
 import { User } from './User';
 import { Embed } from './Embed';
+import { enumPropFinder } from '../../util';
 import { Member } from './Guild';
 import http from '../structures/ws/http';
 
@@ -43,10 +44,9 @@ export class Message {
     public delete() {
         return http.DELETE(`/channels/${this.channelId}/messages/${this.id}`);
     }
-    public embeds = this.data.embeds ? this.data.embeds.map(e => new Embed(e)) : [];
-    public type = Object.keys(MessageType).find(
-        k => this.data.type === MessageType[k]
-    ) as keyof typeof MessageType;
+    public embeds = this.data?.embeds ? this.data.embeds.map(e => new Embed(e)) : [];
+    public type = enumPropFinder<typeof MessageType>(this.data?.type, MessageType);
+
     public get reactions() {
         return this.data.reactions;
     }

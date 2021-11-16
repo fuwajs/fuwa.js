@@ -17,8 +17,8 @@ import { Message } from './Message';
 
 export default class Context {
     protected components = new Map<'buttons' | 'menus', ActionRow>();
-    public author: User | null = this.data.user ? new User(this.data.user) : null;
-    public member: Member | null = this.data.member ? new Member(this.data.member) : null;
+    public author: User | null = this.data?.user ? new User(this.data.user) : null;
+    public member: Member | null = this.data?.member ? new Member(this.data.member) : null;
 
     constructor(protected data: Interaction) {}
     /**
