@@ -285,7 +285,8 @@ export class Client extends WebSocket {
             };
             this.events.has('ready') ? this.events.get('ready')(ready.shard) : void 0;
         });
-        this.event('GUILD_CREATE', guild => {
+        this.event('GUILD_CREATE', _guild => {
+            const guild = new Guild(_guild as any);
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
         this.event('INTERACTION_CREATE', interaction => {
