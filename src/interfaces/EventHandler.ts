@@ -25,7 +25,6 @@ import type {
     GatewayEvents,
 } from '.';
 import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
-import { Collection } from '../util/Collection';
 import { Thread } from '../util/transformers/channelToThread';
 import { Guild as GuildHandler } from '../lib/discord/Guild';
 import { Message as MessageHandler } from '../lib/discord/Message';
@@ -77,9 +76,9 @@ export type EventHandlersDefinitions = {
     'guild removed': (guild: Guild) => any;
     /** Sent when a guild's emojis have been updated. */
     'emojis update': (
-        guild: GuildHandler,
-        emojis: Collection<number, Emoji>,
-        oldEmojis: Collection<number, Emoji>
+        guild: GuildHandler
+        // emojis: Collection<number, Emoji>,
+        // oldEmojis: Collection<number, Emoji>
     ) => any;
     /** Sent when a new user joins a guild. */
     'new member': (guild: GuildHandler, member: Member) => any;
@@ -151,7 +150,7 @@ export type EventHandlersDefinitions = {
     'thread update': (thread: Thread, oldThread: Thread) => any;
     /** Sent when the bot gains access to threads */
     'thread list sync': (
-        threads: Collection<number, Thread>,
+        // threads: Collection<number, Thread>,
         members: ThreadMemberModified[],
         guild_id: number
     ) => any;
