@@ -37,7 +37,7 @@ export class MemoryCache implements Cache {
             return fallback();
         }
     }
-    set(key: string, data: any, overwrites?: CacheOverwrites) {
+    set(key: string, data: any) {
         this.store.set(key, data);
     }
     clear() {
