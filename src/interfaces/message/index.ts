@@ -98,6 +98,7 @@ export interface MessageForm {
     embeds?: (Embed | EmbedHandler)[];
     payload_json?: string;
     allowed_mentions?: AllowedMention[];
+    attachments?: Partial<Attachment>[];
     message_reference?: MessageReference;
     components?: MessageComponent[];
 }
