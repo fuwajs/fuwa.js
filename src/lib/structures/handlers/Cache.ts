@@ -30,7 +30,7 @@ export class MemoryCache implements Cache {
             }
         }, SIZE_CHECK_SPEED);
     }
-    public get<T>(key: string, fallback: () => T) {
+    public get<T>(key: string, fallback: () => T): T {
         if (this.store.has(key)) {
             return this.store.get(key);
         } else {
