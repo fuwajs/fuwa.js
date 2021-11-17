@@ -55,16 +55,17 @@ export default class Context {
     }
     /** Fetches raw channel data */
     public getChannel(): Promise<Channel> | null {
-        return this.data.channel_id
-            ? http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res.data))
-            : null;
+        const fallback = () =>
+            http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res.data));
+        const cache = Globs.cache;
+        return this.data.channel_id ? cache.get(`channels.${this.data.channel_id}`, fallback) : null;
     }
 
     /** Fetches raw guild data */
     getGuild(): Promise<Guild> | null {
-        return this.data.guild_id
-            ? http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data))
-            : null;
+        const fallback = () => http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data));
+        const cache = Globs.cache;
+        return this.data.guild_id ? cache.get(`guilds.${this.data.guild_id}`, fallback) : null;
     }
 
     /** Sends a POST  */
