@@ -50,7 +50,7 @@ export interface CreateChannelInvite {
     max_uses?: number;
     /** Whether this invite only grants temporary membership. Default: false */
     temporary?: boolean;
-    /** If true, don't try to reuse simmilar invite (useful for creating many unique one time use invites). Default: false */
+    /** If true, don't try to reuse similar invite (useful for creating many unique one time use invites). Default: false */
     unique?: boolean;
     /** The type of target for this voice channel invite */
     target_type?: InviteTargetTypes;
@@ -225,7 +225,7 @@ export type AuditLogChange =
               | 'mfa_level'
               | 'verification_level'
               | 'explicit_content_filter'
-              | 'default_messagae_notifications'
+              | 'default_message_notifications'
               | 'prune_delete_days'
               | 'position'
               | 'bitrate'
@@ -278,7 +278,7 @@ export interface AuditLogEntry {
     userId: string | null;
     /** id of the entry */
     id: string;
-    /** Type of action that occured */
+    /** Type of action that occurred */
     action_type: AuditLogEvents;
     /** Additional info for certain action types */
     options?: OptionalAuditEntryInfo;
@@ -378,7 +378,7 @@ export interface IncomingWebhook {
     name: string | null;
     /** The default user avatar hash of the webhook */
     avatar: string | null;
-    /** The secure token of the webhook (returned for Incomming Webhooks) */
+    /** The secure token of the webhook (returned for Incoming Webhooks) */
     token?: string;
     /** The bot/OAuth2 application that created this webhook */
     application_id: string | null;

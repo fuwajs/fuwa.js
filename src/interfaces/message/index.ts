@@ -469,7 +469,7 @@ export interface Sticker {
  * @see https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types
  */
 export enum StickerType {
-    /** @description an official sticker in a pack, part of Nitro or in a removed purchasble pack */
+    /** @description an official sticker in a pack, part of Nitro or in a removed purchasable pack */
     Standard = 1,
     /** @description a sticker uploaded to a Boosted guild for the guild's members */
     Guild,

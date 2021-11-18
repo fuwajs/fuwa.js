@@ -104,7 +104,7 @@ export interface ThreadMetadata {
      */
     archive_timestamp: string;
     /**
-     * @description wheter the thread is locked; when a thread is locked, only users with the manage threads permissions can unarchive it
+     * @description whether the thread is locked; when a thread is locked, only users with the manage threads permissions can unarchive it
      */
     locked: boolean;
     /**

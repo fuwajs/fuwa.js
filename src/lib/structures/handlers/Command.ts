@@ -8,9 +8,9 @@ export interface CommandType {
     name: string;
     description: string;
     guild?: string;
-    run?: CommandCalback;
+    run?: CommandCallback;
 }
-export type CommandCalback = <T extends any>(ctx: Context, args?: T) => any;
+export type CommandCallback = <T extends any>(ctx: Context, args?: T) => any;
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
@@ -36,7 +36,7 @@ export class Command implements CommandType {
      * type of class Argument[]
      */
     args: Argument[];
-    run: CommandCalback;
+    run: CommandCallback;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }
@@ -69,7 +69,7 @@ export class Command implements CommandType {
      */
     public static from<T extends boolean>(
         cmd: ApplicationCommandCreateUpdateDelete,
-        run: T extends true ? CommandCalback : undefined,
+        run: T extends true ? CommandCallback : undefined,
         mount?: T
     ) {
         const client = Globs.client as Client;

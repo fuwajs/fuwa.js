@@ -1,6 +1,6 @@
 import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import { Command, CommandCalback } from './Command';
+import { Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
 // import { setCachePromise } from '../../../util';
@@ -35,7 +35,7 @@ export interface ClientOptions {
      * The owner(s) discord ID. These users can bypass default bot permissions.
      */
     owners?: string[] | string;
-    mountingCommands?: CommandCalback[];
+    mountingCommands?: CommandCallback[];
     cache?: Cache | false;
     /**
      * TODO shard manager
@@ -56,7 +56,7 @@ export class Client extends WebSocket {
     public plugins: Plugin[];
     public bot: BotUser | null = null;
     /** Interaction listeners for buttons */
-    public _interactionListeners = new Map<string, CommandCalback>();
+    public _interactionListeners = new Map<string, CommandCallback>();
     /** Commands that will be mounted before the ready event */
     public mountingCommands = new Array<Command>();
     /** The message prefix. */
@@ -344,10 +344,10 @@ export class Client extends WebSocket {
 
     public command(
         name: string,
-        data: CommandCalback | { desc?: string; args?: any; guild?: string },
-        cb?: CommandCalback
+        data: CommandCallback | { desc?: string; args?: any; guild?: string },
+        cb?: CommandCallback
     ) {
-        let callback: CommandCalback;
+        let callback: CommandCallback;
         if (typeof data === 'function') {
             callback = data;
         } else {
