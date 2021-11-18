@@ -22,41 +22,39 @@ export interface AuthorOpts {
     proxyIcon?: string;
 }
 
-export class Embed {
-    protected type: EmbedType;
-    protected title?: string;
-    protected description?: string;
-    protected url?: string;
-    protected timestamp?: Date;
-    protected color?: number;
-    protected footer?: {
+export class Embed implements IEmbed {
+    type: EmbedType;
+    title?: string;
+    description?: string;
+    url?: string;
+    timestamp?: Date;
+    color?: number;
+    footer?: {
         text: string;
         icon_url: string;
         proxy_icon_url: string;
     };
-    protected image?: Media;
-    protected thumbnail?: Media;
-    protected video?: Media;
-    protected provider?: {
+    image?: Media;
+    thumbnail?: Media;
+    video?: Media;
+    provider?: {
         url: string;
         name: string;
     };
-    protected author?: {
+    author?: {
         proxy_icon_url: string;
         icon_url: string;
         url: string;
         name: string;
     };
-    protected fields?: { name: string; value: string; inline?: boolean }[] = [];
-    public constructor(opts?: IEmbed) {
-        // Rich Embed by default
-
+    fields?: { name: string; value: string; inline?: boolean }[] = [];
+    constructor(opts?: IEmbed) {
         if (opts) {
             // Don't override the default unless specified
             Object.assign(this, {
                 type: 'rich',
                 timestamp: new Date(opts.timestamp),
-                ...opts,
+                ...(opts ?? {}),
             });
         }
     }
@@ -134,10 +132,10 @@ export class Embed {
      * @param opts Extra options for author
      * ```js
      * // without options
-     * embed.setAuthor('Some Name')
+     * embed.setAuthor({ name: 'Some Name' })
      *
      * // with options
-     * embed.setAuthor('Some Name', { url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
+     * embed.setAuthor({ name: 'Some Name', url: 'https://cdn.discordapp.com/attachments/792884815631351869/.jpg' })
      * ```
      */
     public setAuthor({ name, url, icon, proxyIcon }: AuthorOpts): this {
@@ -215,24 +213,6 @@ export class Embed {
         this.url = url;
         return this;
     }
-
-    /**
-     * @param type The type of embed:
-     * - rich: The default
-     * - image
-     * - video
-     * - gif
-     * - article
-     * - link
-     * ```js
-     * embed.setType('rich')
-     * ```
-     */
-    public setType(type: EmbedType): this {
-        this.type = type;
-        return this;
-    }
-
     /**
      * @param fields fields For embed
      * ```ts
@@ -258,8 +238,8 @@ export class Embed {
      * embed.setProvider('some name')
      * ```
      */
-    public setProvider(name: string, opts?: { url?: string }): this {
-        this.provider = { name: name, url: opts.url };
+    public setProvider(name: string, url?: string): this {
+        this.provider = { name, url };
         return this;
     }
 
@@ -273,14 +253,11 @@ export class Embed {
      */
     public setVideo(url: string, opts?: { height?: number; width?: number; proxyUrl?: string }): this {
         this.video = {
-            url: url,
+            url,
             height: opts.height,
             width: opts.width,
             proxy_url: opts.proxyUrl,
         };
-        return this;
-    }
-    public return() {
         return this;
     }
 }

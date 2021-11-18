@@ -1,7 +1,6 @@
 export * from './componentTypes';
 import { MessageInteraction, ThreadMember } from '..';
 import { GuildMember } from '../guild';
-import { Embed as EmbedHandler } from '../../lib/discord/Embed';
 import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
 import { Channel } from '../channel';
@@ -95,7 +94,7 @@ export interface MessageForm {
     content?: string;
     tts?: boolean;
     file?: string;
-    embeds?: (Embed | EmbedHandler)[];
+    embeds?: Embed[];
     payload_json?: string;
     allowed_mentions?: AllowedMention[];
     attachments?: Partial<Attachment>[];
