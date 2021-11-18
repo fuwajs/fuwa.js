@@ -29,6 +29,9 @@
     "denoify": {
         "out": "deno"
     },
+    "engines": {
+        "node": ">=16.5"
+    },
     "devDependencies": {
         "@types/jest": "^27.0.2",
         "@types/node": "^16.10.1",
