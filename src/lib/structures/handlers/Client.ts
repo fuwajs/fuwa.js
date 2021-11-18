@@ -165,13 +165,11 @@ export class Client extends WebSocket {
      * @returns A Guild, or null if the guild was not found
      
      */
-    public getGuild(gid: string, withSize = false): Promise<Guild | null> {
+    public getGuild(gid: string, force = false, withSize = false): Promise<Guild | null> {
         const fallback = () =>
-            http
-                .GET(`/guilds/${gid}?with_counts=${withSize}`)
-                .then(res => (res.data ? new Guild(res.data) : null));
-        // .then(setCachePromise(`channels.${gid}`));
-        return this.cache.get(`guild.${gid}`, fallback);
+            http.GET(`/guilds/${gid}?with_counts=${withSize}`).then(res => new Guild(res.data));
+
+        return force ? fallback() : this.cache.get(`guild.${gid}`, fallback);
     }
     public getUser<T extends '@me' | string>(uid: T): Promise<(T extends '@me' ? BotUser : User) | null> {
         return (
@@ -187,11 +185,11 @@ export class Client extends WebSocket {
                 )
         );
     }
-    public getChannel(cid: string): Promise<Channel | null> {
+    public getChannel(cid: string, force = false): Promise<Channel | null> {
         const fallback = () =>
             http.GET(`/channels/${cid}`).then(res => (res.data ? new Channel(res.data) : null));
         // .then(setCachePromise(`channels.${cid}`));
-        return this.cache.get(`channels.${cid}`, fallback);
+        return force ? fallback() : this.cache.get(`channels.${cid}`, fallback);
     }
     /**
      * Returns all mounted commands.

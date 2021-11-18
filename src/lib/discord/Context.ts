@@ -53,19 +53,30 @@ export default class Context {
             .components.find(b => b.custom_id === id) as ButtonComponent;
         return new Button(this, self, id);
     }
-    /** Fetches raw channel data */
-    public getChannel(): Promise<Channel> | null {
+    /** Fetches raw channel data
+     * @param force If it should force and get the most recent data (slower) or use the cached version
+     */
+    public getChannel(force = false): Promise<Channel> | null {
         const fallback = () =>
             http.GET(`/channels/${this.data.channel_id}`).then(res => new Channel(res.data));
         const cache = Globs.cache;
-        return this.data.channel_id ? cache.get(`channels.${this.data.channel_id}`, fallback) : null;
+        return this.data.channel_id
+            ? force
+                ? fallback()
+                : cache.get(`channels.${this.data.channel_id}`, fallback)
+            : null;
     }
 
     /** Fetches raw guild data */
-    getGuild(): Promise<Guild> | null {
+    getGuild(force = false): Promise<Guild> | null {
         const fallback = () => http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data));
         const cache = Globs.cache;
-        return this.data.guild_id ? cache.get(`guilds.${this.data.guild_id}`, fallback) : null;
+
+        return this.data.guild_id
+            ? force
+                ? fallback()
+                : cache.get(`guilds.${this.data.guild_id}`, fallback)
+            : null;
     }
 
     /** Sends a POST  */
