@@ -7,6 +7,7 @@ types
 .env
 README.md
 .github
+deno
 .gitattributes
 *.log
 config.json
