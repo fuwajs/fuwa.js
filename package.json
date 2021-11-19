@@ -15,7 +15,7 @@
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build watch",
         "format": "prettier --ignore-path .gitignore --write ./src",
-        "testbot": "nodemon test/bot/index",
+        "testbot": "nodemon test/bot/index --ignore dist --ignore types",
         "test": "jest test/tests",
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
     },
