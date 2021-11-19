@@ -79,6 +79,11 @@ export class Guild {
         await http.DELETE(`/users/@me/guilds/${this.id}`);
         return;
     }
+    public static get(id: string, force = false): Promise<Guild> {
+        const fallback = () => http.GET(`/guilds/${id}`).then(({ data }) => new Guild(data));
+        const cache = Globs.cache;
+        return force ? fallback() : cache.get(`guilds.${id}`, fallback);
+    }
 }
 export class Member {
     constructor(protected data: MemberData) {}

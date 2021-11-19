@@ -90,4 +90,9 @@ export class Channel {
         await http.POST(`/channels/${this.id}/typing`);
         return;
     }
+    public static get(id: string, force = false): Promise<Channel> {
+        const fallback = () => http.GET(`/channels/${id}`).then(({ data }) => new Channel(data));
+        const cache = Globs.cache;
+        return force ? fallback() : cache.get(`channels.${id}`, fallback);
+    }
 }
