@@ -16,9 +16,10 @@ import Globs from '../../../util/Global';
 
 import { discordAPI, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
+import type { fetch as _fetch } from 'undici';
 
 // @ts-ignore
-const fetch = isBrowser() ? window.fetch : require('undici').fetch;
+const fetch: _fetch = isBrowser() ? window.fetch : require('undici').fetch;
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
 export default {
@@ -42,6 +43,7 @@ export default {
         data: any;
         status: APICodes;
         headers: any;
+        blob: Blob;
     }> {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
@@ -61,6 +63,7 @@ export default {
                 data,
                 headers: res.headers,
                 status,
+                blob: res.blob(),
             };
         });
     },

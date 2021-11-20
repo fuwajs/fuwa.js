@@ -6,7 +6,7 @@ export interface CacheOverwrites {
 }
 
 export interface Cache {
-    get: <T>(key: string, fallback: () => T) => T;
+    get: <T>(key: string, fallback: () => Promise<T>) => Promise<T>;
     set: (key: string, data: any, overwrites?: CacheOverwrites) => void;
     clear: () => void;
 }
@@ -17,12 +17,12 @@ export interface MemoryCacheOptions {
 }
 const SIZE_CHECK_SPEED = 100;
 export class MemoryCache implements Cache {
-    protected expireAfter = 900_000; // 15 minutes
+    protected expireAfter = 10; //900_000; // 15 minutes
     protected maxSize = 100_000;
     protected store = new Map();
     constructor(options?: MemoryCacheOptions) {
         Object.assign(this, options ?? {});
-        setInterval(this.clear, this.expireAfter);
+        setInterval(() => this.clear, this.expireAfter);
         // clear if the cache gets too big
         setInterval(() => {
             if (this.store.size > this.maxSize) {
@@ -30,11 +30,11 @@ export class MemoryCache implements Cache {
             }
         }, SIZE_CHECK_SPEED);
     }
-    public get<T>(key: string, fallback: () => T): T {
+    public async get<T>(key: string, fallback: () => Promise<T>): Promise<T> {
         if (this.store.has(key)) {
             return this.store.get(key);
         } else {
-            return fallback();
+            return await fallback();
         }
     }
     set(key: string, data: any) {
@@ -42,5 +42,6 @@ export class MemoryCache implements Cache {
     }
     clear() {
         this.store.clear();
+        console.log('cleared');
     }
 }

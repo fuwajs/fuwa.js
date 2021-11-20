@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin, Embed } = require('../../');
+const { Client, Command, Plugin, Embed, Guild, Attachment } = require('../../');
 
 class Logger extends Plugin {
     constructor() {
@@ -10,7 +10,6 @@ class Logger extends Plugin {
         // console.log(data);
     }
 }
-
 const client = new Client({
     intents: ['Guilds', 'GuildMessages', 'DirectMessages', 'GuildMessageReactions'],
     plugins: [new Logger()],
@@ -19,8 +18,12 @@ const client = new Client({
 const FUWA_GUILD_ID = '788135963528134656';
 
 client.on('ready', async function () {
-    console.clear();
+    // console.clear();
     console.log(`Connected to discord!`);
+    const file = new Attachment({
+        url: 'https://cdn.discordapp.com/attachments/788135963528134659/911370177076137984/Path_.svg',
+    });
+    file.download(join(__dirname, 'kk.svg'));
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 });
 
@@ -50,6 +53,9 @@ client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_I
             ]
         });
 });
+
+client.on('guild loaded', () => console.log(client.cache));
+
 client.on('new message', async function (msg) {
     let prefix = '!';
     const channel = await client.getChannel(msg.channel_id);
@@ -58,7 +64,7 @@ client.on('new message', async function (msg) {
         channel.send({ content: '' });
     }
 
-    if (!msg.content.startsWith(prefix) || msg.author.isBot) return;
+    if (!msg.content.startsWith(prefix) || msg.author.isBot) console.log(msg.data.attachments);
 
     const args = msg.content.slice(prefix.length).trim().split(/ +/);
     const msgCommand = args.shift().toLowerCase();

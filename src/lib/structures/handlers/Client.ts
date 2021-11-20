@@ -93,8 +93,9 @@ export class Client extends WebSocket {
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                // eslint-disable-next-line @typescript-eslint/no-empty-function
                 set(_a, _b, _c) {},
-                get(_, fb) {
+                async get(_, fb) {
                     return fb();
                 },
             };
@@ -166,7 +167,7 @@ export class Client extends WebSocket {
      * @returns A Guild, or null if the guild was not found
      
      */
-    public getGuild(gid: string, force = false, withSize = false): Promise<Guild | null> {
+    public getGuild(gid: string, withSize = false, force = false): Promise<Guild> {
         const fallback = () =>
             http.GET(`/guilds/${gid}?with_counts=${withSize}`).then(res => new Guild(res.data));
 
@@ -177,18 +178,11 @@ export class Client extends WebSocket {
             http
                 .GET(`/users/${uid}`)
                 // Basically checks if the uid is @me to make a bot user out of it
-                .then(res =>
-                    res.data
-                        ? uid === '@me'
-                            ? (this.bot = new BotUser(res.data))
-                            : new User(res.data)
-                        : null
-                )
+                .then(res => (uid === '@me' ? (this.bot = new BotUser(res.data)) : new User(res.data)))
         );
     }
     public getChannel(cid: string, force = false): Promise<Channel | null> {
-        const fallback = () =>
-            http.GET(`/channels/${cid}`).then(res => (res.data ? new Channel(res.data) : null));
+        const fallback = () => http.GET(`/channels/${cid}`).then(res => new Channel(res.data));
         // .then(setCachePromise(`channels.${cid}`));
         return force ? fallback() : this.cache.get(`channels.${cid}`, fallback);
     }
