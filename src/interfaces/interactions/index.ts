@@ -1,10 +1,10 @@
 export * from './ApplicationTypes';
-import type { Channel } from 'diagnostics_channel';
 import type { ResolvedData, CommandOptions } from '../DiscordAPI';
 import type { GuildMemberWithUser, User } from '../member';
 import type { Message, ComponentType, ButtonData, SelectMenuData, SelectOption } from '../message';
 import type { ApplicationCommandInteractionData } from './ApplicationTypes';
 import { GuildMember } from '../';
+import { Channel } from '../..';
 /**
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  */
@@ -149,7 +149,7 @@ export interface MessageInteraction {
 export interface InteractionChannel extends Channel {
     /** computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction */
     id: string;
-    type: string;
+    // type: string;
     name: string;
     permissions: string;
 }

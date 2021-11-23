@@ -16,10 +16,12 @@ import Globs from '../../../util/Global';
 
 import { discordAPI, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
-import type { fetch as _fetch } from 'undici';
+import { fetch } from 'undici';
+import { Blob } from 'buffer';
 
 // @ts-ignore
-const fetch: _fetch = isBrowser() ? window.fetch : require('undici').fetch;
+// const fetch: _fetch = isBrowser() ? window.fetch : require('undici').fetch;
+
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
 export default {
@@ -39,12 +41,7 @@ export default {
         data?: string | Buffer,
         headers?: any,
         version?: 6 | 8 | 9
-    ): Promise<{
-        data: any;
-        status: APICodes;
-        headers: any;
-        blob: Blob;
-    }> {
+    ) {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
             method,
@@ -57,13 +54,20 @@ export default {
         };
         return fetch(`${discordAPI.discord}/api/v${version || 8}` + path, params).then(async res => {
             const status = res.status as APICodes;
-            if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
+            // if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
             const data = ALLOWED_CODES.includes(status) ? ((await res.json()) as any) : {};
+            let blob: Blob | null;
+            try {
+                blob = await res.blob();
+                console.log('blob found');
+            } catch {
+                blob = null;
+            }
             return {
                 data,
                 headers: res.headers,
                 status,
-                blob: res.blob(),
+                blob,
             };
         });
     },

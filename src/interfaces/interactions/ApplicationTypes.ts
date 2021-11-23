@@ -1,6 +1,6 @@
 import type { User } from '../member';
 import type { MessageForm, Message } from '../message';
-import type { InteractionChannel, InteractionGuildMember } from '.';
+import type { CommandOptionTypes, InteractionChannel, InteractionGuildMember } from '.';
 import { Role } from '..';
 
 /** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommand */
@@ -17,30 +17,16 @@ export interface ApplicationCommand {
     description?: string;
     /** The parameters for the command */
     options?: ApplicationCommandOption[];
-    /** Whether the command is enbaled by default when the app is added to a guild */
+    /** Whether the command is enabler by default when the app is added to a guild */
     default_permission?: boolean;
     /** The type of command. By default this is a slash command(ChatInput). */
     type?: ApplicationCommandTypes;
 }
 
-/** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoptiontype */
-export enum ApplicationCommandOptionTypes {
-    SubCommand = 1,
-    SubCommandGroup,
-    String,
-    Integer,
-    Boolean,
-    User,
-    Channel,
-    Role,
-    Mentionable,
-    Number,
-}
-
 /** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption */
 export interface ApplicationCommandOption {
     /** Value of Application Command Option Type */
-    type: ApplicationCommandOptionTypes;
+    type: CommandOptionTypes;
     /** 1-32 character name matching lowercase `^[\w-]{1,32}$` */
     name: string;
     /** 1-100 character description */
@@ -110,7 +96,7 @@ export type ApplicationCommandInteractionDataOptionWithValue =
     | ApplicationCommandInteractionDataOptionRole
     | ApplicationCommandInteractionDataOptionMentionable;
 
-interface ApplicationCommandInteractionDataOptionBase<T extends ApplicationCommandOptionTypes, V = unknown> {
+interface ApplicationCommandInteractionDataOptionBase<T extends CommandOptionTypes, V = unknown> {
     /** The name of the parameter */
     name: string;
     /** Type of the option */
@@ -134,60 +120,54 @@ export interface ApplicationCommandInteractionData {
 }
 
 export interface ApplicationCommandInteractionDataOptionSubCommand
-    extends Omit<
-        ApplicationCommandInteractionDataOptionBase<ApplicationCommandOptionTypes.SubCommand>,
-        'value'
-    > {
+    extends Omit<ApplicationCommandInteractionDataOptionBase<CommandOptionTypes.SubCommand>, 'value'> {
     /** Present if this option is a group or subcommand */
     options?: ApplicationCommandInteractionDataOptionWithValue[];
 }
 
 export interface ApplicationCommandInteractionDataOptionSubCommandGroup
-    extends Omit<
-        ApplicationCommandInteractionDataOptionBase<ApplicationCommandOptionTypes.SubCommandGroup>,
-        'value'
-    > {
+    extends Omit<ApplicationCommandInteractionDataOptionBase<CommandOptionTypes.SubCommandGroup>, 'value'> {
     /** Present if this option is a group or subcommand */
     options?: ApplicationCommandInteractionDataOptionSubCommand[];
 }
 
 export type ApplicationCommandInteractionDataOptionString = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.String,
+    CommandOptionTypes.String,
     string
 >;
 
 export type ApplicationCommandInteractionDataOptionInteger = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Integer,
+    CommandOptionTypes.Integer,
     number
 >;
 
 export type ApplicationCommandInteractionDataOptionNumber = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Number,
+    CommandOptionTypes.Number,
     number
 >;
 
 export type ApplicationCommandInteractionDataOptionBoolean = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Boolean,
+    CommandOptionTypes.Boolean,
     boolean
 >;
 
 export type ApplicationCommandInteractionDataOptionUser = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.User,
+    CommandOptionTypes.User,
     string
 >;
 
 export type ApplicationCommandInteractionDataOptionChannel = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Channel,
+    CommandOptionTypes.Channel,
     string
 >;
 
 export type ApplicationCommandInteractionDataOptionRole = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Role,
+    CommandOptionTypes.Role,
     string
 >;
 
 export type ApplicationCommandInteractionDataOptionMentionable = ApplicationCommandInteractionDataOptionBase<
-    ApplicationCommandOptionTypes.Mentionable,
+    CommandOptionTypes.Mentionable,
     string
 >;
 
@@ -281,4 +261,12 @@ export interface InteractionForm extends Omit<MessageForm, 'messageReference'> {
 export interface ApplicationCommandCreateUpdateDelete extends ApplicationCommand {
     /** Id of the guild the command is in */
     guild_id?: string;
+}
+
+export interface ApplicationCommandCreate {
+    name: string;
+    description: string;
+    options?: ApplicationCommandOption[];
+    default_permission?: boolean;
+    type?: ApplicationCommandTypes;
 }

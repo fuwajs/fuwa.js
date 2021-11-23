@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin, Embed, Guild, Attachment } = require('../../');
+const { Client, Command, Plugin, Embed, Guild, Attachment, Argument } = require('../../');
 
 class Logger extends Plugin {
     constructor() {
@@ -20,8 +20,9 @@ const FUWA_GUILD_ID = '788135963528134656';
 client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
+    const guild = await Guild.get(FUWA_GUILD_ID);
     const file = new Attachment({
-        url: 'https://cdn.discordapp.com/attachments/788135963528134659/911370177076137984/Path_.svg',
+        url: guild.icon,
     });
     file.download(join(__dirname, 'kk.svg'));
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
@@ -54,15 +55,22 @@ client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_I
         });
 });
 
-client.on('guild loaded', () => console.log(client.cache));
+client.command(
+    'echoz',
+    {
+        guild: FUWA_GUILD_ID,
+        args: [
+            new Argument({ name: 'text', description: 'text u wna echo', required: true, type: 'String' }),
+        ],
+    },
+    (ctx, { text }) => {
+        ctx.send({ content: `${text}` });
+    }
+);
 
 client.on('new message', async function (msg) {
     let prefix = '!';
     const channel = await client.getChannel(msg.channel_id);
-
-    if (msg.content == '.') {
-        channel.send({ content: '' });
-    }
 
     if (!msg.content.startsWith(prefix) || msg.author.isBot) console.log(msg.data.attachments);
 
@@ -73,14 +81,18 @@ client.on('new message', async function (msg) {
         channel.send({ content: 'Pong!' }, { content: 'Fuwa.js > discord.js all day every day' });
     } else if (msgCommand === 'userinfo') {
         const user = await client.getUser(msg.author.id);
-        channel.send(
-            { content: `ok! ${user.name}#${user.discriminator}` },
-            {
-                embeds: [
-                    new Embed().addField({ name: 'message content', value: msg.content }).setColor('#99bdee'),
-                ],
-            }
-        );
+        channel
+            .send(
+                { content: `ok! ${user.name}#${user.discriminator}` },
+                {
+                    embeds: [
+                        new Embed()
+                            .addField({ name: 'message content', value: msg.content })
+                            .setColor('#99bdee'),
+                    ],
+                }
+            )
+            .then(([msg]) => msg.delete());
     }
 });
 

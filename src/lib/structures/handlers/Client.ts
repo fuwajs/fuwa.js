@@ -10,7 +10,12 @@ import {
     GatewayEventsConverter,
     GatewayEventArgConverter,
 } from '../../../interfaces/EventHandler';
-import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
+import {
+    GatewayOpcodes,
+    ApplicationCommand,
+    InteractionTypes,
+    CommandOptionTypes,
+} from '../../../interfaces';
 import http from '../ws/http';
 import { isBrowser } from '../../../util';
 import { Plugin } from './Plugin';
@@ -136,7 +141,7 @@ export class Client extends WebSocket {
         } else {
             path += '/commands';
         }
-        http.POST(path, JSON.stringify({ name: cmd.name, description: cmd.description })).then(command => {
+        http.POST(path, JSON.stringify(cmd.toJSON())).then(command => {
             this.commands.set(command.data.id, cmd);
         });
         return this;
@@ -292,8 +297,11 @@ export class Client extends WebSocket {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
                 const cmd = this.commands.get(interaction.data?.id);
+                const options = interaction.data.options.filter(
+                    c => ![CommandOptionTypes.SubCommand, CommandOptionTypes.SubCommandGroup].includes(c.type)
+                );
                 const args: any = interaction.data.options
-                    ? Object.fromEntries(interaction.data.options.map(c => [c.name, c.value ?? null]))
+                    ? Object.fromEntries(options.map(c => [c.name, c.value ?? null]))
                     : {};
                 if (cmd && cmd.run) {
                     cmd.run(new Context(interaction), args);

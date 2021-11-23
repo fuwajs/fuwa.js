@@ -1,5 +1,10 @@
 import http from '../ws/http';
-import { CommandOptionTypes, ApplicationCommandCreateUpdateDelete } from '../../../interfaces';
+import {
+    CommandOptionTypes,
+    ApplicationCommandCreateUpdateDelete as ApplicationCommand,
+    ApplicationCommandCreate,
+    ApplicationCommandOption,
+} from '../../../interfaces';
 import Globs from '../../../util/Global';
 import Context from '../../discord/Context';
 import type { Client } from './Client';
@@ -16,7 +21,6 @@ export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
     description: string;
     name: string;
-    command?: Command;
     required?: boolean;
 }
 
@@ -35,12 +39,13 @@ export class Command implements CommandType {
     /** An array of options for the command.
      * type of class Argument[]
      */
-    args: Argument[];
+    args = new Array<Argument>();
+    subCommands = new Array<SubCommand>();
     run: CommandCallback;
     constructor(data: CommandType) {
         Object.assign(this, data);
     }
-    public async mount(): Promise<ApplicationCommandCreateUpdateDelete> {
+    public async mount(): Promise<ApplicationCommand> {
         if (!Globs.appId) throw new Error('Application Id is required to do this action');
         let path = `/applications/${Globs.appId}`;
         if (this.guild) {
@@ -49,16 +54,32 @@ export class Command implements CommandType {
             path += '/commands';
         }
         const client = Globs.client as Client;
-        return http
-            .POST(path, JSON.stringify({ name: this.name, description: this.description }))
-            .then(({ data }) => {
-                this.id = data.id;
-                client.commands.set(this.id, this);
-                return data;
-            });
+        return http.POST(path, JSON.stringify(this.toJSON())).then(({ data }) => {
+            this.id = data.id;
+            client.commands.set(this.id, this);
+            return data;
+        });
     }
-    public addArg(...args: Argument[]): void {
+    public addArg(...args: Argument[]): this {
         this.args.push(...args);
+        return this;
+    }
+    public addSubCommand(...args: SubCommand[]) {
+        this.subCommands.push(...args);
+        return this;
+    }
+    public toString() {
+        return `/${this.name}`;
+    }
+    public toJSON(): ApplicationCommandCreate {
+        return {
+            name: this.name,
+            description: this.description,
+            options: [
+                ...this.subCommands.map(cmd => cmd.toOption()),
+                ...this.args.map(arg => arg.toOption()),
+            ],
+        };
     }
     /**
      * Convert a slash command into a actual command
@@ -68,7 +89,7 @@ export class Command implements CommandType {
      * @returns a new Command
      */
     public static from<T extends boolean>(
-        cmd: ApplicationCommandCreateUpdateDelete,
+        cmd: ApplicationCommand,
         run: T extends true ? CommandCallback : undefined,
         mount?: T
     ) {
@@ -87,13 +108,34 @@ export class Command implements CommandType {
     }
 }
 
+export class SubCommand extends Command {
+    constructor(data: CommandType) {
+        super(data);
+    }
+
+    toOption(): ApplicationCommandOption {
+        return {
+            type: CommandOptionTypes.SubCommand,
+            name: this.name,
+            description: this.description,
+        };
+    }
+}
+
 export class Argument {
     type: CommandOptionTypes;
     description: string;
     name: string;
     required?: boolean;
-    command?: Command;
     constructor(data: ArgumentType) {
         Object.assign(this, { ...data, type: CommandOptionTypes[data.type] });
+    }
+    toOption(): ApplicationCommandOption {
+        return {
+            type: this.type,
+            description: this.description,
+            required: this.required,
+            name: this.name,
+        };
     }
 }
