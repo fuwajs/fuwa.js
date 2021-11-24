@@ -4,7 +4,6 @@ import type { Client } from '../structures/handlers/Client';
 import { ButtonComponent, ButtonStyles } from '../../interfaces';
 
 export class Button {
-    protected client = Globs.client as Client;
     constructor(protected ctx: Context, protected self: ButtonComponent, public id: string) {}
 
     public setContent(content: string): this {
@@ -24,7 +23,8 @@ export class Button {
         return this;
     }
     public onClick(cb: (ctx: Context) => any): this {
-        this.client._interactionListeners.set(this.id, cb);
+        const client = Globs.client as Client;
+        client._interactionListeners.set(this.id, cb);
         return this;
     }
     public exit(): Context {

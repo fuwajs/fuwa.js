@@ -27,7 +27,6 @@ export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Create
 export default {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
-     * ! Be aware that this function is **recursive**
      * Note: this automatically 'catch'es on rejection
      * @param method The HTTP method to execute
      * @param path The path from 'https://discord.com/api/v{version} to execute
@@ -41,7 +40,7 @@ export default {
         data?: string | Buffer,
         headers?: any,
         version?: 6 | 8 | 9
-    ) {
+    ): Promise<{ data: any; headers: any; blob: Blob; _metadata: any; status: APICodes }> {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
             method,
@@ -64,6 +63,7 @@ export default {
                 blob = null;
             }
             return {
+                _metadata: params,
                 data,
                 headers: res.headers,
                 status,
@@ -96,7 +96,7 @@ export default {
      * Updates or replaces old data from the api
      * @param path the api path to fetch
      */
-    async PUT(path: string, data?: string | Buffer, headers?: any) {
+    PUT(path: string, data?: string | Buffer, headers?: any) {
         return this.REQUEST('PUT', path, data, headers, 9);
     },
     /**
