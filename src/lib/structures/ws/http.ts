@@ -40,7 +40,7 @@ export default {
         data?: string | Buffer,
         headers?: any,
         version?: 6 | 8 | 9
-    ): Promise<{ data: any; headers: any; blob: Blob; _metadata: any; status: APICodes }> {
+    ): Promise<{ data: any; headers: Map<string, string>; blob: Blob; _metadata: any; status: APICodes }> {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
             method,
@@ -65,7 +65,7 @@ export default {
             return {
                 _metadata: params,
                 data,
-                headers: res.headers,
+                headers: res.headers as any as Map<string, string>,
                 status,
                 blob,
             };
