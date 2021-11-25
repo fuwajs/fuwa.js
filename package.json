@@ -12,6 +12,8 @@
         "pretest": "npx yarn build",
         "build": "npx gulp",
         "build:deno": "npx denoify",
+        "build:all": "npx yarn build && npx yarn build:deno",
+        "prepublish": "npx yarn build:all",
         "testbot:deno": "deno run --allow-all --no-check --unstable test/bot/index.ts",
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build watch",
