@@ -1,5 +1,5 @@
 *.js
 types
 tests
-dist
+out
 node_modules
