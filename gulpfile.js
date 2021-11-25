@@ -11,7 +11,7 @@ gulp.task('lint', () =>
 );
 
 gulp.task('build', async () => {
-    del.sync(['dist/**/*.*', 'types/**/*.*']); // delete old code, then rebuild
+    del.sync(['out/dist/**/*.*', 'out/types/**/*.*']); // delete old code, then rebuild
     const tsCompile = gulp
         .src('./src/**/*.ts')
         .pipe(sourcemaps.init({ base: 'src' }))
@@ -19,13 +19,13 @@ gulp.task('build', async () => {
             project({ declaration: true, noLibCheck: true, experimentalDecorators: true, outDir: './types' })
         )
         .on('error', console.log);
-    gulp.src('./src/**/*.js').pipe(gulp.dest('dist/'));
-    gulp.src('./src/**/*.json').pipe(gulp.dest('dist/'));
-    gulp.src('./src/**/*.lang').pipe(gulp.dest('dist/'));
+    gulp.src('./src/**/*.js').pipe(gulp.dest('out/dist/'));
+    gulp.src('./src/**/*.json').pipe(gulp.dest('out/dist/'));
+    gulp.src('./src/**/*.lang').pipe(gulp.dest('out/dist/'));
 
     return [
-        tsCompile.dts.pipe(gulp.dest('types/')),
-        tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('dist/')),
+        tsCompile.dts.pipe(gulp.dest('out/types/')),
+        tsCompile.js.pipe(sourcemaps.write('.', { sourceRoot: './src' })).pipe(gulp.dest('out/dist/')),
     ];
 });
 

@@ -1,7 +1,6 @@
 *.secret
 src
 node_modules
-types
 *.map
 .vscode
 .env
@@ -12,6 +11,8 @@ deno
 *.log
 config.json
 .dockerignore
+Dockerfile
+out/deno
 yarn.lock
 test
 tsconfig.json

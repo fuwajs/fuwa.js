@@ -2,8 +2,8 @@
     "name": "fuwa.js",
     "version": "0.3.0",
     "description": "The new way of making discord bots",
-    "main": "dist/index.js",
-    "types": "types/index.d.ts",
+    "main": "out/dist/index.js",
+    "types": "out/types/index.d.ts",
     "repository": "https://github.com/fuwajs/fuwa.js.git",
     "author": "Artrix <39530102+Artrix9095@users.noreply.github.com>",
     "license": "MIT",
@@ -28,7 +28,7 @@
         "erlpack": "^0.1.3"
     },
     "denoify": {
-        "out": "deno"
+        "out": "out/deno"
     },
     "engines": {
         "node": ">=16.5"
