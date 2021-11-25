@@ -16,11 +16,9 @@ import Globs from '../../../util/Global';
 
 import { discordAPI, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
-import { fetch } from 'undici';
-import { Blob } from 'buffer';
 
 // @ts-ignore
-// const fetch: _fetch = isBrowser() ? window.fetch : require('undici').fetch;
+const fetch = isBrowser() ? window.fetch : require('undici').fetch;
 
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
@@ -40,7 +38,13 @@ export default {
         data?: string | Buffer,
         headers?: any,
         version?: 6 | 8 | 9
-    ): Promise<{ data: any; headers: Map<string, string>; blob: Blob; _metadata: any; status: APICodes }> {
+    ): Promise<{
+        data: any;
+        headers: Map<string, string>;
+        buffer: ArrayBuffer;
+        _metadata: any;
+        status: APICodes;
+    }> {
         const params: any = {
             // path: `/api/v${version || 8}` + path,
             method,
@@ -51,23 +55,25 @@ export default {
             },
             body: data,
         };
-        return fetch(`${discordAPI.discord}/api/v${version || 8}` + path, params).then(async res => {
+        const url = path.startsWith(`http`) ? path : `${discordAPI.discord}/api/v${version || 8}` + path;
+        return fetch(url, params).then(async res => {
             const status = res.status as APICodes;
             // if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
-            const data = ALLOWED_CODES.includes(status) ? ((await res.json()) as any) : {};
-            let blob: Blob | null;
+            let data;
             try {
-                blob = await res.blob();
-                console.log('blob found');
+                data = ALLOWED_CODES.includes(status) && res.ok ? ((await res.json()) as any) : {};
             } catch {
-                blob = null;
+                data = {};
             }
+            const buffer: ArrayBuffer | null = await res.arrayBuffer();
+
+            console.log(url);
             return {
                 _metadata: params,
                 data,
-                headers: res.headers as any as Map<string, string>,
+                headers: res.headers as any,
                 status,
-                blob,
+                buffer,
             };
         });
     },

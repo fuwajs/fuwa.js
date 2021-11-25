@@ -1,4 +1,3 @@
-import { Blob } from 'buffer';
 import { writeFile } from 'fs';
 import { join } from 'path';
 import { Attachment as IAttachment } from '../../interfaces/message';
@@ -40,15 +39,13 @@ export default class Attachment {
         return this.data.content_type;
     }
 
-    get(): Promise<Blob> {
-        console.log(this.url);
-        return http.GET(this.url).then(({ blob }) => blob);
+    get(): Promise<ArrayBuffer> {
+        return http.GET(this.url).then(({ buffer }) => buffer);
     }
     download(path?: string): Promise<void> {
         return new Promise(async (res, rej) => {
-            const blob = await this.get();
-            const buffer = Buffer.from(await blob.arrayBuffer());
-            console.log(buffer.toString('utf-8'));
+            const buffer = Buffer.from(await this.get());
+            console.log(buffer);
             const _path = path ?? join(process.cwd(), this.filename);
             writeFile(_path, buffer, err => (err ? rej(err) : res()));
         });

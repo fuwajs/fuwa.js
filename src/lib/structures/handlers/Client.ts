@@ -296,10 +296,16 @@ export class Client extends WebSocket {
         this.event('INTERACTION_CREATE', interaction => {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
+                // console.log(interaction);
                 const cmd = this.commands.get(interaction.data?.id);
-                const options = interaction.data.options.filter(
-                    c => ![CommandOptionTypes.SubCommand, CommandOptionTypes.SubCommandGroup].includes(c.type)
-                );
+                const options = interaction.data.options
+                    ? interaction.data.options.filter(
+                          c =>
+                              ![CommandOptionTypes.SubCommand, CommandOptionTypes.SubCommandGroup].includes(
+                                  c.type
+                              )
+                      )
+                    : [];
                 const args: any = interaction.data.options
                     ? Object.fromEntries(options.map(c => [c.name, c.value ?? null]))
                     : {};

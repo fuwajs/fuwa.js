@@ -12,15 +12,16 @@
         "pretest": "npx yarn build",
         "build": "npx gulp",
         "build:deno": "npx denoify",
+        "testbot:deno": "deno run --allow-all --no-check --unstable test/bot/index.ts",
         "lint": "npx eslint ./src/**/*.ts --fix",
         "watch": "npx yarn build watch",
-        "format": "prettier --ignore-path .gitignore --write ./src",
+        "format": "npx prettier --ignore-path .gitignore --write ./src",
         "testbot": "nodemon test/bot/index --ignore dist --ignore types",
         "test": "jest test/tests",
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
     },
     "dependencies": {
-        "undici": "^4.9.5",
+        "undici": "*",
         "ws": "^8.2.2"
     },
     "optionalDependencies": {
@@ -39,6 +40,7 @@
         "@typescript-eslint/eslint-plugin": "^4.31.2",
         "@typescript-eslint/parser": "^4.31.2",
         "del": "^6.0.0",
+        "denoify": "^0.10.5",
         "eslint": "^7.32.0",
         "eslint-plugin-prettier": "^4.0.0",
         "gulp": "^4.0.2",

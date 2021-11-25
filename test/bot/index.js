@@ -24,7 +24,7 @@ client.on('ready', async function () {
     const file = new Attachment({
         url: guild.icon,
     });
-    file.download(join(__dirname, 'kk.svg'));
+    file.download(join(__dirname, 'kk.png'));
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 });
 
@@ -56,8 +56,9 @@ client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_I
 });
 
 client.command(
-    'echoz',
+    'echo',
     {
+        desc: 'echo something you said',
         guild: FUWA_GUILD_ID,
         args: [
             new Argument({ name: 'text', description: 'text u wna echo', required: true, type: 'String' }),
