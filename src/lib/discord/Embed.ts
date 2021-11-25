@@ -23,7 +23,7 @@ export interface AuthorOpts {
 }
 
 export class Embed implements IEmbed {
-    type: EmbedType;
+    type = 'rich';
     title?: string;
     description?: string;
     url?: string;
@@ -53,8 +53,8 @@ export class Embed implements IEmbed {
             // Don't override the default unless specified
             Object.assign(this, {
                 type: 'rich',
-                timestamp: new Date(opts.timestamp),
                 ...(opts ?? {}),
+                timestamp: new Date(opts.timestamp),
             });
         }
     }
