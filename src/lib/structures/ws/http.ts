@@ -41,7 +41,7 @@ export default {
     ): Promise<{
         data: any;
         headers: Map<string, string>;
-        buffer: ArrayBuffer;
+        buffer: Buffer;
         _metadata: any;
         status: APICodes;
     }> {
@@ -59,15 +59,16 @@ export default {
         return fetch(url, params).then(async res => {
             const status = res.status as APICodes;
             // if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
+            const buffer = Buffer.from(await res.arrayBuffer());
             let data;
             try {
-                data = ALLOWED_CODES.includes(status) && res.ok ? ((await res.json()) as any) : {};
+                data =
+                    ALLOWED_CODES.includes(status) && res.ok
+                        ? (JSON.parse(buffer.toString('utf-8')) as any)
+                        : {};
             } catch {
                 data = {};
             }
-            const buffer: ArrayBuffer | null = await res.arrayBuffer();
-
-            console.log(url);
             return {
                 _metadata: params,
                 data,
