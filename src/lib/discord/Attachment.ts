@@ -39,13 +39,12 @@ export default class Attachment {
         return this.data.content_type;
     }
 
-    get(): Promise<ArrayBuffer> {
+    get(): Promise<Buffer> {
         return http.GET(this.url).then(({ buffer }) => buffer);
     }
     download(path?: string): Promise<void> {
         return new Promise(async (res, rej) => {
-            const buffer = Buffer.from(await this.get());
-            console.log(buffer);
+            const buffer = await this.get();
             const _path = path ?? join(process.cwd(), this.filename);
             writeFile(_path, buffer, err => (err ? rej(err) : res()));
         });
