@@ -31,6 +31,7 @@ gulp.task('build', async () => {
 
 // like tsc -w
 gulp.task('watch', async () => {
+    gulp.series('build')();
     gulp.watch('./src/**/*.ts', gulp.series('build'));
 });
 
