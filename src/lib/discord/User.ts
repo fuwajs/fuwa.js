@@ -1,6 +1,7 @@
 import { discordCDN } from '../../interfaces';
 import { User as UserData } from '../../interfaces/member';
 import { formatImageURL } from '../../util';
+import http from '../structures/ws/http';
 
 export class User {
     constructor(protected data: UserData) {}
@@ -29,6 +30,9 @@ export class User {
     }
     public get accentColor(): number | null {
         return this.data.accent_color ? this.data.accent_color : null;
+    }
+    static get(uid: string): Promise<User> {
+        return http.GET(`/users/${uid}`).then(({ data }) => new User(data));
     }
 }
 export class BotUser extends User {

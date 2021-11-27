@@ -1,6 +1,6 @@
 import { WebSocket } from '../ws/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import { Command, CommandCallback } from './Command';
+import { ArgumentConverter, Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
 // import { setCachePromise } from '../../../util';
@@ -293,7 +293,7 @@ export class Client extends WebSocket {
             const guild = new Guild(_guild as any);
             this.events.has('new guild') ? this.events.get('new guild')(guild) : void 0;
         });
-        this.event('INTERACTION_CREATE', interaction => {
+        this.event('INTERACTION_CREATE', async interaction => {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
                 // console.log(interaction);
@@ -306,11 +306,19 @@ export class Client extends WebSocket {
                               )
                       )
                     : [];
-                const args: any = interaction.data.options
-                    ? Object.fromEntries(options.map(c => [c.name, c.value ?? null]))
-                    : {};
+                const args: [string, CommandOptionTypes][] = options
+                    ? options.map(c => [c.name, c.value ?? null])
+                    : [];
+                await Promise.all(
+                    args.map(async (_, i) => {
+                        const [__, val] = _;
+                        if (!val) return;
+                        const converter = ArgumentConverter[options[i].type];
+                        args[i][1] = converter ? await converter(val) : val;
+                    })
+                );
                 if (cmd && cmd.run) {
-                    cmd.run(new Context(interaction), args);
+                    cmd.run(new Context(interaction), Object.fromEntries(args));
                 } else {
                     console.log('Invalid command used');
                 }

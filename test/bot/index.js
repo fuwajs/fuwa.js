@@ -83,8 +83,7 @@ client.command(
             }),
         ],
     },
-    async (ctx, { user: userId }) => {
-        const user = await client.getUser(userId);
+    async (ctx, { user }) => {
         console.log(user);
         ctx.send({ content: `<@${user.id}>` });
     }

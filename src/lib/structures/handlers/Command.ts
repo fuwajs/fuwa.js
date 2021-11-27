@@ -8,6 +8,7 @@ import {
 import Globs from '../../../util/Global';
 import Context from '../../discord/Context';
 import type { Client } from './Client';
+import { User as UserHandler } from '../../discord';
 
 export interface CommandType {
     name: string;
@@ -15,6 +16,18 @@ export interface CommandType {
     guild?: string;
     run?: CommandCallback;
 }
+export type ArgumentConverterType = {
+    [CommandOptionTypes.User]: [string, UserHandler];
+    // [CommandOptionTypes.Role]: [string]
+};
+export const ArgumentConverter: {
+    [arg in keyof ArgumentConverterType]: (
+        data: ArgumentConverterType[arg][0]
+    ) => Promise<ArgumentConverterType[arg][1]>;
+} = {
+    [CommandOptionTypes.User]: uid => UserHandler.get(uid),
+};
+
 export type CommandCallback = <T>(ctx: Context, args?: T) => any;
 
 export interface ArgumentType {
