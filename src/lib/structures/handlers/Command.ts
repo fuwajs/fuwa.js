@@ -15,7 +15,7 @@ export interface CommandType {
     guild?: string;
     run?: CommandCallback;
 }
-export type CommandCallback = <T extends any>(ctx: Context, args?: T) => any;
+export type CommandCallback = <T>(ctx: Context, args?: T) => any;
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
@@ -54,6 +54,7 @@ export class Command implements CommandType {
             path += '/commands';
         }
         const client = Globs.client as Client;
+        console.log(this.toJSON());
         return http.POST(path, JSON.stringify(this.toJSON())).then(({ data }) => {
             this.id = data.id;
             client.commands.set(this.id, this);

@@ -24,7 +24,7 @@ import { User, BotUser } from '../../discord/User';
 
 import { Channel } from '../../discord/Channel';
 import Context from '../../discord/Context';
-import { Cache, MemoryCache } from '..';
+import { Argument, Cache, MemoryCache } from '..';
 
 export interface ClientOptions {
     /** Discord Bot Token */
@@ -352,7 +352,7 @@ export class Client extends WebSocket {
 
     public command(
         name: string,
-        data: CommandCallback | { desc?: string; args?: any; guild?: string },
+        data: CommandCallback | { desc?: string; args?: Argument[]; guild?: string },
         cb?: CommandCallback
     ) {
         let callback: CommandCallback;
@@ -365,14 +365,14 @@ export class Client extends WebSocket {
             throw new Error('A Callback is required to do this action');
         }
         const info = { ...(typeof data === 'object' ? data : {}) };
-        this.mountingCommands.push(
-            new Command({
-                description: info.desc,
-                run: callback,
-                name,
-                guild: info.guild,
-            })
-        );
+        const cmd = new Command({
+            description: info.desc,
+            run: callback,
+            name,
+            guild: info.guild,
+        });
+        info.args && info.args.forEach(arg => cmd.addArg(arg));
+        this.mountingCommands.push(cmd);
         return this;
     }
 }

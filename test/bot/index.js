@@ -1,6 +1,6 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin, Embed, Guild, Attachment, Argument } = require('../../');
+const { Client, Command, Plugin, Embed, Guild, Attachment, Argument, User } = require('../../');
 
 class Logger extends Plugin {
     constructor() {
@@ -20,11 +20,11 @@ const FUWA_GUILD_ID = '788135963528134656';
 client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
-    const guild = await Guild.get(FUWA_GUILD_ID);
-    const file = new Attachment({
-        url: guild.icon,
-    });
-    file.download(join(__dirname, 'kk.png'));
+    // const guild = await Guild.get(FUWA_GUILD_ID);
+    // const file = new Attachment({
+    //     url: guild.icon,
+    // });
+    // file.download(join(__dirname, 'kk.png'));
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 });
 
@@ -66,6 +66,27 @@ client.command(
     },
     (ctx, { text }) => {
         ctx.send({ content: `${text}` });
+    }
+);
+
+client.command(
+    'user-info',
+    {
+        desc: 'echo something you said',
+        guild: FUWA_GUILD_ID,
+        args: [
+            new Argument({
+                name: 'user',
+                description: 'the user you want info on',
+                required: true,
+                type: 'User',
+            }),
+        ],
+    },
+    async (ctx, { user: userId }) => {
+        const user = await client.getUser(userId);
+        console.log(user);
+        ctx.send({ content: `<@${user.id}>` });
     }
 );
 
