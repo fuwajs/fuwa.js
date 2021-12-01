@@ -32,8 +32,11 @@ export type CommandCallback = <T>(ctx: Context, args?: T) => any;
 
 export interface ArgumentType {
     type: keyof typeof CommandOptionTypes;
+    /** The description of the argument */
     description: string;
+    /** The name of the argument */
     name: string;
+    /** If the argument is required*/
     required?: boolean;
 }
 
@@ -136,15 +139,16 @@ export class SubCommand extends Command {
     }
 }
 
+/** The Argument used in the slash command. */
 export class Argument {
-    type: CommandOptionTypes;
-    description: string;
-    name: string;
-    required?: boolean;
-    constructor(data: ArgumentType) {
+    public type: CommandOptionTypes;
+    public description: string;
+    public name: string;
+    public required?: boolean;
+    public constructor(data: ArgumentType) {
         Object.assign(this, { ...data, type: CommandOptionTypes[data.type] });
     }
-    toOption(): ApplicationCommandOption {
+    public toOption(): ApplicationCommandOption {
         return {
             type: this.type,
             description: this.description,

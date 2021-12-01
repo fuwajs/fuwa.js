@@ -20,7 +20,7 @@ export class MemoryCache implements Cache {
     protected expireAfter = 10; //900_000; // 15 minutes
     protected maxSize = 100_000;
     protected store = new Map();
-    constructor(options?: MemoryCacheOptions) {
+    public constructor(options?: MemoryCacheOptions) {
         Object.assign(this, options ?? {});
         setInterval(() => this.clear, this.expireAfter);
         // clear if the cache gets too big
@@ -37,11 +37,11 @@ export class MemoryCache implements Cache {
             return await fallback();
         }
     }
-    set(key: string, data: any) {
+    public set(key: string, data: any) {
         this.store.set(key, data);
     }
-    clear() {
+    public clear() {
         this.store.clear();
-        console.log('cleared');
+        // console.log('cleared');
     }
 }

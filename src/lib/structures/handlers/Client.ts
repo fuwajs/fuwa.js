@@ -134,7 +134,9 @@ export class Client extends WebSocket {
      */
     public async mountCommand(cmd: Command) {
         if (!(this.applicationId || Globs.appId))
-            throw new Error('Application Id is required to do this action');
+            throw new Error(
+                'Application Id is required to do this action.  Please add this option to your client.'
+            );
         let path = `/applications/${this.applicationId || Globs.appId}`;
         if (cmd.guild) {
             path += `/guilds/${cmd.guild}/commands`;
@@ -149,11 +151,11 @@ export class Client extends WebSocket {
 
     /**
      * Deletes a command from the discord api.
-     * @param cmd command or command id
+     * @param cmd command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */
     public unmountCommand(cmd: Command | string, guildId?: string) {
-        if (!this.applicationId) throw new Error('Application Id is required to do this action');
+        if (!this.applicationId) throw new Error('Application Id is required to do this action. Please add this option to your client.');
         const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
         const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
         let path = `/applications/${this.applicationId}`;
@@ -166,7 +168,7 @@ export class Client extends WebSocket {
     }
 
     /**
-     *
+     *  
      * @param gid Id of the guild you want to fetch
      * @param withSize If you want the guild to contain the approximant member count of the guild (and presences), warning this may slow down the request so only use if needed
      * @returns A Guild, or null if the guild was not found
@@ -192,7 +194,7 @@ export class Client extends WebSocket {
         return force ? fallback() : this.cache.get(`channels.${cid}`, fallback);
     }
     /**
-     * Returns all mounted commands.
+     * Returns all mounted commands and there discord data.
      * @param guildId the id of the guild your application command is registered in.
      */
     public getMountedCommands(guildId?: string): Promise<ApplicationCommand[]> {
@@ -359,8 +361,17 @@ export class Client extends WebSocket {
     }
 
     public command(
+        /** The name of your slash command. */
         name: string,
-        data: CommandCallback | { desc?: string; args?: Argument[]; guild?: string },
+        /** Command API Data */
+        data: CommandCallback | { 
+            /** Your command description */
+            desc?: string; 
+            /** The arguments/options for this command. */
+            args?: Argument[]; 
+            /** The guild ID to POST this slash command. */
+            guild?: string },
+            /** The callback function and your command logic*/
         cb?: CommandCallback
     ) {
         let callback: CommandCallback;
