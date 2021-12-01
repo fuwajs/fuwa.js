@@ -121,6 +121,12 @@ export class Channel {
         await http.POST(`/channels/${this.id}/typing`);
         return;
     }
+    /**
+     * Allows the bot to fetch all base channel information.
+     * @param id the ID of the channel.
+     * @param force by default we search the bot cache only, but if forced = true it will search the discord api if no channel is in the cache.
+     * @returns fuwa.js#Channel
+     */
     public static get(id: string, force = false): Promise<Channel> {
         const fallback = () => http.GET(`/channels/${id}`).then(({ data }) => new Channel(data));
         const cache = Globs.cache;
