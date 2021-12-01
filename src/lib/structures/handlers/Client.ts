@@ -155,7 +155,10 @@ export class Client extends WebSocket {
      * @param guildId only needed if your command is a guild command and your id is a string
      */
     public unmountCommand(cmd: Command | string, guildId?: string) {
-        if (!this.applicationId) throw new Error('Application Id is required to do this action. Please add this option to your client.');
+        if (!this.applicationId)
+            throw new Error(
+                'Application Id is required to do this action. Please add this option to your client.'
+            );
         const guild: string | null = typeof cmd === 'string' ? guildId || null : cmd.guild || null;
         const cmdId = typeof cmd === 'string' ? cmd : cmd.id;
         let path = `/applications/${this.applicationId}`;
@@ -364,14 +367,17 @@ export class Client extends WebSocket {
         /** The name of your slash command. */
         name: string,
         /** Command API Data */
-        data: CommandCallback | { 
-            /** Your command description */
-            desc?: string; 
-            /** The arguments/options for this command. */
-            args?: Argument[]; 
-            /** The guild ID to POST this slash command. */
-            guild?: string },
-            /** The callback function and your command logic*/
+        data:
+            | CommandCallback
+            | {
+                  /** Your command description */
+                  desc?: string;
+                  /** The arguments/options for this command. */
+                  args?: Argument[];
+                  /** The guild ID to POST this slash command. */
+                  guild?: string;
+              },
+        /** The callback function and your command logic*/
         cb?: CommandCallback
     ) {
         let callback: CommandCallback;

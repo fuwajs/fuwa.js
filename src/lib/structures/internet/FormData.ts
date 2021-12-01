@@ -3,7 +3,6 @@ const BOUNDARY = '--FUWA';
 const FORM_START = 'Content-Disposition: form-data; ';
 export class Form {
     public str = '';
-    constructor() {}
 
     append(
         name: string,
