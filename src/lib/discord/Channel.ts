@@ -1,9 +1,10 @@
-import { MessageForm } from '../../interfaces/message';
 import { Message } from './Message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
-import http from '../structures/ws/http';
+import http, { FileHandler } from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { enumPropFinder } from '../../util';
+import { MessageReference } from '../../interfaces';
+import { Attachment, Embed } from '.';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -11,6 +12,18 @@ export type MessageSearchTerms = {
     before?: string;
     amount?: number;
 };
+
+export interface MessageForm {
+    content?: string;
+    tts?: boolean;
+    files?: { name: string; data: Buffer }[];
+    embeds?: Embed[];
+    payload_json?: string;
+    // allowed_mentions?: AllowedMention[];
+    attachments?: { filename: string; description: string }[];
+    message_reference?: MessageReference;
+    // components?: MessageComponent[];
+}
 export class Channel {
     constructor(protected data: ChannelData) {
         if (data) {
@@ -62,11 +75,29 @@ export class Channel {
      */
     public send(...messages: MessageForm[]): Promise<Message[]> {
         return Promise.all(
-            messages.map(msg =>
-                http
-                    .POST(`/channels/${this.id}/messages`, JSON.stringify(msg))
-                    .then(raw => new Message(raw.data))
-            )
+            messages
+                .map(msg =>
+                    msg.files
+                        ? {
+                              ...msg,
+                              __files__: new FileHandler(
+                                  msg.files.map(a => ({ filename: a.name, buffer: a.data }))
+                              ),
+                          }
+                        : msg
+                )
+                .map(msg =>
+                    msg.attachments
+                        ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) }
+                        : msg
+                )
+                .map(msg =>
+                    http
+                        .POST(`/channels/${this.id}/messages`, JSON.stringify(msg), {
+                            'Content-Type': 'multipart/form-data',
+                        })
+                        .then(raw => new Message(raw.data))
+                )
         );
     }
     /** Returns the channel permissions */

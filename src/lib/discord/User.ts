@@ -1,7 +1,7 @@
 import { discordCDN } from '../../interfaces';
 import { User as UserData } from '../../interfaces/member';
 import { formatImageURL } from '../../util';
-import http from '../structures/ws/http';
+import http from '../structures/internet/http';
 
 export class User {
     constructor(protected data: UserData) {}

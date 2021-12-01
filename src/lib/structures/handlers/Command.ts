@@ -1,4 +1,4 @@
-import http from '../ws/http';
+import http from '../internet/http';
 import {
     CommandOptionTypes,
     ApplicationCommandCreateUpdateDelete as ApplicationCommand,

@@ -1,4 +1,4 @@
-import http from './../structures/ws/http';
+import http from '../structures/internet/http';
 import crypto from 'crypto';
 import {
     Interaction,

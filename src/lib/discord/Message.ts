@@ -3,7 +3,7 @@ import { User } from './User';
 import { Embed } from './Embed';
 import { enumPropFinder } from '../../util';
 import { Member } from './Guild';
-import http from '../structures/ws/http';
+import http from '../structures/internet/http';
 
 export class Message {
     constructor(protected data: MessageData) {}

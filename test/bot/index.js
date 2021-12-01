@@ -1,7 +1,7 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin, Embed, Guild, Attachment, Argument, User } = require('../../');
-
+const { Client, Command, Plugin, Embed, Guild, Attachment, Argument, User, Channel } = require('../../');
+require('../../out/dist/lib/structures/internet/FormData')
 class Logger extends Plugin {
     constructor() {
         super({ name: 'Logger' });
@@ -16,15 +16,24 @@ const client = new Client({
 });
 
 const FUWA_GUILD_ID = '788135963528134656';
+const FUWA_TEST_CHANNEL_ID = '789395850874322944';
 
 client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
-    // const guild = await Guild.get(FUWA_GUILD_ID);
-    // const file = new Attachment({
-    //     url: guild.icon,
-    // });
-    // file.download(join(__dirname, 'kk.png'));
+    const guild = await Guild.get(FUWA_GUILD_ID);
+    const file = new Attachment({
+        url: guild.icon,
+    });
+    const icon = await file.get();
+    const channel = await Channel.get(FUWA_TEST_CHANNEL_ID);
+    channel
+        .send({
+            content: 'ayo',
+            attachments: [{ name: 'icon.jpg', description: 'sheesh' }],
+            files: [{ data: icon, name: 'icon.jpg' }],
+        })
+        .then(console.log);
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 });
 

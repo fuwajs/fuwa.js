@@ -4,7 +4,7 @@ import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/
 import { arrayToMap, formatImageURL } from '../../util';
 discordCDN;
 import { User } from './User';
-import http from '../structures/ws/http';
+import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 
 export class Guild {

@@ -1,4 +1,4 @@
-import { WebSocket } from '../ws/WebSocket';
+import { WebSocket } from '../internet/WebSocket';
 import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { ArgumentConverter, Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
@@ -16,7 +16,7 @@ import {
     InteractionTypes,
     CommandOptionTypes,
 } from '../../../interfaces';
-import http from '../ws/http';
+import http from '../internet/http';
 import { isBrowser } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';

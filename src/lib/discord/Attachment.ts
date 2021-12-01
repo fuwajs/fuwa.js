@@ -1,7 +1,8 @@
-import { writeFile } from 'fs';
+import { Blob } from 'buffer';
+import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { Attachment as IAttachment } from '../../interfaces/message';
-import http from '../structures/ws/http';
+import http from '../structures/internet/http';
 // import fs from 'fs';
 
 export default class Attachment {
@@ -39,14 +40,13 @@ export default class Attachment {
         return this.data.content_type;
     }
 
-    get(): Promise<Buffer> {
-        return http.GET(this.url).then(({ buffer }) => buffer);
+    get(): Promise<Blob> {
+        return http.GET(this.url).then(({ blob }) => blob);
     }
-    download(path?: string): Promise<void> {
-        return new Promise(async (res, rej) => {
-            const buffer = await this.get();
-            const _path = path ?? join(process.cwd(), this.filename);
-            writeFile(_path, buffer, err => (err ? rej(err) : res()));
-        });
+    async download(path?: string): Promise<void> {
+        const buffer = Buffer.from(await this.get().then(b => b.arrayBuffer()));
+        path ??= join(process.cwd(), this.filename);
+        await writeFile(path, buffer);
+        return;
     }
 }
