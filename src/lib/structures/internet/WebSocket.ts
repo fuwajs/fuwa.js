@@ -6,6 +6,11 @@ import { isBrowser } from '../../../util';
 //@ts-ignore
 const Socket = isBrowser() ? window.WebSocket : require('ws');
 
+/**
+ * The core of our API that interacts with discord.
+ * This cant be extended or used by users them-self's.
+ * @internal
+ */
 export class WebSocket {
     public ws: any;
     private OPevents: { [key: number]: (data: any) => any } = {};

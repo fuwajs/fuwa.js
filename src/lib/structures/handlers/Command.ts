@@ -70,7 +70,7 @@ export class Command implements CommandType {
             path += '/commands';
         }
         const client = Globs.client as Client;
-        console.log(this.toJSON());
+        // console.log(this.toJSON());
         return http.POST(path, JSON.stringify(this.toJSON())).then(({ data }) => {
             this.id = data.id;
             client.commands.set(this.id, this);

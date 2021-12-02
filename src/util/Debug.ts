@@ -1,7 +1,8 @@
-/******************************************************************************
- * @file src/lib/_Debug.ts
- * @fileoverview Exports the Debug class.
- *****************************************************************************/
+/**
+ * This is the internal debug logger for fuwa.js
+ * @module
+ * @internal
+ */
 
 let chalk = {
     bold: { blue: s => s },
@@ -18,8 +19,8 @@ try {
 }
 
 /**
- * @description This class acts as a namespace for pretty-printed debugging
- * messages.
+ * @description This class acts as a namespace for pretty-printed debugging messages.
+ * @internal
  */
 class Debug {
     protected enabled: boolean;
@@ -30,6 +31,7 @@ class Debug {
      * Log a string paired with an event to stdout
      * @param event The event to log
      * @param str The message to log (must be a string)
+     * @internal
      */
     log(event: string, str: any): void {
         if (!this.enabled) return;
@@ -61,6 +63,7 @@ class Debug {
      * ! This function can be recursive
      * @param obj The object or primitive to print out.
      * @param tabWidth The indentation size in tabs (4 spaces)
+     * @internal
      */
     object(obj: any, tabWidth = 0) {
         let str = '';

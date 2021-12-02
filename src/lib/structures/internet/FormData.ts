@@ -1,16 +1,21 @@
-const NEWLINE = '\r\n';
-const BOUNDARY = '--FUWA';
-const FORM_START = 'Content-Disposition: form-data; ';
+import { Blob } from 'buffer';
+
+export const NEWLINE = '\r\n';
+// export const BOUNDARY = '--boundary';
+export const FORM_START = 'Content-Disposition: form-data; ';
 export class Form {
     public str = '';
-
-    append(
+    // public boundary = `${(Math.random() + 1).toString(32).substring(2)}`;
+    public boundary = `boundary`;
+    // constructor() {}
+    async append(
         name: string,
-        value: string,
+        value: any,
         options?: { contentType?: string; headers?: { [key: string]: string } }
     ) {
         options ??= {};
-        this.str += this.formatObject(name, value, options.headers, options.contentType);
+        const formatted = await this.formatObject(name, value, options.headers, options.contentType);
+        this.str += formatted;
     }
     protected handleVars(data: { [key: string]: string }) {
         const vars: [string, string][] = [...Object.entries(data)];
@@ -18,33 +23,53 @@ export class Form {
         const handledVars = vars.map(([key, val]) => `${key}="${val}"`).join('; ');
         return handledVars;
     }
-    protected formatObject(
+    protected async formatObject(
         name: string,
-        data: string,
+        data: any,
         variables?: { [key: string]: string },
         contentType?: string
-    ): string {
+    ): Promise<string> {
         const vars = this.handleVars({ name, ...variables });
+        contentType ??=
+            data instanceof Blob
+                ? data.type
+                : typeof data === 'object'
+                ? 'application/json'
+                : ArrayBuffer.isView(data)
+                ? 'application/octet-stream'
+                : '';
 
+        if (Buffer.isBuffer(data)) {
+            data = data.toString('base64');
+        } else if (data instanceof Blob) {
+            const buf = Buffer.from(await data.arrayBuffer());
+            if (['image/gif', 'image/jpeg', 'image/png'].includes(contentType)) {
+                data = `data:${contentType};base64,${buf.toString('base64')}`;
+                console.log(data);
+            } else {
+                data = buf.toString('base64');
+            }
+        } else if (['number', 'string', 'boolean'].includes(typeof data)) {
+            data = data;
+        } else {
+            data = JSON.stringify(data);
+        }
+        // console.log({ type: typeof data, contentType, name, data });
+        // console.log(data);
         // prettier-ignore
-        return BOUNDARY + 
-               NEWLINE + 
-               FORM_START + vars +
-               // add content type if its provided
-               (contentType ? `${NEWLINE}Content-Type: ${contentType}` : '') +
-               NEWLINE + NEWLINE
-               + data
-               + NEWLINE
+        const ret = `--${this.boundary}` + 
+                    NEWLINE + 
+                    FORM_START + vars +
+                    // add content type if its provided
+                    (contentType ? `${NEWLINE}Content-Type: ${contentType}` : '') +
+                    NEWLINE + NEWLINE
+                    + data
+                    + NEWLINE;
+        // console.log(ret);
+        return ret;
     }
 
     export() {
-        return this.str;
+        return this.str + `--${this.boundary}--`;
     }
 }
-const form = new Form();
-
-form.append('insane', 'value');
-
-form.append('not', 'insane form', { headers: { filename: 'insane name' } });
-
-console.log(form.export());

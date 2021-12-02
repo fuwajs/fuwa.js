@@ -1,0 +1,13 @@
+{
+    "cleanOutputDir": true,
+    "emit": true,
+    "entryPoints": ["src/index.ts"],
+    "excludeExternals": true,
+    "hideGenerator": true,
+    "lightHighlightTheme": "github-light",
+    "darkHighlightTheme": "github-dark",
+    "name": "fuwa.js",
+    "out": "./out/docs",
+    "readme": "./README.md",
+    "tsconfig": "./tsconfig.json"
+}

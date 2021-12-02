@@ -20,7 +20,8 @@
         "format": "npx prettier --ignore-path .gitignore --write ./src",
         "testbot": "nodemon test/bot/index --ignore out",
         "test": "jest test/tests",
-        "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts"
+        "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts",
+        "docs": "typedoc"
     },
     "dependencies": {
         "undici": "*",
@@ -54,6 +55,7 @@
         "prettier": "^2.4.1",
         "ts-node": "^10.2.1",
         "tsconfig-paths": "^3.11.0",
+        "typedoc": "^0.22.10",
         "typescript": "^4.4.3"
     },
     "eslintConfig": {

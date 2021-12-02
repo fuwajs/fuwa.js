@@ -43,6 +43,7 @@ export function isBrowser() {
  * Pauses a function for x amount of time.
  * @param ms
  * @returns an interval of time in ms
+ * @internal
  */
 export function delay(ms: number): Promise<void> {
     return new Promise(res =>
@@ -52,20 +53,31 @@ export function delay(ms: number): Promise<void> {
     );
 }
 
-/** Format url type  */
+/** Format url type
+ *  @internal
+ */
 export const formatImageURL = (hash: string, size: ImageSize = 128, format?: ImageFormat) => {
     return `${hash}.${format || (hash.includes('/a_') ? 'gif' : 'jpg')}?size=${size}`;
 };
 
-/** @see https://discord.com/developers/docs/reference#image-formatting */
+/**
+ *  @see https://discord.com/developers/docs/reference#image-formatting
+ *  @internal
+ */
 export type ImageSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048;
 
-/** @see https://discord.com/developers/docs/reference#image-formatting */
+/**
+ * @see https://discord.com/developers/docs/reference#image-formatting
+ * @internal
+ *  */
 export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif';
 
-// Typescript is not so good as we developers so we need this little utility function to help it out
-// Taken from https://fettblog.eu/typescript-hasownproperty/
-/** TS safe way to check if a property exists in an object */
+/**
+ * Typescript is not so good as we developers so we need this little utility function to help it out
+ * Taken from [this](https://fettblog.eu/typescript-hasownproperty/) url.
+ *  TS safe way to check if a property exists in an object
+ *  @internal
+ */
 export function hasOwnProperty<T extends Record<string, unknown>, Y extends PropertyKey = string>(
     obj: T,
     prop: Y
@@ -78,6 +90,7 @@ export function hasOwnProperty<T extends Record<string, unknown>, Y extends Prop
  * Converts emoji to string id.
  * @param emoji discord emoji
  * @returns string of emoji
+ *  @internal
  */
 export function makeEmojiFromString(
     emoji?:

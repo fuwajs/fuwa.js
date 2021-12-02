@@ -1,3 +1,9 @@
+/**
+ * This is the internal hash function for discord images
+ * @module
+ * @internal
+ */
+
 export function iconHashToNumber(hash: string) {
     let animated = false;
 

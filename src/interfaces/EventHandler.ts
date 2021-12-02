@@ -1,3 +1,8 @@
+/**
+ * The eventHandler for fuwa.js
+ * @module EventHandler
+ */
+
 import type {
     ApplicationCommandCreateUpdateDelete,
     BigInteraction,
@@ -289,7 +294,7 @@ export interface GuildUpdateChange {
     value?: unknown;
 }
 
-/** @see https://discord.com/developers/docs/topics/gateway#typing-start */
+/** @link https://discord.com/developers/docs/topics/gateway#typing-start */
 export interface TypingStart {
     /** id of the channel */
     channel_id: string;

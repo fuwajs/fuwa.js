@@ -27,32 +27,91 @@ import Context from '../../discord/Context';
 import { Argument, Cache, MemoryCache } from '..';
 
 export interface ClientOptions {
-    /** Discord Bot Token */
+    /**
+     * @description The discord token to connect to the [Discord api](https://discord.com/developers/docs/intro).
+     * This is required to start your client.
+     * @since 1.0.0
+     * @default undefined
+     * @returns string
+     */
     token?: string | Buffer;
-    /** An array of all fuwa.js#plugins assigned to the client class. */
+    /**
+     * @description An array of all fuwa.js#plugins assigned to the client class.
+     * @since 1.0.0
+     * ```typescript
+     *  class Logger extends Plugin {
+     *  constructor() {
+     *       super({ name: 'Logger' });
+     * }
+     * event(client, data) {
+     *      console.log(data)
+     * }
+     * ```
+     * @default undefined
+     *  */
     plugins?: Plugin[];
     /**
      * @description Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
+     * @example
      */
     intents?: (keyof typeof GatewayIntents | GatewayIntents)[];
     /**
-     * The owner(s) discord ID. These users can bypass default bot permissions.
+     * @description The owner(s) discord ID. These users can bypass default bot permissions.
+     * @default undefined
      */
     owners?: string[] | string;
     mountingCommands?: CommandCallback[];
+    /**
+     * @description A simple and easy way to access your R.A.M through our API.
+     * Your cache can story any type of value set into it. Keep in mind when your bot resets or shuts down all data in the cache will be deleted.
+     * This should not be used as a form of storage for information but to simply make common task such as fetching channels quicker.
+     * @example
+     * ```typescript
+     * const client = new Client({
+     * // client options here...
+     * })
+     * client.cache.<>
+     * ```
+     */
     cache?: Cache | false;
     /**
-     * TODO shard manager
+     * @description Shards are a way to extends your node or deno process for your bot.
+     * They allow for multiple instances of your bot split between different servers to
+     * improve performance and bot stability.
+     * @see https://discord.com/developers/docs/topics/gateway#sharding
+     * @since 1.0.0
+     * @default 1
+     * @returns A
      */
     shards?: number;
     /**
-     * Your Bot ID
+     * @description Your Discord bot ID. This is required for using some of fuwa.js built in slash command functions
      * @see https://discord.com/developers/applications
+     * @returns string of your ID
      */
     applicationId?: string;
+    /**
+     * The Default prefix for use the bot.
+     * @default null
+     * @returns string
+     */
+    defaultPrefix?: string | null;
 }
 
+/**
+ * @description The base Client to access and configure your discord bot.
+ * The client should be imported from fuwa.js and extended either as a variable or class.
+ * @extends WebSocket
+ * @example
+ * ```typescript
+ * import { Client } from "fuwa.js"
+ * const bot = new Client({})
+ * // or
+ * class bot extends Client {}
+ * ```
+ * Both will work in javascript or typescript.
+ */
 export class Client extends WebSocket {
     /** A Map of fuwa#client events*/
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
@@ -64,14 +123,14 @@ export class Client extends WebSocket {
     public _interactionListeners = new Map<string, CommandCallback>();
     /** Commands that will be mounted before the ready event */
     public mountingCommands = new Array<Command>();
-    /** The message prefix. */
-    public defaultPrefix: string | null;
     public shardCount: number;
     /** Your bot ID */
     public applicationId: string;
     protected session = { id: '', seq: 0 };
     public cache: Cache;
-    /** DiscordAPI GateWay Intents */
+    /**
+     * @description DiscordAPI GateWay Intents
+     *  */
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
     /** Options to pass to the client */
@@ -129,7 +188,8 @@ export class Client extends WebSocket {
      * Alias for on
      */
     once = this.on;
-    /** Mounts a command at runtime
+    /**
+     * @description Mounts a command at runtime
      * @param cmd The slash command to mount to the client.
      */
     public async mountCommand(cmd: Command) {
@@ -150,7 +210,7 @@ export class Client extends WebSocket {
     }
 
     /**
-     * Deletes a command from the discord api.
+     * @description Deletes a command from the discord api.
      * @param cmd command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */
@@ -171,11 +231,10 @@ export class Client extends WebSocket {
     }
 
     /**
-     *  
+     * Allows easy access to the fuwa.js#Guild information.
      * @param gid Id of the guild you want to fetch
      * @param withSize If you want the guild to contain the approximant member count of the guild (and presences), warning this may slow down the request so only use if needed
      * @returns A Guild, or null if the guild was not found
-     
      */
     public getGuild(gid: string, withSize = false, force = false): Promise<Guild> {
         const fallback = () =>

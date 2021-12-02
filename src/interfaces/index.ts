@@ -1,3 +1,8 @@
+/**
+ * The interfaces for fuwa.js
+ * @module Interfaces
+ */
+
 export * from './DiscordAPI';
 export * from './message';
 export * from './member';

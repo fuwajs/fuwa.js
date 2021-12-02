@@ -1,7 +1,8 @@
-/******************************************************************************
- * @file src/util/Globals.ts
- * @fileoverview Global util Classes
- *****************************************************************************/
+/**
+ * Global Globs
+ * @module
+ * @internal
+ */
 
 import { Cache } from '../index';
 
@@ -11,6 +12,8 @@ const Globs = {
     appId: '',
     client: '' as any,
     cache: {} as Cache,
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    version: require('../../../package.json').version,
 };
 
 export default Globs;

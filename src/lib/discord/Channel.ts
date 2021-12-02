@@ -1,10 +1,11 @@
 import { Message } from './Message';
 import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
-import http, { FileHandler } from '../structures/internet/http';
+import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { enumPropFinder } from '../../util';
 import { MessageReference } from '../../interfaces';
 import { Attachment, Embed } from '.';
+import { Form } from '../structures/internet/FormData';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -73,31 +74,40 @@ export class Channel {
      * Works with embeds and normal text messages
      * @example channel.send({content: "fuwa.js rocks!"})
      */
-    public send(...messages: MessageForm[]): Promise<Message[]> {
-        return Promise.all(
-            messages
-                .map(msg =>
-                    msg.files
-                        ? {
-                              ...msg,
-                              __files__: new FileHandler(
-                                  msg.files.map(a => ({ filename: a.name, buffer: a.data }))
-                              ),
-                          }
-                        : msg
-                )
-                .map(msg =>
-                    msg.attachments
-                        ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) }
-                        : msg
-                )
-                .map(msg =>
-                    http
-                        .POST(`/channels/${this.id}/messages`, JSON.stringify(msg), {
-                            'Content-Type': 'multipart/form-data',
+    public async send(...messages: MessageForm[]): Promise<Message[]> {
+        const payload = new Array<Form>();
+        messages = messages.map(msg =>
+            msg.attachments ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) } : msg
+        );
+        for (const i in messages) {
+            const form = new Form();
+            const msg = messages[i];
+            if (msg.files) {
+                await Promise.all(
+                    msg.files.map((file, i) =>
+                        form.append(`files[${i}]`, file.data, {
+                            // contentType: 'image/png',
+                            headers: { filename: file.name },
                         })
-                        .then(raw => new Message(raw.data))
-                )
+                    )
+                );
+                delete msg.files;
+                await form.append('payload_json', msg);
+            } else {
+                for (const key in msg) {
+                    await form.append(key, msg[key]);
+                }
+            }
+            payload.push(form);
+        }
+        return await Promise.all(
+            payload.map(msg =>
+                http
+                    .POST(`/channels/${this.id}/messages`, msg, {
+                        'Content-Type': 'multipart/form-data',
+                    })
+                    .then(raw => new Message(raw.data))
+            )
         );
     }
     /** Returns the channel permissions */
