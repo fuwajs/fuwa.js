@@ -1,9 +1,3 @@
-/******************************************************************************
- * @file src/lib/discord/Embed.ts
- * @fileoverview Exports a class implementation of the Embed Interface
- * (IEmbed)
- *****************************************************************************/
-
 import { Embed as IEmbed } from '../../interfaces/message';
 
 export type Media = {
@@ -22,7 +16,12 @@ export interface AuthorOpts {
     proxyIcon?: string;
 }
 
+/**
+ * The Fuwa#Embed class is a built in way to create beautiful Discord embeds with our API.
+ * This class extends the basic discord api with more functions.
+ */
 export class Embed implements IEmbed {
+    /** The type of embed for discord's api */
     type = 'rich';
     title?: string;
     description?: string;
@@ -60,7 +59,7 @@ export class Embed implements IEmbed {
     }
 
     /**
-     * @param description  Description For Embed
+     * @param description Description For Embed.
      */
     public setDescription(description: string): this {
         this.description = description;
@@ -184,8 +183,8 @@ export class Embed implements IEmbed {
         } else if (typeof color === 'number') {
             this.color = color;
         } else {
-            console.trace(`Expected a string or number instead found ${typeof color}`);
             // 'throw' would crash the bot for such a minor issue
+            console.trace(`Expected a string or number instead found ${typeof color}`);
         }
 
         return this;

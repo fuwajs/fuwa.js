@@ -41,7 +41,7 @@ export default class Attachment {
     }
     /**
      * Attachment#Get
-     * @description Fetch a discord attachment and get its url from a discord channel.
+     * Fetch a discord attachment and get its url from a discord channel.
      * @returns url of the file
      */
     get(): Promise<Blob> {

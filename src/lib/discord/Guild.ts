@@ -19,9 +19,11 @@ export class Guild {
     public get id() {
         return this.data.id;
     }
+    /** icon for the guild */
     public get icon() {
         return `${discordCDN}/icons/${this.id}/${formatImageURL(this.data.icon, 512)}`;
     }
+    /** banner for the guild */
     public get banner() {
         return `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
     }
@@ -49,9 +51,17 @@ export class Guild {
     public get desc() {
         return this.data.description;
     }
+    /**
+     * Checks if the guild is available or not
+     * @returns boolean
+     */
     public get isUnavailable() {
         return this.data.unavailable ?? false;
     }
+    /**
+     * Fetches a list of guild roles and there ID's
+     * @returns Array<string>
+     */
     public get roles() {
         return arrayToMap('id', this.data.roles);
     }
@@ -65,12 +75,14 @@ export class Guild {
     public get createdAt() {
         return new Date(this.data.joined_at);
     }
+    /** The NSFW level of the guild */
     public get nsfwLevel() {
         return this.data.nsfw_level;
     }
     public get isLarge() {
         return this.data.large;
     }
+    /** The Welcome screen channel id for the guild. */
     public get welcomeChannels() {
         return this.data.welcome_screen;
     }
@@ -79,6 +91,12 @@ export class Guild {
         await http.DELETE(`/users/@me/guilds/${this.id}`);
         return;
     }
+    /**
+     * Allows the API to fetch all base Guild information.
+     * @param id the ID of the guild.
+     * @param force by default we search the bot cache only, but if forced = true it will search the discord api if no guild is in the cache.
+     * @returns fuwa.js#Guild
+     */
     public static get(id: string, force = false): Promise<Guild> {
         const fallback = () => http.GET(`/guilds/${id}`).then(({ data }) => new Guild(data));
         const cache = Globs.cache;

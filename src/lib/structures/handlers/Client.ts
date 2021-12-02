@@ -28,7 +28,7 @@ import { Argument, Cache, MemoryCache } from '..';
 
 export interface ClientOptions {
     /**
-     * @description The discord token to connect to the [Discord api](https://discord.com/developers/docs/intro).
+     * The discord token to connect to the [Discord api](https://discord.com/developers/docs/intro).
      * This is required to start your client.
      * @since 1.0.0
      * @default undefined
@@ -36,7 +36,7 @@ export interface ClientOptions {
      */
     token?: string | Buffer;
     /**
-     * @description An array of all fuwa.js#plugins assigned to the client class.
+     * An array of all fuwa.js#plugins assigned to the client class.
      * @since 1.0.0
      * ```typescript
      *  class Logger extends Plugin {
@@ -51,32 +51,32 @@ export interface ClientOptions {
      *  */
     plugins?: Plugin[];
     /**
-     * @description Discord Intends, enabling bot functions with our api.
+     * Discord Intends, enabling bot functions with our api.
      * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
      * @example
      */
     intents?: (keyof typeof GatewayIntents | GatewayIntents)[];
     /**
-     * @description The owner(s) discord ID. These users can bypass default bot permissions.
+     * The owner(s) discord ID. These users can bypass default bot permissions.
      * @default undefined
      */
     owners?: string[] | string;
     mountingCommands?: CommandCallback[];
     /**
-     * @description A simple and easy way to access your R.A.M through our API.
+     * A simple and easy way to access your R.A.M through our API.
      * Your cache can story any type of value set into it. Keep in mind when your bot resets or shuts down all data in the cache will be deleted.
      * This should not be used as a form of storage for information but to simply make common task such as fetching channels quicker.
      * @example
      * ```typescript
      * const client = new Client({
-     * // client options here...
+     * // other client options here...
      * })
-     * client.cache.<>
+     * client.cache.set("id", "value")
      * ```
      */
     cache?: Cache | false;
     /**
-     * @description Shards are a way to extends your node or deno process for your bot.
+     * Shards are a way to extends your node or deno process for your bot.
      * They allow for multiple instances of your bot split between different servers to
      * improve performance and bot stability.
      * @see https://discord.com/developers/docs/topics/gateway#sharding
@@ -86,7 +86,7 @@ export interface ClientOptions {
      */
     shards?: number;
     /**
-     * @description Your Discord bot ID. This is required for using some of fuwa.js built in slash command functions
+     * Your Discord bot ID. This is required for using some of fuwa.js built in slash command functions
      * @see https://discord.com/developers/applications
      * @returns string of your ID
      */
@@ -100,7 +100,7 @@ export interface ClientOptions {
 }
 
 /**
- * @description The base Client to access and configure your discord bot.
+ * The base Client to access and configure your discord bot.
  * The client should be imported from fuwa.js and extended either as a variable or class.
  * @extends WebSocket
  * @example
@@ -129,7 +129,7 @@ export class Client extends WebSocket {
     protected session = { id: '', seq: 0 };
     public cache: Cache;
     /**
-     * @description DiscordAPI GateWay Intents
+     * DiscordAPI GateWay Intents
      *  */
     protected intents: (keyof typeof GatewayIntents)[];
     protected token = '';
@@ -189,7 +189,7 @@ export class Client extends WebSocket {
      */
     once = this.on;
     /**
-     * @description Mounts a command at runtime
+     * Mounts a command at runtime
      * @param cmd The slash command to mount to the client.
      */
     public async mountCommand(cmd: Command) {
@@ -210,7 +210,7 @@ export class Client extends WebSocket {
     }
 
     /**
-     * @description Deletes a command from the discord api.
+     * Deletes a command from the discord api.
      * @param cmd command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */

@@ -26,6 +26,11 @@ export interface MessageForm {
     message_reference?: MessageReference;
     // components?: MessageComponent[];
 }
+
+/**
+ * The base Channel class to interact with discord's api.
+ * @since 1.0.0
+ */
 export class Channel {
     constructor(protected data: ChannelData) {
         if (data) {
@@ -34,7 +39,13 @@ export class Channel {
         }
     }
     public type = enumPropFinder<typeof ChannelType>(this.data?.type, ChannelType);
-    getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
+    /**
+     * Fetch Messages from a channel.
+     * @param amount the amount of messages to fetch. defaults to 50.
+     * @param data
+     * @returns a map of messages from the channel.
+     */
+    public getMessages(amount = 50, data?: MessageSearchTerms): Promise<Message[]> {
         let params = ``;
         params += data?.after ? `&after=${data.after}` : '';
         params += data?.before ? `&before=${data.before}` : '';
@@ -43,37 +54,46 @@ export class Channel {
             .GET(`/channels/${this.id}/messages?limit=${amount}${params}`)
             .then(raw => raw.data.map(m => new Message(m)));
     }
-    /** @description Returns the channel id */
+    /** Returns the id of a channel. */
     public get id() {
         return this.data.id;
     }
     /**
-     * @description This property is only for **voice channels**
+     * This property is only for **voice channels**
      */
     public get userLimit() {
         return this.data.user_limit;
     }
-    /** @description Returns the name of the channel */
+    /** Returns the name of the channel */
     public get name() {
         return this.data.name;
     }
     public get subject() {
         return this.data.topic ?? '';
     }
-    /** @description Checks if the channel is nsfw or not. Returns boolean */
+    /** Checks if the channel is nsfw or not. 
+     * @returns boolean */
     public get isNSFW() {
         return this.data.nsfw ?? false;
     }
+    /** The position of the channel in the guild. */
     public get position() {
         return this.data.position;
     }
+    /**
+     * Checks if the channel is a of type 'DM'
+     * @returns boolean
+     */
     public get isDM() {
         return ((this.type as any) || '') === 'Dm';
     }
     /**
-     * @description A function to send data to a channel.
-     * Works with embeds and normal text messages
-     * @example channel.send({content: "fuwa.js rocks!"})
+     * A function to send data to a channel.
+     * Works with embeds and normal text messages.
+     * @example
+     * ```typescript
+     * channel.send({content: "Leave a star on Fuwa.js!"})
+     * ```
      */
     public async send(...messages: MessageForm[]): Promise<Message[]> {
         const payload = new Array<Form>();
@@ -111,15 +131,15 @@ export class Channel {
             )
         );
     }
-    /** @description Returns the channel permissions */
+    /** Returns the channel permissions */
     public get perms() {
         return this.data.permissions;
     }
-    /** @description If a channel is in a category, it will have a parent id. This function will return that id*/
+    /** If a channel is in a category, it will have a parent id. This function will return that id*/
     public get parentId() {
         return this.data.parent_id ?? null;
     }
-    /** @description Returns the id of a pined message */
+    /** Returns the id of a pined message */
     public getPins(): Promise<Message[]> {
         return http.GET(`/channels/${this.id}/pins`).then(raw => raw.data.map(msg => new Message(msg)));
     }
@@ -133,7 +153,7 @@ export class Channel {
         return;
     }
     /**
-     * @description Allows the bot to fetch all base channel information.
+     * Allows the API to fetch all base channel information.
      * @param id the ID of the channel.
      * @param force by default we search the bot cache only, but if forced = true it will search the discord api if no channel is in the cache.
      * @returns fuwa.js#Channel

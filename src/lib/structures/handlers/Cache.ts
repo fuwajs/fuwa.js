@@ -1,6 +1,7 @@
 export interface CacheOverwrites {
     /**
-     * @description How many much time (ms) until the item is deleted
+     * How many much time (ms) until the item is deleted
+     * @internal
      */
     expireAfter: number;
 }
@@ -24,7 +25,7 @@ export interface Cache {
     set: (key: string, data: any, overwrites?: CacheOverwrites) => void;
     /**
      * Cache#clear
-     * @description Clears your entire cache for that collection.
+     * Clears your entire cache for that collection.
      */
     clear: () => void;
 }

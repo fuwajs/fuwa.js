@@ -19,7 +19,7 @@ try {
 }
 
 /**
- * @description This class acts as a namespace for pretty-printed debugging messages.
+ * This class acts as a namespace for pretty-printed debugging messages.
  * @internal
  */
 class Debug {
@@ -28,7 +28,7 @@ class Debug {
         this.enabled = enabled;
     }
     /**
-     * @description Log a string paired with an event to stdout
+     * Log a string paired with an event to stdout
      * @param event The event to log
      * @param str The message to log (must be a string)
      * @internal
@@ -59,7 +59,7 @@ class Debug {
     }
 
     /**
-     * @description Print an object or primitive to stdout
+     * Print an object or primitive to stdout
      * ! This function can be recursive
      * @param obj The object or primitive to print out.
      * @param tabWidth The indentation size in tabs (4 spaces)

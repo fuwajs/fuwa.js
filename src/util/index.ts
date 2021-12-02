@@ -1,5 +1,5 @@
 /**
- *  @description Allows easy way to add a prop to a base object when needing to use complicated getters solution.
+ *  Allows easy way to add a prop to a base object when needing to use complicated getters solution.
  *  @internal
  */
 
@@ -43,7 +43,7 @@ export function isBrowser() {
 }
 
 /**
- * @description Pauses a function for x amount of time.
+ * Pauses a function for x amount of time.
  * @param ms
  * @returns an interval of time in ms
  * @internal
@@ -57,7 +57,7 @@ export function delay(ms: number): Promise<void> {
 }
 
 /**
- *  @description Format url type
+ *  Format url type
  *  @internal
  */
 export const formatImageURL = (hash: string, size: ImageSize = 128, format?: ImageFormat) => {
@@ -77,7 +77,7 @@ export type ImageSize = 16 | 32 | 64 | 128 | 256 | 512 | 1024 | 2048;
 export type ImageFormat = 'jpg' | 'jpeg' | 'png' | 'webp' | 'gif';
 
 /**
- * @description Typescript is not so good as we developers so we need this little utility function to help it out
+ * Typescript is not so good as we developers so we need this little utility function to help it out
  * Taken from [this](https://fettblog.eu/typescript-hasownproperty/) url.
  *  TS safe way to check if a property exists in an object
  *  @internal
@@ -91,7 +91,7 @@ export function hasOwnProperty<T extends Record<string, unknown>, Y extends Prop
 }
 
 /**
- * @description Converts emoji to string id.
+ * Converts emoji to string id.
  * @param emoji discord emoji
  * @returns string of emoji
  *  @internal

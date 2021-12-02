@@ -7,7 +7,7 @@
     "lightHighlightTheme": "github-light",
     "darkHighlightTheme": "github-dark",
     "name": "fuwa.js",
-    "out": "./out/docs",
+    "out": "./docs",
     "readme": "./README.md",
     "tsconfig": "./tsconfig.json"
 }
