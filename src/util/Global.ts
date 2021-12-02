@@ -1,5 +1,5 @@
 /**
- * Global Globs
+ * @description Global Globs
  * @module
  * @internal
  */

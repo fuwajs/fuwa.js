@@ -39,7 +39,11 @@ export default class Attachment {
     get contentType() {
         return this.data.content_type;
     }
-
+    /**
+     * Attachment#Get
+     * @description Fetch a discord attachment and get its url from a discord channel.
+     * @returns url of the file
+     */
     get(): Promise<Blob> {
         return http.GET(this.url).then(({ blob }) => blob);
     }

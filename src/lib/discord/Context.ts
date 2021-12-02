@@ -22,7 +22,7 @@ export default class Context {
 
     constructor(protected data: Interaction) {}
     /**
-     * The Context#button function
+     * @description The Context#button function
      * @param data ingest ButtonParams or null
      * @returns
      */
@@ -53,7 +53,8 @@ export default class Context {
             .components.find(b => b.custom_id === id) as ButtonComponent;
         return new Button(this, self, id);
     }
-    /** Fetches raw channel data
+    /**
+     * @description Fetches raw channel data
      * @param force If it should force and get the most recent data (slower) or use the cached version
      */
     public getChannel(force = false): Promise<Channel> | null {
@@ -67,7 +68,7 @@ export default class Context {
             : null;
     }
 
-    /** Fetches raw guild data */
+    /** @description Fetches raw guild data */
     getGuild(force = false): Promise<Guild> | null {
         const fallback = () => http.GET(`/guilds/${this.data.guild_id}`).then(res => new Guild(res.data));
         const cache = Globs.cache;
@@ -79,7 +80,7 @@ export default class Context {
             : null;
     }
 
-    /** Sends a POST  */
+    /** @description Sends a POST  */
     public async send(
         message: InteractionForm,
         type: keyof typeof ResponseTypes = 'ChannelMessageWithSource'
@@ -109,7 +110,7 @@ export default class Context {
         await http.DELETE(`/webhooks/${Globs.appId}/${this.data.token}/messages/@original`);
         return;
     }
-    /** Edit some message data*/
+    /** @description Edit some message data*/
     public edit(message: InteractionForm): Promise<Message> {
         const components = [...(message.components ?? []), ...[...this.components.values()]];
         const data = {

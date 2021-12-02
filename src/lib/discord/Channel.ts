@@ -42,24 +42,24 @@ export class Channel {
             .GET(`/channels/${this.id}/messages?limit=${amount}${params}`)
             .then(raw => raw.data.map(m => new Message(m)));
     }
-    /** Returns the channel id */
+    /** @description Returns the channel id */
     public get id() {
         return this.data.id;
     }
     /**
-     * This property is only for **voice channels**
+     * @description This property is only for **voice channels**
      */
     public get userLimit() {
         return this.data.user_limit;
     }
-    /** Returns the name of the channel */
+    /** @description Returns the name of the channel */
     public get name() {
         return this.data.name;
     }
     public get subject() {
         return this.data.topic ?? '';
     }
-    /** Checks if the channel is nsfw or not. Returns boolean */
+    /** @description Checks if the channel is nsfw or not. Returns boolean */
     public get isNSFW() {
         return this.data.nsfw ?? false;
     }
@@ -70,7 +70,7 @@ export class Channel {
         return ((this.type as any) || '') === 'Dm';
     }
     /**
-     * A function to send data to a channel.
+     * @description A function to send data to a channel.
      * Works with embeds and normal text messages
      * @example channel.send({content: "fuwa.js rocks!"})
      */
@@ -110,15 +110,15 @@ export class Channel {
             )
         );
     }
-    /** Returns the channel permissions */
+    /** @description Returns the channel permissions */
     public get perms() {
         return this.data.permissions;
     }
-    /** If a channel is in a category, it will have a parent id. This function will return that id*/
+    /** @description If a channel is in a category, it will have a parent id. This function will return that id*/
     public get parentId() {
         return this.data.parent_id ?? null;
     }
-    /** Returns the id of a pined message */
+    /** @description Returns the id of a pined message */
     public getPins(): Promise<Message[]> {
         return http.GET(`/channels/${this.id}/pins`).then(raw => raw.data.map(msg => new Message(msg)));
     }
@@ -132,7 +132,7 @@ export class Channel {
         return;
     }
     /**
-     * Allows the bot to fetch all base channel information.
+     * @description Allows the bot to fetch all base channel information.
      * @param id the ID of the channel.
      * @param force by default we search the bot cache only, but if forced = true it will search the discord api if no channel is in the cache.
      * @returns fuwa.js#Channel

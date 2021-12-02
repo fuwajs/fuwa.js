@@ -1,5 +1,5 @@
 /**
- * This is the invalid token handler.
+ * @description This is the invalid token handler.
  * @module
  * @internal
  */

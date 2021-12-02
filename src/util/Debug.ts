@@ -24,16 +24,16 @@ try {
  */
 class Debug {
     protected enabled: boolean;
-    constructor(enabled = false) {
+    public constructor(enabled = false) {
         this.enabled = enabled;
     }
     /**
-     * Log a string paired with an event to stdout
+     * @description Log a string paired with an event to stdout
      * @param event The event to log
      * @param str The message to log (must be a string)
      * @internal
      */
-    log(event: string, str: any): void {
+    public log(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
             `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${str} - ${chalk?.grey(
@@ -41,7 +41,7 @@ class Debug {
             )}`
         );
     }
-    error(event: string, str: any): void {
+    public error(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
             `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.red(str)} - ${chalk?.grey(
@@ -49,7 +49,7 @@ class Debug {
             )}`
         );
     }
-    success(event: string, str: any): void {
+    public success(event: string, str: any): void {
         if (!this.enabled) return;
         console.log(
             `${chalk?.bold?.blue('[' + event.toUpperCase() + ']')}: ${chalk?.green(str)} - ${chalk?.grey(
@@ -59,13 +59,13 @@ class Debug {
     }
 
     /**
-     * Print an object or primitive to stdout
+     * @description Print an object or primitive to stdout
      * ! This function can be recursive
      * @param obj The object or primitive to print out.
      * @param tabWidth The indentation size in tabs (4 spaces)
      * @internal
      */
-    object(obj: any, tabWidth = 0) {
+    public object(obj: any, tabWidth = 0) {
         let str = '';
         // let tabs = '';
         // for (const e of new Array(tabWidth)) tabs += '    ';
