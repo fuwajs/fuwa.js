@@ -130,12 +130,15 @@ export class Client extends WebSocket {
     public cache: Cache;
     /**
      * DiscordAPI GateWay Intents
-     *  */
+     **/
     protected intents: (keyof typeof GatewayIntents)[];
+    /** @internal */
     protected token = '';
     /** Options to pass to the client */
     protected options: ClientOptions;
+    /** @internal */
     protected debug: typeof Debug;
+    /** @internal */
     protected loop?: NodeJS.Timeout;
     public constructor(options?: ClientOptions) {
         super();

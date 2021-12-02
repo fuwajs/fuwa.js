@@ -71,7 +71,7 @@ export class Channel {
     public get subject() {
         return this.data.topic ?? '';
     }
-    /** Checks if the channel is nsfw or not. 
+    /** Checks if the channel is nsfw or not.
      * @returns boolean */
     public get isNSFW() {
         return this.data.nsfw ?? false;

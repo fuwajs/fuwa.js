@@ -237,6 +237,7 @@ export type DelimiterCase<Value, Delimiter extends string> = Value extends strin
       >
     : Value;
 /* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export type DelimiterCasedProperties<Value, Delimiter extends string> = Value extends Function
     ? Value
     : Value extends Array<infer U>
@@ -262,6 +263,7 @@ export type CamelCase<K> = K extends string ? CamelCaseStringArray<Split<K, Word
 
 export type SnakeCasedProperties<Value> = DelimiterCasedProperties<Value, '_'>;
 /* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export type CamelCasedProperties<Value> = Value extends Function
     ? Value
     : Value extends Array<infer U>
