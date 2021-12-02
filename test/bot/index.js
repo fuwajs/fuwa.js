@@ -1,6 +1,18 @@
 const { readFileSync } = require('fs');
 const { join } = require('path');
-const { Client, Command, Plugin, Embed, Guild, Attachment, Argument, User, Channel } = require('../../');
+const { Blob } = require('buffer');
+const {
+    Client,
+    Command,
+    Plugin,
+    Embed,
+    Guild,
+    Attachment,
+    Argument,
+    User,
+    Channel,
+    File,
+} = require('../../');
 require('../../out/dist/lib/structures/internet/FormData');
 class Logger extends Plugin {
     constructor() {
@@ -25,12 +37,12 @@ client.on('ready', async function () {
     const file = new Attachment({
         url: guild.icon,
     });
-    const icon = await file.get();
+    // const icon = await file.get();
     const channel = await Channel.get(FUWA_TEST_CHANNEL_ID);
     channel.send({
         content: 'ayo',
-        attachments: [{ name: 'icon.png', description: 'sheesh' }],
-        files: [{ data: icon, name: 'icon.png' }],
+        attachments: [{ name: 'index.js', description: 'sheesh' }],
+        files: [new File('index.js', new Blob(['var a = 100']), 'text/javascript')],
     });
     // .then(console.log);
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);

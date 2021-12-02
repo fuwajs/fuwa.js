@@ -6,6 +6,7 @@ import { enumPropFinder } from '../../util';
 import { MessageReference } from '../../interfaces';
 import { Attachment, Embed } from '.';
 import { Form } from '../structures/internet/FormData';
+import { File } from '../structures/handlers/FileHandler';
 
 export type MessageSearchTerms = {
     around?: string;
@@ -17,7 +18,7 @@ export type MessageSearchTerms = {
 export interface MessageForm {
     content?: string;
     tts?: boolean;
-    files?: { name: string; data: Buffer }[];
+    files?: File[];
     embeds?: Embed[];
     payload_json?: string;
     // allowed_mentions?: AllowedMention[];

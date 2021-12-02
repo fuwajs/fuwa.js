@@ -56,7 +56,7 @@ export function delay(ms: number): Promise<void> {
     );
 }
 
-/** 
+/**
  *  @description Format url type
  *  @internal
  */

@@ -1,4 +1,5 @@
 import { Blob } from 'buffer';
+import { File } from '..';
 
 export const NEWLINE = '\r\n';
 // export const BOUNDARY = '--boundary';
@@ -42,12 +43,12 @@ export class Form {
         if (Buffer.isBuffer(data)) {
             data = data.toString('base64');
         } else if (data instanceof Blob) {
-            const buf = Buffer.from(await data.arrayBuffer());
+            const buf = await File.blobToBuffer(data);
             if (['image/gif', 'image/jpeg', 'image/png'].includes(contentType)) {
-                data = `data:${contentType};base64,${buf.toString('base64')}`;
+                data = `data:${contentType};base64,${buf.toString('base64url')}`;
                 console.log(data);
             } else {
-                data = buf.toString('base64');
+                data = buf.toString('utf8');
             }
         } else if (['number', 'string', 'boolean'].includes(typeof data)) {
             data = data;
