@@ -124,9 +124,7 @@ export class Channel {
         return await Promise.all(
             payload.map(msg =>
                 http
-                    .POST(`/channels/${this.id}/messages`, msg, {
-                        'Content-Type': 'multipart/form-data',
-                    })
+                    .POST(`/channels/${this.id}/messages`, msg, { 'Content-Type': 'multipart/form-data' })
                     .then(raw => new Message(raw.data))
             )
         );
