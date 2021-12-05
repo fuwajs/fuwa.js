@@ -8,6 +8,27 @@ import { Attachment, Embed } from '.';
 import { Form } from '../structures/internet/FormData';
 import { File } from '../structures/handlers/FileHandler';
 
+export async function MessageFormHandler(msg: MessageForm): Promise<Form> {
+    const form = new Form();
+    if (msg.files) {
+        await Promise.all(
+            msg.files.map((file, i) =>
+                form.append(`files[${i}]`, file.data, {
+                    // contentType: 'image/png',
+                    headers: { filename: file.name },
+                })
+            )
+        );
+        delete msg.files;
+        await form.append('payload_json', msg);
+    } else {
+        for (const key in msg) {
+            await form.append(key, msg[key]);
+        }
+    }
+    return form;
+}
+
 export type MessageSearchTerms = {
     around?: string;
     after?: string;
@@ -96,31 +117,15 @@ export class Channel {
      * ```
      */
     public async send(...messages: MessageForm[]): Promise<Message[]> {
-        const payload = new Array<Form>();
-        messages = messages.map(msg =>
-            msg.attachments ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) } : msg
+        const payload = await Promise.all(
+            messages
+                .map(msg =>
+                    msg.attachments
+                        ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) }
+                        : msg
+                )
+                .map(MessageFormHandler)
         );
-        for (const i in messages) {
-            const form = new Form();
-            const msg = messages[i];
-            if (msg.files) {
-                await Promise.all(
-                    msg.files.map((file, i) =>
-                        form.append(`files[${i}]`, file.data, {
-                            // contentType: 'image/png',
-                            headers: { filename: file.name },
-                        })
-                    )
-                );
-                delete msg.files;
-                await form.append('payload_json', msg);
-            } else {
-                for (const key in msg) {
-                    await form.append(key, msg[key]);
-                }
-            }
-            payload.push(form);
-        }
         return await Promise.all(
             payload.map(msg =>
                 http
