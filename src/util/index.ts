@@ -9,7 +9,28 @@ import Globs from './Global';
 export function createNewProp(value: any): PropertyDescriptor {
     return { configurable: true, enumerable: true, writable: true, value };
 }
-
+export function parseDiscordEventNames(e: string): string {
+    let str = e
+        .toLowerCase()
+        .replace(/_/g, ' ')
+        // Easily fixable bugs
+        .replace(/delete|remove/g, 'removed')
+        .replace('typing start', 'typing');
+    if (str.includes('create') || str.includes('add')) {
+        str = str.replace(' create', '').replace(' add', '');
+        str = 'new ' + str;
+    }
+    if (str.includes('all')) {
+        str = `all ${str.replace(' all', '')}`;
+    }
+    if (
+        str.includes('guild') &&
+        (str.includes('role') || str.includes('member') || str.includes('ban') || str.includes('emojis'))
+    ) {
+        str = str.replace('guild ', '');
+    }
+    return str.replace('new ban', 'ban');
+}
 export function arrayToMap<K extends keyof T, T>(key: K, arr: T[]): Map<K, T> {
     const entries: [K, T][] = arr.map(a => [a[key], a]) as any;
     return new Map(entries);

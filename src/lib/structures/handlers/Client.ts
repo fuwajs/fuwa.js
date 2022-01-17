@@ -17,7 +17,7 @@ import {
     CommandOptionTypes,
 } from '../../../interfaces';
 import http from '../internet/http';
-import { isBrowser } from '../../../util';
+import { isBrowser, parseDiscordEventNames } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User, BotUser } from '../../discord/User';
@@ -61,7 +61,7 @@ export interface ClientOptions {
      * @default undefined
      */
     owners?: string[] | string;
-    mountingCommands?: CommandCallback[];
+    mountingCommands?: CommandCallback<any>[];
     /**
      * A simple and easy way to access your R.A.M through our API.
      * Your cache can story any type of value set into it. Keep in mind when your bot resets or shuts down all data in the cache will be deleted.
@@ -116,13 +116,13 @@ export class Client extends WebSocket {
     /** A Map of fuwa#client events*/
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
-    public commands = new Map<string, Command>();
+    public commands = new Map<string, Command<any>>();
     public plugins: Plugin[];
     public bot: BotUser | null = null;
     /** Interaction listeners for buttons */
-    public _interactionListeners = new Map<string, CommandCallback>();
+    public _interactionListeners = new Map<string, CommandCallback<any>>();
     /** Commands that will be mounted before the ready event */
-    public mountingCommands = new Array<Command>();
+    public mountingCommands = new Array<Command<any>>();
     public shardCount: number;
     /** Your bot ID */
     public applicationId: string;
@@ -195,7 +195,7 @@ export class Client extends WebSocket {
      * Mounts a command at runtime
      * @param cmd The slash command to mount to the client.
      */
-    public async mountCommand(cmd: Command) {
+    public async mountCommand(cmd: Command<any>) {
         if (!(this.applicationId || Globs.appId))
             throw new Error(
                 'Application Id is required to do this action.  Please add this option to your client.'
@@ -217,7 +217,7 @@ export class Client extends WebSocket {
      * @param cmd command id
      * @param guildId only needed if your command is a guild command and your id is a string
      */
-    public unmountCommand(cmd: Command | string, guildId?: string) {
+    public unmountCommand(cmd: Command<any> | string, guildId?: string) {
         if (!this.applicationId)
             throw new Error(
                 'Application Id is required to do this action. Please add this option to your client.'
@@ -271,28 +271,6 @@ export class Client extends WebSocket {
         }
         return http.GET(path).then(res => res.data);
     }
-    protected parseDiscordEventNames(e: string): string {
-        let str = e
-            .toLowerCase()
-            .replace(/_/g, ' ')
-            // Easily fixable bugs
-            .replace(/delete|remove/g, 'removed')
-            .replace('typing start', 'typing');
-        if (str.includes('create') || str.includes('add')) {
-            str = str.replace(' create', '').replace(' add', '');
-            str = 'new ' + str;
-        }
-        if (str.includes('all')) {
-            str = `all ${str.replace(' all', '')}`;
-        }
-        if (
-            str.includes('guild') &&
-            (str.includes('role') || str.includes('member') || str.includes('ban') || str.includes('emojis'))
-        ) {
-            str = str.replace('guild ', '');
-        }
-        return str.replace('new ban', 'ban');
-    }
 
     /** Connects the websocket client to discords api.
      * @param token Your discord bot token.
@@ -313,7 +291,7 @@ export class Client extends WebSocket {
             this.wsEvent('message', data => {
                 this.plugins.forEach(plugin => plugin.event(this, data));
                 if (data.op === GatewayOpcodes.Dispatch && data.t) {
-                    const eventName = GatewayEventsConverter[data.t] || this.parseDiscordEventNames(data.t);
+                    const eventName = GatewayEventsConverter[data.t] || parseDiscordEventNames(data.t);
                     const event = this.events.get(eventName);
                     if (!event || eventName === 'ready') return;
                     const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
@@ -425,24 +403,24 @@ export class Client extends WebSocket {
         this.debug.log('shards', `Sent shard ${shardId}`);
     }
 
-    public command(
+    public command<T>(
         /** The name of your slash command. */
         name: string,
         /** Command API Data */
         data:
-            | CommandCallback
+            | CommandCallback<T>
             | {
                   /** Your command description */
                   desc?: string;
                   /** The arguments/options for this command. */
-                  args?: Argument[];
+                  args?: Argument<any, any>[];
                   /** The guild ID to POST this slash command. */
                   guild?: string;
               },
         /** The callback function and your command logic*/
-        cb?: CommandCallback
+        cb?: CommandCallback<T>
     ) {
-        let callback: CommandCallback;
+        let callback: CommandCallback<T>;
         if (typeof data === 'function') {
             callback = data;
         } else {
