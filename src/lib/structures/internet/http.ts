@@ -14,7 +14,7 @@
 
 import Globs from '../../../util/Global';
 
-import { discordAPI, HTTPResponseCodes as APICodes } from '../../../interfaces';
+import { DISCORD_API, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
 import { URL } from 'url';
 import { Blob } from 'buffer';
@@ -74,7 +74,7 @@ export default {
         _metadata: any;
         status: APICodes;
     }> {
-        const url = path.startsWith(`http`) ? path : `${discordAPI.discord}/api/v${version || 8}` + path;
+        const url = path.startsWith(`http`) ? path : `${DISCORD_API.discord}/api/v${version || 8}` + path;
         const params: any = {
             path: url,
             method,

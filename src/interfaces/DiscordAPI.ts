@@ -147,7 +147,7 @@ export enum GatewayIntents {
     DirectMessageTyping = 1 << 14,
 }
 
-export const discordAPI = {
+export const DISCORD_API = {
     gateway: 'wss://gateway.discord.gg/',
     api: 'https://discord.com/api/v9/',
     discord: 'https://discord.com',

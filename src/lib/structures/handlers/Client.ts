@@ -1,5 +1,5 @@
 import { WebSocket } from '../internet/WebSocket';
-import { discordAPI, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
+import { DISCORD_API, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
 import { ArgumentConverter, Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
@@ -301,7 +301,7 @@ export class Client extends WebSocket {
     public login(token?: string | Buffer) {
         const _token = this.token || token.toString();
         Globs.token = _token;
-        this.connect(discordAPI.gateway, 9);
+        this.connect(DISCORD_API.gateway, 9);
         this.op(GatewayOpcodes.Hello, data => {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(
