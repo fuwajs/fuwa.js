@@ -34,18 +34,8 @@ client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
     const guild = await Guild.get(FUWA_GUILD_ID);
-    const file = new Attachment({
-        url: guild.icon,
-    });
-    // const icon = await file.get();
-    const channel = await Channel.get(FUWA_TEST_CHANNEL_ID);
-    channel.send({
-        content: 'ayo',
-        attachments: [{ name: 'index.js', description: 'sheesh' }],
-        files: [new File('index.js', new Blob(['var a = 100']), 'text/javascript')],
-    });
-    // .then(console.log);
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
+    
 });
 
 client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, async ctx => {

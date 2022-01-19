@@ -4,17 +4,18 @@ import {
     ApplicationCommandCreateUpdateDelete as ApplicationCommand,
     ApplicationCommandCreate,
     ApplicationCommandOption,
+    Role,
 } from '../../../interfaces';
 import Globs from '../../../util/Global';
 import Context from '../../discord/Context';
 import type { Client } from './Client';
-import { User as UserHandler } from '../../discord';
+import { Channel as ChannelHandler, User as UserHandler } from '../../discord';
 
-export interface CommandType {
+export interface CommandType<T> {
     name: string;
     description: string;
     guild?: string;
-    run?: CommandCallback;
+    run?: CommandCallback<T>;
 }
 export type ArgumentConverterType = {
     [CommandOptionTypes.User]: [string, UserHandler];
@@ -28,19 +29,26 @@ export const ArgumentConverter: {
     [CommandOptionTypes.User]: uid => UserHandler.get(uid),
 };
 
-export type CommandCallback = <T>(ctx: Context, args?: T) => any;
+export type CommandCallback<T> = (ctx: Context, args?: T) => any;
 
-export interface ArgumentType {
-    type: keyof typeof CommandOptionTypes;
+export interface ArgumentType<
+    T extends typeof CommandOptionTypes[C],
+    K extends CommandOptionTypeConverter[T],
+    C extends keyof typeof CommandOptionTypes
+> {
+    type: C;
     /** The description of the argument */
     description: string;
     /** The name of the argument */
     name: string;
     /** If the argument is required*/
     required?: boolean;
+    min: K extends number ? number | undefined : undefined;
+    max: K extends number ? number | undefined : undefined;
+    autocomplete?: boolean;
 }
 
-export class Command implements CommandType {
+export class Command<T> implements CommandType<T> {
     /** The id of the application command */
     id: string;
     /** The display name of the slash interaction.
@@ -55,10 +63,10 @@ export class Command implements CommandType {
     /** An array of options for the command.
      * type of class Argument[]
      */
-    args = new Array<Argument>();
-    subCommands = new Array<SubCommand>();
-    run: CommandCallback;
-    constructor(data: CommandType) {
+    args = new Array<Argument<any, any, any>>();
+    subCommands = new Array<SubCommand<any>>();
+    run: CommandCallback<T>;
+    constructor(data: CommandType<T>) {
         Object.assign(this, data);
     }
     public async mount(): Promise<ApplicationCommand> {
@@ -77,11 +85,11 @@ export class Command implements CommandType {
             return data;
         });
     }
-    public addArg(...args: Argument[]): this {
+    public addArg(...args: Argument<any, any, any>[]): this {
         this.args.push(...args);
         return this;
     }
-    public addSubCommand(...args: SubCommand[]) {
+    public addSubCommand(...args: SubCommand<any>[]) {
         this.subCommands.push(...args);
         return this;
     }
@@ -107,7 +115,7 @@ export class Command implements CommandType {
      */
     public static from<T extends boolean>(
         cmd: ApplicationCommand,
-        run: T extends true ? CommandCallback : undefined,
+        run: T extends true ? CommandCallback<any> : undefined,
         mount?: T
     ) {
         const client = Globs.client as Client;
@@ -125,8 +133,8 @@ export class Command implements CommandType {
     }
 }
 
-export class SubCommand extends Command {
-    constructor(data: CommandType) {
+export class SubCommand<T> extends Command<T> {
+    constructor(data: CommandType<T>) {
         super(data);
     }
 
@@ -138,15 +146,34 @@ export class SubCommand extends Command {
         };
     }
 }
+export type CommandOptionTypeConverter = {
+    [CommandOptionTypes.SubCommand]: any;
+    [CommandOptionTypes.SubCommandGroup]: any;
+    [CommandOptionTypes.String]: string;
+    [CommandOptionTypes.Integer]: number;
+    [CommandOptionTypes.Boolean]: boolean;
+    [CommandOptionTypes.User]: UserHandler;
+    [CommandOptionTypes.Channel]: ChannelHandler;
+    [CommandOptionTypes.Role]: Role;
+    [CommandOptionTypes.Number]: number;
+    [CommandOptionTypes.Mentionable]: Role | UserHandler;
+};
 
 /** The Argument used in the slash command. */
-export class Argument {
-    public type: CommandOptionTypes;
+export class Argument<
+    T extends typeof CommandOptionTypes[C],
+    K extends CommandOptionTypeConverter[T],
+    C extends keyof typeof CommandOptionTypes
+> {
+    public type: T;
     public description: string;
     public name: string;
     public required?: boolean;
-    public constructor(data: ArgumentType) {
-        Object.assign(this, { ...data, type: CommandOptionTypes[data.type] });
+    public autocomplete?: boolean;
+    public min: K extends number ? number | undefined : undefined;
+    public max: K extends number ? number | undefined : undefined;
+    public constructor(data: ArgumentType<T, K, C>) {
+        Object.assign(this, { ...data, type: CommandOptionTypes[data.type as any] });
     }
     public toOption(): ApplicationCommandOption {
         return {
@@ -154,6 +181,9 @@ export class Argument {
             description: this.description,
             required: this.required,
             name: this.name,
+            min_value: this.min,
+            max_value: this.max,
+            autocomplete: this.autocomplete,
         };
     }
 }

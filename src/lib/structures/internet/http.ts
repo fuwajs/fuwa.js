@@ -75,7 +75,7 @@ export default {
         status: APICodes;
     }> {
         const url = path.startsWith(`http`) ? path : `${DISCORD_API.discord}/api/v${version || 8}` + path;
-        const params: any = {
+        const params = {
             path: url,
             method,
             headers: {
@@ -93,7 +93,7 @@ export default {
             // console.log(params.body);
             params.body = params.body.export();
         }
-        return fetch(url, params).then(async res => {
+        return fetch(url, params as any).then(async res => {
             const status = res.status as APICodes;
             // if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
             const blob = await res.blob();

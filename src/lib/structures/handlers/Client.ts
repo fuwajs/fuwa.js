@@ -413,7 +413,7 @@ export class Client extends WebSocket {
                   /** Your command description */
                   desc?: string;
                   /** The arguments/options for this command. */
-                  args?: Argument<any, any>[];
+                  args?: Argument<any, any, any>[];
                   /** The guild ID to POST this slash command. */
                   guild?: string;
               },

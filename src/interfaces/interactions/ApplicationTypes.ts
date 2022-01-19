@@ -37,6 +37,9 @@ export interface ApplicationCommandOption {
     choices?: ApplicationCommandOptionChoice[];
     /** If the option is a subcommand or subcommand group type, this nested options will be the parameters */
     options?: ApplicationCommandOption[];
+    max_value?: number;
+    autocomplete?: boolean;
+    min_value?: number;
 }
 
 export enum ApplicationCommandTypes {
