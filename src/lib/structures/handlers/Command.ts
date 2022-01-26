@@ -43,8 +43,8 @@ export interface ArgumentType<
     name: string;
     /** If the argument is required*/
     required?: boolean;
-    min: K extends number ? number | undefined : undefined;
-    max: K extends number ? number | undefined : undefined;
+    min?: K extends number ? number : undefined;
+    max?: K extends number ? number : undefined;
     autocomplete?: boolean;
 }
 
@@ -176,6 +176,11 @@ export class Argument<
         Object.assign(this, { ...data, type: CommandOptionTypes[data.type as any] });
     }
     public toOption(): ApplicationCommandOption {
+        if ([CommandOptionTypes.Number, CommandOptionTypes.Integer].includes(this.type) && (min || max)) {
+            throw new TypeError(
+                'Min and/or max is only allowed when the type of the argument is Number or Integer'
+            );
+        }
         return {
             type: this.type,
             description: this.description,
