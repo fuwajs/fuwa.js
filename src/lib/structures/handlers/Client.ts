@@ -206,7 +206,7 @@ export class Client extends WebSocket {
         } else {
             path += '/commands';
         }
-        http.POST(path, JSON.stringify(cmd.toJSON())).then(command => {
+        http.POST(path, JSON.stringify(cmd)).then(command => {
             this.commands.set(command.data.id, cmd);
         });
         return this;
