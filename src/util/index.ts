@@ -3,6 +3,8 @@
  *  @internal
  */
 
+import { CommandOptions, CommandOptionTypes } from '../interfaces';
+import { ArgumentConverter } from '../lib/structures/handlers/Command';
 import Globs from './Global';
 
 // deno-lint-ignore no-explicit-any
@@ -34,6 +36,24 @@ export function parseDiscordEventNames(e: string): string {
 export function arrayToMap<K extends keyof T, T>(key: K, arr: T[]): Map<K, T> {
     const entries: [K, T][] = arr.map(a => [a[key], a]) as any;
     return new Map(entries);
+}
+
+const NON_ARGS = [CommandOptionTypes.SubCommand, CommandOptionTypes.SubCommandGroup];
+export async function getArgs(options?: CommandOptions[]): Promise<any> {
+    options = options
+        ? // filter out any  sub commands/command groups
+          options.filter(c => !NON_ARGS.includes(c.type))
+        : [];
+    if (!options) return {};
+    const entries = await Promise.all(
+        options.map(async ({ type, value, name }) => {
+            // console.log(type);
+            if (!value) return;
+            const converter = ArgumentConverter[type];
+            return [name, converter ? await converter(value) : value];
+        })
+    );
+    return Object.fromEntries(entries);
 }
 
 export function arrayToObject<K extends keyof T, T>(key: K, arr: T[]): { [key: string]: K } {

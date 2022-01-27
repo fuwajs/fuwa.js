@@ -1,6 +1,6 @@
 import { WebSocket } from '../internet/WebSocket';
 import { DISCORD_API, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
-import { ArgumentConverter, Command, CommandCallback } from './Command';
+import { Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
 // import { setCachePromise } from '../../../util';
@@ -10,14 +10,9 @@ import {
     GatewayEventsConverter,
     GatewayEventArgConverter,
 } from '../../../interfaces/EventHandler';
-import {
-    GatewayOpcodes,
-    ApplicationCommand,
-    InteractionTypes,
-    CommandOptionTypes,
-} from '../../../interfaces';
+import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
 import http from '../internet/http';
-import { isBrowser, parseDiscordEventNames } from '../../../util';
+import { getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User, BotUser } from '../../discord/User';
@@ -341,29 +336,11 @@ export class Client extends WebSocket {
         this.event('INTERACTION_CREATE', async interaction => {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
-                // console.log(interaction);
+                console.log(interaction.data.options);
                 const cmd = this.commands.get(interaction.data?.id);
-                const options = interaction.data.options
-                    ? interaction.data.options.filter(
-                          c =>
-                              ![CommandOptionTypes.SubCommand, CommandOptionTypes.SubCommandGroup].includes(
-                                  c.type
-                              )
-                      )
-                    : [];
-                const args: [string, CommandOptionTypes][] = options
-                    ? options.map(c => [c.name, c.value ?? null])
-                    : [];
-                await Promise.all(
-                    args.map(async (_, i) => {
-                        const [__, val] = _;
-                        if (!val) return;
-                        const converter = ArgumentConverter[options[i].type];
-                        args[i][1] = converter ? await converter(val) : val;
-                    })
-                );
                 if (cmd && cmd.run) {
-                    cmd.run(new Context(interaction), Object.fromEntries(args));
+                    const args = await getArgs(interaction.data?.options);
+                    cmd.run(new Context(interaction), args);
                 } else {
                     console.log('Invalid command used');
                 }
