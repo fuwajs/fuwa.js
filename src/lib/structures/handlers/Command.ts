@@ -19,6 +19,7 @@ export interface CommandType<T> {
 }
 export type ArgumentConverterType = {
     [CommandOptionTypes.User]: [string, UserHandler];
+    [CommandOptionTypes.Channel]: [string, ChannelHandler];
     // [CommandOptionTypes.Role]: [string]
 };
 export const ArgumentConverter: {
@@ -26,7 +27,8 @@ export const ArgumentConverter: {
         data: ArgumentConverterType[arg][0]
     ) => Promise<ArgumentConverterType[arg][1]>;
 } = {
-    [CommandOptionTypes.User]: uid => UserHandler.get(uid),
+    [CommandOptionTypes.User]: id => UserHandler.get(id),
+    [CommandOptionTypes.Channel]: id => ChannelHandler.get(id),
 };
 
 export type CommandCallback<T> = (ctx: Context, args?: T) => any;
