@@ -38,7 +38,7 @@ export interface ArgumentType<
 > {
     type: C;
     /** The description of the argument */
-    description: string;
+    description?: string;
     /** The name of the argument */
     name: string;
     /** If the argument is required*/
@@ -85,8 +85,12 @@ export class Command<T> implements CommandType<T> {
             return data;
         });
     }
-    public addArg(...args: Argument<any, any, any>[]): this {
-        this.args.push(...args);
+    public addArg<
+        T extends typeof CommandOptionTypes[C],
+        K extends CommandOptionTypeConverter[T],
+        C extends keyof typeof CommandOptionTypes
+    >(...args: (Argument<T, K, C> | ArgumentType<T, K, C>)[]): this {
+        this.args.push(...args.map(arg => (arg instanceof Argument ? arg : new Argument(arg))));
         return this;
     }
     public addSubCommand(...args: SubCommand<any>[]) {
@@ -173,7 +177,11 @@ export class Argument<
     public min?: K extends number ? number | undefined : undefined;
     public max?: K extends number ? number | undefined : undefined;
     public constructor(data: ArgumentType<T, K, C>) {
-        Object.assign(this, { ...data, type: CommandOptionTypes[data.type as any] });
+        Object.assign(this, {
+            description: "This command doesn't have a description",
+            ...data,
+            type: CommandOptionTypes[data.type as any],
+        });
     }
     public toOption(): ApplicationCommandOption {
         if (
