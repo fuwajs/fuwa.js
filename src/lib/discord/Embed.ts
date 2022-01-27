@@ -20,37 +20,13 @@ export interface AuthorOpts {
  * The Fuwa#Embed class is a built in way to create beautiful Discord embeds with our API.
  * This class extends the basic discord api with more functions.
  */
-export class Embed implements IEmbed {
+export class Embed {
     /** The type of embed for discord's api */
-    type = 'rich';
-    title?: string;
-    description?: string;
-    url?: string;
-    timestamp?: Date;
-    color?: number;
-    footer?: {
-        text: string;
-        icon_url: string;
-        proxy_icon_url: string;
-    };
-    image?: Media;
-    thumbnail?: Media;
-    video?: Media;
-    provider?: {
-        url: string;
-        name: string;
-    };
-    author?: {
-        proxy_icon_url: string;
-        icon_url: string;
-        url: string;
-        name: string;
-    };
-    fields?: { name: string; value: string; inline?: boolean }[] = [];
+    data: IEmbed = {};
     constructor(opts?: IEmbed) {
         if (opts) {
             // Don't override the default unless specified
-            Object.assign(this, {
+            Object.assign(this.data, {
                 type: 'rich',
                 ...(opts ?? {}),
                 timestamp: new Date(opts.timestamp),
@@ -62,7 +38,7 @@ export class Embed implements IEmbed {
      * @param description Description For Embed.
      */
     public setDescription(description: string): this {
-        this.description = description;
+        this.data.description = description;
         return this;
     }
     /**
@@ -86,7 +62,7 @@ export class Embed implements IEmbed {
         //     const base64 = fs.readFileSync(imageUrl).toString('base64');
         //     imageUrl = `data:image/${ext};base64,${base64}`;
         // }
-        this.image = {
+        this.data.image = {
             url: imageUrl,
             proxy_url: opts?.proxyUrl,
             height: opts?.height,
@@ -102,7 +78,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setTitle(title: string): this {
-        this.title = title;
+        this.data.title = title;
         return this;
     }
 
@@ -118,7 +94,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setFooter(footerText: string, opts?: { icon?: string; proxyIconUrl?: string } | undefined): this {
-        this.footer = {
+        this.data.footer = {
             text: footerText,
             icon_url: opts?.icon,
             proxy_icon_url: opts?.proxyIconUrl,
@@ -138,7 +114,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setAuthor({ name, url, icon, proxyIcon }: AuthorOpts): this {
-        this.author = {
+        this.data.author = {
             name,
             url,
             icon_url: icon,
@@ -159,7 +135,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setThumbnail(url: string, opts?: { proxyUrl?: string; height?: number; width?: number }): this {
-        this.thumbnail = {
+        this.data.thumbnail = {
             url: url,
             proxy_url: opts?.proxyUrl,
             height: opts?.height,
@@ -177,11 +153,11 @@ export class Embed implements IEmbed {
      */
     public setColor(color: string | number): this {
         if (typeof color === 'string') {
-            this.color = parseInt('0x' + color.replace('#', ''));
-            if (isNaN(this.color)) this.color = 0xffffff;
+            this.data.color = parseInt('0x' + color.replace('#', ''));
+            if (isNaN(this.data.color)) this.data.color = 0xffffff;
             return this;
         } else if (typeof color === 'number') {
-            this.color = color;
+            this.data.color = color;
         } else {
             // 'throw' would crash the bot for such a minor issue
             console.trace(`Expected a string or number instead found ${typeof color}`);
@@ -197,7 +173,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setTimestamp(time?: string | Date | number): this {
-        this.timestamp = new Date(time);
+        this.data.timestamp = new Date(time);
         return this;
     }
 
@@ -209,7 +185,7 @@ export class Embed implements IEmbed {
      * ````
      */
     public setUrl(url: string): this {
-        this.url = url;
+        this.data.url = url;
         return this;
     }
     /**
@@ -219,14 +195,14 @@ export class Embed implements IEmbed {
      * ```
      */
     public addFields(fields: { name: string; value: string; inline?: boolean }[]): this {
-        this.fields.push(...fields);
+        this.data.fields.push(...fields);
         return this;
     }
     /**
      * @param field A field for embed
      */
     public addField(field: { name: string; value: string; inline?: boolean }): this {
-        this.fields.push(field);
+        this.data.fields.push(field);
         return this;
     }
 
@@ -238,7 +214,7 @@ export class Embed implements IEmbed {
      * ```
      */
     public setProvider(name: string, url?: string): this {
-        this.provider = { name, url };
+        this.data.provider = { name, url };
         return this;
     }
 
@@ -250,13 +226,16 @@ export class Embed implements IEmbed {
      * embed.setVideo('https://tinyurl.com/icehacks')
      * ```
      */
-    public setVideo(url: string, opts?: { height?: number; width?: number; proxyUrl?: string }): this {
-        this.video = {
+    public setVideo(url: string, opts?: { height?: number; width?: number }): this {
+        this.data.video = {
             url,
             height: opts.height,
             width: opts.width,
-            proxy_url: opts.proxyUrl,
+            // proxy_url: opts.proxyUrl,
         };
         return this;
+    }
+    public toJSON() {
+        return this.data;
     }
 }
