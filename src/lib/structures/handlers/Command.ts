@@ -170,13 +170,16 @@ export class Argument<
     public name: string;
     public required?: boolean;
     public autocomplete?: boolean;
-    public min: K extends number ? number | undefined : undefined;
-    public max: K extends number ? number | undefined : undefined;
+    public min?: K extends number ? number | undefined : undefined;
+    public max?: K extends number ? number | undefined : undefined;
     public constructor(data: ArgumentType<T, K, C>) {
         Object.assign(this, { ...data, type: CommandOptionTypes[data.type as any] });
     }
     public toOption(): ApplicationCommandOption {
-        if ([CommandOptionTypes.Number, CommandOptionTypes.Integer].includes(this.type) && (min || max)) {
+        if (
+            [CommandOptionTypes.Number, CommandOptionTypes.Integer].includes(this.type) &&
+            (this.min || this.max)
+        ) {
             throw new TypeError(
                 'Min and/or max is only allowed when the type of the argument is Number or Integer'
             );
