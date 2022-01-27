@@ -79,6 +79,9 @@ export class Channel {
     public get id() {
         return this.data.id;
     }
+    public toString() {
+        return `<#${this.id}>`;
+    }
     /**
      * This property is only for **voice channels**
      */

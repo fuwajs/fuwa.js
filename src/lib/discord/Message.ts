@@ -22,6 +22,9 @@ export class Message {
     get content() {
         return this.data.content;
     }
+    public toString() {
+        return this.content;
+    }
     /** If the message is replying to another message.*/
     get messageReference(): Message | null {
         return this.data.message_reference ? new Message(this.data.message_reference as any) : null;
