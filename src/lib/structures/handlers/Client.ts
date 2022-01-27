@@ -195,7 +195,7 @@ export class Client extends WebSocket {
      * Mounts a command at runtime
      * @param cmd The slash command to mount to the client.
      */
-    public async mountCommand(cmd: Command<any>) {
+    public async mountCommand<T>(cmd: Command<T>) {
         if (!(this.applicationId || Globs.appId))
             throw new Error(
                 'Application Id is required to do this action.  Please add this option to your client.'
