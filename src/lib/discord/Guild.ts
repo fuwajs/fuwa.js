@@ -2,7 +2,6 @@ import { Channel as ChannelHandler } from './Channel';
 import { DISCORD_API } from '../../interfaces/DiscordAPI';
 import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
 import { arrayToMap, formatImageURL } from '../../util';
-DISCORD_API.cdn;
 import { User } from './User';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
