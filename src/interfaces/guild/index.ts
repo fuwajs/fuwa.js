@@ -469,6 +469,8 @@ export interface Role {
     mentionable: boolean;
     /** The tags this role has */
     tags?: RoleTags;
+    unicode_emoji?: string | null;
+    icon?: string | null;
 }
 
 /** @see https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
