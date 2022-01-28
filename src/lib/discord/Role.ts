@@ -1,6 +1,6 @@
 import { DISCORD_API, PermissionFlags } from '../../interfaces';
 import { Role as RoleData } from '../../interfaces/guild';
-import { enumEqualityTester, formatImageURL } from '../../util';
+import { formatImageURL } from '../../util';
 
 export class Role {
     constructor(protected data: RoleData) {}
