@@ -1,8 +1,8 @@
 import { Channel as ChannelHandler } from './Channel';
-import { discordCDN } from '../../interfaces/DiscordAPI';
+import { DISCORD_API } from '../../interfaces/DiscordAPI';
 import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
 import { arrayToMap, formatImageURL } from '../../util';
-discordCDN;
+DISCORD_API.cdn;
 import { User } from './User';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
@@ -21,11 +21,11 @@ export class Guild {
     }
     /** icon for the guild */
     public get icon() {
-        return `${discordCDN}/icons/${this.id}/${formatImageURL(this.data.icon, 512)}`;
+        return `${DISCORD_API.cdn}/icons/${this.id}/${formatImageURL(this.data.icon, 512)}`;
     }
     /** banner for the guild */
     public get banner() {
-        return `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
+        return `${DISCORD_API.cdn}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`;
     }
     /** Returns the name of the guild */
     public get name() {

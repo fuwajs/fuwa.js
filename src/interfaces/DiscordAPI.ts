@@ -151,9 +151,8 @@ export const DISCORD_API = {
     gateway: 'wss://gateway.discord.gg/',
     api: 'https://discord.com/api/v9/',
     discord: 'https://discord.com',
+    cdn: 'https://cdn.discordapp.com',
 };
-
-export const discordCDN = 'https://cdn.discordapp.com';
 
 export type EventBase<Event extends GatewayPayload['t'] | null, Data> = { op: 0; t: Event; d: Data };
 

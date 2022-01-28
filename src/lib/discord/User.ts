@@ -1,4 +1,4 @@
-import { discordCDN } from '../../interfaces';
+import { DISCORD_API } from '../../interfaces';
 import { User as UserData } from '../../interfaces/member';
 import { formatImageURL } from '../../util';
 import http from '../structures/internet/http';
@@ -21,11 +21,11 @@ export class User {
         return this.data.system ?? false;
     }
     public get avatar() {
-        return `${discordCDN}/avatars/${this.id}/${formatImageURL(this.data.avatar, 512)}`;
+        return `${DISCORD_API.cdn}/avatars/${this.id}/${formatImageURL(this.data.avatar, 512)}`;
     }
     public get banner(): string | null {
         return this.data.banner
-            ? `${discordCDN}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`
+            ? `${DISCORD_API.cdn}/banners/${this.id}/${formatImageURL(this.data.banner, 512)}`
             : null;
     }
     public get accentColor(): number | null {
