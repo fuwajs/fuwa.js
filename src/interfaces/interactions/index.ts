@@ -8,11 +8,8 @@ import { Channel } from '../..';
 /**
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  */
-export enum ApplicationCommandType {
-    ChatInput = 1,
-    User,
-    Message,
-}
+export * from './ApplicationTypes';
+import { ApplicationCommandType } from './ApplicationTypes';
 
 /** @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface Interaction {
@@ -87,11 +84,11 @@ export interface BigInteraction
     /** Id of the interaction */
     id: string;
     /** Id of the application this interaction is for */
-    applicationId: string;
+    application_id: string;
     /** The guild it was sent from */
-    guildId?: string;
+    guild_id?: string;
     /** The channel it was sent from */
-    channelId?: string;
+    channel_id?: string;
     /** Guild member data for the invoking user, including permissions */
     member?: Omit<InteractionGuildMember, 'roles' | 'user'> & {
         /** Array of role object ids */

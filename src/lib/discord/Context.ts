@@ -7,6 +7,7 @@ import {
     ButtonComponent,
     ButtonStyles,
     ActionRow,
+    Role,
 } from '../../interfaces';
 import { Channel } from './Channel';
 import { User } from './User';
@@ -16,11 +17,32 @@ import Globs from '../../util/Global';
 import { Message } from './Message';
 
 export default class Context {
+    constructor(protected data: Interaction) {}
     protected components = new Map<'buttons' | 'menus', ActionRow>();
     public author: User | null = this.data?.user ? new User(this.data.user) : null;
     public member: Member | null = this.data?.member ? new Member(this.data.member) : null;
-
-    constructor(protected data: Interaction) {}
+    public resolved: {
+        users?: User;
+        members?: Member;
+        //! add role class later
+        roles?: Role;
+        channels?: Channel;
+        messages?: Message;
+    } | null = this.data.data.resolved
+        ? {
+              users: this.data.data.resolved.users ? new User(this.data.data.resolved.users) : undefined,
+              roles: this.data.data.resolved.channels,
+              channels: this.data.data.resolved.channels
+                  ? new Channel(this.data.data.resolved.channels)
+                  : undefined,
+              messages: this.data.data.resolved.messages
+                  ? new Message(this.data.data.resolved.messages)
+                  : undefined,
+              members: this.data.data.resolved.users
+                  ? new Member(this.data.data.resolved.members)
+                  : undefined,
+          }
+        : null;
     /**
      * The Context#button function
      * @param data ingest ButtonParams or null

@@ -481,11 +481,11 @@ export interface IdentifyConnectionProperties {
 }
 
 export interface ResolvedData {
-    users?: Map<string, User>;
-    members?: Map<string, Member>;
-    roles?: Map<string, Role>;
-    channels?: Map<string, Channel>;
-    messages?: Map<string, Message>;
+    users?: User;
+    members?: Member;
+    roles?: Role;
+    channels?: Channel;
+    messages?: Message;
 }
 
 export interface CommandOptions {

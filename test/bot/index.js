@@ -35,7 +35,6 @@ client.on('ready', async function () {
     console.log(`Connected to discord!`);
     const guild = await Guild.get(FUWA_GUILD_ID);
     const commands = await client.getMountedCommands(FUWA_GUILD_ID);
-    
 });
 
 client.command('gay-mom-detector', { desc: 'is ur mom gae?', guild: FUWA_GUILD_ID }, async ctx => {
@@ -96,6 +95,21 @@ client.command(
     async (ctx, { user }) => {
         console.log(user);
         ctx.send({ content: `<@${user.id}>` });
+    }
+);
+
+client.command(
+    'stuff',
+    {
+        desc: '',
+        // args: [new Argument({ type: 'Channel', name: 'channel', description: 'Channel Name' })],
+        guild: FUWA_GUILD_ID,
+        type: 'User',
+    },
+    (ctx, args) => {
+        console.log(args);
+        console.log(ctx.resolved.users);
+        ctx.send({ content: `${ctx.resolved.users}` });
     }
 );
 
