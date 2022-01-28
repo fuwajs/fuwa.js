@@ -28,26 +28,7 @@ export function bufferToBlob(buf: Buffer): Blob {
 
 // @ts-ignore
 // const fetch = isBrowser() ? window.fetch : require('undici').fetch;
-// @ts-ignore
-// export const FormData: typeof FormDataType = isBrowser() ? window.FormData : require('undici').FormData;
-// export function JSONToForm(data: any): FormDataType {
-//     const form = new FormData();
-//     form.append('payload_json', JSON.stringify(data));
-//     const files: FileHandler[] = Object.keys(data)
-//         .filter(_ => data[_] instanceof FileHandler)
-//         .map(_ => data[_]);
-//     if (files) {
-//         files.forEach(val => {
-//             // file handler
 
-//             val.files.forEach((file, i) => {
-//                 const url = URL.createObjectURL(bufferToBlob(file.buffer));
-//                 form.append(`file[${i}]`, url, file.filename);
-//             });
-//         });
-//     }
-//     return form;
-// }
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
 export default {
