@@ -7,7 +7,6 @@ import {
     ButtonComponent,
     ButtonStyles,
     ActionRow,
-    Role,
 } from '../../interfaces';
 import { Channel } from './Channel';
 import { User } from './User';
@@ -15,6 +14,7 @@ import { Guild, Member } from './Guild';
 import { Button, ButtonParams } from './Button';
 import Globs from '../../util/Global';
 import { Message } from './Message';
+import { Role } from './Role';
 
 export default class Context {
     constructor(protected data: Interaction) {}
@@ -24,14 +24,16 @@ export default class Context {
     public resolved: {
         users?: User;
         members?: Member;
-        //! add role class later
         roles?: Role;
         channels?: Channel;
         messages?: Message;
     } | null = this.data.data.resolved
         ? {
               users: this.data.data.resolved.users ? new User(this.data.data.resolved.users) : undefined,
-              roles: this.data.data.resolved.channels,
+              roles:
+                  this.data.data.resolved.roles && this.data.guild_id
+                      ? new Role(this.data.data.resolved.roles, this.data.guild_id)
+                      : undefined,
               channels: this.data.data.resolved.channels
                   ? new Channel(this.data.data.resolved.channels)
                   : undefined,

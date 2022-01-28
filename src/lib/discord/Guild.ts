@@ -1,8 +1,11 @@
 import { Channel as ChannelHandler } from './Channel';
 import { DISCORD_API } from '../../interfaces/DiscordAPI';
-import { Guild as GuildData, GuildMember as MemberData } from '../../interfaces/guild';
-import { arrayToMap, formatImageURL } from '../../util';
+import { Guild as GuildData, GuildMember as MemberData, GuildNsfwLevel } from '../../interfaces/guild';
+import { PermissionFlags } from '../../interfaces';
+import { enumPropFinder, formatImageURL } from '../../util';
 import { User } from './User';
+import { Channel } from './Channel';
+import { Role, RoleCreateUpdate } from './Role';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 
@@ -30,7 +33,7 @@ export class Guild {
     public get name() {
         return this.data.name;
     }
-    /** ! WARNING: This does not *yet*  take into account sharding.
+    /**! WARNING: This does not *yet*  take into account sharding.
      * Returns in total guild size
      */
     public get size() {
@@ -38,11 +41,19 @@ export class Guild {
     }
     /** Returns total guild members */
     public members: Map<string, Member> | null = this.data?.members
-        ? new Map(this.data.members.map(m => [m.user.id, new Member(m)]) ?? [])
+        ? new Map(this.data.members.map(data => [data.user.id, new Member(data)]) ?? [])
+        : null;
+    /**
+     * Fetches a list of guild roles and there ID's
+     * @returns Array<string>
+     */
+    public roles: Map<string, Role> | null = this.data?.roles
+        ? new Map(this.data.roles.map(data => [data.id, new Role(data, this.id)]) ?? [])
         : null;
     /** Returns total guild channels */
-
-    public channels = this.data?.channels ? arrayToMap('id', this.data.channels) : null;
+    public channels: Map<string, ChannelHandler> | null = this.data?.channels
+        ? new Map(this.data.channels.map(data => [data.id, new ChannelHandler(data)]) ?? [])
+        : null;
     /** Returns the guild owner id */
     public get ownerId() {
         return this.data.owner_id;
@@ -57,13 +68,6 @@ export class Guild {
     public get isUnavailable() {
         return this.data.unavailable ?? false;
     }
-    /**
-     * Fetches a list of guild roles and there ID's
-     * @returns Array<string>
-     */
-    public get roles() {
-        return arrayToMap('id', this.data.roles);
-    }
     /** Checks if the user id passed has the same id as the guild owner.
      * @returns boolean
      */
@@ -76,7 +80,7 @@ export class Guild {
     }
     /** The NSFW level of the guild */
     public get nsfwLevel() {
-        return this.data.nsfw_level;
+        return enumPropFinder<typeof GuildNsfwLevel>(this.data.nsfw_level, GuildNsfwLevel);
     }
     public get isLarge() {
         return this.data.large;
@@ -84,6 +88,19 @@ export class Guild {
     /** The Welcome screen channel id for the guild. */
     public get welcomeChannels() {
         return this.data.welcome_screen;
+    }
+    public addRole(data: RoleCreateUpdate) {
+        const payload = {
+            ...data,
+            permissions: data.permissions
+                ? data.permissions.map(a => PermissionFlags[a]).reduce((a, b) => a | b)
+                : null,
+            unicode_emoji: data.unicodeEmoji,
+            color: typeof data.color === 'string' ? parseInt(data.color.replace('#', '')) : data.color,
+        };
+        return http
+            .POST(`/guilds/${this.id}/roles`, JSON.stringify(payload))
+            .then(({ data }) => new Role(data, this.id));
     }
     /**Allows the given application to leave the current requested guild. */
     public async leave(): Promise<void> {
@@ -100,6 +117,27 @@ export class Guild {
         const fallback = () => http.GET(`/guilds/${id}`).then(({ data }) => new Guild(data));
         const cache = Globs.cache;
         return force ? fallback() : cache.get(`guilds.${id}`, fallback);
+    }
+    public async ban(user: User | Member | string, reason?: string, deleteMessageDays?: number) {
+        const id = user instanceof User ? user.id : user instanceof Member ? user.user.id : user;
+
+        await http.PUT(
+            `/guilds/${this.id}/bans/${id}`,
+            JSON.stringify({ reason, delete_message_days: deleteMessageDays }),
+            { 'X-Audit-Log-Reason': reason }
+        );
+        return;
+    }
+    public async kick(user: User | Member | string) {
+        const id = user instanceof User ? user.id : user instanceof Member ? user.user.id : user;
+        await http.DELETE(`/guilds/${this.id}/members/${id}`);
+        return;
+    }
+    public async unban(user: User | string) {
+        const id = user instanceof User ? user.id : user;
+
+        await http.DELETE(`/guilds/${this.id}/bans/${id}`);
+        return;
     }
 }
 export class Member {
