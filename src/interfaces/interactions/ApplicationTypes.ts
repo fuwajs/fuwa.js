@@ -20,7 +20,7 @@ export interface ApplicationCommand {
     /** Whether the command is enabler by default when the app is added to a guild */
     default_permission?: boolean;
     /** The type of command. By default this is a slash command(ChatInput). */
-    type?: ApplicationCommandTypes;
+    type?: ApplicationCommandType;
 }
 
 /** @see https://discord.com/developers/docs/interactions/slash-commands#applicationcommandoption */
@@ -42,7 +42,7 @@ export interface ApplicationCommandOption {
     min_value?: number;
 }
 
-export enum ApplicationCommandTypes {
+export enum ApplicationCommandType {
     ChatInput = 1,
     User,
     Message,
@@ -196,7 +196,7 @@ export interface CreateGlobalApplicationCommand {
     /** 1-100 character description */
     description: string;
     /** The type of the command */
-    type?: ApplicationCommandTypes;
+    type?: ApplicationCommandType;
     /** The parameters for the command */
     options?: ApplicationCommandOption[];
 }
@@ -205,7 +205,7 @@ export interface CreateGlobalContextMenuCommand {
     /** 1-31 character name matching `^[\w-]{1,32}$` */
     name: string;
     /** The type of the command */
-    type: ApplicationCommandTypes;
+    type: ApplicationCommandType;
 }
 
 /** @see https://discord.com/developers/docs/interactions/slash-commands#create-guild-application-command-json-params */
@@ -225,7 +225,7 @@ export interface EditGlobalApplicationCommand {
     /** 1-100 character description */
     description?: string;
     /** The type of the command */
-    type?: ApplicationCommandTypes;
+    type?: ApplicationCommandType;
     /** The parameters for the command */
     options?: ApplicationCommandOption[] | null;
     /** Whether the command is enabled by default when the app is added to a guild. Default: true */
@@ -271,5 +271,5 @@ export interface ApplicationCommandCreate {
     description: string;
     options?: ApplicationCommandOption[];
     default_permission?: boolean;
-    type?: ApplicationCommandTypes;
+    type?: ApplicationCommandType;
 }

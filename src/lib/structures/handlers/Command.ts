@@ -5,6 +5,8 @@ import {
     ApplicationCommandCreate,
     ApplicationCommandOption,
     Role,
+    ApplicationCommandType,
+    ResolvedData,
 } from '../../../interfaces';
 import Globs from '../../../util/Global';
 import Context from '../../discord/Context';
@@ -12,10 +14,39 @@ import type { Client } from './Client';
 import { Channel as ChannelHandler, User as UserHandler } from '../../discord';
 
 export interface CommandType<T> {
+    type?: keyof typeof ApplicationCommandType;
     name: string;
     description: string;
     guild?: string;
     run?: CommandCallback<T>;
+}
+export async function mountCommand(cmd: Command<any>): Promise<ApplicationCommand> {
+    if (!Globs.appId) throw new Error('Application Id is required to do this action');
+    if (!cmd.name.match(/^[\w-]{1,32}$/)) {
+        throw new Error("Command name doesn't comply with discord naming rules");
+    }
+    if (cmd.description.length > 100) {
+        throw new Error(
+            `Command description must be less than 100 characters, not ${cmd.description.length}`
+        );
+    }
+    const json = cmd.toJSON();
+    if ((json.options.length ?? 0) > 25) {
+        throw new Error(`Cannot have more than 25 options per command`);
+    }
+    let path = `/applications/${Globs.appId}`;
+    if (cmd.guild) {
+        path += `/guilds/${cmd.guild}/commands`;
+    } else {
+        path += '/commands';
+    }
+    const client = Globs.client as Client;
+    // console.log(this.toJSON());
+    return http.POST(path, JSON.stringify(json)).then(({ data }) => {
+        cmd.id = data.id;
+        client.commands.set(cmd.id, cmd);
+        return data;
+    });
 }
 export type ArgumentConverterType = {
     [CommandOptionTypes.User]: [string, UserHandler];
@@ -50,7 +81,8 @@ export interface ArgumentType<
     autocomplete?: boolean;
 }
 
-export class Command<T> implements CommandType<T> {
+export class Command<T> {
+    type = 1;
     /** The id of the application command */
     id: string;
     /** The display name of the slash interaction.
@@ -69,23 +101,10 @@ export class Command<T> implements CommandType<T> {
     subCommands = new Array<SubCommand<any>>();
     run: CommandCallback<T>;
     constructor(data: CommandType<T>) {
-        Object.assign(this, data);
+        Object.assign(this, { ...data, type: data.type ? ApplicationCommandType[data.type] : 1 });
     }
-    public async mount(): Promise<ApplicationCommand> {
-        if (!Globs.appId) throw new Error('Application Id is required to do this action');
-        let path = `/applications/${Globs.appId}`;
-        if (this.guild) {
-            path += `/guilds/${this.guild}/commands`;
-        } else {
-            path += '/commands';
-        }
-        const client = Globs.client as Client;
-        // console.log(this.toJSON());
-        return http.POST(path, JSON.stringify(this.toJSON())).then(({ data }) => {
-            this.id = data.id;
-            client.commands.set(this.id, this);
-            return data;
-        });
+    public mount() {
+        return mountCommand(this);
     }
     public addArg<
         T extends typeof CommandOptionTypes[C],
@@ -106,6 +125,7 @@ export class Command<T> implements CommandType<T> {
         return {
             name: this.name,
             description: this.description,
+            type: this.type,
             options: [
                 ...this.subCommands.map(cmd => cmd.toOption()),
                 ...this.args.map(arg => arg.toOption()),

@@ -31,6 +31,9 @@ export class User {
     public get accentColor(): number | null {
         return this.data.accent_color ? this.data.accent_color : null;
     }
+    public toString() {
+        return `<@${this.id}>`;
+    }
     static get(uid: string): Promise<User> {
         return http.GET(`/users/${uid}`).then(({ data }) => new User(data));
     }

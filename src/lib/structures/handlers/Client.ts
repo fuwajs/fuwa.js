@@ -10,7 +10,12 @@ import {
     GatewayEventsConverter,
     GatewayEventArgConverter,
 } from '../../../interfaces/EventHandler';
-import { GatewayOpcodes, ApplicationCommand, InteractionTypes } from '../../../interfaces';
+import {
+    GatewayOpcodes,
+    ApplicationCommand,
+    InteractionTypes,
+    ApplicationCommandType,
+} from '../../../interfaces';
 import http from '../internet/http';
 import { getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
 import { Plugin } from './Plugin';
@@ -336,7 +341,7 @@ export class Client extends WebSocket {
         this.event('INTERACTION_CREATE', async interaction => {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
-                console.log(interaction.data.options);
+                console.log(interaction);
                 const cmd = this.commands.get(interaction.data?.id);
                 if (cmd && cmd.run) {
                     const args = await getArgs(interaction.data?.options);
@@ -393,6 +398,7 @@ export class Client extends WebSocket {
                   args?: Argument<any, any, any>[];
                   /** The guild ID to POST this slash command. */
                   guild?: string;
+                  type?: keyof typeof ApplicationCommandType;
               },
         /** The callback function and your command logic*/
         cb?: CommandCallback<T>
@@ -412,6 +418,7 @@ export class Client extends WebSocket {
             run: callback,
             name,
             guild: info.guild,
+            type: info.type,
         });
         info.args && info.args.forEach(arg => cmd.addArg(arg));
         this.mountingCommands.push(cmd);
