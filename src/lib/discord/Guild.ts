@@ -1,13 +1,14 @@
 import { Channel as ChannelHandler } from './Channel';
 import { DISCORD_API } from '../../interfaces/DiscordAPI';
 import { Guild as GuildData, GuildMember as MemberData, GuildNsfwLevel } from '../../interfaces/guild';
-import { PermissionFlags } from '../../interfaces';
+import { HTTPResponseCodes, PermissionFlags } from '../../interfaces';
 import { enumPropFinder, formatImageURL } from '../../util';
 import { User } from './User';
 import { Channel } from './Channel';
 import { Role, RoleCreateUpdate } from './Role';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
+import { APIError } from '../../util/Errors';
 
 export class Guild {
     constructor(protected data: GuildData) {
@@ -98,9 +99,13 @@ export class Guild {
             unicode_emoji: data.unicodeEmoji,
             color: typeof data.color === 'string' ? parseInt(data.color.replace('#', '')) : data.color,
         };
-        return http
-            .POST(`/guilds/${this.id}/roles`, JSON.stringify(payload))
-            .then(({ data }) => new Role(data, this.id));
+        return http.POST(`/guilds/${this.id}/roles`, JSON.stringify(payload)).then(({ data, status }) => {
+            if (status === HTTPResponseCodes.Forbidden) {
+                throw new APIError(data.message);
+            } else {
+                return new Role(data, this.id);
+            }
+        });
     }
     /**Allows the given application to leave the current requested guild. */
     public async leave(): Promise<void> {
@@ -124,7 +129,7 @@ export class Guild {
         await http.PUT(
             `/guilds/${this.id}/bans/${id}`,
             JSON.stringify({ reason, delete_message_days: deleteMessageDays }),
-            { 'X-Audit-Log-Reason': reason }
+            reason ? { 'X-Audit-Log-Reason': reason } : {}
         );
         return;
     }

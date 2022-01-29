@@ -34,14 +34,10 @@ client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
     const guild = await Guild.get(FUWA_GUILD_ID);
-    console.log(guild);
+    // console.log(guild);
     // const commands = await client.getMountedCommands(FUWA_GUILD_ID);
-    guild.addRole({
-        name: 'hey hey hey',
-        mentionable: true,
-        unicodeEmoji: '🧢',
-        permissions: ['ManageRoles'],
-    });
+    
+    // .then(console.log);
 });
 
 client.on('message removed', console.log);

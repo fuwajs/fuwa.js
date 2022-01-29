@@ -10,3 +10,10 @@ export class InvalidToken extends Error {
         super('An invalid token was passed');
     }
 }
+
+export class APIError extends Error {
+    name = 'APIError';
+    constructor(msg: string) {
+        super(msg);
+    }
+}

@@ -54,6 +54,7 @@ export default {
         blob: Blob;
         _metadata: any;
         status: APICodes;
+        body: string;
     }> {
         const url = path.startsWith(`http`) ? path : `${DISCORD_API.discord}/api/v${version || 8}` + path;
         const params = {
@@ -79,25 +80,28 @@ export default {
             // if (status === APICodes.NoContent) return { data: {}, headers: res.headers, status };
             const blob = await res.blob();
             const buffer = Buffer.from(await blob.arrayBuffer());
-            if (res.status === APICodes.BadRequest) console.log(params.body);
             // console.log(params.body);
             let data;
+            console.log(res.headers.get('content-type'));
             try {
                 data =
-                    ALLOWED_CODES.includes(status) && res.ok
+                    res.headers.get('content-type') === 'application/json'
                         ? (JSON.parse(buffer.toString('utf-8')) as any)
                         : {};
             } catch {
                 data = {};
             }
-            return {
+            const ret = {
                 _metadata: params,
                 data,
                 headers: res.headers as any,
                 status,
                 buffer,
                 blob,
+                body: buffer.toString('utf-8'),
             };
+            console.log(ret);
+            return ret;
         });
     },
 
