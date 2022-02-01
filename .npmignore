@@ -4,4 +4,7 @@
 !out/dist/**/*.js
 !out/types/**/*.d.ts
 
+# make sure maps dont get into the final build
+*.js.map
+
 !README.md
