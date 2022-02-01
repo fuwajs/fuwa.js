@@ -4,7 +4,6 @@ import { Guild as GuildData, GuildMember as MemberData, GuildNsfwLevel } from '.
 import { HTTPResponseCodes, PermissionFlags, Role as RoleData } from '../../interfaces';
 import { enumPropFinder, formatImageURL } from '../../util';
 import { User } from './User';
-import { Channel } from './Channel';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { APIError } from '../../util/Errors';
