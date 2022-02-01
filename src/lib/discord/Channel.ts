@@ -4,7 +4,7 @@ import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { enumPropFinder } from '../../util';
 import { MessageReference } from '../../interfaces';
-import { Attachment, Embed } from '.';
+import { Embed } from '.';
 import { Form } from '../structures/internet/FormData';
 import { File } from '../structures/handlers/FileHandler';
 
