@@ -36,7 +36,7 @@ client.on('ready', async function () {
     const guild = await Guild.get(FUWA_GUILD_ID);
     // console.log(guild);
     // const commands = await client.getMountedCommands(FUWA_GUILD_ID);
-    
+
     // .then(console.log);
 });
 
@@ -49,6 +49,11 @@ client.on('presence update', async function (presence, oldPresence) {
             new_presence: presence.status,
         },
     ]);
+});
+
+client.command('test1', { desc: '', type: 'User', guild: FUWA_GUILD_ID }, ctx => {
+    const [member] = ctx.resolve().members;
+    ctx.send({ content: `This member has ${member.roleIds.length} roles` });
 });
 
 client.on('message update', async function (data) {

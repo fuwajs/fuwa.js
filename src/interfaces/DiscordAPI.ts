@@ -478,11 +478,11 @@ export interface IdentifyConnectionProperties {
 }
 
 export interface ResolvedData {
-    users?: User;
-    members?: Member;
-    roles?: Role;
-    channels?: Channel;
-    messages?: Message;
+    users?: { [key: string]: Omit<User, 'id'> };
+    members?: { [key: string]: Omit<Member, 'user'> };
+    // roles?: Role;
+    // channels?: Channel;
+    messages?: { [key: string]: Omit<Message, 'id'> };
 }
 
 export interface CommandOptions {

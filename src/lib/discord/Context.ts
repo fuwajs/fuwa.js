@@ -14,36 +14,13 @@ import { Guild, Member, Role } from './Guild';
 import { Button, ButtonParams } from './Button';
 import Globs from '../../util/Global';
 import { Message } from './Message';
+import { Merge } from '../../util';
 
 export default class Context {
     constructor(protected data: Interaction) {}
     protected components = new Map<'buttons' | 'menus', ActionRow>();
     public author: User | null = this.data?.user ? new User(this.data.user) : null;
     public member: Member | null = this.data?.member ? new Member(this.data.member) : null;
-    public resolved: {
-        users?: User;
-        members?: Member;
-        roles?: Role;
-        channels?: Channel;
-        messages?: Message;
-    } | null = this.data.data.resolved
-        ? {
-              users: this.data.data.resolved.users ? new User(this.data.data.resolved.users) : undefined,
-              roles:
-                  this.data.data.resolved.roles && this.data.guild_id
-                      ? new Role(this.data.data.resolved.roles, this.data.guild_id)
-                      : undefined,
-              channels: this.data.data.resolved.channels
-                  ? new Channel(this.data.data.resolved.channels)
-                  : undefined,
-              messages: this.data.data.resolved.messages
-                  ? new Message(this.data.data.resolved.messages)
-                  : undefined,
-              members: this.data.data.resolved.users
-                  ? new Member(this.data.data.resolved.members)
-                  : undefined,
-          }
-        : null;
     /**
      * The Context#button function
      * @param data ingest ButtonParams or null
@@ -75,6 +52,25 @@ export default class Context {
             .get('buttons')
             .components.find(b => b.custom_id === id) as ButtonComponent;
         return new Button(this, self, id);
+    }
+    public resolve() {
+        if (!this.data.data.resolved) return null;
+        const { resolved } = this.data.data;
+        function getResolvedWithIds<T>(data: { [key: string]: T }): ({ id: string } & T)[] {
+            const keys = Object.keys(data);
+            return keys.map(key => ({ id: key, ...data[key] }));
+        }
+        return {
+            members: getResolvedWithIds(resolved.members).map(
+                member =>
+                    new Member({
+                        user: { id: member.id, ...resolved.users[member.id] },
+                        ...member,
+                    })
+            ),
+            users: getResolvedWithIds(resolved.users).map(user => new User(user)),
+            messages: getResolvedWithIds(resolved.messages).map(msg => new Message(msg)),
+        };
     }
     /**
      * Fetches raw channel data
