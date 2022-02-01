@@ -17,7 +17,7 @@ import Globs from '../../../util/Global';
 import { DISCORD_API, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
 import { Blob } from 'buffer';
-// import { fetch } from 'undici';
+import { fetch } from 'undici';
 import { Form } from './FormData';
 
 export function bufferToBlob(buf: Buffer): Blob {
@@ -26,7 +26,7 @@ export function bufferToBlob(buf: Buffer): Blob {
 }
 
 // @ts-ignore
-const fetch = isBrowser() ? window.fetch : require('undici').fetch;
+// const fetch = isBrowser() ? window.fetch : require('undici').fetch;
 
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
 
@@ -81,7 +81,6 @@ export default {
             const buffer = Buffer.from(await blob.arrayBuffer());
             // console.log(params.body);
             let data;
-            console.log(res.headers.get('content-type'));
             try {
                 data =
                     res.headers.get('content-type') === 'application/json'
@@ -89,6 +88,10 @@ export default {
                         : {};
             } catch {
                 data = {};
+            }
+            if (data && !res.ok) {
+                console.log(params);
+                console.log(buffer.toString('utf-8'));
             }
             const ret = {
                 _metadata: params,
@@ -99,7 +102,6 @@ export default {
                 blob,
                 body: buffer.toString('utf-8'),
             };
-            console.log(ret);
             return ret;
         });
     },
