@@ -348,16 +348,6 @@ export interface GetMessagesAfter extends GetMessagesLimit {
 /** @see https://discord.com/developers/docs/resources/channel#get-channel-messages-query-string-params */
 export type GetMessages = GetMessagesLimit & GetMessagesAfter & GetMessagesBefore & GetMessagesAround;
 
-/** https://discord.com/developers/docs/topics/gateway#message-delete */
-export interface MessageDelete {
-    /** The id of the message */
-    id: string;
-    /** The id of the channel */
-    channel_id: string;
-    /** The id of the guild */
-    guild_id?: string;
-}
-
 /** @see https://discord.com/developers/docs/topics/gateway#message-update */
 export interface MessageUpdateDelete {
     /** the id of the message*/

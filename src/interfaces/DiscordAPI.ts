@@ -4,7 +4,6 @@ import type { Activity, Guild, Presence, StatusType } from './guild';
 import type {
     Emoji,
     Message,
-    MessageDelete,
     MessageReactionRemove,
     MessageReactionRemoveAll,
     MessageReactionRemoveEmoji,
@@ -228,8 +227,8 @@ export interface GatewayEvents {
     INVITE_DELETE: EventBase<'INVITE_DELETE', InviteDelete>;
     MESSAGE_CREATE: EventBase<'MESSAGE_CREATE', Message>;
     MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', MessageUpdateDelete>;
-    MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageDelete>;
-    MESSAGE_DELETE_BULK: EventBase<'MESSAGE_DELETE_BULK', MessageDelete>;
+    MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageUpdateDelete>;
+    MESSAGE_DELETE_BULK: EventBase<'MESSAGE_DELETE_BULK', MessageUpdateDelete>;
     MESSAGE_REACTION_ADD: EventBase<'MESSAGE_REACTION_ADD', Reaction>;
     MESSAGE_REACTION_REMOVE: EventBase<'MESSAGE_REACTION_REMOVE', MessageReactionRemove>;
     MESSAGE_REACTION_REMOVE_ALL: EventBase<'MESSAGE_REACTION_REMOVE_ALL', MessageReactionRemoveAll>;
