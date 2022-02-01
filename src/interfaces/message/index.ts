@@ -359,7 +359,7 @@ export interface MessageDelete {
 }
 
 /** @see https://discord.com/developers/docs/topics/gateway#message-update */
-export interface MessageUpdate {
+export interface MessageUpdateDelete {
     /** the id of the message*/
     id: string;
     /**	id of channel to listen to updates of */
