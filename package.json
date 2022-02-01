@@ -1,6 +1,6 @@
 {
     "name": "fuwa.js",
-    "version": "0.3.0",
+    "version": "3.0.0",
     "description": "The new way of making discord bots",
     "main": "out/dist/index.js",
     "types": "out/types/index.d.ts",
