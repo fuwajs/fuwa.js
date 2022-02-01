@@ -11,7 +11,6 @@ import type {
     Sticker,
     Reaction,
     MessageUpdate,
-    MessageReactionAdd,
 } from './message';
 import { PresenceUpdate, VoiceState } from './guild';
 import type { Channel, StageInstance } from './channel';
