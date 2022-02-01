@@ -6,7 +6,6 @@ import {
     ApplicationCommandOption,
     Role,
     ApplicationCommandType,
-    ResolvedData,
 } from '../../../interfaces';
 import Globs from '../../../util/Global';
 import Context from '../../discord/Context';

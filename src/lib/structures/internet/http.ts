@@ -16,7 +16,6 @@ import Globs from '../../../util/Global';
 
 import { DISCORD_API, HTTPResponseCodes as APICodes } from '../../../interfaces';
 import { isBrowser } from '../../../util';
-import { URL } from 'url';
 import { Blob } from 'buffer';
 import { fetch } from 'undici';
 import { Form } from './FormData';
