@@ -18,7 +18,7 @@ import type {
     MessageReactionAdd,
     MessageReactionRemove,
     MessageReactionRemoveAll,
-    MessageUpdate,
+    MessageUpdateDelete,
     PresenceUpdate,
     Role,
     StageInstance,
@@ -104,13 +104,13 @@ export type EventHandlersDefinitions = {
      *
      * Sent when a message is created.
      * */
-    message: (message: Message) => any;
+    message: (message: MessageHandler) => any;
     /** Sent when a message is created. */
     'new message': (message: MessageHandler) => any;
     /** Sent when a message is deleted. */
-    'message removed': (partial: { id: string; channel: Channel }, message?: Message) => any;
+    'message removed': (data: MessageUpdateDelete) => any;
     /** Sent when a message is updated. */
-    'message update': (data: MessageUpdate) => any;
+    'message update': (data: MessageUpdateDelete) => any;
     /** Sent when a user updates its nickname */
     'nickname update': (guild: GuildHandler, member: Member, nickname: string, oldNickname?: string) => any;
     /** A user's presence is their current state on a guild. This event is sent when a user's presence or info, such as name or avatar, is updated. */
@@ -118,7 +118,7 @@ export type EventHandlersDefinitions = {
     /** Sent before every event execution.  will not await its execution. */
     raw: (data: GatewayPayload) => any;
     /** Sent when all shards went ready. */
-    ready: () => any;
+    ready: (shard?: number) => any;
     /** Sent when a user adds a reaction to a message. */
     'new message reaction': (data: MessageReactionAdd, message?: Message) => any;
     /** Sent when a user removes a reaction from a message. */

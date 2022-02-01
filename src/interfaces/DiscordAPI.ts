@@ -10,7 +10,7 @@ import type {
     MessageReactionRemoveEmoji,
     Sticker,
     Reaction,
-    MessageUpdate,
+    MessageUpdateDelete,
 } from './message';
 import { PresenceUpdate, VoiceState } from './guild';
 import type { Channel, StageInstance } from './channel';
@@ -227,7 +227,7 @@ export interface GatewayEvents {
     INVITE_CREATE: EventBase<'INVITE_CREATE', InviteCreate>;
     INVITE_DELETE: EventBase<'INVITE_DELETE', InviteDelete>;
     MESSAGE_CREATE: EventBase<'MESSAGE_CREATE', Message>;
-    MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', MessageUpdate>;
+    MESSAGE_UPDATE: EventBase<'MESSAGE_UPDATE', MessageUpdateDelete>;
     MESSAGE_DELETE: EventBase<'MESSAGE_DELETE', MessageDelete>;
     MESSAGE_DELETE_BULK: EventBase<'MESSAGE_DELETE_BULK', MessageDelete>;
     MESSAGE_REACTION_ADD: EventBase<'MESSAGE_REACTION_ADD', Reaction>;
