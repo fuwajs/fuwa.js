@@ -157,12 +157,8 @@ export class Client extends WebSocket {
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
                 clear() {},
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                set(_a, _b, _c) {},
-                async get(_, fb) {
+                set(_a, _b, _c) {}, // eslint-disable-line @typescript-eslint/no-unused-vars
+                get(_, fb) {
                     return fb();
                 },
             };
