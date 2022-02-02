@@ -337,7 +337,6 @@ export class Client extends WebSocket {
         this.event('INTERACTION_CREATE', async interaction => {
             if (!interaction.data) return;
             if (interaction.type === InteractionTypes.ApplicationCommand) {
-                console.log(interaction);
                 const cmd = this.commands.get(interaction.data?.id);
                 if (cmd && cmd.run) {
                     const args = await getArgs(interaction.data?.options);
