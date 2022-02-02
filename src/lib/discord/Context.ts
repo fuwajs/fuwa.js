@@ -1,23 +1,22 @@
 import http from '../structures/internet/http';
 import crypto from 'crypto';
 import {
-    Interaction,
     InteractionForm,
     InteractionResponseTypes as ResponseTypes,
     ButtonComponent,
     ButtonStyles,
     ActionRow,
+    BigInteraction,
 } from '../../interfaces';
 import { Channel } from './Channel';
 import { User } from './User';
-import { Guild, Member, Role } from './Guild';
+import { Guild, Member } from './Guild';
 import { Button, ButtonParams } from './Button';
 import Globs from '../../util/Global';
 import { Message } from './Message';
-import { Merge } from '../../util';
 
 export default class Context {
-    constructor(protected data: Interaction) {}
+    constructor(protected data: BigInteraction) {}
     protected components = new Map<'buttons' | 'menus', ActionRow>();
     public author: User | null = this.data?.user ? new User(this.data.user) : null;
     public member: Member | null = this.data?.member ? new Member(this.data.member) : null;
