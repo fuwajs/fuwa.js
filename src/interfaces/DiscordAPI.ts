@@ -15,7 +15,6 @@ import { PresenceUpdate, VoiceState } from './guild';
 import type { Channel, StageInstance } from './channel';
 import {
     GatewayOpcodes,
-    Role,
     InviteDelete,
     InviteCreate,
     UnavailableGuild,
