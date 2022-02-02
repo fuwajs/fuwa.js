@@ -19,6 +19,7 @@
         "watch": "npx yarn build watch",
         "format": "npx prettier --ignore-path .gitignore --write ./src",
         "testbot": "nodemon test/bot/index --ignore out",
+        "debug": "npx tsc -p . --noEmit",
         "test": "jest test/tests",
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts",
         "docs": "typedoc"
