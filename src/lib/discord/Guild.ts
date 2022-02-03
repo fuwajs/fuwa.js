@@ -180,7 +180,7 @@ export type RoleCreateUpdate = {
     mentionable?: boolean;
 };
 export class Role {
-    constructor(protected data: RoleData, protected guildId) {}
+    constructor(protected data: RoleData, protected guildId: string) {}
 
     public get id() {
         return this.data.id;
