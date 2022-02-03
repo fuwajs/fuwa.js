@@ -59,7 +59,7 @@ export interface Guild {
     /** The id of the channel where community guilds can display rules and/or guidelines */
     rules_channel_id: string | null;
     /** When this guild was joined at */
-    joined_at?: Date;
+    joined_at?: string;
     /** True if this is considered a large guild */
     large?: boolean;
     /** True if this guild is unavailable due to an outage */

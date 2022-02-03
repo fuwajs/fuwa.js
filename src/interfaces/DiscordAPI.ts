@@ -166,7 +166,7 @@ export interface GuildMembersChunk {
 interface ChannelPinsUpdate {
     guild_id?: string;
     channel_id: string;
-    last_pin_timestamp?: Date | null;
+    last_pin_timestamp?: string | null;
 }
 
 interface GuildEmojisUpdate {

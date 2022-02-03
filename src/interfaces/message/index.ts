@@ -4,6 +4,7 @@ import { GuildMember } from '../guild';
 import type { Author, GuildMemberWithUser, Member, User } from '../member';
 import type { MessageComponents } from './componentTypes';
 import { Channel } from '../channel';
+import { EmbedType } from '../..';
 
 /** @see https://discord.com/developers/docs/resources/channel#message-object */
 export interface Message {
@@ -192,10 +193,10 @@ export interface Attachment {
 
 export interface Embed {
     title?: string;
-    type?: string;
+    type?: EmbedType;
     description?: string;
     url?: string;
-    timestamp?: Date;
+    timestamp?: string;
     color?: number;
     footer?: EmbedFooter;
     image?: EmbedImage;

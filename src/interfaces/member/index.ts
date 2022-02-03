@@ -13,16 +13,16 @@ export interface Member {
     /** Array of role object ids */
     roles: string[];
     /** When the user joined the guild */
-    joined_at: Date;
+    joined_at: string;
     /** When the user started boosting the guild */
-    premium_since?: Date | null;
+    premium_since?: string | null;
     /** Whether the user is deafened in voice channels */
     deaf: boolean;
     /** Whether the user is muted in voice channels */
     mute: boolean;
     /** Whether the user has not yet passed the guild's Membership Screening requirements */
     pending?: boolean;
-    communication_disabled_until: Date;
+    communication_disabled_until: string;
 }
 
 // We use these types much since user always exists unless its a `CREATE_MESSAGE` or `MESSAGE_UPDATE` event

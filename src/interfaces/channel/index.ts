@@ -24,7 +24,7 @@ export interface Channel {
     owner_id?: string;
     application_id?: string;
     parent_id?: string | null;
-    last_pin_timestamp?: Date | null;
+    last_pin_timestamp?: string | null;
     rtc_region?: string | null;
     video_quality_mode?: number;
     message_count?: number;
@@ -119,7 +119,7 @@ export interface ThreadMetadata {
 export interface ThreadMember {
     id?: string;
     user_id?: string;
-    join_timestamp: Date;
+    join_timestamp: string;
     flags?: number;
 }
 /** @see https://discord.com/developers/docs/resources/channel#overwrite-object */
