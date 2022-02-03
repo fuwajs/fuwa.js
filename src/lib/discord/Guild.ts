@@ -169,6 +169,9 @@ export class Member {
     public get guildId() {
         return (this.data as any).guild_id ?? null;
     }
+    public get mutedUntil() {
+        return new Date(this.data.communication_disabled_until);
+    }
 }
 
 export type RoleCreateUpdate = {

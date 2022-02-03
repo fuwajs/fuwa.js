@@ -22,6 +22,7 @@ export interface Member {
     mute: boolean;
     /** Whether the user has not yet passed the guild's Membership Screening requirements */
     pending?: boolean;
+    communication_disabled_until: Date;
 }
 
 // We use these types much since user always exists unless its a `CREATE_MESSAGE` or `MESSAGE_UPDATE` event

@@ -112,6 +112,9 @@ export interface Guild {
 /** @see https://discord.com/developers/docs/resources/guild#guild-member-object */
 export type GuildMember = Member;
 
+/** @see https://discord.com/developers/docs/topics/gateway#guild-member-update-guild-member-update-event-fields */
+export type GuildMemberUpdate = GuildMember & { guild_id: string };
+
 /** @see https://discord.com/developers/docs/resources/guild#guild-object-guild-features */
 export enum GuildFeatures {
     /** Guild has access to set an invite splash background */
