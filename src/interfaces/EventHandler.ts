@@ -5,7 +5,6 @@
 
 import type {
     ApplicationCommandCreateUpdateDelete,
-    BigInteraction,
     Channel,
     Emoji,
     GatewayPayload,
@@ -13,26 +12,30 @@ import type {
     GuildMember,
     InviteCreate,
     InviteDelete,
-    Member,
     Message,
     MessageReactionAdd,
     MessageReactionRemove,
     MessageReactionRemoveAll,
     MessageUpdateDelete,
     PresenceUpdate,
-    Role,
     StageInstance,
     ThreadMemberModified,
     ThreadMembersUpdateModified,
-    User,
     VoiceServerUpdate,
     VoiceState,
     GatewayEvents,
 } from '.';
 import { IntegrationCreateUpdate, IntegrationDelete } from './integrations';
 import { Thread } from '../util/transformers/channelToThread';
-import { Guild as GuildHandler } from '../lib/discord/Guild';
-import { Message as MessageHandler } from '../lib/discord/Message';
+import {
+    Context,
+    Guild as GuildHandler,
+    Message as MessageHandler,
+    Role as RoleHandler,
+    User as UserHandler,
+    Member as MemberHandler,
+} from '..';
+import { UnavailableGuild } from './guild/extention';
 
 export type EventHandlersDefinitions = {
     /** Sent when a new Slash Command is created, relevant to the current user. */
@@ -42,7 +45,7 @@ export type EventHandlersDefinitions = {
     /** Sent when a Slash Command relevant to the current user is deleted. */
     'application command removed': (data: ApplicationCommandCreateUpdateDelete) => any;
     /** Sent when properties about the user change. */
-    'user update': (user: User) => any;
+    'user update': (user: UserHandler) => any;
     /** Sent when a new guild channel is created, relevant to the current user. */
     'new channel': (channel: Channel) => any;
     /** Sent when a channel is updated. This is not sent when the field `last_message_id` is altered. To keep track of the `last_message_id` changes, you must listen for `MESSAGE_CREATE` events. */
@@ -55,9 +58,9 @@ export type EventHandlersDefinitions = {
     /** Sent before every event.  awaits the execution of this event before main event gets sent. */
     'dispatch requirements': (data: GatewayPayload, shard_id: number) => any;
     /** Sent when a user is banned from a guild. */
-    ban: (guild: GuildHandler, user: User, member?: Member) => any;
+    ban: (data: { guildId; user: UserHandler }) => any;
     /** Sent when a user is unbanned from a guild. */
-    'ban removed': (guild: GuildHandler, user: User, member?: Member) => any;
+    'ban removed': (data: { guildId; user: UserHandler }) => any;
     /**
      * This event can be sent in three different scenarios:
      * 1. When a user is initially connecting, to lazily load and backfill information for all unavailable guilds sent in the `READY` event. Guilds that are unavailable due to an outage will send a `GUILD_DELETE` event.
@@ -66,39 +69,32 @@ export type EventHandlersDefinitions = {
      *
      * This event does not get sent on startup
      */
-    'new guild': (guild: Guild) => any;
+    'new guild': (guild: GuildHandler) => any;
     /** This event does get sent on start when shards are loading the guilds */
     'guild loaded': (guild: GuildHandler) => any;
     /** When a guild goes available this event will be ran. */
-    'guild online': (guild: Guild) => any;
-    /** When a guild goes unavailable this event will be ran. */
-    'guild offline': (guild: Guild) => any;
     /** Sent when a guilds integration gets updated */
     'guild integrations update': (guild: Guild) => any;
     /** Sent when a guild is updated. */
-    'guild update': (guild: GuildHandler, changes: GuildUpdateChange[]) => any;
+    'guild update': (guild: GuildHandler) => any;
     /** Sent when a guild becomes or was already unavailable due to an outage, or when the user leaves or is removed from a guild. If the `unavailable` field is not set, the user was removed from the guild. */
-    'guild removed': (guild: Guild) => any;
+    'guild removed': (guild: UnavailableGuild) => any;
     /** Sent when a guild's emojis have been updated. */
-    'emojis update': (
-        guild: GuildHandler
-        // emojis: Collection<number, Emoji>,
-        // oldEmojis: Collection<number, Emoji>
-    ) => any;
+    'emojis update': (data: { guildId; emojis: Emoji[] }) => any;
     /** Sent when a new user joins a guild. */
-    'new member': (guild: GuildHandler, member: Member) => any;
+    'new member': (guild: GuildHandler, member: MemberHandler) => any;
     /** Sent when a user is removed from a guild (leave/kick/ban). */
-    'member removed': (guild: GuildHandler, user: User, member?: Member) => any;
+    'member removed': (guild: GuildHandler, user: UserHandler, member?: MemberHandler) => any;
     /** Sent when a guild member is updated. This will also fire when the user object of a guild member changes. */
-    'member update': (guild: GuildHandler, member: Member, oldMember?: Member) => any;
+    'member update': (data: { guildId: string; member: MemberHandler }) => any;
     /** Sent when a user uses a Slash Command (type 2) or clicks a button (type 3). */
-    'new interaction': (data: BigInteraction, member?: Member) => any;
+    'new interaction': (data: Context) => any;
     /** Sent when a user uses a Slash Command in a guild (type 2) or clicks a button (type 3). */
-    'new guild interaction': (data: BigInteraction, member: Member) => any;
+    'new guild interaction': (data: Context) => any;
     /** Sent when a user uses a Slash Command in a dm (type 2) or clicks a button (type 3). */
-    'new dm interaction': (data: Omit<BigInteraction, 'member'>) => any;
+    'new dm interaction': (data: Context) => any;
     /** Sent when a lurker joins/leaves/moves stage channels. */
-    'lurker voice state update': (member: Member, voiceState: VoiceState) => any;
+    'lurker voice state update': (member: MemberHandler, voiceState: VoiceState) => any;
     /**
      * @deprecated Please use 'new message'
      *
@@ -112,7 +108,12 @@ export type EventHandlersDefinitions = {
     /** Sent when a message is updated. */
     'message update': (data: MessageUpdateDelete) => any;
     /** Sent when a user updates its nickname */
-    'nickname update': (guild: GuildHandler, member: Member, nickname: string, oldNickname?: string) => any;
+    'nickname update': (
+        guild: GuildHandler,
+        member: MemberHandler,
+        nickname: string,
+        oldNickname?: string
+    ) => any;
     /** A user's presence is their current state on a guild. This event is sent when a user's presence or info, such as name or avatar, is updated. */
     'presence update': (presence: PresenceUpdate, oldPresence?: PresenceUpdate) => any;
     /** Sent before every event execution.  will not await its execution. */
@@ -133,16 +134,14 @@ export type EventHandlersDefinitions = {
         guild_id?: number
     ) => any;
     /** Sent when a guild role is created. */
-    'new role': (guild: GuildHandler, role: Role) => any;
+    'new role': (data: { guildId: string; role: RoleHandler }) => any;
     /** Sent when a guild role is deleted. */
-    'role removed': (guild: GuildHandler, role: Role) => any;
+    'role removed': (data: { guildId: string; roleId: string }) => any;
     /** Sent when a guild role is updated. */
-    'role update': (guild: GuildHandler, role: Role, old: Role) => any;
-    'role added to member': (guild: GuildHandler, member: Member, role_id: number) => any;
-    'role removed from member': (guild: GuildHandler, member: Member, role_id: number) => any;
+    'role update': (data: { guildId: string; role: RoleHandler }) => any;
     'shard ready': (shardId: number) => any;
     /** Sent when a shard failed to load. */
-    'shard could not load': (shard_id: number, unavailableGuild_ids: Set<number>) => any;
+    // 'shard could not load': (shard_id: number, unavailableGuild_ids: Set<number>) => any;
     /** Sent when a Stage instance is created (i.e. the Stage is now "live"). */
     'new stage instance': (instance: StageInstance) => any;
     /** Sent when a Stage instance has been deleted (i.e. the Stage has been closed). */
@@ -168,19 +167,19 @@ export type EventHandlersDefinitions = {
     /** Sent when a user starts typing in a channel. */
     typing: (data: TypingStart) => any;
     /** Sent when a user joins a voice channel */
-    'voice channel join': (member: Member, channel_id: number) => any;
+    'voice channel join': (member: MemberHandler, channel_id: number) => any;
     /** Sent when a user leaves a voice channel. Does not get sent when user switches the voice channel */
-    'voice channel leave': (member: Member, channel_id: number) => any;
+    'voice channel leave': (member: MemberHandler, channel_id: number) => any;
     /** Sent when a user switches the voice channel */
-    'voice channel switch': (member: Member, channel_id: number, oldChannel_id: number) => any;
+    'voice channel switch': (member: MemberHandler, channel_id: number, oldChannel_id: number) => any;
     /** Sent when a voice server is updated with information for making the bot connect to a voice channel. */
     'voice server update': (payload: VoiceServerUpdate, guild: GuildHandler) => any;
     /** Sent when someone joins/leaves/moves voice channels. */
-    'voice state update': (member: Member, voiceState: VoiceState) => any;
+    'voice state update': (member: MemberHandler, voiceState: VoiceState) => any;
     /** Sent when a guild channel's webhook is created, updated, or deleted. */
     'webhooks update': (channelId: number, guild_id: number) => any;
     /** Sent when a member has passed the guild's Membership Screening requirements */
-    'membership screening passed': (guild: GuildHandler, member: Member) => any;
+    'membership screening passed': (guild: GuildHandler, member: MemberHandler) => any;
     /** Sent when an integration is created on a server such as twitch, youtube etc.. */
     'new integration': (data: IntegrationCreateUpdate) => any;
     /** Sent when an integration is updated. */
@@ -259,8 +258,20 @@ export type GatewayEventsArgsType = {
 
 export const GatewayEventArgConverter: GatewayEventsArgsType = {
     'guild loaded': data => [new GuildHandler(data)],
+    'guild update': data => [new GuildHandler(data)],
+    'emojis update': ({ guild_id: guildId, emojis }) => [{ guildId, emojis }],
+    'new guild': data => [new GuildHandler(data)],
+    ban: ({ guild_id: guildId, user }) => [{ guildId, user: new UserHandler(user) }],
+    'ban removed': ({ guild_id: guildId, user }) => [{ guildId, user: new UserHandler(user) }],
     ready: () => [],
+    'new interaction': data => [new Context(data)],
+    'new guild interaction': data => [new Context(data)],
+    'new dm interaction': data => [new Context(data)],
     'new message': data => [new MessageHandler(data)],
+    'new role': ({ guild_id: guildId, role }) => [{ guildId, role: new RoleHandler(role, guildId) }],
+    'role update': ({ guild_id: guildId, role }) => [{ guildId, role: new RoleHandler(role, guildId) }],
+    'role removed': ({ guild_id: guildId, role_id: roleId }) => [{ guildId, roleId }],
+    'member update': ({ guild_id: guildId, ...data }) => [{ guildId, member: new MemberHandler(data) }],
 };
 
 export interface DebugArg {
