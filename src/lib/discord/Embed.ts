@@ -173,7 +173,7 @@ export class Embed {
      * ```
      */
     public setTimestamp(time?: string | Date | number): this {
-        this.data.timestamp = new Date(time);
+        this.data.timestamp = new Date(time).toISOString();
         return this;
     }
 
