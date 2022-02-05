@@ -4,6 +4,7 @@ import { Embed } from './Embed';
 import { enumPropFinder } from '../../util';
 import { Member } from './Guild';
 import http from '../structures/internet/http';
+import { Attachment } from '.';
 
 export class Message {
     constructor(protected data: MessageData) {}
@@ -17,8 +18,11 @@ export class Message {
     get createdAt() {
         return new Date(this.data.timestamp);
     }
+    public get attachments() {
+        return this.data.attachments.map(data => new Attachment(data));
+    }
 
-    /** the actual content of the message send in x channel*/
+    /** the actual content of the message */
     get content() {
         return this.data.content;
     }
@@ -28,6 +32,9 @@ export class Message {
     /** If the message is replying to another message.*/
     get messageReference(): Message | null {
         return this.data.message_reference ? new Message(this.data.message_reference as any) : null;
+    }
+    get editedAt() {
+        return this.data.edited_timestamp ? new Date(this.data.edited_timestamp) : null;
     }
     /** If the message is pinned in a channel. */
     get isPinned() {
@@ -44,8 +51,12 @@ export class Message {
     public get channelId() {
         return this.data.channel_id ?? null;
     }
-    public delete() {
-        return http.DELETE(`/channels/${this.channelId}/messages/${this.id}`);
+    public async delete() {
+        await http.DELETE(`/channels/${this.channelId}/messages/${this.id}`);
+        return;
+    }
+    public get isTTS() {
+        return this.data.tts;
     }
     public embeds = this.data?.embeds ? this.data.embeds.map(e => new Embed(e)) : [];
     public type = enumPropFinder<typeof MessageType>(this.data?.type, MessageType);
@@ -57,6 +68,6 @@ export class Message {
         return this.data.member ? new Member(this.data.member as any) : null;
     }
     public get mentions() {
-        return this.data.mentions;
+        return this.data.mentions.map(({ member, ...user }) => new Member({ user, ...member } as any));
     }
 }

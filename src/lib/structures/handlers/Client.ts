@@ -1,5 +1,10 @@
 import { WebSocket } from '../internet/WebSocket';
-import { DISCORD_API, GatewayCommands, GatewayIntents } from '../../../interfaces/DiscordAPI';
+import {
+    DISCORD_API,
+    GatewayCommands,
+    GatewayIntents,
+    GatewayPresenceUpdate,
+} from '../../../interfaces/DiscordAPI';
 import { Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
@@ -15,9 +20,12 @@ import {
     ApplicationCommand,
     InteractionTypes,
     ApplicationCommandType,
+    Identify,
+    Activity,
+    ActivityType,
 } from '../../../interfaces';
 import http from '../internet/http';
-import { getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
+import { enumPropFinder, getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User, BotUser } from '../../discord/User';
@@ -91,13 +99,19 @@ export interface ClientOptions {
      * @returns string of your ID
      */
     applicationId?: string;
-    /**
-     * The Default prefix for use the bot.
-     * @default null
-     * @returns string
-     */
-    defaultPrefix?: string | null;
 }
+
+export type StatusUpate = Omit<GatewayPresenceUpdate, 'since' | 'activities'> & {
+    since?: Date;
+    activities?: (Omit<Activity, 'timestamps' | 'type' | 'application_id'> & {
+        type: keyof typeof ActivityType;
+        timestamps?: { start?: Date; end?: Date };
+        /** The application ID for the game your playing */
+        gameId?: string;
+    })[];
+    /** A specific guild you want to change your status in */
+    guildId?: string;
+};
 
 /**
  * The base Client to access and configure your discord bot.
@@ -127,6 +141,7 @@ export class Client extends WebSocket {
     /** Your bot ID */
     public applicationId: string;
     protected session = { id: '', seq: 0 };
+    protected status: GatewayPresenceUpdate | null = null;
     public cache: Cache;
     /**
      * DiscordAPI GateWay Intents
@@ -134,6 +149,7 @@ export class Client extends WebSocket {
     protected intents: (keyof typeof GatewayIntents)[];
     /** @internal */
     protected token = '';
+    public botStatus: 'READY' | 'LOADING' = 'LOADING';
     /** Options to pass to the client */
     protected options: ClientOptions;
     /** @internal */
@@ -267,7 +283,6 @@ export class Client extends WebSocket {
         }
         return http.GET(path).then(res => res.data);
     }
-
     /** Connects the websocket client to discords api.
      * @param token Your discord bot token.
      * @see https://discord.com/developers/applications
@@ -294,7 +309,7 @@ export class Client extends WebSocket {
                     event(...args);
                 }
             });
-            const identify = {
+            const identify: Identify = {
                 token: _token,
                 intents,
                 properties: {
@@ -303,7 +318,7 @@ export class Client extends WebSocket {
                     $browser: 'Fuwa.js',
                     $device: 'Fuwa.js',
                 },
-                // status: this.status,
+                presence: this.status,
             };
 
             // this.debug.log('discord login', 'Attempting to connect to discord');
@@ -322,6 +337,7 @@ export class Client extends WebSocket {
             Globs.client = this;
             this.token = _token;
             Globs.appId = this.applicationId = ready.application.id;
+            this.botStatus = 'READY';
             Globs.sessionId = ready.session_id;
             this.mountingCommands.forEach(async cmd => await cmd.mount());
             this.session = {
@@ -366,13 +382,43 @@ export class Client extends WebSocket {
         if (end) process.exit();
         return;
     }
+    setStatus(data: StatusUpate) {
+        this.status = {
+            ...data,
+            since: data.since.valueOf(),
+            activities: data.activities
+                ? data.activities.map(({ gameId, ...val }) => ({
+                      ...val,
+                      timestamps: val.timestamps
+                          ? { end: val.timestamps.end?.valueOf(), start: val.timestamps.start?.valueOf() }
+                          : undefined,
+                      type: ActivityType[val.type],
+                      application_id: gameId,
+                  }))
+                : undefined,
+        };
+        console.log(this.status);
+        if (this.connected && this.botStatus === 'READY') {
+            this.response.op.emit(GatewayOpcodes.StatusUpdate, {
+                activities: this.status.activities,
+                client_status: {
+                    web: 'Fuwa.js',
+                },
+                guild_id: data.guildId,
+                status: this.status.status,
+                user: {
+                    id: this.bot.id,
+                },
+            });
+        }
+    }
 
     /**
      *
      * @param shardId the shard(s) spawned from websocket
      * @param data discord raw api json
      */
-    protected async spawnShard(shardId: number, data: GatewayCommands[GatewayOpcodes.Identify]['d']) {
+    async spawnShard(shardId: number, data: Identify) {
         this.response.op.emit(GatewayOpcodes.Identify, {
             ...data,
             shard: [shardId, this.shardCount],

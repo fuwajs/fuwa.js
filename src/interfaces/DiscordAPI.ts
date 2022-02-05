@@ -443,7 +443,7 @@ export interface Identify {
     /** Whether this connection supports compression of packets */
     compress?: boolean;
     /** Value between 50 and 250, total number of members where the gateway will stop sending offline members in the guild member list */
-    largeThreshold?: number;
+    large_threshold?: number;
     /** Used for Guild Sharding */
     shard?: [shard_id: number, numberOfShards: number];
     /** Presence structure for initial presence information */
@@ -455,7 +455,7 @@ export interface Identify {
 /**
  * @see https://discord.com/developers/docs/topics/gateway#update-presence-gateway-presence-update-structure
  */
-interface GatewayPresenceUpdate {
+export interface GatewayPresenceUpdate {
     /** unix time (in milliseconds) of when the client went idle, or null if the client is not idle */
     since: number | null;
     /** the user's activities */

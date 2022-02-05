@@ -14,6 +14,8 @@ import { Guild, Member } from './Guild';
 import { Button, ButtonParams } from './Button';
 import Globs from '../../util/Global';
 import { Message } from './Message';
+import { makeMessagePayload } from '.';
+import { File } from '../structures';
 
 export default class Context {
     constructor(protected data: BigInteraction) {}
@@ -99,10 +101,7 @@ export default class Context {
     }
 
     /** Sends a POST  */
-    public async send(
-        message: InteractionForm,
-        type: keyof typeof ResponseTypes = 'ChannelMessageWithSource'
-    ): Promise<void> {
+    public async send(message: InteractionForm & { files?: File[] }): Promise<void> {
         const components = [...(message.components ?? []), ...[...this.components.values()]];
         const data = {
             ...message,
@@ -110,20 +109,21 @@ export default class Context {
         };
         // clear components for next message
         this.components.clear();
+        const form = await makeMessagePayload({
+            files: message.files,
+            type: ResponseTypes.ChannelMessageWithSource,
+            data,
+        } as any);
         await http
-            .POST(
-                `/interactions/${this.data.id}/${this.data.token}/callback`,
-                JSON.stringify({
-                    type: ResponseTypes[type],
-                    data,
-                })
-            )
+            .POST(`/interactions/${this.data.id}/${this.data.token}/callback`, form, {
+                'Content-Type': 'multipart/form-data',
+            })
             .catch(expected => {
                 throw new Error(expected);
             });
-
         return;
     }
+    public async loading() {}
     public async delete(): Promise<void> {
         await http.DELETE(`/webhooks/${Globs.appId}/${this.data.token}/messages/@original`);
         return;
@@ -141,6 +141,7 @@ export default class Context {
             .PATCH(
                 `/webhooks/${Globs.appId}/${this.data.token}/messages/@original`,
                 JSON.stringify({
+                    type: ResponseTypes.UpdateMessage,
                     data,
                 })
             )

@@ -3,12 +3,12 @@ import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { enumPropFinder } from '../../util';
-import { MessageReference } from '../../interfaces';
+import { InteractionForm, MessageReference } from '../../interfaces';
 import { Embed } from '.';
 import { Form } from '../structures/internet/FormData';
 import { File } from '../structures/handlers/FileHandler';
 
-export async function MessageFormHandler(msg: MessageForm): Promise<Form> {
+export async function messageToForm(msg: MessageForm): Promise<Form> {
     const form = new Form();
     if (msg.files) {
         await Promise.all(
@@ -28,6 +28,13 @@ export async function MessageFormHandler(msg: MessageForm): Promise<Form> {
     }
     return form;
 }
+export async function makeMessagePayload(message: MessageForm) {
+    return await messageToForm(
+        (message = message.attachments
+            ? { ...message, attachments: message.attachments.map((a, i) => ({ ...a, id: i })) }
+            : message)
+    );
+}
 
 export type MessageSearchTerms = {
     around?: string;
@@ -41,7 +48,6 @@ export interface MessageForm {
     tts?: boolean;
     files?: File[];
     embeds?: Embed[];
-    payload_json?: string;
     // allowed_mentions?: AllowedMention[];
     attachments?: { filename: string; description: string }[];
     message_reference?: MessageReference;
@@ -119,23 +125,12 @@ export class Channel {
      * channel.send({content: "Leave a star on Fuwa.js!"})
      * ```
      */
-    public async send(...messages: MessageForm[]): Promise<Message[]> {
-        const payload = await Promise.all(
-            messages
-                .map(msg =>
-                    msg.attachments
-                        ? { ...msg, attachments: msg.attachments.map((a, i) => ({ ...a, id: i })) }
-                        : msg
-                )
-                .map(MessageFormHandler)
-        );
-        return await Promise.all(
-            payload.map(msg =>
-                http
-                    .POST(`/channels/${this.id}/messages`, msg, { 'Content-Type': 'multipart/form-data' })
-                    .then(raw => new Message(raw.data))
-            )
-        );
+    public async send(message: MessageForm): Promise<Message> {
+        return http
+            .POST(`/channels/${this.id}/messages`, await makeMessagePayload(message), {
+                'Content-Type': 'multipart/form-data',
+            })
+            .then(raw => new Message(raw.data));
     }
     /** Returns the channel permissions */
     public get perms() {

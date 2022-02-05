@@ -1,4 +1,4 @@
-const { readFileSync } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const { join } = require('path');
 const { Blob } = require('buffer');
 const {
@@ -13,13 +13,17 @@ const {
     Channel,
     File,
 } = require('../../');
-require('../../out/dist/lib/structures/internet/FormData');
+
 class Logger extends Plugin {
     constructor() {
         super({ name: 'Logger' });
     }
     event(client, data) {
-        // console.log(data);
+        if (data.t === 'MESSAGE_CREATE') {
+            console.log(JSON.stringify(data.d, undefined, 4));
+        } else {
+            console.log(data);
+        }
     }
 }
 const client = new Client({
@@ -29,7 +33,17 @@ const client = new Client({
 
 const FUWA_GUILD_ID = '936748309098397708';
 // const FUWA_TEST_CHANNEL_ID = '789395850874322944';
-
+client.setStatus({
+    since: new Date(),
+    status: 'dnd',
+    afk: false,
+    activities: [
+        {
+            name: 'Bot',
+            type: 'Listening',
+        },
+    ],
+});
 client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);

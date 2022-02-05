@@ -230,9 +230,9 @@ export interface VoiceRegion {
  */
 export interface PresenceUpdate {
     /** the user presence is being update for */
-    user: User;
+    user: Partial<User>;
     /** id of the guild */
-    guild_id: string;
+    guild_id?: string;
     /** either "idle", "dnd", "online", or "offline" */
     status: Omit<StatusType, 'invisible'>;
     /** user's current activities */
