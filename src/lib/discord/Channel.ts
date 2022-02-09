@@ -3,7 +3,7 @@ import { Channel as ChannelData, ChannelType } from '../../interfaces/channel';
 import http from '../structures/internet/http';
 import Globs from '../../util/Global';
 import { enumPropFinder } from '../../util';
-import { InteractionForm, MessageReference } from '../../interfaces';
+import { MessageReference } from '../../interfaces';
 import { Embed } from '.';
 import { Form } from '../structures/internet/FormData';
 import { File } from '../structures/handlers/FileHandler';

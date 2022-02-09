@@ -1,5 +1,4 @@
-import {} from '../../../interfaces';
-import http, { Response } from '../internet/http';
+import { Response } from '../internet/http';
 import type { Client } from './Client';
 
 export interface PluginOptions {

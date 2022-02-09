@@ -1,10 +1,5 @@
 import { WebSocket } from '../internet/WebSocket';
-import {
-    DISCORD_API,
-    GatewayCommands,
-    GatewayIntents,
-    GatewayPresenceUpdate,
-} from '../../../interfaces/DiscordAPI';
+import { DISCORD_API, GatewayIntents, GatewayPresenceUpdate } from '../../../interfaces/DiscordAPI';
 import { Command, CommandCallback } from './Command';
 import Globs from '../../../util/Global';
 import { InvalidToken } from '../../../util/Errors';
@@ -27,7 +22,7 @@ import {
     HTTPResponseCodes,
 } from '../../../interfaces';
 import http from '../internet/http';
-import { enumPropFinder, getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
+import { getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
 import { Plugin } from './Plugin';
 import { Guild } from '../../discord/Guild';
 import { User, BotUser } from '../../discord/User';
