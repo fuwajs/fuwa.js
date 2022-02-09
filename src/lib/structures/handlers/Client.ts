@@ -23,6 +23,8 @@ import {
     Identify,
     Activity,
     ActivityType,
+    Resume,
+    HTTPResponseCodes,
 } from '../../../interfaces';
 import http from '../internet/http';
 import { enumPropFinder, getArgs, isBrowser, parseDiscordEventNames } from '../../../util';
@@ -283,14 +285,28 @@ export class Client extends WebSocket {
         }
         return http.GET(path).then(res => res.data);
     }
-    /** Connects the websocket client to discords api.
-     * @param token Your discord bot token.
-     * @see https://discord.com/developers/applications
-     */
-    public login(token?: string | Buffer) {
-        const _token = this.token || token.toString();
-        Globs.token = _token;
+    protected loginFunctions(isResume = false) {
         this.connect(DISCORD_API.gateway, 9);
+        this.wsEvent('message', data => {
+            this.plugins.forEach(plugin => plugin.event(this, data));
+            if (data.op === GatewayOpcodes.Dispatch && data.t) {
+                const eventName = GatewayEventsConverter[data.t] || parseDiscordEventNames(data.t);
+                const event = this.events.get(eventName);
+                if (!event || eventName === 'ready') return;
+                const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
+                event(...args);
+            }
+            if (data.s) {
+                this.session.seq = data.s;
+            }
+        });
+        this.wsEvent('close', ({ code }) => {
+            if (code !== 1000) {
+                this.connect(DISCORD_API.gateway, 9);
+                console.log('closed');
+                this.loginFunctions(true);
+            }
+        });
         this.op(GatewayOpcodes.Hello, data => {
             // this.debug.log('hello', `Received Hello event and received:\n${this.debug.object(data, 1)}`);
             setInterval(
@@ -299,43 +315,44 @@ export class Client extends WebSocket {
                 data.heartbeat_interval
             );
             const intents = this.intents.map(intent => GatewayIntents[intent]).reduce((a, b) => a | b);
-            this.wsEvent('message', data => {
-                this.plugins.forEach(plugin => plugin.event(this, data));
-                if (data.op === GatewayOpcodes.Dispatch && data.t) {
-                    const eventName = GatewayEventsConverter[data.t] || parseDiscordEventNames(data.t);
-                    const event = this.events.get(eventName);
-                    if (!event || eventName === 'ready') return;
-                    const args = (GatewayEventArgConverter[eventName] || (d => [d]))(data.d);
-                    event(...args);
-                }
-            });
-            const identify: Identify = {
-                token: _token,
-                intents,
-                properties: {
-                    // @ts-ignore
-                    $os: isBrowser() ? Deno.build.os : process.platform,
-                    $browser: 'Fuwa.js',
-                    $device: 'Fuwa.js',
-                },
-                presence: this.status,
-            };
+            const auth: Identify | Resume = isResume
+                ? ({
+                      token: Globs.token,
+                      session_id: this.session.id,
+                      seq: this.session.seq,
+                  } as Resume)
+                : ({
+                      token: Globs.token,
+                      intents,
+                      properties: {
+                          // @ts-ignore
+                          $os: isBrowser() ? Deno.build.os : process.platform,
+                          $browser: 'Fuwa.js',
+                          $device: 'Fuwa.js',
+                      },
+                      presence: this.status,
+                  } as Identify);
 
             // this.debug.log('discord login', 'Attempting to connect to discord');
-            this.response.op.emit(GatewayOpcodes.Identify, identify);
+            this.response.op.emit(isResume ? GatewayOpcodes.Resume : GatewayOpcodes.Identify, auth);
         });
         this.op(GatewayOpcodes.Reconnect, () => {
             this.response.op.emit(GatewayOpcodes.Resume, {
-                token: _token,
+                token: Globs.token,
                 session_id: this.session.id,
                 seq: this.session.seq,
             });
         });
-        this.op(GatewayOpcodes.Heartbeat, seq => (this.session.seq = seq));
+        this.op(GatewayOpcodes.Heartbeat, () =>
+            this.response.op.emit(GatewayOpcodes.Heartbeat, Math.random())
+        );
+        this.op(GatewayOpcodes.InvalidSession, () => {
+            throw new InvalidToken();
+        });
         this.event('READY', ready => {
             this.bot = new BotUser(ready.user);
             Globs.client = this;
-            this.token = _token;
+            this.token = Globs.token;
             Globs.appId = this.applicationId = ready.application.id;
             this.botStatus = 'READY';
             Globs.sessionId = ready.session_id;
@@ -370,14 +387,24 @@ export class Client extends WebSocket {
             throw new InvalidToken();
         });
     }
-
-    /**
-     * Shuts down the bot process.
+    /** Connects the websocket client to discords api.
+     * @param token Your discord bot token.
+     * @see https://discord.com/developers/applications
      */
-    public logout<T extends boolean>(end: T): T extends true ? void : never {
+    public async login(token?: string | Buffer) {
+        const _token = this.token || token.toString();
+        Globs.token = _token;
+        DISCORD_API.gateway = await http.GET(`/gateway/bot`).then(({ status, data }) => {
+            if (status === HTTPResponseCodes.Unauthorized) throw new InvalidToken();
+            return data.url;
+        });
+        this.connect(DISCORD_API.gateway, 9);
+        this.loginFunctions();
+    }
+    public logout<T extends boolean>(end?: T): T extends true ? void : never {
         if (this?.ws && this.loop) {
             clearInterval(this.loop);
-            this.ws.close();
+            this.ws.close(1000);
         }
         if (end) process.exit();
         return;
@@ -397,7 +424,6 @@ export class Client extends WebSocket {
                   }))
                 : undefined,
         };
-        console.log(this.status);
         if (this.connected && this.botStatus === 'READY') {
             this.response.op.emit(GatewayOpcodes.StatusUpdate, {
                 activities: this.status.activities,

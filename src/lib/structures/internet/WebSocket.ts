@@ -42,7 +42,7 @@ export class WebSocket {
             throw new Error('ETF encoding selected but erlpack not found');
         }
         this.ws = new Socket(url + `?v=${version ?? 8}&encoding=${encoding}`);
-
+        this.ws.onclose = this.WSEvents.close;
         this.ws.onopen = () => {
             this.connected = true;
 
@@ -72,7 +72,7 @@ export class WebSocket {
     protected event<T extends keyof GatewayEvents>(e: T, cb: (data: GatewayEvents[T]['d']) => void): void {
         this.APIEvents[e] = cb;
     }
-    protected wsEvent<T extends 'open' | 'message'>(e: T, cb: (data: any) => any) {
+    protected wsEvent<T extends 'open' | 'message' | 'close'>(e: T, cb: (data: any) => any) {
         this.WSEvents[e] = cb;
     }
 }
