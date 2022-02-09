@@ -3,3 +3,4 @@ types
 tests
 out
 node_modules
+*.deno.ts
