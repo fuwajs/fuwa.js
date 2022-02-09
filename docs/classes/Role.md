@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[lib/discord/Guild.ts:186](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L186)
+[lib/discord/Guild.ts:186](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L186)
 
 ## Accessors
 
@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[lib/discord/Guild.ts:194](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L194)
+[lib/discord/Guild.ts:194](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L194)
 
 ___
 
@@ -68,7 +68,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:197](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L197)
+[lib/discord/Guild.ts:197](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L197)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:203](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L203)
+[lib/discord/Guild.ts:203](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L203)
 
 ___
 
@@ -96,7 +96,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:188](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L188)
+[lib/discord/Guild.ts:188](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L188)
 
 ___
 
@@ -110,7 +110,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:238](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L238)
+[lib/discord/Guild.ts:238](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L238)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:200](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L200)
+[lib/discord/Guild.ts:200](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L200)
 
 ___
 
@@ -138,7 +138,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:191](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L191)
+[lib/discord/Guild.ts:191](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L191)
 
 ___
 
@@ -191,7 +191,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:225](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L225)
+[lib/discord/Guild.ts:225](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L225)
 
 ___
 
@@ -205,7 +205,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:208](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L208)
+[lib/discord/Guild.ts:208](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L208)
 
 ## Methods
 
@@ -219,7 +219,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:234](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L234)
+[lib/discord/Guild.ts:234](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L234)
 
 ___
 
@@ -239,4 +239,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:211](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Guild.ts#L211)
+[lib/discord/Guild.ts:211](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L211)

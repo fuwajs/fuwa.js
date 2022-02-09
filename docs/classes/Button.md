@@ -37,7 +37,7 @@
 
 #### Defined in
 
-[lib/discord/Button.ts:7](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L7)
+[lib/discord/Button.ts:7](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L7)
 
 ## Properties
 
@@ -63,7 +63,7 @@
 
 #### Defined in
 
-[lib/discord/Button.ts:21](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L21)
+[lib/discord/Button.ts:21](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L21)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Button.ts:30](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L30)
+[lib/discord/Button.ts:30](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L30)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Button.ts:25](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L25)
+[lib/discord/Button.ts:25](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L25)
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Button.ts:9](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L9)
+[lib/discord/Button.ts:9](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L9)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Button.ts:17](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L17)
+[lib/discord/Button.ts:17](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L17)
 
 ___
 
@@ -157,4 +157,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Button.ts:13](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Button.ts#L13)
+[lib/discord/Button.ts:13](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Button.ts#L13)

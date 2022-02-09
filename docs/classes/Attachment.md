@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[lib/discord/Attachment.ts:17](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L17)
+[lib/discord/Attachment.ts:17](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L17)
 
 ## Accessors
 
@@ -52,7 +52,7 @@
 
 #### Defined in
 
-[lib/discord/Attachment.ts:39](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L39)
+[lib/discord/Attachment.ts:39](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L39)
 
 ___
 
@@ -66,7 +66,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:21](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L21)
+[lib/discord/Attachment.ts:21](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L21)
 
 ___
 
@@ -80,7 +80,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:30](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L30)
+[lib/discord/Attachment.ts:30](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L30)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:18](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L18)
+[lib/discord/Attachment.ts:18](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L18)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:36](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L36)
+[lib/discord/Attachment.ts:36](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L36)
 
 ___
 
@@ -122,7 +122,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:24](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L24)
+[lib/discord/Attachment.ts:24](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L24)
 
 ___
 
@@ -136,7 +136,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:33](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L33)
+[lib/discord/Attachment.ts:33](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L33)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:27](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L27)
+[lib/discord/Attachment.ts:27](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L27)
 
 ## Methods
 
@@ -170,7 +170,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Attachment.ts:50](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L50)
+[lib/discord/Attachment.ts:50](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L50)
 
 ___
 
@@ -189,4 +189,4 @@ url of the file
 
 #### Defined in
 
-[lib/discord/Attachment.ts:47](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/discord/Attachment.ts#L47)
+[lib/discord/Attachment.ts:47](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Attachment.ts#L47)

@@ -54,7 +54,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:102](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L102)
+[lib/structures/handlers/Command.ts:102](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L102)
 
 ## Properties
 
@@ -67,7 +67,7 @@ type of class Argument[]
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:99](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L99)
+[lib/structures/handlers/Command.ts:99](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L99)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:91](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L91)
+[lib/structures/handlers/Command.ts:91](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L91)
 
 ___
 
@@ -89,7 +89,7 @@ The guild for the command to be registered in. If left blank, the command will b
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:95](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L95)
+[lib/structures/handlers/Command.ts:95](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L95)
 
 ___
 
@@ -101,7 +101,7 @@ The id of the application command
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:86](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L86)
+[lib/structures/handlers/Command.ts:86](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L86)
 
 ___
 
@@ -114,7 +114,7 @@ Must be all lowercase.
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:90](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L90)
+[lib/structures/handlers/Command.ts:90](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L90)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:101](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L101)
+[lib/structures/handlers/Command.ts:101](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L101)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:100](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L100)
+[lib/structures/handlers/Command.ts:100](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L100)
 
 ___
 
@@ -144,7 +144,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:84](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L84)
+[lib/structures/handlers/Command.ts:84](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L84)
 
 ## Methods
 
@@ -172,7 +172,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:108](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L108)
+[lib/structures/handlers/Command.ts:108](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L108)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:116](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L116)
+[lib/structures/handlers/Command.ts:116](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L116)
 
 ___
 
@@ -206,7 +206,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:105](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L105)
+[lib/structures/handlers/Command.ts:105](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L105)
 
 ___
 
@@ -220,7 +220,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:123](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L123)
+[lib/structures/handlers/Command.ts:123](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L123)
 
 ___
 
@@ -234,7 +234,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:120](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L120)
+[lib/structures/handlers/Command.ts:120](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L120)
 
 ___
 
@@ -266,4 +266,4 @@ a new Command
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:141](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Command.ts#L141)
+[lib/structures/handlers/Command.ts:141](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Command.ts#L141)
