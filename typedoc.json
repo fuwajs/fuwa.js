@@ -6,9 +6,8 @@
     "hideGenerator": true,
     "lightHighlightTheme": "github-light",
     "darkHighlightTheme": "github-dark",
-    "excludePrivate": true,
     "excludeProtected": true,
-    "name": "fuwa.js",
+    "name": "Fuwa.js",
     "out": "./docs",
     "readme": "./README.md",
     "tsconfig": "./tsconfig.json"
