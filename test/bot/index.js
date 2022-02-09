@@ -19,11 +19,10 @@ class Logger extends Plugin {
         super({ name: 'Logger' });
     }
     event(client, data) {
-        if (data.t === 'MESSAGE_CREATE') {
-            console.log(JSON.stringify(data.d, undefined, 4));
-        } else {
-            console.log(data);
-        }
+        console.log(data);
+    }
+    http(client, data) {
+        console.log(data.data);
     }
 }
 const client = new Client({
@@ -48,6 +47,8 @@ client.on('ready', async function () {
     // console.clear();
     console.log(`Connected to discord!`);
     const guild = await Guild.get(FUWA_GUILD_ID);
+
+    // client.ws.close()
     // console.log(guild);
     // const commands = await client.getMountedCommands(FUWA_GUILD_ID);
 
