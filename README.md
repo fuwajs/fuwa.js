@@ -1,6 +1,7 @@
 <div align="center">
     <img src="/assets/Logo.svg" width="256" height="256">
     <p>The <b>new</b>, simple, and easy way to create <em>progressive</em> Discord bots.</p>
+    <!-- badges -->
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
             <img src="https://img.shields.io/discord/788135963528134656?color=7289da&logo=discord&logoColor=white"/>
@@ -11,6 +12,7 @@
         <img src="https://github.com/fuwajs/fuwa.js/workflows/CI/badge.svg" />
         <img src="https://img.shields.io/github/license/fuwajs/fuwa.js" />
         <a href="https://www.codacy.com/gh/fuwajs/fuwa.js/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fuwajs/fuwa.js&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/f0bce02a48ad4ae4b3d5daa4a9156646"/></a>
+        <img src="https://github.com/fuwajs/fuwa.js/actions/workflows/deno-build.yml/badge.svg" alt="Deno build" />
     </p>
 </div>
 
