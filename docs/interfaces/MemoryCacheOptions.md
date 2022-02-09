@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / MemoryCacheOptions
+[Fuwa.js](../README.md) / [Exports](../modules.md) / MemoryCacheOptions
 
 # Interface: MemoryCacheOptions
 
@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L34)
+[lib/structures/handlers/Cache.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Cache.ts#L34)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L35)
+[lib/structures/handlers/Cache.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Cache.ts#L35)

@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / Channel
+[Fuwa.js](../README.md) / [Exports](../modules.md) / Channel
 
 # Class: Channel
 
@@ -51,7 +51,7 @@ The base Channel class to interact with discord's api.
 
 #### Defined in
 
-[lib/discord/Channel.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L62)
+[lib/discord/Channel.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L62)
 
 ## Properties
 
@@ -61,7 +61,7 @@ The base Channel class to interact with discord's api.
 
 #### Defined in
 
-[lib/discord/Channel.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L68)
+[lib/discord/Channel.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L68)
 
 ## Accessors
 
@@ -77,7 +77,7 @@ Returns the id of a channel.
 
 #### Defined in
 
-[lib/discord/Channel.ts:85](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L85)
+[lib/discord/Channel.ts:85](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L85)
 
 ___
 
@@ -95,7 +95,7 @@ boolean
 
 #### Defined in
 
-[lib/discord/Channel.ts:117](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L117)
+[lib/discord/Channel.ts:117](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L117)
 
 ___
 
@@ -113,7 +113,7 @@ boolean
 
 #### Defined in
 
-[lib/discord/Channel.ts:106](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L106)
+[lib/discord/Channel.ts:106](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L106)
 
 ___
 
@@ -129,7 +129,7 @@ Returns the name of the channel
 
 #### Defined in
 
-[lib/discord/Channel.ts:98](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L98)
+[lib/discord/Channel.ts:98](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L98)
 
 ___
 
@@ -145,7 +145,7 @@ If a channel is in a category, it will have a parent id. This function will retu
 
 #### Defined in
 
-[lib/discord/Channel.ts:140](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L140)
+[lib/discord/Channel.ts:140](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L140)
 
 ___
 
@@ -161,7 +161,7 @@ Returns the channel permissions
 
 #### Defined in
 
-[lib/discord/Channel.ts:136](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L136)
+[lib/discord/Channel.ts:136](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L136)
 
 ___
 
@@ -177,7 +177,7 @@ The position of the channel in the guild.
 
 #### Defined in
 
-[lib/discord/Channel.ts:110](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L110)
+[lib/discord/Channel.ts:110](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L110)
 
 ___
 
@@ -191,7 +191,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:101](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L101)
+[lib/discord/Channel.ts:101](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L101)
 
 ___
 
@@ -207,7 +207,7 @@ This property is only for **voice channels**
 
 #### Defined in
 
-[lib/discord/Channel.ts:94](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L94)
+[lib/discord/Channel.ts:94](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L94)
 
 ## Methods
 
@@ -232,7 +232,7 @@ a map of messages from the channel.
 
 #### Defined in
 
-[lib/discord/Channel.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L75)
+[lib/discord/Channel.ts:75](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L75)
 
 ___
 
@@ -248,7 +248,7 @@ Returns the id of a pined message
 
 #### Defined in
 
-[lib/discord/Channel.ts:144](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L144)
+[lib/discord/Channel.ts:144](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L144)
 
 ___
 
@@ -276,7 +276,7 @@ channel.send({content: "Leave a star on Fuwa.js!"})
 
 #### Defined in
 
-[lib/discord/Channel.ts:128](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L128)
+[lib/discord/Channel.ts:128](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L128)
 
 ___
 
@@ -295,7 +295,7 @@ This makes the bot appear to be typing
 
 #### Defined in
 
-[lib/discord/Channel.ts:152](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L152)
+[lib/discord/Channel.ts:152](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L152)
 
 ___
 
@@ -309,7 +309,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:88](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L88)
+[lib/discord/Channel.ts:88](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L88)
 
 ___
 
@@ -334,4 +334,4 @@ fuwa.js#Channel
 
 #### Defined in
 
-[lib/discord/Channel.ts:162](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L162)
+[lib/discord/Channel.ts:162](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Channel.ts#L162)

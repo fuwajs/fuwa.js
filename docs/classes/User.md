@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / User
+[Fuwa.js](../README.md) / [Exports](../modules.md) / User
 
 # Class: User
 
@@ -44,7 +44,7 @@
 
 #### Defined in
 
-[lib/discord/User.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L7)
+[lib/discord/User.ts:7](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L7)
 
 ## Accessors
 
@@ -58,7 +58,7 @@
 
 #### Defined in
 
-[lib/discord/User.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L31)
+[lib/discord/User.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L31)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L23)
+[lib/discord/User.ts:23](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L23)
 
 ___
 
@@ -86,7 +86,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L26)
+[lib/discord/User.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L26)
 
 ___
 
@@ -100,7 +100,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L14)
+[lib/discord/User.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L14)
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L8)
+[lib/discord/User.ts:8](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L8)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L17)
+[lib/discord/User.ts:17](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L17)
 
 ___
 
@@ -142,7 +142,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L20)
+[lib/discord/User.ts:20](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L20)
 
 ___
 
@@ -156,7 +156,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L11)
+[lib/discord/User.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L11)
 
 ## Methods
 
@@ -170,7 +170,7 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L34)
+[lib/discord/User.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L34)
 
 ___
 
@@ -190,4 +190,4 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/User.ts#L37)
+[lib/discord/User.ts:37](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/User.ts#L37)

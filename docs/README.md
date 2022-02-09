@@ -1,7 +1,7 @@
-fuwa.js / [Exports](modules.md)
+Fuwa.js / [Exports](modules.md)
 
 <div align="center">
-    <img src="assets/Logo.svg" width="256" height="256">
+    <img src="/assets/Logo.svg" width="256" height="256">
     <p>The <b>new</b>, simple, and easy way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">

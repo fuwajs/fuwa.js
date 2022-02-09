@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / ClientOptions
+[Fuwa.js](../README.md) / [Exports](../modules.md) / ClientOptions
 
 # Interface: ClientOptions
 
@@ -29,7 +29,7 @@ Your Discord bot ID. This is required for using some of fuwa.js built in slash c
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:103](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L103)
+[lib/structures/handlers/Client.ts:103](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L103)
 
 ___
 
@@ -51,7 +51,7 @@ client.cache.set("id", "value")
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L87)
+[lib/structures/handlers/Client.ts:87](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L87)
 
 ___
 
@@ -67,7 +67,7 @@ Discord Intends, enabling bot functions with our api.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L68)
+[lib/structures/handlers/Client.ts:68](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L68)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L74)
+[lib/structures/handlers/Client.ts:74](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L74)
 
 ___
 
@@ -91,7 +91,7 @@ The owner(s) discord ID. These users can bypass default bot permissions.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:73](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L73)
+[lib/structures/handlers/Client.ts:73](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L73)
 
 ___
 
@@ -116,7 +116,7 @@ event(client, data) {
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L62)
+[lib/structures/handlers/Client.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L62)
 
 ___
 
@@ -138,7 +138,7 @@ improve performance and bot stability.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:97](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L97)
+[lib/structures/handlers/Client.ts:97](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L97)
 
 ___
 
@@ -157,4 +157,4 @@ This is required to start your client.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Client.ts#L47)
+[lib/structures/handlers/Client.ts:47](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Client.ts#L47)

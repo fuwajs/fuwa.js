@@ -1,4 +1,4 @@
-[fuwa.js](../README.md) / [Exports](../modules.md) / CacheOverwrites
+[Fuwa.js](../README.md) / [Exports](../modules.md) / CacheOverwrites
 
 # Interface: CacheOverwrites
 
@@ -20,4 +20,4 @@ How many much time (ms) until the item is deleted
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L6)
+[lib/structures/handlers/Cache.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Cache.ts#L6)
