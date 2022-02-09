@@ -24,6 +24,6 @@ jobs:
 
             - name: Build docs
               run: |
-                  npm i -g yawn
-                  yarn
+                  npm i -g yarn
+                  yarn install
                   yarn docs
