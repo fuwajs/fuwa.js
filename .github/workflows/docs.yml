@@ -34,5 +34,5 @@ jobs:
             - name: commit
               run: |
                   git add .
-                  git commit -m "gen docs"
+                  git commit -m "Gen deno"
                   git push
