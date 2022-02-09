@@ -15,9 +15,8 @@
 import Globs from '../../../util/Global';
 
 import { DISCORD_API, HTTPResponseCodes as APICodes } from '../../../interfaces';
-import { isBrowser } from '../../../util';
+import { fetch } from '../../../ports/fetch';
 import { Blob } from 'buffer';
-// import { fetch } from 'undici';
 import { Form } from './FormData';
 
 export function bufferToBlob(buf: Buffer): Blob {
@@ -25,8 +24,6 @@ export function bufferToBlob(buf: Buffer): Blob {
     return new Blob([arr]);
 }
 
-// @ts-ignore
-const fetch = isBrowser() ? window.fetch : require('undici').fetch;
 export type ParamsType = {
     path: string;
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';

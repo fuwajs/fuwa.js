@@ -1,5 +1,5 @@
 import { Blob } from 'buffer';
-import { writeFile } from 'fs/promises';
+import { writeFileSync } from 'fs';
 import { join } from 'path';
 import { Attachment as IAttachment } from '../../interfaces/message';
 import http from '../structures/internet/http';
@@ -50,7 +50,6 @@ export default class Attachment {
     async download(path?: string): Promise<void> {
         const buffer = Buffer.from(await this.get().then(b => b.arrayBuffer()));
         path ??= join(process.cwd(), this.filename);
-        await writeFile(path, buffer);
-        return;
+        return writeFileSync(path, buffer);
     }
 }

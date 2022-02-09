@@ -3,8 +3,8 @@ import { GatewayOpcodes } from '../../../interfaces';
 import { GatewayCommands, GatewayEvents } from '../../../interfaces/DiscordAPI';
 import { erlpack, pack, unpack } from './Pack';
 import { isBrowser } from '../../../util';
+import { WebSocket as Socket } from '../../../ports/WebSocket';
 //@ts-ignore
-const Socket = isBrowser() ? window.WebSocket : require('ws');
 
 /**
  * The core of our API that interacts with discord.
