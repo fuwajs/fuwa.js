@@ -3,7 +3,7 @@ import { Channel as ChannelData, ChannelType } from '../../interfaces/channel/in
 import http from '../structures/internet/http.ts';
 import Globs from '../../util/Global.ts';
 import { enumPropFinder } from '../../util/index.ts';
-import { InteractionForm, MessageReference } from '../../interfaces/index.ts';
+import { MessageReference } from '../../interfaces/index.ts';
 import { Embed } from './index.ts';
 import { Form } from '../structures/internet/FormData.ts';
 import { File } from '../structures/handlers/FileHandler.ts';

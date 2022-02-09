@@ -2,7 +2,6 @@ import { GatewayOpcodes } from '../../../interfaces/index.ts';
 
 import { GatewayCommands, GatewayEvents } from '../../../interfaces/DiscordAPI.ts';
 import { erlpack, pack, unpack } from './Pack.ts';
-import { isBrowser } from '../../../util/index.ts';
 import { WebSocket as Socket } from '../../../ports/WebSocket.ts';
 //@ts-ignore
 

@@ -123,7 +123,7 @@ export default class Context {
             });
         return;
     }
-    public async loading() {}
+    // public async loading() {}
     public async delete(): Promise<void> {
         await http.DELETE(`/webhooks/${Globs.appId}/${this.data.token}/messages/@original`);
         return;

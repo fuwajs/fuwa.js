@@ -1,5 +1,4 @@
-import {} from '../../../interfaces/index.ts';
-import http, { Response } from '../internet/http';
+import { Response } from '../internet/http.ts';
 import type { Client } from './Client.ts';
 
 export interface PluginOptions {

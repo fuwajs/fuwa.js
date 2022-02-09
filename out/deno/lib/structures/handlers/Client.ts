@@ -1,11 +1,6 @@
 import { Buffer } from "https://deno.land/std@0.85.0/node/buffer.ts";
 import { WebSocket } from '../internet/WebSocket.ts';
-import {
-    DISCORD_API,
-    GatewayCommands,
-    GatewayIntents,
-    GatewayPresenceUpdate,
-} from '../../../interfaces/DiscordAPI.ts';
+import { DISCORD_API, GatewayIntents, GatewayPresenceUpdate } from '../../../interfaces/DiscordAPI.ts';
 import { Command, CommandCallback } from './Command.ts';
 import Globs from '../../../util/Global.ts';
 import { InvalidToken } from '../../../util/Errors.ts';
@@ -28,7 +23,7 @@ import {
     HTTPResponseCodes,
 } from '../../../interfaces/index.ts';
 import http from '../internet/http.ts';
-import { enumPropFinder, getArgs, isBrowser, parseDiscordEventNames } from '../../../util/index.ts';
+import { getArgs, isBrowser, parseDiscordEventNames } from '../../../util/index.ts';
 import { Plugin } from './Plugin.ts';
 import { Guild } from '../../discord/Guild.ts';
 import { User, BotUser } from '../../discord/User.ts';
