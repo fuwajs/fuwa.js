@@ -33,6 +33,7 @@ jobs:
                   git config user.email "<>"
             - name: commit
               run: |
+                  git pull
                   git add .
                   git commit -m "gen docs"
                   git push
