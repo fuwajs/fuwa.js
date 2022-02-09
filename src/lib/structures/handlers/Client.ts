@@ -1,4 +1,4 @@
-import { Socket } from '../internet/WebSocket';
+import { WebSocket } from '../internet/WebSocket';
 import {
     DISCORD_API,
     GatewayCommands,
@@ -118,7 +118,7 @@ export type StatusUpate = Omit<GatewayPresenceUpdate, 'since' | 'activities'> & 
 /**
  * The base Client to access and configure your discord bot.
  * The client should be imported from fuwa.js and extended either as a variable or class.
- * @extends Socket
+ * @extends WebSocket
  * @example
  * ```typescript
  * import { Client } from "fuwa.js"
@@ -128,7 +128,7 @@ export type StatusUpate = Omit<GatewayPresenceUpdate, 'since' | 'activities'> & 
  * ```
  * Both will work in javascript or typescript.
  */
-export class Client extends Socket {
+export class Client extends WebSocket {
     /** A Map of fuwa#client events*/
     public events = new Map<keyof EventHandlers, (...args: any[]) => any>();
     /** A Map of commands */
