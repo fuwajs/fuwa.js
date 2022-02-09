@@ -27,7 +27,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Plugin.ts:12](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Plugin.ts#L12)
+[lib/structures/handlers/Plugin.ts:12](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Plugin.ts#L12)
 
 ## Properties
 
@@ -52,7 +52,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Plugin.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Plugin.ts#L15)
+[lib/structures/handlers/Plugin.ts:15](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Plugin.ts#L15)
 
 ___
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Plugin.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/structures/handlers/Plugin.ts#L16)
+[lib/structures/handlers/Plugin.ts:16](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Plugin.ts#L16)

@@ -46,7 +46,7 @@ This class extends the basic discord api with more functions.
 
 #### Defined in
 
-[lib/discord/Embed.ts:26](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L26)
+[lib/discord/Embed.ts:26](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L26)
 
 ## Properties
 
@@ -58,7 +58,7 @@ The type of embed for discord's api
 
 #### Defined in
 
-[lib/discord/Embed.ts:25](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L25)
+[lib/discord/Embed.ts:25](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L25)
 
 ## Methods
 
@@ -81,7 +81,7 @@ The type of embed for discord's api
 
 #### Defined in
 
-[lib/discord/Embed.ts:204](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L204)
+[lib/discord/Embed.ts:204](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L204)
 
 ___
 
@@ -101,7 +101,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:197](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L197)
+[lib/discord/Embed.ts:197](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L197)
 
 ___
 
@@ -121,7 +121,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:116](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L116)
+[lib/discord/Embed.ts:116](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L116)
 
 ___
 
@@ -141,7 +141,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:154](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L154)
+[lib/discord/Embed.ts:154](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L154)
 
 ___
 
@@ -161,7 +161,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:40](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L40)
+[lib/discord/Embed.ts:40](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L40)
 
 ___
 
@@ -184,7 +184,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:96](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L96)
+[lib/discord/Embed.ts:96](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L96)
 
 ___
 
@@ -208,7 +208,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:58](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L58)
+[lib/discord/Embed.ts:58](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L58)
 
 ___
 
@@ -229,7 +229,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:216](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L216)
+[lib/discord/Embed.ts:216](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L216)
 
 ___
 
@@ -253,7 +253,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:137](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L137)
+[lib/discord/Embed.ts:137](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L137)
 
 ___
 
@@ -273,7 +273,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:175](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L175)
+[lib/discord/Embed.ts:175](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L175)
 
 ___
 
@@ -293,7 +293,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:80](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L80)
+[lib/discord/Embed.ts:80](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L80)
 
 ___
 
@@ -313,7 +313,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:187](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L187)
+[lib/discord/Embed.ts:187](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L187)
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:229](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L229)
+[lib/discord/Embed.ts:229](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L229)
 
 ___
 
@@ -350,4 +350,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:238](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Embed.ts#L238)
+[lib/discord/Embed.ts:238](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L238)

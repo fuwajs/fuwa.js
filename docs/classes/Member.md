@@ -34,7 +34,7 @@
 
 #### Defined in
 
-[lib/discord/Guild.ts:147](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L147)
+[lib/discord/Guild.ts:147](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L147)
 
 ## Accessors
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[lib/discord/Guild.ts:169](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L169)
+[lib/discord/Guild.ts:169](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L169)
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:160](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L160)
+[lib/discord/Guild.ts:160](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L160)
 
 ___
 
@@ -76,7 +76,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:157](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L157)
+[lib/discord/Guild.ts:157](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L157)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:163](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L163)
+[lib/discord/Guild.ts:163](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L163)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:151](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L151)
+[lib/discord/Guild.ts:151](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L151)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:172](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L172)
+[lib/discord/Guild.ts:172](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L172)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:154](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L154)
+[lib/discord/Guild.ts:154](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L154)
 
 ___
 
@@ -146,7 +146,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:166](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L166)
+[lib/discord/Guild.ts:166](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L166)
 
 ___
 
@@ -160,4 +160,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:148](https://github.com/Fuwajs/Fuwa.js/blob/8345c96/src/lib/discord/Guild.ts#L148)
+[lib/discord/Guild.ts:148](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L148)
