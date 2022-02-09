@@ -10,15 +10,21 @@ Main project point for all the typescript files.
 
 ### Classes
 
+- [Argument](classes/Argument.md)
+- [Attachment](classes/Attachment.md)
 - [BotUser](classes/BotUser.md)
 - [Button](classes/Button.md)
 - [Channel](classes/Channel.md)
+- [Client](classes/Client.md)
+- [Command](classes/Command.md)
+- [Context](classes/Context.md)
 - [Embed](classes/Embed.md)
 - [File](classes/File.md)
 - [Guild](classes/Guild.md)
 - [Member](classes/Member.md)
 - [MemoryCache](classes/MemoryCache.md)
 - [Message](classes/Message.md)
+- [Plugin](classes/Plugin.md)
 - [Role](classes/Role.md)
 - [User](classes/User.md)
 
@@ -28,8 +34,10 @@ Main project point for all the typescript files.
 - [ButtonParams](interfaces/ButtonParams.md)
 - [Cache](interfaces/Cache.md)
 - [CacheOverwrites](interfaces/CacheOverwrites.md)
+- [ClientOptions](interfaces/ClientOptions.md)
 - [MemoryCacheOptions](interfaces/MemoryCacheOptions.md)
 - [MessageForm](interfaces/MessageForm.md)
+- [PluginOptions](interfaces/PluginOptions.md)
 
 ### Type aliases
 
@@ -51,7 +59,7 @@ Main project point for all the typescript files.
 
 #### Defined in
 
-[lib/discord/Embed.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L10)
+[lib/discord/Embed.ts:10](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L10)
 
 ___
 
@@ -70,7 +78,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:3](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L3)
+[lib/discord/Embed.ts:3](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L3)
 
 ___
 
@@ -89,7 +97,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Channel.ts#L39)
+[lib/discord/Channel.ts:39](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L39)
 
 ___
 
@@ -110,7 +118,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Guild.ts#L177)
+[lib/discord/Guild.ts:177](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Guild.ts#L177)
 
 ## Functions
 
@@ -130,7 +138,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Channel.ts#L31)
+[lib/discord/Channel.ts:31](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L31)
 
 ___
 
@@ -150,4 +158,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Channel.ts#L11)
+[lib/discord/Channel.ts:11](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Channel.ts#L11)

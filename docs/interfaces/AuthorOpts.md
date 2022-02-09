@@ -19,7 +19,7 @@
 
 #### Defined in
 
-[lib/discord/Embed.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L15)
+[lib/discord/Embed.ts:15](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L15)
 
 ___
 
@@ -29,7 +29,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L13)
+[lib/discord/Embed.ts:13](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L13)
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L16)
+[lib/discord/Embed.ts:16](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L16)
 
 ___
 
@@ -49,4 +49,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/discord/Embed.ts#L14)
+[lib/discord/Embed.ts:14](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/discord/Embed.ts#L14)

@@ -32,7 +32,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L42)
+[lib/structures/handlers/Cache.ts:42](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L42)
 
 ## Methods
 
@@ -53,7 +53,7 @@ Clears your entire cache for that collection.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L65)
+[lib/structures/handlers/Cache.ts:65](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L65)
 
 ___
 
@@ -88,7 +88,7 @@ Stored Cache.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L52)
+[lib/structures/handlers/Cache.ts:52](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L52)
 
 ___
 
@@ -117,4 +117,4 @@ Stored Cache.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L62)
+[lib/structures/handlers/Cache.ts:62](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L62)

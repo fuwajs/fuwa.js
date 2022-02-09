@@ -20,4 +20,4 @@ How many much time (ms) until the item is deleted
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L6)
+[lib/structures/handlers/Cache.ts:6](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L6)

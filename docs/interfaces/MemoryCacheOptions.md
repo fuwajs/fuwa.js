@@ -17,7 +17,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L34)
+[lib/structures/handlers/Cache.ts:34](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L34)
 
 ___
 
@@ -27,4 +27,4 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/6d44e08/src/lib/structures/handlers/Cache.ts#L35)
+[lib/structures/handlers/Cache.ts:35](https://github.com/Fuwajs/Fuwa.js/blob/c87c3be/src/lib/structures/handlers/Cache.ts#L35)
