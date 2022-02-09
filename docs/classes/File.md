@@ -35,7 +35,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/FileHandler.ts:5](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/FileHandler.ts#L5)
+[lib/structures/handlers/FileHandler.ts:5](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/FileHandler.ts#L5)
 
 ## Properties
 
@@ -45,7 +45,7 @@
 
 #### Defined in
 
-[lib/structures/handlers/FileHandler.ts:4](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/FileHandler.ts#L4)
+[lib/structures/handlers/FileHandler.ts:4](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/FileHandler.ts#L4)
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/FileHandler.ts:16](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/FileHandler.ts#L16)
+[lib/structures/handlers/FileHandler.ts:16](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/FileHandler.ts#L16)
 
 ___
 
@@ -98,4 +98,4 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/FileHandler.ts:12](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/FileHandler.ts#L12)
+[lib/structures/handlers/FileHandler.ts:12](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/FileHandler.ts#L12)

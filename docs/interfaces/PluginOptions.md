@@ -19,7 +19,7 @@ Description of the plugin
 
 #### Defined in
 
-[lib/structures/handlers/Plugin.ts:9](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Plugin.ts#L9)
+[lib/structures/handlers/Plugin.ts:9](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Plugin.ts#L9)
 
 ___
 
@@ -31,4 +31,4 @@ Plugin name
 
 #### Defined in
 
-[lib/structures/handlers/Plugin.ts:7](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Plugin.ts#L7)
+[lib/structures/handlers/Plugin.ts:7](https://github.com/fuwajs/fuwa.js/blob/ca6b509/src/lib/structures/handlers/Plugin.ts#L7)
