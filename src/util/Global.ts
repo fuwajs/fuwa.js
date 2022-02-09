@@ -4,13 +4,13 @@
  * @internal
  */
 
-import { Cache } from '../index';
+import type { Cache, Client } from '../index';
 
 const Globs = {
     token: '',
     sessionId: '',
     appId: '',
-    client: '' as any,
+    client: '' as any as Client,
     cache: {} as Cache,
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     version: require('../../../package.json').version,

@@ -27,9 +27,22 @@ export function bufferToBlob(buf: Buffer): Blob {
 
 // @ts-ignore
 const fetch = isBrowser() ? window.fetch : require('undici').fetch;
-
+export type ParamsType = {
+    path: string;
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+    headers: any;
+    body: string | Buffer | Form;
+};
 export const ALLOWED_CODES = [APICodes.OKAY, APICodes.NoContent, APICodes.Created];
-
+export type Response = {
+    data: any;
+    headers: Map<string, string>;
+    buffer: Buffer;
+    blob: Blob;
+    _metadata: any;
+    status: APICodes;
+    body: string;
+};
 export default {
     /**
      * Use this if you want to handle Discord Rate limits automatically.
@@ -46,17 +59,9 @@ export default {
         data?: string | Buffer | Form,
         headers?: any,
         version?: 6 | 8 | 9
-    ): Promise<{
-        data: any;
-        headers: Map<string, string>;
-        buffer: Buffer;
-        blob: Blob;
-        _metadata: any;
-        status: APICodes;
-        body: string;
-    }> {
+    ): Promise<Response> {
         const url = path.startsWith(`http`) ? path : `${DISCORD_API.discord}/api/v${version || 8}` + path;
-        const params = {
+        const params: ParamsType = {
             path: url,
             method,
             headers: {
@@ -93,7 +98,7 @@ export default {
                 console.log(params);
                 console.log(buffer.toString('utf-8'));
             }
-            const ret = {
+            const ret: Response = {
                 _metadata: params,
                 data,
                 headers: res.headers as any,
@@ -102,6 +107,9 @@ export default {
                 blob,
                 body: buffer.toString('utf-8'),
             };
+            if (Globs.client) {
+                Globs.client.plugins.forEach(plugin => plugin.http && plugin.http(Globs.client, ret));
+            }
             return ret;
         });
     },
