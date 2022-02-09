@@ -1,6 +1,6 @@
 {
     "include": ["./src"],
-    "exclude": ["./dist", "./out", "./examples", "./test"],
+    "exclude": ["./dist", "./out", "./examples", "./test", "./src/ports/*.deno.ts"],
     "compilerOptions": {
         /* Visit https://aka.ms/tsconfig.json to read more about this file */
 

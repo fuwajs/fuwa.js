@@ -22,7 +22,7 @@
         "debug": "npx tsc -p . --noEmit",
         "test": "jest test/tests",
         "sync-ts-path": "ts-node -r tsconfig-paths/register ./src/index.ts",
-        "docs": "typedoc"
+        "docs": "typedoc --options ./typedoc.json --plugin typedoc-plugin-markdown"
     },
     "dependencies": {
         "undici": "*",
@@ -32,7 +32,8 @@
         "erlpack": "^0.1.3"
     },
     "denoify": {
-        "out": "out/deno"
+        "out": "out/deno",
+        "index": "src/index.ts"
     },
     "engines": {
         "node": ">=16.5"
@@ -56,7 +57,8 @@
         "prettier": "^2.4.1",
         "ts-node": "^10.2.1",
         "tsconfig-paths": "^3.11.0",
-        "typedoc": "^0.22.10",
+        "typedoc": "^0.22.11",
+        "typedoc-plugin-markdown": "^3.11.13",
         "typescript": "^4.4.3"
     },
     "eslintConfig": {
