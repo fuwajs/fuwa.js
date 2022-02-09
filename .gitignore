@@ -6,3 +6,5 @@ types
 .env
 *.log
 out
+docs
+!out/deno
