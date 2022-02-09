@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[lib/discord/User.ts:42](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L42)
+[lib/discord/User.ts:42](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L42)
 
 ## Accessors
 
@@ -66,7 +66,7 @@ User.accentColor
 
 #### Defined in
 
-[lib/discord/User.ts:31](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L31)
+[lib/discord/User.ts:31](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L31)
 
 ___
 
@@ -84,7 +84,7 @@ User.avatar
 
 #### Defined in
 
-[lib/discord/User.ts:23](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L23)
+[lib/discord/User.ts:23](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L23)
 
 ___
 
@@ -102,7 +102,7 @@ User.banner
 
 #### Defined in
 
-[lib/discord/User.ts:26](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L26)
+[lib/discord/User.ts:26](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L26)
 
 ___
 
@@ -120,7 +120,7 @@ User.discriminator
 
 #### Defined in
 
-[lib/discord/User.ts:14](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L14)
+[lib/discord/User.ts:14](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L14)
 
 ___
 
@@ -138,7 +138,7 @@ User.id
 
 #### Defined in
 
-[lib/discord/User.ts:8](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L8)
+[lib/discord/User.ts:8](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L8)
 
 ___
 
@@ -156,7 +156,7 @@ User.isBot
 
 #### Defined in
 
-[lib/discord/User.ts:17](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L17)
+[lib/discord/User.ts:17](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L17)
 
 ___
 
@@ -174,7 +174,7 @@ User.isSystem
 
 #### Defined in
 
-[lib/discord/User.ts:20](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L20)
+[lib/discord/User.ts:20](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L20)
 
 ___
 
@@ -192,7 +192,7 @@ User.name
 
 #### Defined in
 
-[lib/discord/User.ts:11](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L11)
+[lib/discord/User.ts:11](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L11)
 
 ## Methods
 
@@ -210,7 +210,7 @@ User.name
 
 #### Defined in
 
-[lib/discord/User.ts:34](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L34)
+[lib/discord/User.ts:34](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L34)
 
 ___
 
@@ -234,4 +234,4 @@ ___
 
 #### Defined in
 
-[lib/discord/User.ts:37](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/User.ts#L37)
+[lib/discord/User.ts:37](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/User.ts#L37)

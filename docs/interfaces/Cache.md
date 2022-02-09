@@ -29,7 +29,7 @@ Clears your entire cache for that collection.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:30](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Cache.ts#L30)
+[lib/structures/handlers/Cache.ts:30](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Cache.ts#L30)
 
 ___
 
@@ -62,7 +62,7 @@ Stored Cache.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:17](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Cache.ts#L17)
+[lib/structures/handlers/Cache.ts:17](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Cache.ts#L17)
 
 ___
 
@@ -90,4 +90,4 @@ Stored Cache.
 
 #### Defined in
 
-[lib/structures/handlers/Cache.ts:25](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Cache.ts#L25)
+[lib/structures/handlers/Cache.ts:25](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Cache.ts#L25)

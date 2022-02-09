@@ -59,7 +59,7 @@ Main project point for all the typescript files.
 
 #### Defined in
 
-[lib/discord/Embed.ts:10](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L10)
+[lib/discord/Embed.ts:10](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Embed.ts#L10)
 
 ___
 
@@ -78,7 +78,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Embed.ts:3](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Embed.ts#L3)
+[lib/discord/Embed.ts:3](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Embed.ts#L3)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:39](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Channel.ts#L39)
+[lib/discord/Channel.ts:39](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Channel.ts#L39)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:177](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Guild.ts#L177)
+[lib/discord/Guild.ts:177](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Guild.ts#L177)
 
 ## Functions
 
@@ -138,7 +138,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:31](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Channel.ts#L31)
+[lib/discord/Channel.ts:31](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Channel.ts#L31)
 
 ___
 
@@ -158,4 +158,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:11](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/discord/Channel.ts#L11)
+[lib/discord/Channel.ts:11](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/discord/Channel.ts#L11)

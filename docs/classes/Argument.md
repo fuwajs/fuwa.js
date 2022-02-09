@@ -54,7 +54,7 @@ The Argument used in the slash command.
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:200](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L200)
+[lib/structures/handlers/Command.ts:200](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L200)
 
 ## Properties
 
@@ -64,7 +64,7 @@ The Argument used in the slash command.
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:197](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L197)
+[lib/structures/handlers/Command.ts:197](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L197)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:194](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L194)
+[lib/structures/handlers/Command.ts:194](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L194)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:199](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L199)
+[lib/structures/handlers/Command.ts:199](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L199)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:198](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L198)
+[lib/structures/handlers/Command.ts:198](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L198)
 
 ___
 
@@ -104,7 +104,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:195](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L195)
+[lib/structures/handlers/Command.ts:195](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L195)
 
 ___
 
@@ -114,7 +114,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:196](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L196)
+[lib/structures/handlers/Command.ts:196](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L196)
 
 ___
 
@@ -124,7 +124,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:193](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L193)
+[lib/structures/handlers/Command.ts:193](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L193)
 
 ## Methods
 
@@ -138,4 +138,4 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Command.ts:207](https://github.com/fuwajs/fuwa.js/blob/b906434/src/lib/structures/handlers/Command.ts#L207)
+[lib/structures/handlers/Command.ts:207](https://github.com/fuwajs/fuwa.js/blob/2dc8ebd/src/lib/structures/handlers/Command.ts#L207)
