@@ -27,3 +27,12 @@ jobs:
                   npm i -g yarn
                   yarn install
                   yarn docs
+            - name: setup git config
+                run: |
+                    git config user.name "GitHub Actions Bot"
+                    git config user.email "<>"
+            - name: commit
+                run: |
+                git commit -m "gen docs"
+                git push origin next
+
