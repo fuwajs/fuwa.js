@@ -20,7 +20,6 @@
 - [edit](Context.md#edit)
 - [getChannel](Context.md#getchannel)
 - [getGuild](Context.md#getguild)
-- [loading](Context.md#loading)
 - [resolve](Context.md#resolve)
 - [send](Context.md#send)
 
@@ -38,7 +37,7 @@
 
 #### Defined in
 
-[lib/discord/Context.ts:21](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L21)
+[lib/discord/Context.ts:21](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L21)
 
 ## Properties
 
@@ -48,7 +47,7 @@
 
 #### Defined in
 
-[lib/discord/Context.ts:23](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L23)
+[lib/discord/Context.ts:23](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L23)
 
 ___
 
@@ -58,7 +57,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Context.ts:24](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L24)
+[lib/discord/Context.ts:24](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L24)
 
 ## Methods
 
@@ -80,7 +79,7 @@ The Context#button function
 
 #### Defined in
 
-[lib/discord/Context.ts:30](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L30)
+[lib/discord/Context.ts:30](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L30)
 
 ___
 
@@ -94,7 +93,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Context.ts:127](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L127)
+[lib/discord/Context.ts:127](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L127)
 
 ___
 
@@ -116,7 +115,7 @@ Edit some message data
 
 #### Defined in
 
-[lib/discord/Context.ts:132](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L132)
+[lib/discord/Context.ts:132](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L132)
 
 ___
 
@@ -138,7 +137,7 @@ Fetches raw channel data
 
 #### Defined in
 
-[lib/discord/Context.ts:80](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L80)
+[lib/discord/Context.ts:80](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L80)
 
 ___
 
@@ -160,21 +159,7 @@ Fetches raw guild data
 
 #### Defined in
 
-[lib/discord/Context.ts:92](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L92)
-
-___
-
-### loading
-
-▸ **loading**(): `Promise`<`void`\>
-
-#### Returns
-
-`Promise`<`void`\>
-
-#### Defined in
-
-[lib/discord/Context.ts:126](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L126)
+[lib/discord/Context.ts:92](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L92)
 
 ___
 
@@ -194,7 +179,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Context.ts:57](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L57)
+[lib/discord/Context.ts:57](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L57)
 
 ___
 
@@ -216,4 +201,4 @@ Sends a POST
 
 #### Defined in
 
-[lib/discord/Context.ts:104](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Context.ts#L104)
+[lib/discord/Context.ts:104](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Context.ts#L104)

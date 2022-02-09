@@ -21,7 +21,7 @@
 
 #### Defined in
 
-[lib/discord/Channel.ts:52](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L52)
+[lib/discord/Channel.ts:52](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L52)
 
 ___
 
@@ -31,7 +31,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:47](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L47)
+[lib/discord/Channel.ts:47](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L47)
 
 ___
 
@@ -41,7 +41,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:50](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L50)
+[lib/discord/Channel.ts:50](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L50)
 
 ___
 
@@ -51,7 +51,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:49](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L49)
+[lib/discord/Channel.ts:49](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L49)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:53](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L53)
+[lib/discord/Channel.ts:53](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L53)
 
 ___
 
@@ -71,4 +71,4 @@ ___
 
 #### Defined in
 
-[lib/discord/Channel.ts:48](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Channel.ts#L48)
+[lib/discord/Channel.ts:48](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Channel.ts#L48)

@@ -74,7 +74,7 @@ WebSocket.constructor
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:161](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L161)
+[lib/structures/handlers/Client.ts:156](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L156)
 
 ## Properties
 
@@ -86,7 +86,7 @@ Interaction listeners for buttons
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:139](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L139)
+[lib/structures/handlers/Client.ts:134](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L134)
 
 ___
 
@@ -98,7 +98,7 @@ Your bot ID
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:144](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L144)
+[lib/structures/handlers/Client.ts:139](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L139)
 
 ___
 
@@ -108,7 +108,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:137](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L137)
+[lib/structures/handlers/Client.ts:132](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L132)
 
 ___
 
@@ -118,7 +118,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:154](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L154)
+[lib/structures/handlers/Client.ts:149](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L149)
 
 ___
 
@@ -128,7 +128,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:147](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L147)
+[lib/structures/handlers/Client.ts:142](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L142)
 
 ___
 
@@ -140,7 +140,7 @@ A Map of commands
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:135](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L135)
+[lib/structures/handlers/Client.ts:130](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L130)
 
 ___
 
@@ -152,7 +152,7 @@ A Map of fuwa#client events
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:133](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L133)
+[lib/structures/handlers/Client.ts:128](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L128)
 
 ___
 
@@ -164,7 +164,7 @@ Commands that will be mounted before the ready event
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:141](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L141)
+[lib/structures/handlers/Client.ts:136](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L136)
 
 ___
 
@@ -197,7 +197,7 @@ Alias for on
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:207](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L207)
+[lib/structures/handlers/Client.ts:202](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L202)
 
 ___
 
@@ -207,7 +207,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:136](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L136)
+[lib/structures/handlers/Client.ts:131](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L131)
 
 ___
 
@@ -217,7 +217,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:142](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L142)
+[lib/structures/handlers/Client.ts:137](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L137)
 
 ___
 
@@ -231,7 +231,7 @@ WebSocket.ws
 
 #### Defined in
 
-[lib/structures/internet/WebSocket.ts:15](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/internet/WebSocket.ts#L15)
+[lib/structures/internet/WebSocket.ts:14](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/internet/WebSocket.ts#L14)
 
 ## Methods
 
@@ -259,7 +259,7 @@ WebSocket.ws
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:455](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L455)
+[lib/structures/handlers/Client.ts:450](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L450)
 
 ___
 
@@ -280,7 +280,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:270](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L270)
+[lib/structures/handlers/Client.ts:265](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L265)
 
 ___
 
@@ -306,7 +306,7 @@ A Guild, or null if the guild was not found
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:256](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L256)
+[lib/structures/handlers/Client.ts:251](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L251)
 
 ___
 
@@ -328,7 +328,7 @@ Returns all mounted commands and there discord data.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:279](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L279)
+[lib/structures/handlers/Client.ts:274](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L274)
 
 ___
 
@@ -354,7 +354,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:262](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L262)
+[lib/structures/handlers/Client.ts:257](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L257)
 
 ___
 
@@ -378,7 +378,7 @@ Connects the websocket client to discords api.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:394](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L394)
+[lib/structures/handlers/Client.ts:389](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L389)
 
 ___
 
@@ -404,7 +404,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:404](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L404)
+[lib/structures/handlers/Client.ts:399](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L399)
 
 ___
 
@@ -432,7 +432,7 @@ Mounts a command at runtime
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:212](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L212)
+[lib/structures/handlers/Client.ts:207](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L207)
 
 ___
 
@@ -459,7 +459,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:200](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L200)
+[lib/structures/handlers/Client.ts:195](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L195)
 
 ___
 
@@ -479,7 +479,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:412](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L412)
+[lib/structures/handlers/Client.ts:407](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L407)
 
 ___
 
@@ -500,7 +500,7 @@ ___
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:447](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L447)
+[lib/structures/handlers/Client.ts:442](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L442)
 
 ___
 
@@ -523,4 +523,4 @@ Deletes a command from the discord api.
 
 #### Defined in
 
-[lib/structures/handlers/Client.ts:234](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/structures/handlers/Client.ts#L234)
+[lib/structures/handlers/Client.ts:229](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/structures/handlers/Client.ts#L229)

@@ -53,7 +53,7 @@
 
 #### Defined in
 
-[lib/discord/Guild.ts:12](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L12)
+[lib/discord/Guild.ts:12](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L12)
 
 ## Properties
 
@@ -65,7 +65,7 @@ Returns total guild channels
 
 #### Defined in
 
-[lib/discord/Guild.ts:53](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L53)
+[lib/discord/Guild.ts:53](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L53)
 
 ___
 
@@ -77,7 +77,7 @@ Returns total guild members
 
 #### Defined in
 
-[lib/discord/Guild.ts:42](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L42)
+[lib/discord/Guild.ts:42](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L42)
 
 ___
 
@@ -91,7 +91,7 @@ Fetches a list of guild roles and there ID's
 
 #### Defined in
 
-[lib/discord/Guild.ts:49](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L49)
+[lib/discord/Guild.ts:49](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L49)
 
 ## Accessors
 
@@ -107,7 +107,7 @@ banner for the guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:28](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L28)
+[lib/discord/Guild.ts:28](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L28)
 
 ___
 
@@ -123,7 +123,7 @@ Returns total guild members
 
 #### Defined in
 
-[lib/discord/Guild.ts:77](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L77)
+[lib/discord/Guild.ts:77](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L77)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:60](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L60)
+[lib/discord/Guild.ts:60](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L60)
 
 ___
 
@@ -153,7 +153,7 @@ icon for the guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:24](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L24)
+[lib/discord/Guild.ts:24](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L24)
 
 ___
 
@@ -169,7 +169,7 @@ id of the guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:20](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L20)
+[lib/discord/Guild.ts:20](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L20)
 
 ___
 
@@ -183,7 +183,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:84](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L84)
+[lib/discord/Guild.ts:84](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L84)
 
 ___
 
@@ -201,7 +201,7 @@ boolean
 
 #### Defined in
 
-[lib/discord/Guild.ts:73](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L73)
+[lib/discord/Guild.ts:73](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L73)
 
 ___
 
@@ -219,7 +219,7 @@ boolean
 
 #### Defined in
 
-[lib/discord/Guild.ts:67](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L67)
+[lib/discord/Guild.ts:67](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L67)
 
 ___
 
@@ -235,7 +235,7 @@ Returns the name of the guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:32](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L32)
+[lib/discord/Guild.ts:32](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L32)
 
 ___
 
@@ -251,7 +251,7 @@ The NSFW level of the guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:81](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L81)
+[lib/discord/Guild.ts:81](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L81)
 
 ___
 
@@ -267,7 +267,7 @@ Returns the guild owner id
 
 #### Defined in
 
-[lib/discord/Guild.ts:57](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L57)
+[lib/discord/Guild.ts:57](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L57)
 
 ___
 
@@ -284,7 +284,7 @@ Returns in total guild size
 
 #### Defined in
 
-[lib/discord/Guild.ts:38](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L38)
+[lib/discord/Guild.ts:38](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L38)
 
 ___
 
@@ -300,7 +300,7 @@ The Welcome screen channel id for the guild.
 
 #### Defined in
 
-[lib/discord/Guild.ts:88](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L88)
+[lib/discord/Guild.ts:88](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L88)
 
 ## Methods
 
@@ -320,7 +320,7 @@ The Welcome screen channel id for the guild.
 
 #### Defined in
 
-[lib/discord/Guild.ts:91](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L91)
+[lib/discord/Guild.ts:91](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L91)
 
 ___
 
@@ -342,7 +342,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:124](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L124)
+[lib/discord/Guild.ts:124](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L124)
 
 ___
 
@@ -362,7 +362,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:134](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L134)
+[lib/discord/Guild.ts:134](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L134)
 
 ___
 
@@ -378,7 +378,7 @@ Allows the given application to leave the current requested guild.
 
 #### Defined in
 
-[lib/discord/Guild.ts:109](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L109)
+[lib/discord/Guild.ts:109](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L109)
 
 ___
 
@@ -398,7 +398,7 @@ ___
 
 #### Defined in
 
-[lib/discord/Guild.ts:139](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L139)
+[lib/discord/Guild.ts:139](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L139)
 
 ___
 
@@ -423,4 +423,4 @@ fuwa.js#Guild
 
 #### Defined in
 
-[lib/discord/Guild.ts:119](https://github.com/fuwajs/fuwa.js/blob/e4bacda/src/lib/discord/Guild.ts#L119)
+[lib/discord/Guild.ts:119](https://github.com/fuwajs/fuwa.js/blob/b00913c/src/lib/discord/Guild.ts#L119)
