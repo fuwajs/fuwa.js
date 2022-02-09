@@ -1,9 +1,8 @@
 {
-    "exclude": "**/*+(index|.deno|.test).ts",
+    "exclude": "**/*+(.deno|.test).ts",
     "cleanOutputDir": true,
-    "emit": true,
+    "emit": false,
     "entryPoints": ["src/index.ts"],
-    "excludeExternals": true,
     "hideGenerator": true,
     "lightHighlightTheme": "github-light",
     "darkHighlightTheme": "github-dark",
