@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/Logo.svg" width="256" height="256">
+    <img src="/assets/Logo.svg" width="256" height="256">
     <p>The <b>new</b>, simple, and easy way to create <em>progressive</em> Discord bots.</p>
     <p>
         <a href="https://discord.gg/FGn4T9eUp5">
@@ -19,6 +19,5 @@
 A better way to make discord bots.
 
 Library Developer's: [Artrix](https://github.com/Artrix9095), [ThatGuyJamal](https://github.com/ThatGuyJamal)
-
 
 The framework is still in development, please join our [discord server](https://discord.gg/FGn4T9eUp5) for future updates.
