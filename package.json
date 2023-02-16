@@ -33,7 +33,7 @@
     },
     "homepage": "https://fuwajs.github.io",
     "dependencies": {
-        "undici": "^4.5.1",
+        "undici": "^5.19.1",
         "ws": "^8.2.2"
     },
     "devDependencies": {
